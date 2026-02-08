@@ -210,9 +210,9 @@ ret_from_fork:
 	When switching to a new task, the kernel restores `fn` and `arg` from
 	`task_struct` to `x19` and `x20`. Below, `ret_from_fork` calls the function
 	stored in `x19` register with the argument stored in `x20`. */
-mov x0, x0 /* STUDENT: TODO: replace this */
+	mov x0, x20  /* STUDENT: TODO: replace this */
 	// call a kern task's main func
-blr x0 /* STUDENT: TODO: replace this */
+	blr x19 /* STUDENT: TODO: replace this */
 	// Below: 
 	// the kern task returns from main func... what happen next? 
 	// have students think about it. also exercise use of gdb
