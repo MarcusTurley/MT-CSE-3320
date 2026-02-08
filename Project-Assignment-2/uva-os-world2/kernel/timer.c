@@ -76,6 +76,7 @@ void handle_generic_timer_irq(void)  {
 	
 	// drive the scheduler
 	/* STUDENT: TODO: your code here */
+	timer_tick();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
