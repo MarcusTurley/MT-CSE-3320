@@ -224,6 +224,7 @@ void switch_to(struct task_struct * next) {
     */
 
     /* below: cpu_switch_to() in switch.S. it will branch to next->cpu_context.pc */
+    
     cpu_switch_to(prev, next);   /* STUDENT: TODO: replace this */
 }
 
@@ -490,9 +491,9 @@ void exit_process(int status) {
     /* Give any children to init. */
     if (reparent(p)) 
         wakeup_nolock(init_task);
+    wakeup_nolock(p->parent);
 
     /* Parent might be sleeping in wait(). */
-    wakeup_nolock(p->parent); 
     p->xstate = status;
     p->state = TASK_ZOMBIE;
     
@@ -505,8 +506,7 @@ void exit_process(int status) {
     to a normal task (if any) */
     /* STUDENT: TODO: your code here */
     struct task_struct *idle = idle_tasks[cpuid()];
-    mycpu()->proc = idle;
-    cpu_switch_to(p, idle);
+    switch_to(idle);
     /* the "switch-to" task will resume from the schedule()'s exit path, which
     will release sched_lock after sched_lock is released, the parent can proceed
     to recycle the zombie's kern stack (& task_struct), which is no longer used

@@ -90,10 +90,20 @@ static PIXEL int2rgb (int value);
 // draw dots on canvas, closer to the original js version (see comment at the end)
 // Q4: quest: "two donuts". understand code below
 // Q7: quest: "donuts in sync"
-
+// unsigned long current_counter() {
+//   return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
+// }
 void donut_pixel(int idx) {
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
+    unsigned start_s, start_ms, cur_s, cur_ms;
+    current_time(&start_s, &start_ms);
     while (1) {
+        current_time(&cur_s, &cur_ms);
+        uint32_t elapsed_ms = (cur_s - start_s) * 1000 + (cur_ms - start_ms);
+        if (elapsed_ms >= 3 * 1000) { // 3000 ticks = 3ms
+            printf("Donut Exited after |%ums|\n",elapsed_ms);
+            exit_process(0);
+        }
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
         memset(z[idx], 127, 1760); // z buffer
         int sj = 0, cj = 1024;

@@ -61,7 +61,6 @@ void generic_timer_init (void) {
 }
 
 //Q3: quest: "two preemptive printers"
-unsigned int ticks = 0;
 void handle_generic_timer_irq(void)  {
 	// scheduling at SCHED_TICK_HZ could be too frequent. can throttle like: 
 	// if (ticks % 10 == 0 || woken)
@@ -77,7 +76,6 @@ void handle_generic_timer_irq(void)  {
 	
 	// drive the scheduler
 	/* STUDENT: TODO: your code here */
-	ticks++;
 	timer_tick();
 }
 

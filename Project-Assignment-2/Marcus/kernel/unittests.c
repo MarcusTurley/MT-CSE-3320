@@ -181,7 +181,6 @@ static void kern_task_return(const char *str) {
 static void kern_task_exit(const char *str) {
 	printf("Kernel task started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
     printf("%s", str); 
-    struct task_struct *p = myproc();
     exit_process(0); 
 }
 
@@ -324,10 +323,6 @@ void kern_task_donut(int idx) {
         default: p->priority = 2; break;
     }
     p->credits = p->priority;
-    
-    if (idx == 0) {
-        ktimer_start(3000, (TKernelTimerHandler *)kern_task_exit, "Donut Timeout\n", 0);
-    }
     donut(idx);
 }
 
