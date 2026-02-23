@@ -100,7 +100,7 @@ void donut_pixel(int idx) {
     while (1) {
         current_time(&cur_s, &cur_ms);
         uint32_t elapsed_ms = (cur_s - start_s) * 1000 + (cur_ms - start_ms);
-        if (elapsed_ms >= 3 * 1000) { // 3000 ticks = 3ms
+        if (elapsed_ms >= 3 * 1000 && idx == 0) { // 3000 ticks = 3ms
             printf("Donut Exited after |%ums|\n",elapsed_ms);
             exit_process(0);
         }
@@ -171,10 +171,10 @@ void donut_pixel(int idx) {
         /* STUDENT: TODO: your code here */
         struct task_struct *p = myproc();
         
-        int speed_factor = p->priority / 10;
+        int speed_factor = p->priority;
         if (speed_factor < 1) speed_factor = 1;
 
-        for (int s = 0; s <= idx; s++) {
+        for (int s = 0; s <= p->priority; s++) {
             R(5, 7, cA, sA);
             R(5, 8, cB, sB);
         }

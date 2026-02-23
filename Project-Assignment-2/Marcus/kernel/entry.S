@@ -74,8 +74,8 @@
 	// also restore x30
 	ldp x30, x22, [sp, #16 * 15] /* STUDENT: TODO: replace this */
 
-	mrs x22, elr_el1		
-	mrs x23, spsr_el1
+	msr	elr_el1, x22			
+	msr	spsr_el1, x23
 
 	// restores the CPU state by copying back the values of x0 - x30
 	ldp	x0, x1, [sp, #16 * 0]

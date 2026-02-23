@@ -506,7 +506,9 @@ void exit_process(int status) {
     to a normal task (if any) */
     /* STUDENT: TODO: your code here */
     struct task_struct *idle = idle_tasks[cpuid()];
-    switch_to(idle);
+    // switch_to(idle);
+    mycpu()->proc = idle;
+    cpu_switch_to(p, idle);
     /* the "switch-to" task will resume from the schedule()'s exit path, which
     will release sched_lock after sched_lock is released, the parent can proceed
     to recycle the zombie's kern stack (& task_struct), which is no longer used

@@ -24,6 +24,7 @@ cpu_switch_to:
 	str	x30, [x8]			// save LR (x30) to cpu_context.pc, pointing to where this function is called from
 	
 	// calculate the address of the next task's `cpu_context`
+	mov x10, #THREAD_CPU_CONTEXT
 	add x8, x1, x10/* STUDENT: TODO: replace this */
 	
 	// below: restore the CPU context of "switch_to" task to CPU regs

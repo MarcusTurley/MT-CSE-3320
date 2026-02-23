@@ -313,13 +313,13 @@ void kern_task_donut(int idx) {
     switch(idx) {
         case 0: p->priority = 2; break;
         case 1: p->priority = 10; break;
-        case 2: p->priority = 4; break;
-        case 3: p->priority = 5; break;
-        case 4: p->priority = 9; break;
-        case 5: p->priority = 7; break;
-        case 6: p->priority = 8; break;
-        case 7: p->priority = 9; break;
-        case 8: p->priority = 3; break;
+        case 2: p->priority = 40; break;
+        case 3: p->priority = 60; break;
+        case 4: p->priority = 80; break;
+        case 5: p->priority = 60; break;
+        case 6: p->priority = 40; break;
+        case 7: p->priority = 10; break;
+        case 8: p->priority = 2; break;
         default: p->priority = 2; break;
     }
     p->credits = p->priority;
