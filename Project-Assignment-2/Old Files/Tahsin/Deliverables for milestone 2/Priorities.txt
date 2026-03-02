@@ -1,5 +1,0 @@
-1) priority = idx;
-2) priority = 25- idx;
-3) priority = idx%2;
-4) priority += idx%3;
-5) priority = idx%5;

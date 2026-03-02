@@ -168,19 +168,10 @@ void donut_pixel(int idx) {
         yield();
 
         frame_count[idx]++;
-
-        // Exit condition: after ~3 seconds
-        // Suppose each frame is roughly 100 ms (adjust if different)
         if (frame_count[idx] == 100 && idx==2) {
             exit_process(0);
         }
 
-
-
-        // Optionally: also check for UART key press (pseudo code)
-         //if (idx == 1 && ) {
-            // exit_process(0);
-         //}
     }
 }
 

@@ -135,7 +135,7 @@ void schedule() {
 				if (p->credits > max_cr) { max_cr = p->credits; next = i; }
 			}
 		}        
-		if (max_cr >= 0) {
+		if (max_cr >0) {
             I("cpu%d picked pid %d state %s credits %ld", cpu, next, 
                 states[task[next]->state], p->credits);
             switch_to(task[next]);  /* STUDENT: TODO: replace this */
@@ -235,7 +235,7 @@ void switch_to(struct task_struct * next) {
 void timer_tick() {
     struct task_struct *cur = myproc();
     struct cpu* cp = mycpu(); 
-
+    printf("Inside timer_tick\n");
     if (cur) { // update task::credits, decide if schedule() is needed
         V("enter timer_tick cpu%d task %s pid %d", cpuid(), cur->name, cur->pid);
         if (cur->pid>=0 && cur->state == TASK_RUNNING) // not "idle" (pid -1), and running
@@ -307,14 +307,16 @@ Caller must hold sched_lock  */
 static int wakeup_nolock(void *chan) {
     struct task_struct *p;
     int cnt = 0; 
-    for (int i = 0; i < NR_TASKS; i ++) {
-        p = task[i]; 
+    // V("chan=%lx", (unsigned long)chan);
+	for (int i = 0; i < NR_TASKS; i ++) {
+		p = task[i]; 
+        // NB: it's possible that p == cur and should be woken up
         if (p->state == TASK_UNUSED) continue; 
         if (p->state == TASK_SLEEPING && p->chan == chan) {            
-            /* STUDENT: TODO: FIXED */
+            /* STUDENT: TODO: your code here */
             p->state = TASK_RUNNABLE;
+            p->chan  = 0;
             cnt++;
-            
             I("wakeup cpu%d chan=%lx pid %d", cpuid(),
                 (unsigned long)p->chan, p->pid);
         }
@@ -369,9 +371,9 @@ void sleep(void *chan, struct spinlock *lk) {
 
     /* Go to sleep. */
     /* STUDENT: TODO: your code here */
-    p->chan = chan;
+    p->chan  = chan;
     p->state = TASK_SLEEPING;
-    
+
     /* although the task has not used up the current tick, bill it regardless.
     thus this task will be disadvantaged in future scheduling  */
     p->credits --; 
@@ -380,9 +382,10 @@ void sleep(void *chan, struct spinlock *lk) {
     know exists for sure. the idle task will return from the schedule() and 
     rls sched_lock. the next timertick will call schedule() and switch 
     to a normal task (if any)  */
-    struct task_struct *idle = 0;
+    struct task_struct *idle = idle_tasks[cpuid()];
     mycpu()->proc = idle;
     cpu_switch_to(p, idle);  
+    
     
     /* cpu_switch_to() back here when the cur task is woken up. 
     it now has sched_lock.  */
@@ -619,7 +622,6 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
 	p->flags = clone_flags;
 	p->credits = p->priority = cur->priority;
 	p->pid = pid; 
-    
 
 	// @page is 0-filled, many fields (e.g. mm.pgd) are implicitly init'd
 

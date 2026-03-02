@@ -120,7 +120,7 @@ setup_sp:
    8009c:	00000000 	.word	0x00000000
    800a0:	000001c5 	.word	0x000001c5
    800a4:	00000000 	.word	0x00000000
-   800a8:	00095f80 	.word	0x00095f80
+   800a8:	00095f68 	.word	0x00095f68
    800ac:	00000000 	.word	0x00000000
    800b0:	0010e110 	.word	0x0010e110
    800b4:	00000000 	.word	0x00000000
@@ -235,7 +235,7 @@ unknown:
    808b4:	52800d02 	mov	w2, #0x68                  	// #104
    808b8:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
    808bc:	910ba000 	add	x0, x0, #0x2e8
-   808c0:	94000356 	bl	81618 <tfp_printf>
+   808c0:	9400033e 	bl	815b8 <tfp_printf>
         irq0, 
         get32(IRQ_BASIC_PENDING), 
         get32(IRQ_PENDING_1),
@@ -252,11 +252,11 @@ unknown:
    808d4:	a8c37bfd 	ldp	x29, x30, [sp], #48
     BUG(); 
    808d8:	52800de2 	mov	w2, #0x6f                  	// #111
-   808dc:	1400041f 	b	81958 <assertion_failed>
+   808dc:	14000407 	b	818f8 <assertion_failed>
         irq &= (~GENERIC_TIMER_INTERRUPT);
    808e0:	121e7a93 	and	w19, w20, #0xfffffffd
         handle_generic_timer_irq();
-   808e4:	94000589 	bl	81f08 <handle_generic_timer_irq>
+   808e4:	94000571 	bl	81ea8 <handle_generic_timer_irq>
         irq &= (~GENERIC_TIMER_INTERRUPT);
    808e8:	17ffffdc 	b	80858 <handle_irq+0x28>
 }
@@ -268,7 +268,7 @@ unknown:
         irq &= (~GPU_SIDE_INTERRUPT);  // clear all "GPU side" irqs
    808fc:	12177a73 	and	w19, w19, #0xfffffeff
             sys_timer_irq(); 
-   80900:	9400062c 	bl	821b0 <sys_timer_irq>
+   80900:	94000614 	bl	82150 <sys_timer_irq>
         if (p1) {
    80904:	34fffbb5 	cbz	w21, 80878 <handle_irq+0x48>
             E("unknown pending irq in IRQ_PENDING_1 p1 %08x", p1); 
@@ -278,7 +278,7 @@ unknown:
    80914:	910a8261 	add	x1, x19, #0x2a0
    80918:	910aa000 	add	x0, x0, #0x2a8
    8091c:	52800bc2 	mov	w2, #0x5e                  	// #94
-   80920:	9400033e 	bl	81618 <tfp_printf>
+   80920:	94000326 	bl	815b8 <tfp_printf>
             goto unknown; 
    80924:	f94013f5 	ldr	x21, [sp, #32]
    80928:	17ffffd7 	b	80884 <handle_irq+0x54>
@@ -294,7 +294,7 @@ void show_invalid_entry_message(int type, unsigned long esr,
    80930:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
     E("%s, cpu%d, esr: 0x%016lx, elr: 0x%016lx, far: 0x%016lx",  
    80934:	b00000a4 	adrp	x4, 95000 <wordsworth.1725+0xee10>
-   80938:	91378084 	add	x4, x4, #0xde0
+   80938:	91372084 	add	x4, x4, #0xdc8
 {    
    8093c:	910003fd 	mov	x29, sp
    80940:	f9001bf7 	str	x23, [sp, #48]
@@ -321,7 +321,7 @@ void show_invalid_entry_message(int type, unsigned long esr,
    80980:	52800ee2 	mov	w2, #0x77                  	// #119
    80984:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
    80988:	910da000 	add	x0, x0, #0x368
-   8098c:	94000323 	bl	81618 <tfp_printf>
+   8098c:	9400030b 	bl	815b8 <tfp_printf>
         entry_error_messages[type], cpuid(), esr, elr, far);
     E("online esr decoder: %s0x%016lx", "https://esr.arm64.dev/#", esr);
    80990:	aa1403e4 	mov	x4, x20
@@ -343,7 +343,7 @@ void show_invalid_entry_message(int type, unsigned long esr,
     E("online esr decoder: %s0x%016lx", "https://esr.arm64.dev/#", esr);
    809b4:	910f4000 	add	x0, x0, #0x3d0
    809b8:	52800f22 	mov	w2, #0x79                  	// #121
-   809bc:	14000317 	b	81618 <tfp_printf>
+   809bc:	140002ff 	b	815b8 <tfp_printf>
 
 00000000000809c0 <kernel_main>:
 extern void donut(int x, int y); 	//donut.c
@@ -355,18 +355,18 @@ void kernel_main() {
    809c0:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
    809c4:	910003fd 	mov	x29, sp
 	uart_init();
-   809c8:	94001122 	bl	84e50 <uart_init>
+   809c8:	94001134 	bl	84e98 <uart_init>
 	init_printf(NULL, putc);	
    809cc:	b00000a1 	adrp	x1, 95000 <wordsworth.1725+0xee10>
    809d0:	d2800000 	mov	x0, #0x0                   	// #0
-   809d4:	f9479421 	ldr	x1, [x1, #3880]
-   809d8:	9400030a 	bl	81600 <init_printf>
+   809d4:	f9478821 	ldr	x1, [x1, #3856]
+   809d8:	940002f2 	bl	815a0 <init_printf>
 	printf("------ kernel boot ------  core %d\n\r", cpuid());
    809dc:	9400154b 	bl	85f08 <cpuid>
    809e0:	2a0003e1 	mov	w1, w0
    809e4:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
    809e8:	91150000 	add	x0, x0, #0x540
-   809ec:	9400030b 	bl	81618 <tfp_printf>
+   809ec:	940002f3 	bl	815b8 <tfp_printf>
 	printf("build time (kernel.c) %s %s\n", __DATE__, __TIME__); // simplicity 
    809f0:	d0000022 	adrp	x2, 86000 <__asm_dcache_level+0xc>
    809f4:	d0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
@@ -374,16 +374,16 @@ void kernel_main() {
    809fc:	9115e021 	add	x1, x1, #0x578
    80a00:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
    80a04:	91162000 	add	x0, x0, #0x588
-   80a08:	94000304 	bl	81618 <tfp_printf>
+   80a08:	940002ec 	bl	815b8 <tfp_printf>
 			
 	paging_init(); 
-   80a0c:	94000b09 	bl	83630 <paging_init>
+   80a0c:	94000af1 	bl	835d0 <paging_init>
 	sched_init(); 	// must be before schedule() or timertick() 
-   80a10:	94000b90 	bl	83850 <sched_init>
+   80a10:	94000b78 	bl	837f0 <sched_init>
 	fb_init(); 		// reserve fb memory other page allocations
-   80a14:	940007f9 	bl	829f8 <fb_init>
+   80a14:	940007e1 	bl	82998 <fb_init>
 	sys_timer_init(); 		// kernel timer: delay, timekeeping...
-   80a18:	94000564 	bl	81fa8 <sys_timer_init>
+   80a18:	9400054c 	bl	81f48 <sys_timer_init>
 	enable_interrupt_controller(0/*coreid*/);
    80a1c:	52800000 	mov	w0, #0x0                   	// #0
    80a20:	97ffff78 	bl	80800 <enable_interrupt_controller>
@@ -395,14 +395,14 @@ void kernel_main() {
 	/* sched ticks alive. preemptive scheduler is on */
 	/* STUDENT: TODO: your code here */
 	generic_timer_init();
-   80a28:	94000532 	bl	81ef0 <generic_timer_init>
+   80a28:	9400051a 	bl	81e90 <generic_timer_init>
 	
 	
 	/* now cpu is on its boot stack (boot.S) belonging to the idle task. 
 	schedule() will jump off to kernel stacks belonging to normal tasks
 	(i.e. init_task as set up in sched_init(), sched.c) */
 	schedule(); 
-   80a2c:	94000c05 	bl	83a40 <schedule>
+   80a2c:	94000bed 	bl	839e0 <schedule>
 	the cpu switches back to the boot stack and returns here */
     while (1) {
         /* don't call schedule(), otherwise each irq calls schedule(): too much
@@ -422,4687 +422,4684 @@ void kernel_main() {
 /* the 1st task (other than "idle"), created by sched_init()
 as the launchpad of various kernel tests, etc.  */
 void init(int arg/*ignored*/) {
-   80a40:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   80a40:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
 	int wpid; 
     W("entering init");
-   80a44:	d0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   80a48:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   80a44:	528007a2 	mov	w2, #0x3d                  	// #61
+   80a48:	d0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
 void init(int arg/*ignored*/) {
    80a4c:	910003fd 	mov	x29, sp
     W("entering init");
    80a50:	9116a021 	add	x1, x1, #0x5a8
-   80a54:	9116e000 	add	x0, x0, #0x5b8
-void init(int arg/*ignored*/) {
-   80a58:	a90153f3 	stp	x19, x20, [sp, #16]
-   80a5c:	d0000034 	adrp	x20, 86000 <__asm_dcache_level+0xc>
-	test_kern_reader_writer(); 
+   80a54:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   80a58:	9116e000 	add	x0, x0, #0x5b8
+   80a5c:	940002d7 	bl	815b8 <tfp_printf>
 
+	printf("Init is running\n");
+   80a60:	d0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   80a64:	91178000 	add	x0, x0, #0x5e0
+   80a68:	940002d4 	bl	815b8 <tfp_printf>
+	/* STUDENT: TODO: your code here */
+	//test_kern_tasks_donut();
+	// Q4: quest: "two donuts"
+	/* STUDENT: TODO: your code here */
+	// test_kern_task_mgmt();
+	test_kern_reader_writer(); 
+   80a6c:	9400108f 	bl	84ca8 <test_kern_reader_writer>
 	while (1) {
-		wpid = wait(0 /* does not care about status */); 
-		if (wpid < 0) {
-			W("init: wait failed with %d", wpid);
-   80a60:	91178294 	add	x20, x20, #0x5e0
-void init(int arg/*ignored*/) {
-   80a64:	a9025bf5 	stp	x21, x22, [sp, #32]
-   80a68:	d0000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
-			panic("init: maybe no child. has nothing to do. bye"); 
-		} else {
-			W("wait returns pid=%d", wpid);
-   80a6c:	911902d6 	add	x22, x22, #0x640
-    W("entering init");
-   80a70:	528007a2 	mov	w2, #0x3d                  	// #61
-   80a74:	d0000035 	adrp	x21, 86000 <__asm_dcache_level+0xc>
-			W("wait returns pid=%d", wpid);
-   80a78:	aa0103f3 	mov	x19, x1
-    W("entering init");
-   80a7c:	940002e7 	bl	81618 <tfp_printf>
-	test_kern_reader_writer(); 
-   80a80:	94001076 	bl	84c58 <test_kern_reader_writer>
-   80a84:	d503201f 	nop
-		wpid = wait(0 /* does not care about status */); 
-   80a88:	d2800000 	mov	x0, #0x0                   	// #0
-   80a8c:	94000d07 	bl	83ea8 <wait>
-			W("init: wait failed with %d", wpid);
-   80a90:	aa1303e1 	mov	x1, x19
-		wpid = wait(0 /* does not care about status */); 
-   80a94:	2a0003e3 	mov	w3, w0
-			W("init: wait failed with %d", wpid);
-   80a98:	52800942 	mov	w2, #0x4a                  	// #74
-   80a9c:	aa1403e0 	mov	x0, x20
-		if (wpid < 0) {
-   80aa0:	36f80163 	tbz	w3, #31, 80acc <init+0x8c>
-			W("init: wait failed with %d", wpid);
-   80aa4:	940002dd 	bl	81618 <tfp_printf>
-			panic("init: maybe no child. has nothing to do. bye"); 
-   80aa8:	911842a0 	add	x0, x21, #0x610
-   80aac:	94000361 	bl	81830 <panic>
-		wpid = wait(0 /* does not care about status */); 
-   80ab0:	d2800000 	mov	x0, #0x0                   	// #0
-   80ab4:	94000cfd 	bl	83ea8 <wait>
-			W("init: wait failed with %d", wpid);
-   80ab8:	aa1303e1 	mov	x1, x19
-		wpid = wait(0 /* does not care about status */); 
-   80abc:	2a0003e3 	mov	w3, w0
-			W("init: wait failed with %d", wpid);
-   80ac0:	52800942 	mov	w2, #0x4a                  	// #74
-   80ac4:	aa1403e0 	mov	x0, x20
-		if (wpid < 0) {
-   80ac8:	37fffee3 	tbnz	w3, #31, 80aa4 <init+0x64>
-			W("wait returns pid=%d", wpid);
-   80acc:	aa1603e0 	mov	x0, x22
-   80ad0:	528009a2 	mov	w2, #0x4d                  	// #77
-   80ad4:	940002d1 	bl	81618 <tfp_printf>
-   80ad8:	17ffffec 	b	80a88 <init+0x48>
-   80adc:	00000000 	udf	#0
+    yield();
+   80a70:	94000c50 	bl	83bb0 <yield>
+   80a74:	94000c4f 	bl	83bb0 <yield>
+	while (1) {
+   80a78:	17fffffe 	b	80a70 <init+0x30>
+   80a7c:	00000000 	udf	#0
 
-0000000000080ae0 <ulli2a>:
+0000000000080a80 <ulli2a>:
     unsigned long long int num, struct param *p)
 {
     int n = 0;
     unsigned long long int d = 1;
     char *bf = p->bf;
     while (num / d >= p->base)
-   80ae0:	b9400c26 	ldr	w6, [x1, #12]
+   80a80:	b9400c26 	ldr	w6, [x1, #12]
     char *bf = p->bf;
-   80ae4:	f9400829 	ldr	x9, [x1, #16]
+   80a84:	f9400829 	ldr	x9, [x1, #16]
     while (num / d >= p->base)
-   80ae8:	2a0603e4 	mov	w4, w6
-   80aec:	eb26401f 	cmp	x0, w6, uxtw
-   80af0:	54000583 	b.cc	80ba0 <ulli2a+0xc0>  // b.lo, b.ul, b.last
+   80a88:	2a0603e4 	mov	w4, w6
+   80a8c:	eb26401f 	cmp	x0, w6, uxtw
+   80a90:	54000583 	b.cc	80b40 <ulli2a+0xc0>  // b.lo, b.ul, b.last
     unsigned long long int d = 1;
-   80af4:	d2800022 	mov	x2, #0x1                   	// #1
+   80a94:	d2800022 	mov	x2, #0x1                   	// #1
         d *= p->base;
-   80af8:	9b047c42 	mul	x2, x2, x4
+   80a98:	9b047c42 	mul	x2, x2, x4
     while (num / d >= p->base)
-   80afc:	9ac20803 	udiv	x3, x0, x2
-   80b00:	eb04007f 	cmp	x3, x4
-   80b04:	54ffffa2 	b.cs	80af8 <ulli2a+0x18>  // b.hs, b.nlast
+   80a9c:	9ac20803 	udiv	x3, x0, x2
+   80aa0:	eb04007f 	cmp	x3, x4
+   80aa4:	54ffffa2 	b.cs	80a98 <ulli2a+0x18>  // b.hs, b.nlast
     while (d != 0) {
-   80b08:	b4000462 	cbz	x2, 80b94 <ulli2a+0xb4>
+   80aa8:	b4000462 	cbz	x2, 80b34 <ulli2a+0xb4>
     int n = 0;
-   80b0c:	52800007 	mov	w7, #0x0                   	// #0
+   80aac:	52800007 	mov	w7, #0x0                   	// #0
         int dgt = num / d;
         num %= d;
         d /= p->base;
         if (n || dgt > 0 || d == 0) {
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80b10:	528006eb 	mov	w11, #0x37                  	// #55
-   80b14:	52800aea 	mov	w10, #0x57                  	// #87
+   80ab0:	528006eb 	mov	w11, #0x37                  	// #55
+   80ab4:	52800aea 	mov	w10, #0x57                  	// #87
         if (n || dgt > 0 || d == 0) {
-   80b18:	710000ff 	cmp	w7, #0x0
+   80ab8:	710000ff 	cmp	w7, #0x0
         num %= d;
-   80b1c:	9b028060 	msub	x0, x3, x2, x0
+   80abc:	9b028060 	msub	x0, x3, x2, x0
         d /= p->base;
-   80b20:	9ac40848 	udiv	x8, x2, x4
+   80ac0:	9ac40848 	udiv	x8, x2, x4
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80b24:	aa0903e5 	mov	x5, x9
+   80ac4:	aa0903e5 	mov	x5, x9
         if (n || dgt > 0 || d == 0) {
-   80b28:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
-   80b2c:	540000ec 	b.gt	80b48 <ulli2a+0x68>
-   80b30:	eb02009f 	cmp	x4, x2
-   80b34:	540002c9 	b.ls	80b8c <ulli2a+0xac>  // b.plast
+   80ac8:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
+   80acc:	540000ec 	b.gt	80ae8 <ulli2a+0x68>
+   80ad0:	eb02009f 	cmp	x4, x2
+   80ad4:	540002c9 	b.ls	80b2c <ulli2a+0xac>  // b.plast
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80b38:	1100c063 	add	w3, w3, #0x30
-   80b3c:	380014a3 	strb	w3, [x5], #1
+   80ad8:	1100c063 	add	w3, w3, #0x30
+   80adc:	380014a3 	strb	w3, [x5], #1
             ++n;
         }
     }
     *bf = 0;
-   80b40:	390000bf 	strb	wzr, [x5]
+   80ae0:	390000bf 	strb	wzr, [x5]
 }
-   80b44:	d65f03c0 	ret
+   80ae4:	d65f03c0 	ret
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80b48:	7100247f 	cmp	w3, #0x9
-   80b4c:	52800606 	mov	w6, #0x30                  	// #48
-   80b50:	5400008d 	b.le	80b60 <ulli2a+0x80>
-   80b54:	39400026 	ldrb	w6, [x1]
-   80b58:	f27e00df 	tst	x6, #0x4
-   80b5c:	1a8a1166 	csel	w6, w11, w10, ne	// ne = any
-   80b60:	0b0300c3 	add	w3, w6, w3
-   80b64:	380014a3 	strb	w3, [x5], #1
+   80ae8:	7100247f 	cmp	w3, #0x9
+   80aec:	52800606 	mov	w6, #0x30                  	// #48
+   80af0:	5400008d 	b.le	80b00 <ulli2a+0x80>
+   80af4:	39400026 	ldrb	w6, [x1]
+   80af8:	f27e00df 	tst	x6, #0x4
+   80afc:	1a8a1166 	csel	w6, w11, w10, ne	// ne = any
+   80b00:	0b0300c3 	add	w3, w6, w3
+   80b04:	380014a3 	strb	w3, [x5], #1
             ++n;
-   80b68:	110004e7 	add	w7, w7, #0x1
+   80b08:	110004e7 	add	w7, w7, #0x1
     while (d != 0) {
-   80b6c:	eb02009f 	cmp	x4, x2
+   80b0c:	eb02009f 	cmp	x4, x2
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80b70:	aa0503e9 	mov	x9, x5
+   80b10:	aa0503e9 	mov	x9, x5
     while (d != 0) {
-   80b74:	54fffe68 	b.hi	80b40 <ulli2a+0x60>  // b.pmore
-   80b78:	b9400c26 	ldr	w6, [x1, #12]
-   80b7c:	9ac80803 	udiv	x3, x0, x8
-   80b80:	2a0603e4 	mov	w4, w6
+   80b14:	54fffe68 	b.hi	80ae0 <ulli2a+0x60>  // b.pmore
+   80b18:	b9400c26 	ldr	w6, [x1, #12]
+   80b1c:	9ac80803 	udiv	x3, x0, x8
+   80b20:	2a0603e4 	mov	w4, w6
     int n = 0;
-   80b84:	aa0803e2 	mov	x2, x8
-   80b88:	17ffffe4 	b	80b18 <ulli2a+0x38>
-   80b8c:	52800007 	mov	w7, #0x0                   	// #0
-   80b90:	17fffffb 	b	80b7c <ulli2a+0x9c>
+   80b24:	aa0803e2 	mov	x2, x8
+   80b28:	17ffffe4 	b	80ab8 <ulli2a+0x38>
+   80b2c:	52800007 	mov	w7, #0x0                   	// #0
+   80b30:	17fffffb 	b	80b1c <ulli2a+0x9c>
     char *bf = p->bf;
-   80b94:	aa0903e5 	mov	x5, x9
+   80b34:	aa0903e5 	mov	x5, x9
     *bf = 0;
-   80b98:	390000bf 	strb	wzr, [x5]
+   80b38:	390000bf 	strb	wzr, [x5]
 }
-   80b9c:	d65f03c0 	ret
-   80ba0:	aa0003e3 	mov	x3, x0
+   80b3c:	d65f03c0 	ret
+   80b40:	aa0003e3 	mov	x3, x0
     unsigned long long int d = 1;
-   80ba4:	d2800022 	mov	x2, #0x1                   	// #1
-   80ba8:	17ffffd9 	b	80b0c <ulli2a+0x2c>
-   80bac:	d503201f 	nop
+   80b44:	d2800022 	mov	x2, #0x1                   	// #1
+   80b48:	17ffffd9 	b	80aac <ulli2a+0x2c>
+   80b4c:	d503201f 	nop
 
-0000000000080bb0 <uli2a>:
+0000000000080b50 <uli2a>:
 static void uli2a(unsigned long int num, struct param *p)
 {
     int n = 0;
     unsigned long int d = 1;
     char *bf = p->bf;
     while (num / d >= p->base)
-   80bb0:	b9400c26 	ldr	w6, [x1, #12]
+   80b50:	b9400c26 	ldr	w6, [x1, #12]
     char *bf = p->bf;
-   80bb4:	f9400829 	ldr	x9, [x1, #16]
+   80b54:	f9400829 	ldr	x9, [x1, #16]
     while (num / d >= p->base)
-   80bb8:	2a0603e4 	mov	w4, w6
-   80bbc:	eb26401f 	cmp	x0, w6, uxtw
-   80bc0:	54000583 	b.cc	80c70 <uli2a+0xc0>  // b.lo, b.ul, b.last
+   80b58:	2a0603e4 	mov	w4, w6
+   80b5c:	eb26401f 	cmp	x0, w6, uxtw
+   80b60:	54000583 	b.cc	80c10 <uli2a+0xc0>  // b.lo, b.ul, b.last
     unsigned long int d = 1;
-   80bc4:	d2800022 	mov	x2, #0x1                   	// #1
+   80b64:	d2800022 	mov	x2, #0x1                   	// #1
         d *= p->base;
-   80bc8:	9b047c42 	mul	x2, x2, x4
+   80b68:	9b047c42 	mul	x2, x2, x4
     while (num / d >= p->base)
-   80bcc:	9ac20803 	udiv	x3, x0, x2
-   80bd0:	eb04007f 	cmp	x3, x4
-   80bd4:	54ffffa2 	b.cs	80bc8 <uli2a+0x18>  // b.hs, b.nlast
+   80b6c:	9ac20803 	udiv	x3, x0, x2
+   80b70:	eb04007f 	cmp	x3, x4
+   80b74:	54ffffa2 	b.cs	80b68 <uli2a+0x18>  // b.hs, b.nlast
     while (d != 0) {
-   80bd8:	b4000462 	cbz	x2, 80c64 <uli2a+0xb4>
+   80b78:	b4000462 	cbz	x2, 80c04 <uli2a+0xb4>
     int n = 0;
-   80bdc:	52800007 	mov	w7, #0x0                   	// #0
+   80b7c:	52800007 	mov	w7, #0x0                   	// #0
         int dgt = num / d;
         num %= d;
         d /= p->base;
         if (n || dgt > 0 || d == 0) {
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80be0:	528006eb 	mov	w11, #0x37                  	// #55
-   80be4:	52800aea 	mov	w10, #0x57                  	// #87
+   80b80:	528006eb 	mov	w11, #0x37                  	// #55
+   80b84:	52800aea 	mov	w10, #0x57                  	// #87
         if (n || dgt > 0 || d == 0) {
-   80be8:	710000ff 	cmp	w7, #0x0
+   80b88:	710000ff 	cmp	w7, #0x0
         num %= d;
-   80bec:	9b028060 	msub	x0, x3, x2, x0
+   80b8c:	9b028060 	msub	x0, x3, x2, x0
         d /= p->base;
-   80bf0:	9ac40848 	udiv	x8, x2, x4
+   80b90:	9ac40848 	udiv	x8, x2, x4
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80bf4:	aa0903e5 	mov	x5, x9
+   80b94:	aa0903e5 	mov	x5, x9
         if (n || dgt > 0 || d == 0) {
-   80bf8:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
-   80bfc:	540000ec 	b.gt	80c18 <uli2a+0x68>
-   80c00:	eb02009f 	cmp	x4, x2
-   80c04:	540002c9 	b.ls	80c5c <uli2a+0xac>  // b.plast
+   80b98:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
+   80b9c:	540000ec 	b.gt	80bb8 <uli2a+0x68>
+   80ba0:	eb02009f 	cmp	x4, x2
+   80ba4:	540002c9 	b.ls	80bfc <uli2a+0xac>  // b.plast
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80c08:	1100c063 	add	w3, w3, #0x30
-   80c0c:	380014a3 	strb	w3, [x5], #1
+   80ba8:	1100c063 	add	w3, w3, #0x30
+   80bac:	380014a3 	strb	w3, [x5], #1
             ++n;
         }
     }
     *bf = 0;
-   80c10:	390000bf 	strb	wzr, [x5]
+   80bb0:	390000bf 	strb	wzr, [x5]
 }
-   80c14:	d65f03c0 	ret
+   80bb4:	d65f03c0 	ret
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80c18:	7100247f 	cmp	w3, #0x9
-   80c1c:	52800606 	mov	w6, #0x30                  	// #48
-   80c20:	5400008d 	b.le	80c30 <uli2a+0x80>
-   80c24:	39400026 	ldrb	w6, [x1]
-   80c28:	f27e00df 	tst	x6, #0x4
-   80c2c:	1a8a1166 	csel	w6, w11, w10, ne	// ne = any
-   80c30:	0b0300c3 	add	w3, w6, w3
-   80c34:	380014a3 	strb	w3, [x5], #1
+   80bb8:	7100247f 	cmp	w3, #0x9
+   80bbc:	52800606 	mov	w6, #0x30                  	// #48
+   80bc0:	5400008d 	b.le	80bd0 <uli2a+0x80>
+   80bc4:	39400026 	ldrb	w6, [x1]
+   80bc8:	f27e00df 	tst	x6, #0x4
+   80bcc:	1a8a1166 	csel	w6, w11, w10, ne	// ne = any
+   80bd0:	0b0300c3 	add	w3, w6, w3
+   80bd4:	380014a3 	strb	w3, [x5], #1
             ++n;
-   80c38:	110004e7 	add	w7, w7, #0x1
+   80bd8:	110004e7 	add	w7, w7, #0x1
     while (d != 0) {
-   80c3c:	eb02009f 	cmp	x4, x2
+   80bdc:	eb02009f 	cmp	x4, x2
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80c40:	aa0503e9 	mov	x9, x5
+   80be0:	aa0503e9 	mov	x9, x5
     while (d != 0) {
-   80c44:	54fffe68 	b.hi	80c10 <uli2a+0x60>  // b.pmore
-   80c48:	b9400c26 	ldr	w6, [x1, #12]
-   80c4c:	9ac80803 	udiv	x3, x0, x8
-   80c50:	2a0603e4 	mov	w4, w6
+   80be4:	54fffe68 	b.hi	80bb0 <uli2a+0x60>  // b.pmore
+   80be8:	b9400c26 	ldr	w6, [x1, #12]
+   80bec:	9ac80803 	udiv	x3, x0, x8
+   80bf0:	2a0603e4 	mov	w4, w6
     int n = 0;
-   80c54:	aa0803e2 	mov	x2, x8
-   80c58:	17ffffe4 	b	80be8 <uli2a+0x38>
-   80c5c:	52800007 	mov	w7, #0x0                   	// #0
-   80c60:	17fffffb 	b	80c4c <uli2a+0x9c>
+   80bf4:	aa0803e2 	mov	x2, x8
+   80bf8:	17ffffe4 	b	80b88 <uli2a+0x38>
+   80bfc:	52800007 	mov	w7, #0x0                   	// #0
+   80c00:	17fffffb 	b	80bec <uli2a+0x9c>
     char *bf = p->bf;
-   80c64:	aa0903e5 	mov	x5, x9
+   80c04:	aa0903e5 	mov	x5, x9
     *bf = 0;
-   80c68:	390000bf 	strb	wzr, [x5]
+   80c08:	390000bf 	strb	wzr, [x5]
 }
-   80c6c:	d65f03c0 	ret
-   80c70:	aa0003e3 	mov	x3, x0
+   80c0c:	d65f03c0 	ret
+   80c10:	aa0003e3 	mov	x3, x0
     unsigned long int d = 1;
-   80c74:	d2800022 	mov	x2, #0x1                   	// #1
-   80c78:	17ffffd9 	b	80bdc <uli2a+0x2c>
-   80c7c:	d503201f 	nop
+   80c14:	d2800022 	mov	x2, #0x1                   	// #1
+   80c18:	17ffffd9 	b	80b7c <uli2a+0x2c>
+   80c1c:	d503201f 	nop
 
-0000000000080c80 <ui2a>:
+0000000000080c20 <ui2a>:
 static void ui2a(unsigned int num, struct param *p)
 {
     int n = 0;
     unsigned int d = 1;
     char *bf = p->bf;
     while (num / d >= p->base)
-   80c80:	b9400c24 	ldr	w4, [x1, #12]
+   80c20:	b9400c24 	ldr	w4, [x1, #12]
     char *bf = p->bf;
-   80c84:	f9400826 	ldr	x6, [x1, #16]
+   80c24:	f9400826 	ldr	x6, [x1, #16]
     while (num / d >= p->base)
-   80c88:	6b04001f 	cmp	w0, w4
-   80c8c:	54000583 	b.cc	80d3c <ui2a+0xbc>  // b.lo, b.ul, b.last
+   80c28:	6b04001f 	cmp	w0, w4
+   80c2c:	54000583 	b.cc	80cdc <ui2a+0xbc>  // b.lo, b.ul, b.last
     unsigned int d = 1;
-   80c90:	52800022 	mov	w2, #0x1                   	// #1
-   80c94:	d503201f 	nop
+   80c30:	52800022 	mov	w2, #0x1                   	// #1
+   80c34:	d503201f 	nop
         d *= p->base;
-   80c98:	1b047c42 	mul	w2, w2, w4
+   80c38:	1b047c42 	mul	w2, w2, w4
     while (num / d >= p->base)
-   80c9c:	1ac20803 	udiv	w3, w0, w2
-   80ca0:	6b04007f 	cmp	w3, w4
-   80ca4:	54ffffa2 	b.cs	80c98 <ui2a+0x18>  // b.hs, b.nlast
+   80c3c:	1ac20803 	udiv	w3, w0, w2
+   80c40:	6b04007f 	cmp	w3, w4
+   80c44:	54ffffa2 	b.cs	80c38 <ui2a+0x18>  // b.hs, b.nlast
     while (d != 0) {
-   80ca8:	34000442 	cbz	w2, 80d30 <ui2a+0xb0>
+   80c48:	34000442 	cbz	w2, 80cd0 <ui2a+0xb0>
     int n = 0;
-   80cac:	52800007 	mov	w7, #0x0                   	// #0
+   80c4c:	52800007 	mov	w7, #0x0                   	// #0
         int dgt = num / d;
         num %= d;
         d /= p->base;
         if (n || dgt > 0 || d == 0) {
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80cb0:	528006ea 	mov	w10, #0x37                  	// #55
-   80cb4:	52800ae9 	mov	w9, #0x57                  	// #87
+   80c50:	528006ea 	mov	w10, #0x37                  	// #55
+   80c54:	52800ae9 	mov	w9, #0x57                  	// #87
         if (n || dgt > 0 || d == 0) {
-   80cb8:	710000ff 	cmp	w7, #0x0
+   80c58:	710000ff 	cmp	w7, #0x0
         num %= d;
-   80cbc:	1b028060 	msub	w0, w3, w2, w0
+   80c5c:	1b028060 	msub	w0, w3, w2, w0
         d /= p->base;
-   80cc0:	1ac40848 	udiv	w8, w2, w4
+   80c60:	1ac40848 	udiv	w8, w2, w4
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80cc4:	aa0603e5 	mov	x5, x6
+   80c64:	aa0603e5 	mov	x5, x6
         if (n || dgt > 0 || d == 0) {
-   80cc8:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
-   80ccc:	540000ec 	b.gt	80ce8 <ui2a+0x68>
-   80cd0:	6b04005f 	cmp	w2, w4
-   80cd4:	540002a2 	b.cs	80d28 <ui2a+0xa8>  // b.hs, b.nlast
+   80c68:	7a400860 	ccmp	w3, #0x0, #0x0, eq	// eq = none
+   80c6c:	540000ec 	b.gt	80c88 <ui2a+0x68>
+   80c70:	6b04005f 	cmp	w2, w4
+   80c74:	540002a2 	b.cs	80cc8 <ui2a+0xa8>  // b.hs, b.nlast
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80cd8:	1100c063 	add	w3, w3, #0x30
-   80cdc:	380014a3 	strb	w3, [x5], #1
+   80c78:	1100c063 	add	w3, w3, #0x30
+   80c7c:	380014a3 	strb	w3, [x5], #1
             ++n;
         }
     }
     *bf = 0;
-   80ce0:	390000bf 	strb	wzr, [x5]
+   80c80:	390000bf 	strb	wzr, [x5]
 }
-   80ce4:	d65f03c0 	ret
+   80c84:	d65f03c0 	ret
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80ce8:	7100247f 	cmp	w3, #0x9
-   80cec:	52800606 	mov	w6, #0x30                  	// #48
-   80cf0:	5400008d 	b.le	80d00 <ui2a+0x80>
-   80cf4:	39400026 	ldrb	w6, [x1]
-   80cf8:	f27e00df 	tst	x6, #0x4
-   80cfc:	1a891146 	csel	w6, w10, w9, ne	// ne = any
-   80d00:	0b0300c3 	add	w3, w6, w3
-   80d04:	380014a3 	strb	w3, [x5], #1
+   80c88:	7100247f 	cmp	w3, #0x9
+   80c8c:	52800606 	mov	w6, #0x30                  	// #48
+   80c90:	5400008d 	b.le	80ca0 <ui2a+0x80>
+   80c94:	39400026 	ldrb	w6, [x1]
+   80c98:	f27e00df 	tst	x6, #0x4
+   80c9c:	1a891146 	csel	w6, w10, w9, ne	// ne = any
+   80ca0:	0b0300c3 	add	w3, w6, w3
+   80ca4:	380014a3 	strb	w3, [x5], #1
             ++n;
-   80d08:	110004e7 	add	w7, w7, #0x1
+   80ca8:	110004e7 	add	w7, w7, #0x1
     while (d != 0) {
-   80d0c:	6b04005f 	cmp	w2, w4
+   80cac:	6b04005f 	cmp	w2, w4
             *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
-   80d10:	aa0503e6 	mov	x6, x5
+   80cb0:	aa0503e6 	mov	x6, x5
     while (d != 0) {
-   80d14:	54fffe63 	b.cc	80ce0 <ui2a+0x60>  // b.lo, b.ul, b.last
-   80d18:	b9400c24 	ldr	w4, [x1, #12]
-   80d1c:	1ac80803 	udiv	w3, w0, w8
+   80cb4:	54fffe63 	b.cc	80c80 <ui2a+0x60>  // b.lo, b.ul, b.last
+   80cb8:	b9400c24 	ldr	w4, [x1, #12]
+   80cbc:	1ac80803 	udiv	w3, w0, w8
     int n = 0;
-   80d20:	2a0803e2 	mov	w2, w8
-   80d24:	17ffffe5 	b	80cb8 <ui2a+0x38>
-   80d28:	52800007 	mov	w7, #0x0                   	// #0
-   80d2c:	17fffffc 	b	80d1c <ui2a+0x9c>
+   80cc0:	2a0803e2 	mov	w2, w8
+   80cc4:	17ffffe5 	b	80c58 <ui2a+0x38>
+   80cc8:	52800007 	mov	w7, #0x0                   	// #0
+   80ccc:	17fffffc 	b	80cbc <ui2a+0x9c>
     char *bf = p->bf;
-   80d30:	aa0603e5 	mov	x5, x6
+   80cd0:	aa0603e5 	mov	x5, x6
     *bf = 0;
-   80d34:	390000bf 	strb	wzr, [x5]
+   80cd4:	390000bf 	strb	wzr, [x5]
 }
-   80d38:	d65f03c0 	ret
-   80d3c:	2a0003e3 	mov	w3, w0
+   80cd8:	d65f03c0 	ret
+   80cdc:	2a0003e3 	mov	w3, w0
     unsigned int d = 1;
-   80d40:	52800022 	mov	w2, #0x1                   	// #1
-   80d44:	17ffffda 	b	80cac <ui2a+0x2c>
+   80ce0:	52800022 	mov	w2, #0x1                   	// #1
+   80ce4:	17ffffda 	b	80c4c <ui2a+0x2c>
 
-0000000000080d48 <putchw>:
+0000000000080ce8 <putchw>:
     *nump = num;
     return ch;
 }
 
 static void putchw(void *putp, putcf putf, struct param *p)
 {
-   80d48:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
-   80d4c:	910003fd 	mov	x29, sp
-   80d50:	a90153f3 	stp	x19, x20, [sp, #16]
-   80d54:	aa0003f4 	mov	x20, x0
+   80ce8:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   80cec:	910003fd 	mov	x29, sp
+   80cf0:	a90153f3 	stp	x19, x20, [sp, #16]
+   80cf4:	aa0003f4 	mov	x20, x0
     char ch;
     int n = p->width;
-   80d58:	b9400453 	ldr	w19, [x2, #4]
+   80cf8:	b9400453 	ldr	w19, [x2, #4]
     char *bf = p->bf;
 
     /* Number of filling characters */
     while (*bf++ && n > 0)
-   80d5c:	f9400840 	ldr	x0, [x2, #16]
+   80cfc:	f9400840 	ldr	x0, [x2, #16]
 {
-   80d60:	a9025bf5 	stp	x21, x22, [sp, #32]
-   80d64:	aa0103f5 	mov	x21, x1
-   80d68:	f9001bf7 	str	x23, [sp, #48]
-   80d6c:	aa0203f7 	mov	x23, x2
+   80d00:	a9025bf5 	stp	x21, x22, [sp, #32]
+   80d04:	aa0103f5 	mov	x21, x1
+   80d08:	f9001bf7 	str	x23, [sp, #48]
+   80d0c:	aa0203f7 	mov	x23, x2
     while (*bf++ && n > 0)
-   80d70:	38401401 	ldrb	w1, [x0], #1
-   80d74:	7100003f 	cmp	w1, #0x0
-   80d78:	7a401a64 	ccmp	w19, #0x0, #0x4, ne	// ne = any
-   80d7c:	540000cd 	b.le	80d94 <putchw+0x4c>
-   80d80:	38401401 	ldrb	w1, [x0], #1
+   80d10:	38401401 	ldrb	w1, [x0], #1
+   80d14:	7100003f 	cmp	w1, #0x0
+   80d18:	7a401a64 	ccmp	w19, #0x0, #0x4, ne	// ne = any
+   80d1c:	540000cd 	b.le	80d34 <putchw+0x4c>
+   80d20:	38401401 	ldrb	w1, [x0], #1
         n--;
-   80d84:	51000673 	sub	w19, w19, #0x1
+   80d24:	51000673 	sub	w19, w19, #0x1
     while (*bf++ && n > 0)
-   80d88:	7100003f 	cmp	w1, #0x0
-   80d8c:	7a401a64 	ccmp	w19, #0x0, #0x4, ne	// ne = any
-   80d90:	54ffff8c 	b.gt	80d80 <putchw+0x38>
+   80d28:	7100003f 	cmp	w1, #0x0
+   80d2c:	7a401a64 	ccmp	w19, #0x0, #0x4, ne	// ne = any
+   80d30:	54ffff8c 	b.gt	80d20 <putchw+0x38>
     if (p->sign)
-   80d94:	394022e1 	ldrb	w1, [x23, #8]
+   80d34:	394022e1 	ldrb	w1, [x23, #8]
         n--;
     if (p->alt && p->base == 16)
-   80d98:	394002e0 	ldrb	w0, [x23]
+   80d38:	394002e0 	ldrb	w0, [x23]
         n--;
-   80d9c:	7100003f 	cmp	w1, #0x0
-   80da0:	1a9f07e2 	cset	w2, ne	// ne = any
-   80da4:	4b020273 	sub	w19, w19, w2
+   80d3c:	7100003f 	cmp	w1, #0x0
+   80d40:	1a9f07e2 	cset	w2, ne	// ne = any
+   80d44:	4b020273 	sub	w19, w19, w2
     if (p->alt && p->base == 16)
-   80da8:	360800e0 	tbz	w0, #1, 80dc4 <putchw+0x7c>
-   80dac:	b9400ee2 	ldr	w2, [x23, #12]
-   80db0:	7100405f 	cmp	w2, #0x10
-   80db4:	54000a80 	b.eq	80f04 <putchw+0x1bc>  // b.none
+   80d48:	360800e0 	tbz	w0, #1, 80d64 <putchw+0x7c>
+   80d4c:	b9400ee2 	ldr	w2, [x23, #12]
+   80d50:	7100405f 	cmp	w2, #0x10
+   80d54:	54000a80 	b.eq	80ea4 <putchw+0x1bc>  // b.none
         n -= 2;
     else if (p->alt && p->base == 8)
         n--;
-   80db8:	7100205f 	cmp	w2, #0x8
-   80dbc:	1a9f17e2 	cset	w2, eq	// eq = none
-   80dc0:	4b020273 	sub	w19, w19, w2
+   80d58:	7100205f 	cmp	w2, #0x8
+   80d5c:	1a9f17e2 	cset	w2, eq	// eq = none
+   80d60:	4b020273 	sub	w19, w19, w2
 
     /* Fill with space to align to the right, before alternate or sign */
     if (!p->lz && !p->align_left) {
-   80dc4:	52800122 	mov	w2, #0x9                   	// #9
-   80dc8:	6a02001f 	tst	w0, w2
-   80dcc:	54000181 	b.ne	80dfc <putchw+0xb4>  // b.any
+   80d64:	52800122 	mov	w2, #0x9                   	// #9
+   80d68:	6a02001f 	tst	w0, w2
+   80d6c:	54000181 	b.ne	80d9c <putchw+0xb4>  // b.any
         while (n-- > 0)
-   80dd0:	7100027f 	cmp	w19, #0x0
-   80dd4:	51000673 	sub	w19, w19, #0x1
-   80dd8:	5400012d 	b.le	80dfc <putchw+0xb4>
-   80ddc:	d503201f 	nop
-   80de0:	51000673 	sub	w19, w19, #0x1
+   80d70:	7100027f 	cmp	w19, #0x0
+   80d74:	51000673 	sub	w19, w19, #0x1
+   80d78:	5400012d 	b.le	80d9c <putchw+0xb4>
+   80d7c:	d503201f 	nop
+   80d80:	51000673 	sub	w19, w19, #0x1
             putf(putp, ' ');
-   80de4:	aa1403e0 	mov	x0, x20
-   80de8:	52800401 	mov	w1, #0x20                  	// #32
-   80dec:	d63f02a0 	blr	x21
+   80d84:	aa1403e0 	mov	x0, x20
+   80d88:	52800401 	mov	w1, #0x20                  	// #32
+   80d8c:	d63f02a0 	blr	x21
         while (n-- > 0)
-   80df0:	3100067f 	cmn	w19, #0x1
-   80df4:	54ffff61 	b.ne	80de0 <putchw+0x98>  // b.any
-   80df8:	394022e1 	ldrb	w1, [x23, #8]
+   80d90:	3100067f 	cmn	w19, #0x1
+   80d94:	54ffff61 	b.ne	80d80 <putchw+0x98>  // b.any
+   80d98:	394022e1 	ldrb	w1, [x23, #8]
     }
 
     /* print sign */
     if (p->sign)
-   80dfc:	34000061 	cbz	w1, 80e08 <putchw+0xc0>
+   80d9c:	34000061 	cbz	w1, 80da8 <putchw+0xc0>
         putf(putp, p->sign);
-   80e00:	aa1403e0 	mov	x0, x20
-   80e04:	d63f02a0 	blr	x21
+   80da0:	aa1403e0 	mov	x0, x20
+   80da4:	d63f02a0 	blr	x21
 
     /* Alternate */
     if (p->alt && p->base == 16) {
-   80e08:	394002e0 	ldrb	w0, [x23]
-   80e0c:	360800c0 	tbz	w0, #1, 80e24 <putchw+0xdc>
-   80e10:	b9400ee1 	ldr	w1, [x23, #12]
-   80e14:	7100403f 	cmp	w1, #0x10
-   80e18:	540005e0 	b.eq	80ed4 <putchw+0x18c>  // b.none
+   80da8:	394002e0 	ldrb	w0, [x23]
+   80dac:	360800c0 	tbz	w0, #1, 80dc4 <putchw+0xdc>
+   80db0:	b9400ee1 	ldr	w1, [x23, #12]
+   80db4:	7100403f 	cmp	w1, #0x10
+   80db8:	540005e0 	b.eq	80e74 <putchw+0x18c>  // b.none
         putf(putp, '0');
         putf(putp, (p->uc ? 'X' : 'x'));
     } else if (p->alt && p->base == 8) {
-   80e1c:	7100203f 	cmp	w1, #0x8
-   80e20:	54000760 	b.eq	80f0c <putchw+0x1c4>  // b.none
+   80dbc:	7100203f 	cmp	w1, #0x8
+   80dc0:	54000760 	b.eq	80eac <putchw+0x1c4>  // b.none
         putf(putp, '0');
     }
 
     /* Fill with zeros, after alternate or sign */
     if (p->lz) {
-   80e24:	36000160 	tbz	w0, #0, 80e50 <putchw+0x108>
+   80dc4:	36000160 	tbz	w0, #0, 80df0 <putchw+0x108>
         while (n-- > 0)
-   80e28:	7100027f 	cmp	w19, #0x0
-   80e2c:	51000673 	sub	w19, w19, #0x1
-   80e30:	5400010d 	b.le	80e50 <putchw+0x108>
-   80e34:	d503201f 	nop
-   80e38:	51000673 	sub	w19, w19, #0x1
+   80dc8:	7100027f 	cmp	w19, #0x0
+   80dcc:	51000673 	sub	w19, w19, #0x1
+   80dd0:	5400010d 	b.le	80df0 <putchw+0x108>
+   80dd4:	d503201f 	nop
+   80dd8:	51000673 	sub	w19, w19, #0x1
             putf(putp, '0');
-   80e3c:	aa1403e0 	mov	x0, x20
-   80e40:	52800601 	mov	w1, #0x30                  	// #48
-   80e44:	d63f02a0 	blr	x21
+   80ddc:	aa1403e0 	mov	x0, x20
+   80de0:	52800601 	mov	w1, #0x30                  	// #48
+   80de4:	d63f02a0 	blr	x21
         while (n-- > 0)
-   80e48:	3100067f 	cmn	w19, #0x1
-   80e4c:	54ffff61 	b.ne	80e38 <putchw+0xf0>  // b.any
+   80de8:	3100067f 	cmn	w19, #0x1
+   80dec:	54ffff61 	b.ne	80dd8 <putchw+0xf0>  // b.any
     }
 
     /* Put actual buffer */
     bf = p->bf;
     while ((ch = *bf++))
-   80e50:	f9400af6 	ldr	x22, [x23, #16]
-   80e54:	384016c1 	ldrb	w1, [x22], #1
-   80e58:	340000c1 	cbz	w1, 80e70 <putchw+0x128>
-   80e5c:	d503201f 	nop
+   80df0:	f9400af6 	ldr	x22, [x23, #16]
+   80df4:	384016c1 	ldrb	w1, [x22], #1
+   80df8:	340000c1 	cbz	w1, 80e10 <putchw+0x128>
+   80dfc:	d503201f 	nop
         putf(putp, ch);
-   80e60:	aa1403e0 	mov	x0, x20
-   80e64:	d63f02a0 	blr	x21
+   80e00:	aa1403e0 	mov	x0, x20
+   80e04:	d63f02a0 	blr	x21
     while ((ch = *bf++))
-   80e68:	384016c1 	ldrb	w1, [x22], #1
-   80e6c:	35ffffa1 	cbnz	w1, 80e60 <putchw+0x118>
+   80e08:	384016c1 	ldrb	w1, [x22], #1
+   80e0c:	35ffffa1 	cbnz	w1, 80e00 <putchw+0x118>
 
     /* Fill with space to align to the left, after string */
     if (!p->lz && p->align_left) {
-   80e70:	394002e1 	ldrb	w1, [x23]
-   80e74:	52800120 	mov	w0, #0x9                   	// #9
-   80e78:	0a010000 	and	w0, w0, w1
-   80e7c:	7100201f 	cmp	w0, #0x8
-   80e80:	540000c0 	b.eq	80e98 <putchw+0x150>  // b.none
+   80e10:	394002e1 	ldrb	w1, [x23]
+   80e14:	52800120 	mov	w0, #0x9                   	// #9
+   80e18:	0a010000 	and	w0, w0, w1
+   80e1c:	7100201f 	cmp	w0, #0x8
+   80e20:	540000c0 	b.eq	80e38 <putchw+0x150>  // b.none
         while (n-- > 0)
             putf(putp, ' ');
     }
 }
-   80e84:	a94153f3 	ldp	x19, x20, [sp, #16]
-   80e88:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   80e8c:	f9401bf7 	ldr	x23, [sp, #48]
-   80e90:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   80e94:	d65f03c0 	ret
+   80e24:	a94153f3 	ldp	x19, x20, [sp, #16]
+   80e28:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   80e2c:	f9401bf7 	ldr	x23, [sp, #48]
+   80e30:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   80e34:	d65f03c0 	ret
         while (n-- > 0)
-   80e98:	7100027f 	cmp	w19, #0x0
-   80e9c:	51000673 	sub	w19, w19, #0x1
-   80ea0:	54ffff2d 	b.le	80e84 <putchw+0x13c>
-   80ea4:	d503201f 	nop
-   80ea8:	51000673 	sub	w19, w19, #0x1
+   80e38:	7100027f 	cmp	w19, #0x0
+   80e3c:	51000673 	sub	w19, w19, #0x1
+   80e40:	54ffff2d 	b.le	80e24 <putchw+0x13c>
+   80e44:	d503201f 	nop
+   80e48:	51000673 	sub	w19, w19, #0x1
             putf(putp, ' ');
-   80eac:	aa1403e0 	mov	x0, x20
-   80eb0:	52800401 	mov	w1, #0x20                  	// #32
-   80eb4:	d63f02a0 	blr	x21
+   80e4c:	aa1403e0 	mov	x0, x20
+   80e50:	52800401 	mov	w1, #0x20                  	// #32
+   80e54:	d63f02a0 	blr	x21
         while (n-- > 0)
-   80eb8:	3100067f 	cmn	w19, #0x1
-   80ebc:	54ffff61 	b.ne	80ea8 <putchw+0x160>  // b.any
+   80e58:	3100067f 	cmn	w19, #0x1
+   80e5c:	54ffff61 	b.ne	80e48 <putchw+0x160>  // b.any
 }
-   80ec0:	a94153f3 	ldp	x19, x20, [sp, #16]
-   80ec4:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   80ec8:	f9401bf7 	ldr	x23, [sp, #48]
-   80ecc:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   80ed0:	d65f03c0 	ret
+   80e60:	a94153f3 	ldp	x19, x20, [sp, #16]
+   80e64:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   80e68:	f9401bf7 	ldr	x23, [sp, #48]
+   80e6c:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   80e70:	d65f03c0 	ret
         putf(putp, '0');
-   80ed4:	aa1403e0 	mov	x0, x20
-   80ed8:	52800601 	mov	w1, #0x30                  	// #48
-   80edc:	d63f02a0 	blr	x21
+   80e74:	aa1403e0 	mov	x0, x20
+   80e78:	52800601 	mov	w1, #0x30                  	// #48
+   80e7c:	d63f02a0 	blr	x21
         putf(putp, (p->uc ? 'X' : 'x'));
-   80ee0:	394002e3 	ldrb	w3, [x23]
-   80ee4:	52800b02 	mov	w2, #0x58                  	// #88
-   80ee8:	aa1403e0 	mov	x0, x20
-   80eec:	52800f01 	mov	w1, #0x78                  	// #120
-   80ef0:	f27e007f 	tst	x3, #0x4
-   80ef4:	1a811041 	csel	w1, w2, w1, ne	// ne = any
-   80ef8:	d63f02a0 	blr	x21
-   80efc:	394002e0 	ldrb	w0, [x23]
-   80f00:	17ffffc9 	b	80e24 <putchw+0xdc>
+   80e80:	394002e3 	ldrb	w3, [x23]
+   80e84:	52800b02 	mov	w2, #0x58                  	// #88
+   80e88:	aa1403e0 	mov	x0, x20
+   80e8c:	52800f01 	mov	w1, #0x78                  	// #120
+   80e90:	f27e007f 	tst	x3, #0x4
+   80e94:	1a811041 	csel	w1, w2, w1, ne	// ne = any
+   80e98:	d63f02a0 	blr	x21
+   80e9c:	394002e0 	ldrb	w0, [x23]
+   80ea0:	17ffffc9 	b	80dc4 <putchw+0xdc>
         n -= 2;
-   80f04:	51000a73 	sub	w19, w19, #0x2
-   80f08:	17ffffaf 	b	80dc4 <putchw+0x7c>
+   80ea4:	51000a73 	sub	w19, w19, #0x2
+   80ea8:	17ffffaf 	b	80d64 <putchw+0x7c>
         putf(putp, '0');
-   80f0c:	aa1403e0 	mov	x0, x20
-   80f10:	52800601 	mov	w1, #0x30                  	// #48
-   80f14:	d63f02a0 	blr	x21
-   80f18:	394002e0 	ldrb	w0, [x23]
-   80f1c:	17ffffc2 	b	80e24 <putchw+0xdc>
+   80eac:	aa1403e0 	mov	x0, x20
+   80eb0:	52800601 	mov	w1, #0x30                  	// #48
+   80eb4:	d63f02a0 	blr	x21
+   80eb8:	394002e0 	ldrb	w0, [x23]
+   80ebc:	17ffffc2 	b	80dc4 <putchw+0xdc>
 
-0000000000080f20 <_vsnprintf_putcf>:
+0000000000080ec0 <_vsnprintf_putcf>:
 };
 
 static void _vsnprintf_putcf(void *p, char c)
 {
   struct _vsnprintf_putcf_data *data = (struct _vsnprintf_putcf_data*)p;
   if (data->num_chars < data->dest_capacity)
-   80f20:	f9400003 	ldr	x3, [x0]
+   80ec0:	f9400003 	ldr	x3, [x0]
 {
-   80f24:	12001c21 	and	w1, w1, #0xff
+   80ec4:	12001c21 	and	w1, w1, #0xff
   if (data->num_chars < data->dest_capacity)
-   80f28:	f9400802 	ldr	x2, [x0, #16]
-   80f2c:	eb03005f 	cmp	x2, x3
-   80f30:	54000082 	b.cs	80f40 <_vsnprintf_putcf+0x20>  // b.hs, b.nlast
+   80ec8:	f9400802 	ldr	x2, [x0, #16]
+   80ecc:	eb03005f 	cmp	x2, x3
+   80ed0:	54000082 	b.cs	80ee0 <_vsnprintf_putcf+0x20>  // b.hs, b.nlast
     data->dest[data->num_chars] = c;
-   80f34:	f9400403 	ldr	x3, [x0, #8]
-   80f38:	38226861 	strb	w1, [x3, x2]
-   80f3c:	f9400802 	ldr	x2, [x0, #16]
+   80ed4:	f9400403 	ldr	x3, [x0, #8]
+   80ed8:	38226861 	strb	w1, [x3, x2]
+   80edc:	f9400802 	ldr	x2, [x0, #16]
   data->num_chars ++;
-   80f40:	91000442 	add	x2, x2, #0x1
-   80f44:	f9000802 	str	x2, [x0, #16]
+   80ee0:	91000442 	add	x2, x2, #0x1
+   80ee4:	f9000802 	str	x2, [x0, #16]
 }
-   80f48:	d65f03c0 	ret
-   80f4c:	d503201f 	nop
+   80ee8:	d65f03c0 	ret
+   80eec:	d503201f 	nop
 
-0000000000080f50 <_vsprintf_putcf>:
+0000000000080ef0 <_vsprintf_putcf>:
 };
 
 static void _vsprintf_putcf(void *p, char c)
 {
   struct _vsprintf_putcf_data *data = (struct _vsprintf_putcf_data*)p;
   data->dest[data->num_chars++] = c;
-   80f50:	a9400803 	ldp	x3, x2, [x0]
-   80f54:	91000444 	add	x4, x2, #0x1
-   80f58:	f9000404 	str	x4, [x0, #8]
-   80f5c:	38226861 	strb	w1, [x3, x2]
+   80ef0:	a9400803 	ldp	x3, x2, [x0]
+   80ef4:	91000444 	add	x4, x2, #0x1
+   80ef8:	f9000404 	str	x4, [x0, #8]
+   80efc:	38226861 	strb	w1, [x3, x2]
 }
-   80f60:	d65f03c0 	ret
-   80f64:	d503201f 	nop
+   80f00:	d65f03c0 	ret
+   80f04:	d503201f 	nop
 
-0000000000080f68 <tfp_format>:
+0000000000080f08 <tfp_format>:
 {
-   80f68:	a9b67bfd 	stp	x29, x30, [sp, #-160]!
-   80f6c:	910003fd 	mov	x29, sp
-   80f70:	a90573fb 	stp	x27, x28, [sp, #80]
+   80f08:	a9b67bfd 	stp	x29, x30, [sp, #-160]!
+   80f0c:	910003fd 	mov	x29, sp
+   80f10:	a90573fb 	stp	x27, x28, [sp, #80]
     while ((ch = *(fmt++))) {
-   80f74:	aa0203fb 	mov	x27, x2
+   80f14:	aa0203fb 	mov	x27, x2
 {
-   80f78:	a90153f3 	stp	x19, x20, [sp, #16]
-   80f7c:	aa0103f4 	mov	x20, x1
-   80f80:	aa0003f3 	mov	x19, x0
-   80f84:	a9025bf5 	stp	x21, x22, [sp, #32]
-   80f88:	b9401876 	ldr	w22, [x3, #24]
-   80f8c:	a9046bf9 	stp	x25, x26, [sp, #64]
+   80f18:	a90153f3 	stp	x19, x20, [sp, #16]
+   80f1c:	aa0103f4 	mov	x20, x1
+   80f20:	aa0003f3 	mov	x19, x0
+   80f24:	a9025bf5 	stp	x21, x22, [sp, #32]
+   80f28:	b9401876 	ldr	w22, [x3, #24]
+   80f2c:	a9046bf9 	stp	x25, x26, [sp, #64]
     p.bf = bf;
-   80f90:	9101c3f9 	add	x25, sp, #0x70
+   80f30:	9101c3f9 	add	x25, sp, #0x70
     while ((ch = *(fmt++))) {
-   80f94:	38401761 	ldrb	w1, [x27], #1
-   80f98:	a9400075 	ldp	x21, x0, [x3]
-   80f9c:	f90037e0 	str	x0, [sp, #104]
+   80f34:	38401761 	ldrb	w1, [x27], #1
+   80f38:	a9400075 	ldp	x21, x0, [x3]
+   80f3c:	f90037e0 	str	x0, [sp, #104]
     p.bf = bf;
-   80fa0:	f9004ff9 	str	x25, [sp, #152]
+   80f40:	f9004ff9 	str	x25, [sp, #152]
     while ((ch = *(fmt++))) {
-   80fa4:	34000a81 	cbz	w1, 810f4 <tfp_format+0x18c>
+   80f44:	34000a81 	cbz	w1, 81094 <tfp_format+0x18c>
                 p.base = 10;
-   80fa8:	5280015a 	mov	w26, #0xa                   	// #10
-   80fac:	a90363f7 	stp	x23, x24, [sp, #48]
+   80f48:	5280015a 	mov	w26, #0xa                   	// #10
+   80f4c:	a90363f7 	stp	x23, x24, [sp, #48]
     ui2a(num, p);
-   80fb0:	910223f7 	add	x23, sp, #0x88
+   80f50:	910223f7 	add	x23, sp, #0x88
             p.lz = 0;
-   80fb4:	12800178 	mov	w24, #0xfffffff4            	// #-12
-   80fb8:	14000008 	b	80fd8 <tfp_format+0x70>
+   80f54:	12800178 	mov	w24, #0xfffffff4            	// #-12
+   80f58:	14000008 	b	80f78 <tfp_format+0x70>
             putf(putp, ch);
-   80fbc:	aa1303e0 	mov	x0, x19
-   80fc0:	d63f0280 	blr	x20
-   80fc4:	aa1c03e0 	mov	x0, x28
-   80fc8:	aa1b03fc 	mov	x28, x27
-   80fcc:	aa0003fb 	mov	x27, x0
+   80f5c:	aa1303e0 	mov	x0, x19
+   80f60:	d63f0280 	blr	x20
+   80f64:	aa1c03e0 	mov	x0, x28
+   80f68:	aa1b03fc 	mov	x28, x27
+   80f6c:	aa0003fb 	mov	x27, x0
     while ((ch = *(fmt++))) {
-   80fd0:	39400381 	ldrb	w1, [x28]
-   80fd4:	340008e1 	cbz	w1, 810f0 <tfp_format+0x188>
+   80f70:	39400381 	ldrb	w1, [x28]
+   80f74:	340008e1 	cbz	w1, 81090 <tfp_format+0x188>
         if (ch != '%') {
-   80fd8:	7100943f 	cmp	w1, #0x25
-   80fdc:	9100077c 	add	x28, x27, #0x1
-   80fe0:	54fffee1 	b.ne	80fbc <tfp_format+0x54>  // b.any
+   80f78:	7100943f 	cmp	w1, #0x25
+   80f7c:	9100077c 	add	x28, x27, #0x1
+   80f80:	54fffee1 	b.ne	80f5c <tfp_format+0x54>  // b.any
             p.lz = 0;
-   80fe4:	394223e0 	ldrb	w0, [sp, #136]
+   80f84:	394223e0 	ldrb	w0, [sp, #136]
             while ((ch = *(fmt++))) {
-   80fe8:	39400363 	ldrb	w3, [x27]
+   80f88:	39400363 	ldrb	w3, [x27]
             p.lz = 0;
-   80fec:	0a180000 	and	w0, w0, w24
-   80ff0:	390223e0 	strb	w0, [sp, #136]
+   80f8c:	0a180000 	and	w0, w0, w24
+   80f90:	390223e0 	strb	w0, [sp, #136]
             p.width = 0;
-   80ff4:	b9008fff 	str	wzr, [sp, #140]
+   80f94:	b9008fff 	str	wzr, [sp, #140]
             p.sign = 0;
-   80ff8:	390243ff 	strb	wzr, [sp, #144]
+   80f98:	390243ff 	strb	wzr, [sp, #144]
             while ((ch = *(fmt++))) {
-   80ffc:	340007a3 	cbz	w3, 810f0 <tfp_format+0x188>
-   81000:	52800002 	mov	w2, #0x0                   	// #0
-   81004:	52800001 	mov	w1, #0x0                   	// #0
-   81008:	52800000 	mov	w0, #0x0                   	// #0
+   80f9c:	340007a3 	cbz	w3, 81090 <tfp_format+0x188>
+   80fa0:	52800002 	mov	w2, #0x0                   	// #0
+   80fa4:	52800001 	mov	w1, #0x0                   	// #0
+   80fa8:	52800000 	mov	w0, #0x0                   	// #0
                 switch (ch) {
-   8100c:	7100b47f 	cmp	w3, #0x2d
-   81010:	54000f00 	b.eq	811f0 <tfp_format+0x288>  // b.none
-   81014:	7100c07f 	cmp	w3, #0x30
-   81018:	540009e0 	b.eq	81154 <tfp_format+0x1ec>  // b.none
-   8101c:	71008c7f 	cmp	w3, #0x23
-   81020:	54000760 	b.eq	8110c <tfp_format+0x1a4>  // b.none
-   81024:	34000080 	cbz	w0, 81034 <tfp_format+0xcc>
-   81028:	394223e0 	ldrb	w0, [sp, #136]
-   8102c:	321d0000 	orr	w0, w0, #0x8
-   81030:	390223e0 	strb	w0, [sp, #136]
-   81034:	34000081 	cbz	w1, 81044 <tfp_format+0xdc>
-   81038:	394223e0 	ldrb	w0, [sp, #136]
-   8103c:	32000000 	orr	w0, w0, #0x1
-   81040:	390223e0 	strb	w0, [sp, #136]
-   81044:	34000082 	cbz	w2, 81054 <tfp_format+0xec>
-   81048:	394223e0 	ldrb	w0, [sp, #136]
-   8104c:	321f0000 	orr	w0, w0, #0x2
-   81050:	390223e0 	strb	w0, [sp, #136]
+   80fac:	7100b47f 	cmp	w3, #0x2d
+   80fb0:	54000f00 	b.eq	81190 <tfp_format+0x288>  // b.none
+   80fb4:	7100c07f 	cmp	w3, #0x30
+   80fb8:	540009e0 	b.eq	810f4 <tfp_format+0x1ec>  // b.none
+   80fbc:	71008c7f 	cmp	w3, #0x23
+   80fc0:	54000760 	b.eq	810ac <tfp_format+0x1a4>  // b.none
+   80fc4:	34000080 	cbz	w0, 80fd4 <tfp_format+0xcc>
+   80fc8:	394223e0 	ldrb	w0, [sp, #136]
+   80fcc:	321d0000 	orr	w0, w0, #0x8
+   80fd0:	390223e0 	strb	w0, [sp, #136]
+   80fd4:	34000081 	cbz	w1, 80fe4 <tfp_format+0xdc>
+   80fd8:	394223e0 	ldrb	w0, [sp, #136]
+   80fdc:	32000000 	orr	w0, w0, #0x1
+   80fe0:	390223e0 	strb	w0, [sp, #136]
+   80fe4:	34000082 	cbz	w2, 80ff4 <tfp_format+0xec>
+   80fe8:	394223e0 	ldrb	w0, [sp, #136]
+   80fec:	321f0000 	orr	w0, w0, #0x2
+   80ff0:	390223e0 	strb	w0, [sp, #136]
             if (ch >= '0' && ch <= '9') {
-   81054:	5100c066 	sub	w6, w3, #0x30
-   81058:	12001cc0 	and	w0, w6, #0xff
-   8105c:	7100241f 	cmp	w0, #0x9
-   81060:	54001209 	b.ls	812a0 <tfp_format+0x338>  // b.plast
+   80ff4:	5100c066 	sub	w6, w3, #0x30
+   80ff8:	12001cc0 	and	w0, w6, #0xff
+   80ffc:	7100241f 	cmp	w0, #0x9
+   81000:	54001209 	b.ls	81240 <tfp_format+0x338>  // b.plast
             if (ch == '.') {
-   81064:	7100b87f 	cmp	w3, #0x2e
-   81068:	54001540 	b.eq	81310 <tfp_format+0x3a8>  // b.none
+   81004:	7100b87f 	cmp	w3, #0x2e
+   81008:	54001540 	b.eq	812b0 <tfp_format+0x3a8>  // b.none
             if (ch == 'z') {
-   8106c:	7101e87f 	cmp	w3, #0x7a
-   81070:	540010e0 	b.eq	8128c <tfp_format+0x324>  // b.none
+   8100c:	7101e87f 	cmp	w3, #0x7a
+   81010:	540010e0 	b.eq	8122c <tfp_format+0x324>  // b.none
             if (ch == 'l') {
-   81074:	7101b07f 	cmp	w3, #0x6c
-   81078:	54001600 	b.eq	81338 <tfp_format+0x3d0>  // b.none
+   81014:	7101b07f 	cmp	w3, #0x6c
+   81018:	54001600 	b.eq	812d8 <tfp_format+0x3d0>  // b.none
             switch (ch) {
-   8107c:	7101a47f 	cmp	w3, #0x69
-   81080:	54002640 	b.eq	81548 <tfp_format+0x5e0>  // b.none
+   8101c:	7101a47f 	cmp	w3, #0x69
+   81020:	54002640 	b.eq	814e8 <tfp_format+0x5e0>  // b.none
             char lng = 0;  /* 1 for long, 2 for long long */
-   81084:	52800000 	mov	w0, #0x0                   	// #0
+   81024:	52800000 	mov	w0, #0x0                   	// #0
             switch (ch) {
-   81088:	7101a47f 	cmp	w3, #0x69
-   8108c:	54000b69 	b.ls	811f8 <tfp_format+0x290>  // b.plast
-   81090:	7101cc7f 	cmp	w3, #0x73
-   81094:	540017e0 	b.eq	81390 <tfp_format+0x428>  // b.none
-   81098:	54000889 	b.ls	811a8 <tfp_format+0x240>  // b.plast
-   8109c:	7101d47f 	cmp	w3, #0x75
-   810a0:	540005e1 	b.ne	8115c <tfp_format+0x1f4>  // b.any
+   81028:	7101a47f 	cmp	w3, #0x69
+   8102c:	54000b69 	b.ls	81198 <tfp_format+0x290>  // b.plast
+   81030:	7101cc7f 	cmp	w3, #0x73
+   81034:	540017e0 	b.eq	81330 <tfp_format+0x428>  // b.none
+   81038:	54000889 	b.ls	81148 <tfp_format+0x240>  // b.plast
+   8103c:	7101d47f 	cmp	w3, #0x75
+   81040:	540005e1 	b.ne	810fc <tfp_format+0x1f4>  // b.any
                 p.base = 10;
-   810a4:	b90097fa 	str	w26, [sp, #148]
+   81044:	b90097fa 	str	w26, [sp, #148]
                 if (2 == lng)
-   810a8:	7100081f 	cmp	w0, #0x2
-   810ac:	540006e0 	b.eq	81188 <tfp_format+0x220>  // b.none
+   81048:	7100081f 	cmp	w0, #0x2
+   8104c:	540006e0 	b.eq	81128 <tfp_format+0x220>  // b.none
                   if (1 == lng)
-   810b0:	7100041f 	cmp	w0, #0x1
-   810b4:	540008e0 	b.eq	811d0 <tfp_format+0x268>  // b.none
+   81050:	7100041f 	cmp	w0, #0x1
+   81054:	540008e0 	b.eq	81170 <tfp_format+0x268>  // b.none
                     ui2a(va_arg(va, unsigned int), &p);
-   810b8:	37f81c36 	tbnz	w22, #31, 8143c <tfp_format+0x4d4>
-   810bc:	91002ea1 	add	x1, x21, #0xb
-   810c0:	aa1503e0 	mov	x0, x21
-   810c4:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   810c8:	b9400000 	ldr	w0, [x0]
-   810cc:	aa1703e1 	mov	x1, x23
-   810d0:	97fffeec 	bl	80c80 <ui2a>
+   81058:	37f81c36 	tbnz	w22, #31, 813dc <tfp_format+0x4d4>
+   8105c:	91002ea1 	add	x1, x21, #0xb
+   81060:	aa1503e0 	mov	x0, x21
+   81064:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81068:	b9400000 	ldr	w0, [x0]
+   8106c:	aa1703e1 	mov	x1, x23
+   81070:	97fffeec 	bl	80c20 <ui2a>
                 putchw(putp, putf, &p);
-   810d4:	aa1403e1 	mov	x1, x20
-   810d8:	aa1703e2 	mov	x2, x23
-   810dc:	aa1303e0 	mov	x0, x19
-   810e0:	97ffff1a 	bl	80d48 <putchw>
+   81074:	aa1403e1 	mov	x1, x20
+   81078:	aa1703e2 	mov	x2, x23
+   8107c:	aa1303e0 	mov	x0, x19
+   81080:	97ffff1a 	bl	80ce8 <putchw>
     while ((ch = *(fmt++))) {
-   810e4:	39400381 	ldrb	w1, [x28]
-   810e8:	9100079b 	add	x27, x28, #0x1
-   810ec:	35fff761 	cbnz	w1, 80fd8 <tfp_format+0x70>
-   810f0:	a94363f7 	ldp	x23, x24, [sp, #48]
+   81084:	39400381 	ldrb	w1, [x28]
+   81088:	9100079b 	add	x27, x28, #0x1
+   8108c:	35fff761 	cbnz	w1, 80f78 <tfp_format+0x70>
+   81090:	a94363f7 	ldp	x23, x24, [sp, #48]
 }
-   810f4:	a94153f3 	ldp	x19, x20, [sp, #16]
-   810f8:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   810fc:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   81100:	a94573fb 	ldp	x27, x28, [sp, #80]
-   81104:	a8ca7bfd 	ldp	x29, x30, [sp], #160
-   81108:	d65f03c0 	ret
+   81094:	a94153f3 	ldp	x19, x20, [sp, #16]
+   81098:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   8109c:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   810a0:	a94573fb 	ldp	x27, x28, [sp, #80]
+   810a4:	a8ca7bfd 	ldp	x29, x30, [sp], #160
+   810a8:	d65f03c0 	ret
                     p.alt = 1;
-   8110c:	52800022 	mov	w2, #0x1                   	// #1
+   810ac:	52800022 	mov	w2, #0x1                   	// #1
             while ((ch = *(fmt++))) {
-   81110:	38401783 	ldrb	w3, [x28], #1
-   81114:	35fff7c3 	cbnz	w3, 8100c <tfp_format+0xa4>
-   81118:	34000080 	cbz	w0, 81128 <tfp_format+0x1c0>
-   8111c:	394223e0 	ldrb	w0, [sp, #136]
-   81120:	321d0000 	orr	w0, w0, #0x8
-   81124:	390223e0 	strb	w0, [sp, #136]
-   81128:	34fffe41 	cbz	w1, 810f0 <tfp_format+0x188>
-   8112c:	394223e0 	ldrb	w0, [sp, #136]
+   810b0:	38401783 	ldrb	w3, [x28], #1
+   810b4:	35fff7c3 	cbnz	w3, 80fac <tfp_format+0xa4>
+   810b8:	34000080 	cbz	w0, 810c8 <tfp_format+0x1c0>
+   810bc:	394223e0 	ldrb	w0, [sp, #136]
+   810c0:	321d0000 	orr	w0, w0, #0x8
+   810c4:	390223e0 	strb	w0, [sp, #136]
+   810c8:	34fffe41 	cbz	w1, 81090 <tfp_format+0x188>
+   810cc:	394223e0 	ldrb	w0, [sp, #136]
 }
-   81130:	a94153f3 	ldp	x19, x20, [sp, #16]
-   81134:	32000000 	orr	w0, w0, #0x1
-   81138:	390223e0 	strb	w0, [sp, #136]
-   8113c:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   81140:	a94363f7 	ldp	x23, x24, [sp, #48]
-   81144:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   81148:	a94573fb 	ldp	x27, x28, [sp, #80]
-   8114c:	a8ca7bfd 	ldp	x29, x30, [sp], #160
-   81150:	d65f03c0 	ret
+   810d0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   810d4:	32000000 	orr	w0, w0, #0x1
+   810d8:	390223e0 	strb	w0, [sp, #136]
+   810dc:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   810e0:	a94363f7 	ldp	x23, x24, [sp, #48]
+   810e4:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   810e8:	a94573fb 	ldp	x27, x28, [sp, #80]
+   810ec:	a8ca7bfd 	ldp	x29, x30, [sp], #160
+   810f0:	d65f03c0 	ret
                     p.lz = 1;
-   81154:	52800021 	mov	w1, #0x1                   	// #1
-   81158:	17ffffee 	b	81110 <tfp_format+0x1a8>
+   810f4:	52800021 	mov	w1, #0x1                   	// #1
+   810f8:	17ffffee 	b	810b0 <tfp_format+0x1a8>
             switch (ch) {
-   8115c:	7101e07f 	cmp	w3, #0x78
-   81160:	54000f61 	b.ne	8134c <tfp_format+0x3e4>  // b.any
+   810fc:	7101e07f 	cmp	w3, #0x78
+   81100:	54000f61 	b.ne	812ec <tfp_format+0x3e4>  // b.any
                 p.uc = (ch == 'X')?1:0;
-   81164:	7101607f 	cmp	w3, #0x58
-   81168:	394223e1 	ldrb	w1, [sp, #136]
-   8116c:	1a9f17e2 	cset	w2, eq	// eq = none
+   81104:	7101607f 	cmp	w3, #0x58
+   81108:	394223e1 	ldrb	w1, [sp, #136]
+   8110c:	1a9f17e2 	cset	w2, eq	// eq = none
                 p.base = 16;
-   81170:	52800203 	mov	w3, #0x10                  	// #16
-   81174:	b90097e3 	str	w3, [sp, #148]
+   81110:	52800203 	mov	w3, #0x10                  	// #16
+   81114:	b90097e3 	str	w3, [sp, #148]
                 if (2 == lng)
-   81178:	7100081f 	cmp	w0, #0x2
+   81118:	7100081f 	cmp	w0, #0x2
                 p.uc = (ch == 'X')?1:0;
-   8117c:	331e0041 	bfi	w1, w2, #2, #1
-   81180:	390223e1 	strb	w1, [sp, #136]
+   8111c:	331e0041 	bfi	w1, w2, #2, #1
+   81120:	390223e1 	strb	w1, [sp, #136]
                 if (2 == lng)
-   81184:	54fff961 	b.ne	810b0 <tfp_format+0x148>  // b.any
+   81124:	54fff961 	b.ne	81050 <tfp_format+0x148>  // b.any
                     ulli2a(va_arg(va, unsigned long long int), &p);
-   81188:	37f81836 	tbnz	w22, #31, 8148c <tfp_format+0x524>
-   8118c:	91003ea1 	add	x1, x21, #0xf
-   81190:	aa1503e0 	mov	x0, x21
-   81194:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   81198:	f9400000 	ldr	x0, [x0]
-   8119c:	aa1703e1 	mov	x1, x23
-   811a0:	97fffe50 	bl	80ae0 <ulli2a>
-   811a4:	17ffffcc 	b	810d4 <tfp_format+0x16c>
+   81128:	37f81836 	tbnz	w22, #31, 8142c <tfp_format+0x524>
+   8112c:	91003ea1 	add	x1, x21, #0xf
+   81130:	aa1503e0 	mov	x0, x21
+   81134:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81138:	f9400000 	ldr	x0, [x0]
+   8113c:	aa1703e1 	mov	x1, x23
+   81140:	97fffe50 	bl	80a80 <ulli2a>
+   81144:	17ffffcc 	b	81074 <tfp_format+0x16c>
             switch (ch) {
-   811a8:	7101bc7f 	cmp	w3, #0x6f
-   811ac:	54000d40 	b.eq	81354 <tfp_format+0x3ec>  // b.none
-   811b0:	7101c07f 	cmp	w3, #0x70
-   811b4:	54000cc1 	b.ne	8134c <tfp_format+0x3e4>  // b.any
+   81148:	7101bc7f 	cmp	w3, #0x6f
+   8114c:	54000d40 	b.eq	812f4 <tfp_format+0x3ec>  // b.none
+   81150:	7101c07f 	cmp	w3, #0x70
+   81154:	54000cc1 	b.ne	812ec <tfp_format+0x3e4>  // b.any
                 p.alt = 1;
-   811b8:	394223e0 	ldrb	w0, [sp, #136]
+   81158:	394223e0 	ldrb	w0, [sp, #136]
                 p.base = 16;
-   811bc:	52800201 	mov	w1, #0x10                  	// #16
-   811c0:	b90097e1 	str	w1, [sp, #148]
+   8115c:	52800201 	mov	w1, #0x10                  	// #16
+   81160:	b90097e1 	str	w1, [sp, #148]
                 p.alt = 1;
-   811c4:	121d7400 	and	w0, w0, #0xfffffff9
-   811c8:	321f0000 	orr	w0, w0, #0x2
-   811cc:	390223e0 	strb	w0, [sp, #136]
+   81164:	121d7400 	and	w0, w0, #0xfffffff9
+   81168:	321f0000 	orr	w0, w0, #0x2
+   8116c:	390223e0 	strb	w0, [sp, #136]
                     uli2a(va_arg(va, unsigned long int), &p);
-   811d0:	37f81476 	tbnz	w22, #31, 8145c <tfp_format+0x4f4>
-   811d4:	91003ea1 	add	x1, x21, #0xf
-   811d8:	aa1503e0 	mov	x0, x21
-   811dc:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   811e0:	f9400000 	ldr	x0, [x0]
-   811e4:	aa1703e1 	mov	x1, x23
-   811e8:	97fffe72 	bl	80bb0 <uli2a>
-   811ec:	17ffffba 	b	810d4 <tfp_format+0x16c>
+   81170:	37f81476 	tbnz	w22, #31, 813fc <tfp_format+0x4f4>
+   81174:	91003ea1 	add	x1, x21, #0xf
+   81178:	aa1503e0 	mov	x0, x21
+   8117c:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81180:	f9400000 	ldr	x0, [x0]
+   81184:	aa1703e1 	mov	x1, x23
+   81188:	97fffe72 	bl	80b50 <uli2a>
+   8118c:	17ffffba 	b	81074 <tfp_format+0x16c>
                 switch (ch) {
-   811f0:	52800020 	mov	w0, #0x1                   	// #1
-   811f4:	17ffffc7 	b	81110 <tfp_format+0x1a8>
+   81190:	52800020 	mov	w0, #0x1                   	// #1
+   81194:	17ffffc7 	b	810b0 <tfp_format+0x1a8>
             switch (ch) {
-   811f8:	7101607f 	cmp	w3, #0x58
-   811fc:	54fffb40 	b.eq	81164 <tfp_format+0x1fc>  // b.none
-   81200:	54000128 	b.hi	81224 <tfp_format+0x2bc>  // b.pmore
-   81204:	34fff763 	cbz	w3, 810f0 <tfp_format+0x188>
-   81208:	7100947f 	cmp	w3, #0x25
-   8120c:	54000a01 	b.ne	8134c <tfp_format+0x3e4>  // b.any
+   81198:	7101607f 	cmp	w3, #0x58
+   8119c:	54fffb40 	b.eq	81104 <tfp_format+0x1fc>  // b.none
+   811a0:	54000128 	b.hi	811c4 <tfp_format+0x2bc>  // b.pmore
+   811a4:	34fff763 	cbz	w3, 81090 <tfp_format+0x188>
+   811a8:	7100947f 	cmp	w3, #0x25
+   811ac:	54000a01 	b.ne	812ec <tfp_format+0x3e4>  // b.any
                 putf(putp, ch);
-   81210:	9100079b 	add	x27, x28, #0x1
-   81214:	2a0303e1 	mov	w1, w3
-   81218:	aa1303e0 	mov	x0, x19
-   8121c:	d63f0280 	blr	x20
-   81220:	17ffff6c 	b	80fd0 <tfp_format+0x68>
+   811b0:	9100079b 	add	x27, x28, #0x1
+   811b4:	2a0303e1 	mov	w1, w3
+   811b8:	aa1303e0 	mov	x0, x19
+   811bc:	d63f0280 	blr	x20
+   811c0:	17ffff6c 	b	80f70 <tfp_format+0x68>
             switch (ch) {
-   81224:	71018c7f 	cmp	w3, #0x63
-   81228:	54000141 	b.ne	81250 <tfp_format+0x2e8>  // b.any
+   811c4:	71018c7f 	cmp	w3, #0x63
+   811c8:	54000141 	b.ne	811f0 <tfp_format+0x2e8>  // b.any
                 putf(putp, (char)(va_arg(va, int)));
-   8122c:	37f80cd6 	tbnz	w22, #31, 813c4 <tfp_format+0x45c>
-   81230:	91002ea1 	add	x1, x21, #0xb
-   81234:	aa1503e0 	mov	x0, x21
-   81238:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   8123c:	39400001 	ldrb	w1, [x0]
-   81240:	9100079b 	add	x27, x28, #0x1
-   81244:	aa1303e0 	mov	x0, x19
-   81248:	d63f0280 	blr	x20
+   811cc:	37f80cd6 	tbnz	w22, #31, 81364 <tfp_format+0x45c>
+   811d0:	91002ea1 	add	x1, x21, #0xb
+   811d4:	aa1503e0 	mov	x0, x21
+   811d8:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   811dc:	39400001 	ldrb	w1, [x0]
+   811e0:	9100079b 	add	x27, x28, #0x1
+   811e4:	aa1303e0 	mov	x0, x19
+   811e8:	d63f0280 	blr	x20
                 break;
-   8124c:	17ffff61 	b	80fd0 <tfp_format+0x68>
+   811ec:	17ffff61 	b	80f70 <tfp_format+0x68>
             switch (ch) {
-   81250:	7101907f 	cmp	w3, #0x64
-   81254:	540007c1 	b.ne	8134c <tfp_format+0x3e4>  // b.any
+   811f0:	7101907f 	cmp	w3, #0x64
+   811f4:	540007c1 	b.ne	812ec <tfp_format+0x3e4>  // b.any
                 p.base = 10;
-   81258:	b90097fa 	str	w26, [sp, #148]
+   811f8:	b90097fa 	str	w26, [sp, #148]
                 if (2 == lng)
-   8125c:	7100081f 	cmp	w0, #0x2
-   81260:	54001261 	b.ne	814ac <tfp_format+0x544>  // b.any
+   811fc:	7100081f 	cmp	w0, #0x2
+   81200:	54001261 	b.ne	8144c <tfp_format+0x544>  // b.any
                     lli2a(va_arg(va, long long int), &p);
-   81264:	37f81456 	tbnz	w22, #31, 814ec <tfp_format+0x584>
-   81268:	91003ea1 	add	x1, x21, #0xf
-   8126c:	aa1503e0 	mov	x0, x21
-   81270:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   81274:	f9400000 	ldr	x0, [x0]
+   81204:	37f81456 	tbnz	w22, #31, 8148c <tfp_format+0x584>
+   81208:	91003ea1 	add	x1, x21, #0xf
+   8120c:	aa1503e0 	mov	x0, x21
+   81210:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81214:	f9400000 	ldr	x0, [x0]
     if (num < 0) {
-   81278:	b6fff920 	tbz	x0, #63, 8119c <tfp_format+0x234>
+   81218:	b6fff920 	tbz	x0, #63, 8113c <tfp_format+0x234>
         p->sign = '-';
-   8127c:	528005a1 	mov	w1, #0x2d                  	// #45
+   8121c:	528005a1 	mov	w1, #0x2d                  	// #45
         num = -num;
-   81280:	cb0003e0 	neg	x0, x0
+   81220:	cb0003e0 	neg	x0, x0
         p->sign = '-';
-   81284:	390243e1 	strb	w1, [sp, #144]
+   81224:	390243e1 	strb	w1, [sp, #144]
     ulli2a(num, p);
-   81288:	17ffffc5 	b	8119c <tfp_format+0x234>
+   81228:	17ffffc5 	b	8113c <tfp_format+0x234>
                 ch = *(fmt++);
-   8128c:	38401783 	ldrb	w3, [x28], #1
+   8122c:	38401783 	ldrb	w3, [x28], #1
             switch (ch) {
-   81290:	7101a47f 	cmp	w3, #0x69
-   81294:	54001440 	b.eq	8151c <tfp_format+0x5b4>  // b.none
-   81298:	52800020 	mov	w0, #0x1                   	// #1
-   8129c:	17ffff7b 	b	81088 <tfp_format+0x120>
+   81230:	7101a47f 	cmp	w3, #0x69
+   81234:	54001440 	b.eq	814bc <tfp_format+0x5b4>  // b.none
+   81238:	52800020 	mov	w0, #0x1                   	// #1
+   8123c:	17ffff7b 	b	81028 <tfp_format+0x120>
     unsigned int num = 0;
-   812a0:	52800002 	mov	w2, #0x0                   	// #0
-   812a4:	1400000b 	b	812d0 <tfp_format+0x368>
+   81240:	52800002 	mov	w2, #0x0                   	// #0
+   81244:	1400000b 	b	81270 <tfp_format+0x368>
     else if (ch >= 'a' && ch <= 'f')
-   812a8:	7100141f 	cmp	w0, #0x5
-   812ac:	54000269 	b.ls	812f8 <tfp_format+0x390>  // b.plast
+   81248:	7100141f 	cmp	w0, #0x5
+   8124c:	54000269 	b.ls	81298 <tfp_format+0x390>  // b.plast
     else if (ch >= 'A' && ch <= 'F')
-   812b0:	7100143f 	cmp	w1, #0x5
-   812b4:	54000288 	b.hi	81304 <tfp_format+0x39c>  // b.pmore
+   81250:	7100143f 	cmp	w1, #0x5
+   81254:	54000288 	b.hi	812a4 <tfp_format+0x39c>  // b.pmore
         if (digit > base)
-   812b8:	710028bf 	cmp	w5, #0xa
-   812bc:	54000241 	b.ne	81304 <tfp_format+0x39c>  // b.any
+   81258:	710028bf 	cmp	w5, #0xa
+   8125c:	54000241 	b.ne	812a4 <tfp_format+0x39c>  // b.any
         ch = *p++;
-   812c0:	38401783 	ldrb	w3, [x28], #1
+   81260:	38401783 	ldrb	w3, [x28], #1
         num = num * base + digit;
-   812c4:	0b020842 	add	w2, w2, w2, lsl #2
-   812c8:	5100c066 	sub	w6, w3, #0x30
-   812cc:	0b0204a2 	add	w2, w5, w2, lsl #1
+   81264:	0b020842 	add	w2, w2, w2, lsl #2
+   81268:	5100c066 	sub	w6, w3, #0x30
+   8126c:	0b0204a2 	add	w2, w5, w2, lsl #1
     else if (ch >= 'a' && ch <= 'f')
-   812d0:	51018460 	sub	w0, w3, #0x61
+   81270:	51018460 	sub	w0, w3, #0x61
     else if (ch >= 'A' && ch <= 'F')
-   812d4:	51010461 	sub	w1, w3, #0x41
+   81274:	51010461 	sub	w1, w3, #0x41
     if (ch >= '0' && ch <= '9')
-   812d8:	12001cc4 	and	w4, w6, #0xff
+   81278:	12001cc4 	and	w4, w6, #0xff
         return ch - 'A' + 10;
-   812dc:	5100dc65 	sub	w5, w3, #0x37
+   8127c:	5100dc65 	sub	w5, w3, #0x37
     else if (ch >= 'a' && ch <= 'f')
-   812e0:	12001c00 	and	w0, w0, #0xff
+   81280:	12001c00 	and	w0, w0, #0xff
     else if (ch >= 'A' && ch <= 'F')
-   812e4:	12001c21 	and	w1, w1, #0xff
+   81284:	12001c21 	and	w1, w1, #0xff
     if (ch >= '0' && ch <= '9')
-   812e8:	7100249f 	cmp	w4, #0x9
-   812ec:	54fffde8 	b.hi	812a8 <tfp_format+0x340>  // b.pmore
+   81288:	7100249f 	cmp	w4, #0x9
+   8128c:	54fffde8 	b.hi	81248 <tfp_format+0x340>  // b.pmore
         return ch - '0';
-   812f0:	2a0603e5 	mov	w5, w6
+   81290:	2a0603e5 	mov	w5, w6
         if (digit > base)
-   812f4:	17fffff3 	b	812c0 <tfp_format+0x358>
+   81294:	17fffff3 	b	81260 <tfp_format+0x358>
         return ch - 'a' + 10;
-   812f8:	51015c65 	sub	w5, w3, #0x57
+   81298:	51015c65 	sub	w5, w3, #0x57
         if (digit > base)
-   812fc:	710028bf 	cmp	w5, #0xa
-   81300:	54fffe00 	b.eq	812c0 <tfp_format+0x358>  // b.none
+   8129c:	710028bf 	cmp	w5, #0xa
+   812a0:	54fffe00 	b.eq	81260 <tfp_format+0x358>  // b.none
     *nump = num;
-   81304:	b9008fe2 	str	w2, [sp, #140]
+   812a4:	b9008fe2 	str	w2, [sp, #140]
             if (ch == '.') {
-   81308:	7100b87f 	cmp	w3, #0x2e
-   8130c:	54ffeb01 	b.ne	8106c <tfp_format+0x104>  // b.any
+   812a8:	7100b87f 	cmp	w3, #0x2e
+   812ac:	54ffeb01 	b.ne	8100c <tfp_format+0x104>  // b.any
               p.lz = 1;  /* zero-padding */
-   81310:	394223e0 	ldrb	w0, [sp, #136]
-   81314:	32000000 	orr	w0, w0, #0x1
-   81318:	390223e0 	strb	w0, [sp, #136]
-   8131c:	d503201f 	nop
+   812b0:	394223e0 	ldrb	w0, [sp, #136]
+   812b4:	32000000 	orr	w0, w0, #0x1
+   812b8:	390223e0 	strb	w0, [sp, #136]
+   812bc:	d503201f 	nop
                 ch = *(fmt++);
-   81320:	38401783 	ldrb	w3, [x28], #1
+   812c0:	38401783 	ldrb	w3, [x28], #1
               } while ((ch >= '0') && (ch <= '9'));
-   81324:	5100c060 	sub	w0, w3, #0x30
-   81328:	12001c00 	and	w0, w0, #0xff
-   8132c:	7100241f 	cmp	w0, #0x9
-   81330:	54ffff89 	b.ls	81320 <tfp_format+0x3b8>  // b.plast
-   81334:	17ffff4e 	b	8106c <tfp_format+0x104>
+   812c4:	5100c060 	sub	w0, w3, #0x30
+   812c8:	12001c00 	and	w0, w0, #0xff
+   812cc:	7100241f 	cmp	w0, #0x9
+   812d0:	54ffff89 	b.ls	812c0 <tfp_format+0x3b8>  // b.plast
+   812d4:	17ffff4e 	b	8100c <tfp_format+0x104>
                 ch = *(fmt++);
-   81338:	39400383 	ldrb	w3, [x28]
+   812d8:	39400383 	ldrb	w3, [x28]
                 if (ch == 'l') {
-   8133c:	7101b07f 	cmp	w3, #0x6c
-   81340:	54000720 	b.eq	81424 <tfp_format+0x4bc>  // b.none
+   812dc:	7101b07f 	cmp	w3, #0x6c
+   812e0:	54000720 	b.eq	813c4 <tfp_format+0x4bc>  // b.none
                 ch = *(fmt++);
-   81344:	9100079c 	add	x28, x28, #0x1
-   81348:	17ffffd2 	b	81290 <tfp_format+0x328>
-   8134c:	9100079b 	add	x27, x28, #0x1
-   81350:	17ffff20 	b	80fd0 <tfp_format+0x68>
+   812e4:	9100079c 	add	x28, x28, #0x1
+   812e8:	17ffffd2 	b	81230 <tfp_format+0x328>
+   812ec:	9100079b 	add	x27, x28, #0x1
+   812f0:	17ffff20 	b	80f70 <tfp_format+0x68>
                 p.base = 8;
-   81354:	52800100 	mov	w0, #0x8                   	// #8
-   81358:	b90097e0 	str	w0, [sp, #148]
+   812f4:	52800100 	mov	w0, #0x8                   	// #8
+   812f8:	b90097e0 	str	w0, [sp, #148]
                 ui2a(va_arg(va, unsigned int), &p);
-   8135c:	37f80456 	tbnz	w22, #31, 813e4 <tfp_format+0x47c>
-   81360:	91002ea1 	add	x1, x21, #0xb
-   81364:	aa1503e0 	mov	x0, x21
-   81368:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   8136c:	b9400000 	ldr	w0, [x0]
-   81370:	aa1703e1 	mov	x1, x23
-   81374:	9100079b 	add	x27, x28, #0x1
-   81378:	97fffe42 	bl	80c80 <ui2a>
+   812fc:	37f80456 	tbnz	w22, #31, 81384 <tfp_format+0x47c>
+   81300:	91002ea1 	add	x1, x21, #0xb
+   81304:	aa1503e0 	mov	x0, x21
+   81308:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   8130c:	b9400000 	ldr	w0, [x0]
+   81310:	aa1703e1 	mov	x1, x23
+   81314:	9100079b 	add	x27, x28, #0x1
+   81318:	97fffe42 	bl	80c20 <ui2a>
                 putchw(putp, putf, &p);
-   8137c:	aa1703e2 	mov	x2, x23
-   81380:	aa1403e1 	mov	x1, x20
-   81384:	aa1303e0 	mov	x0, x19
-   81388:	97fffe70 	bl	80d48 <putchw>
+   8131c:	aa1703e2 	mov	x2, x23
+   81320:	aa1403e1 	mov	x1, x20
+   81324:	aa1303e0 	mov	x0, x19
+   81328:	97fffe70 	bl	80ce8 <putchw>
                 break;
-   8138c:	17ffff11 	b	80fd0 <tfp_format+0x68>
+   8132c:	17ffff11 	b	80f70 <tfp_format+0x68>
                 p.bf = va_arg(va, char *);
-   81390:	37f803b6 	tbnz	w22, #31, 81404 <tfp_format+0x49c>
-   81394:	91003ea1 	add	x1, x21, #0xf
-   81398:	aa1503e0 	mov	x0, x21
-   8139c:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   813a0:	f9400003 	ldr	x3, [x0]
+   81330:	37f803b6 	tbnz	w22, #31, 813a4 <tfp_format+0x49c>
+   81334:	91003ea1 	add	x1, x21, #0xf
+   81338:	aa1503e0 	mov	x0, x21
+   8133c:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81340:	f9400003 	ldr	x3, [x0]
                 putchw(putp, putf, &p);
-   813a4:	aa1703e2 	mov	x2, x23
-   813a8:	aa1403e1 	mov	x1, x20
-   813ac:	aa1303e0 	mov	x0, x19
-   813b0:	9100079b 	add	x27, x28, #0x1
+   81344:	aa1703e2 	mov	x2, x23
+   81348:	aa1403e1 	mov	x1, x20
+   8134c:	aa1303e0 	mov	x0, x19
+   81350:	9100079b 	add	x27, x28, #0x1
                 p.bf = va_arg(va, char *);
-   813b4:	f9004fe3 	str	x3, [sp, #152]
+   81354:	f9004fe3 	str	x3, [sp, #152]
                 putchw(putp, putf, &p);
-   813b8:	97fffe64 	bl	80d48 <putchw>
+   81358:	97fffe64 	bl	80ce8 <putchw>
                 p.bf = bf;
-   813bc:	f9004ff9 	str	x25, [sp, #152]
+   8135c:	f9004ff9 	str	x25, [sp, #152]
                 break;
-   813c0:	17ffff04 	b	80fd0 <tfp_format+0x68>
+   81360:	17ffff04 	b	80f70 <tfp_format+0x68>
                 putf(putp, (char)(va_arg(va, int)));
-   813c4:	110022c1 	add	w1, w22, #0x8
-   813c8:	7100003f 	cmp	w1, #0x0
-   813cc:	54000d2d 	b.le	81570 <tfp_format+0x608>
-   813d0:	91002ea2 	add	x2, x21, #0xb
-   813d4:	aa1503e0 	mov	x0, x21
-   813d8:	2a0103f6 	mov	w22, w1
-   813dc:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   813e0:	17ffff97 	b	8123c <tfp_format+0x2d4>
+   81364:	110022c1 	add	w1, w22, #0x8
+   81368:	7100003f 	cmp	w1, #0x0
+   8136c:	54000d2d 	b.le	81510 <tfp_format+0x608>
+   81370:	91002ea2 	add	x2, x21, #0xb
+   81374:	aa1503e0 	mov	x0, x21
+   81378:	2a0103f6 	mov	w22, w1
+   8137c:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   81380:	17ffff97 	b	811dc <tfp_format+0x2d4>
                 ui2a(va_arg(va, unsigned int), &p);
-   813e4:	110022c1 	add	w1, w22, #0x8
-   813e8:	7100003f 	cmp	w1, #0x0
-   813ec:	54000d2d 	b.le	81590 <tfp_format+0x628>
-   813f0:	91002ea2 	add	x2, x21, #0xb
-   813f4:	aa1503e0 	mov	x0, x21
-   813f8:	2a0103f6 	mov	w22, w1
-   813fc:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   81400:	17ffffdb 	b	8136c <tfp_format+0x404>
+   81384:	110022c1 	add	w1, w22, #0x8
+   81388:	7100003f 	cmp	w1, #0x0
+   8138c:	54000d2d 	b.le	81530 <tfp_format+0x628>
+   81390:	91002ea2 	add	x2, x21, #0xb
+   81394:	aa1503e0 	mov	x0, x21
+   81398:	2a0103f6 	mov	w22, w1
+   8139c:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   813a0:	17ffffdb 	b	8130c <tfp_format+0x404>
                 p.bf = va_arg(va, char *);
-   81404:	110022c1 	add	w1, w22, #0x8
-   81408:	7100003f 	cmp	w1, #0x0
-   8140c:	54000bad 	b.le	81580 <tfp_format+0x618>
-   81410:	91003ea2 	add	x2, x21, #0xf
-   81414:	aa1503e0 	mov	x0, x21
-   81418:	2a0103f6 	mov	w22, w1
-   8141c:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   81420:	17ffffe0 	b	813a0 <tfp_format+0x438>
+   813a4:	110022c1 	add	w1, w22, #0x8
+   813a8:	7100003f 	cmp	w1, #0x0
+   813ac:	54000bad 	b.le	81520 <tfp_format+0x618>
+   813b0:	91003ea2 	add	x2, x21, #0xf
+   813b4:	aa1503e0 	mov	x0, x21
+   813b8:	2a0103f6 	mov	w22, w1
+   813bc:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   813c0:	17ffffe0 	b	81340 <tfp_format+0x438>
                   ch = *(fmt++);
-   81424:	39400783 	ldrb	w3, [x28, #1]
-   81428:	91000b9c 	add	x28, x28, #0x2
+   813c4:	39400783 	ldrb	w3, [x28, #1]
+   813c8:	91000b9c 	add	x28, x28, #0x2
             switch (ch) {
-   8142c:	7101a47f 	cmp	w3, #0x69
-   81430:	54000d80 	b.eq	815e0 <tfp_format+0x678>  // b.none
+   813cc:	7101a47f 	cmp	w3, #0x69
+   813d0:	54000d80 	b.eq	81580 <tfp_format+0x678>  // b.none
                   lng = 2;
-   81434:	52800040 	mov	w0, #0x2                   	// #2
-   81438:	17ffff14 	b	81088 <tfp_format+0x120>
+   813d4:	52800040 	mov	w0, #0x2                   	// #2
+   813d8:	17ffff14 	b	81028 <tfp_format+0x120>
                     ui2a(va_arg(va, unsigned int), &p);
-   8143c:	110022c1 	add	w1, w22, #0x8
-   81440:	7100003f 	cmp	w1, #0x0
-   81444:	540001cd 	b.le	8147c <tfp_format+0x514>
-   81448:	91002ea2 	add	x2, x21, #0xb
-   8144c:	aa1503e0 	mov	x0, x21
-   81450:	2a0103f6 	mov	w22, w1
-   81454:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   81458:	17ffff1c 	b	810c8 <tfp_format+0x160>
+   813dc:	110022c1 	add	w1, w22, #0x8
+   813e0:	7100003f 	cmp	w1, #0x0
+   813e4:	540001cd 	b.le	8141c <tfp_format+0x514>
+   813e8:	91002ea2 	add	x2, x21, #0xb
+   813ec:	aa1503e0 	mov	x0, x21
+   813f0:	2a0103f6 	mov	w22, w1
+   813f4:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   813f8:	17ffff1c 	b	81068 <tfp_format+0x160>
                     uli2a(va_arg(va, unsigned long int), &p);
-   8145c:	110022c1 	add	w1, w22, #0x8
-   81460:	7100003f 	cmp	w1, #0x0
-   81464:	540003cd 	b.le	814dc <tfp_format+0x574>
-   81468:	91003ea2 	add	x2, x21, #0xf
-   8146c:	aa1503e0 	mov	x0, x21
-   81470:	2a0103f6 	mov	w22, w1
-   81474:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   81478:	17ffff5a 	b	811e0 <tfp_format+0x278>
+   813fc:	110022c1 	add	w1, w22, #0x8
+   81400:	7100003f 	cmp	w1, #0x0
+   81404:	540003cd 	b.le	8147c <tfp_format+0x574>
+   81408:	91003ea2 	add	x2, x21, #0xf
+   8140c:	aa1503e0 	mov	x0, x21
+   81410:	2a0103f6 	mov	w22, w1
+   81414:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   81418:	17ffff5a 	b	81180 <tfp_format+0x278>
                     ui2a(va_arg(va, unsigned int), &p);
+   8141c:	f94037e0 	ldr	x0, [sp, #104]
+   81420:	8b36c000 	add	x0, x0, w22, sxtw
+   81424:	2a0103f6 	mov	w22, w1
+   81428:	17ffff10 	b	81068 <tfp_format+0x160>
+                    ulli2a(va_arg(va, unsigned long long int), &p);
+   8142c:	110022c1 	add	w1, w22, #0x8
+   81430:	7100003f 	cmp	w1, #0x0
+   81434:	540003cd 	b.le	814ac <tfp_format+0x5a4>
+   81438:	91003ea2 	add	x2, x21, #0xf
+   8143c:	aa1503e0 	mov	x0, x21
+   81440:	2a0103f6 	mov	w22, w1
+   81444:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   81448:	17ffff3c 	b	81138 <tfp_format+0x230>
+                  if (1 == lng)
+   8144c:	7100041f 	cmp	w0, #0x1
+   81450:	54000380 	b.eq	814c0 <tfp_format+0x5b8>  // b.none
+                    i2a(va_arg(va, int), &p);
+   81454:	37f804f6 	tbnz	w22, #31, 814f0 <tfp_format+0x5e8>
+   81458:	91002ea1 	add	x1, x21, #0xb
+   8145c:	aa1503e0 	mov	x0, x21
+   81460:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   81464:	b9400000 	ldr	w0, [x0]
+    if (num < 0) {
+   81468:	36ffe020 	tbz	w0, #31, 8106c <tfp_format+0x164>
+        p->sign = '-';
+   8146c:	528005a1 	mov	w1, #0x2d                  	// #45
+        num = -num;
+   81470:	4b0003e0 	neg	w0, w0
+        p->sign = '-';
+   81474:	390243e1 	strb	w1, [sp, #144]
+    ui2a(num, p);
+   81478:	17fffefd 	b	8106c <tfp_format+0x164>
+                    uli2a(va_arg(va, unsigned long int), &p);
    8147c:	f94037e0 	ldr	x0, [sp, #104]
    81480:	8b36c000 	add	x0, x0, w22, sxtw
    81484:	2a0103f6 	mov	w22, w1
-   81488:	17ffff10 	b	810c8 <tfp_format+0x160>
-                    ulli2a(va_arg(va, unsigned long long int), &p);
+   81488:	17ffff3e 	b	81180 <tfp_format+0x278>
+                    lli2a(va_arg(va, long long int), &p);
    8148c:	110022c1 	add	w1, w22, #0x8
    81490:	7100003f 	cmp	w1, #0x0
-   81494:	540003cd 	b.le	8150c <tfp_format+0x5a4>
+   81494:	540006ed 	b.le	81570 <tfp_format+0x668>
    81498:	91003ea2 	add	x2, x21, #0xf
    8149c:	aa1503e0 	mov	x0, x21
    814a0:	2a0103f6 	mov	w22, w1
    814a4:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   814a8:	17ffff3c 	b	81198 <tfp_format+0x230>
-                  if (1 == lng)
-   814ac:	7100041f 	cmp	w0, #0x1
-   814b0:	54000380 	b.eq	81520 <tfp_format+0x5b8>  // b.none
-                    i2a(va_arg(va, int), &p);
-   814b4:	37f804f6 	tbnz	w22, #31, 81550 <tfp_format+0x5e8>
-   814b8:	91002ea1 	add	x1, x21, #0xb
-   814bc:	aa1503e0 	mov	x0, x21
-   814c0:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   814c4:	b9400000 	ldr	w0, [x0]
-    if (num < 0) {
-   814c8:	36ffe020 	tbz	w0, #31, 810cc <tfp_format+0x164>
-        p->sign = '-';
-   814cc:	528005a1 	mov	w1, #0x2d                  	// #45
-        num = -num;
-   814d0:	4b0003e0 	neg	w0, w0
-        p->sign = '-';
-   814d4:	390243e1 	strb	w1, [sp, #144]
-    ui2a(num, p);
-   814d8:	17fffefd 	b	810cc <tfp_format+0x164>
-                    uli2a(va_arg(va, unsigned long int), &p);
-   814dc:	f94037e0 	ldr	x0, [sp, #104]
-   814e0:	8b36c000 	add	x0, x0, w22, sxtw
-   814e4:	2a0103f6 	mov	w22, w1
-   814e8:	17ffff3e 	b	811e0 <tfp_format+0x278>
-                    lli2a(va_arg(va, long long int), &p);
-   814ec:	110022c1 	add	w1, w22, #0x8
-   814f0:	7100003f 	cmp	w1, #0x0
-   814f4:	540006ed 	b.le	815d0 <tfp_format+0x668>
-   814f8:	91003ea2 	add	x2, x21, #0xf
-   814fc:	aa1503e0 	mov	x0, x21
-   81500:	2a0103f6 	mov	w22, w1
-   81504:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   81508:	17ffff5b 	b	81274 <tfp_format+0x30c>
+   814a8:	17ffff5b 	b	81214 <tfp_format+0x30c>
                     ulli2a(va_arg(va, unsigned long long int), &p);
-   8150c:	f94037e0 	ldr	x0, [sp, #104]
-   81510:	8b36c000 	add	x0, x0, w22, sxtw
-   81514:	2a0103f6 	mov	w22, w1
-   81518:	17ffff20 	b	81198 <tfp_format+0x230>
+   814ac:	f94037e0 	ldr	x0, [sp, #104]
+   814b0:	8b36c000 	add	x0, x0, w22, sxtw
+   814b4:	2a0103f6 	mov	w22, w1
+   814b8:	17ffff20 	b	81138 <tfp_format+0x230>
                 p.base = 10;
-   8151c:	b90097fa 	str	w26, [sp, #148]
+   814bc:	b90097fa 	str	w26, [sp, #148]
                     li2a(va_arg(va, long int), &p);
-   81520:	37f80416 	tbnz	w22, #31, 815a0 <tfp_format+0x638>
-   81524:	91003ea1 	add	x1, x21, #0xf
-   81528:	aa1503e0 	mov	x0, x21
-   8152c:	927df035 	and	x21, x1, #0xfffffffffffffff8
-   81530:	f9400000 	ldr	x0, [x0]
+   814c0:	37f80416 	tbnz	w22, #31, 81540 <tfp_format+0x638>
+   814c4:	91003ea1 	add	x1, x21, #0xf
+   814c8:	aa1503e0 	mov	x0, x21
+   814cc:	927df035 	and	x21, x1, #0xfffffffffffffff8
+   814d0:	f9400000 	ldr	x0, [x0]
     if (num < 0) {
-   81534:	b6ffe580 	tbz	x0, #63, 811e4 <tfp_format+0x27c>
+   814d4:	b6ffe580 	tbz	x0, #63, 81184 <tfp_format+0x27c>
         p->sign = '-';
-   81538:	528005a1 	mov	w1, #0x2d                  	// #45
+   814d8:	528005a1 	mov	w1, #0x2d                  	// #45
         num = -num;
-   8153c:	cb0003e0 	neg	x0, x0
+   814dc:	cb0003e0 	neg	x0, x0
         p->sign = '-';
-   81540:	390243e1 	strb	w1, [sp, #144]
+   814e0:	390243e1 	strb	w1, [sp, #144]
     uli2a(num, p);
-   81544:	17ffff28 	b	811e4 <tfp_format+0x27c>
+   814e4:	17ffff28 	b	81184 <tfp_format+0x27c>
                 p.base = 10;
-   81548:	b90097fa 	str	w26, [sp, #148]
+   814e8:	b90097fa 	str	w26, [sp, #148]
                 if (2 == lng)
-   8154c:	17ffffda 	b	814b4 <tfp_format+0x54c>
+   814ec:	17ffffda 	b	81454 <tfp_format+0x54c>
                     i2a(va_arg(va, int), &p);
-   81550:	110022c1 	add	w1, w22, #0x8
-   81554:	7100003f 	cmp	w1, #0x0
-   81558:	5400034d 	b.le	815c0 <tfp_format+0x658>
-   8155c:	91002ea2 	add	x2, x21, #0xb
-   81560:	aa1503e0 	mov	x0, x21
-   81564:	2a0103f6 	mov	w22, w1
-   81568:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   8156c:	17ffffd6 	b	814c4 <tfp_format+0x55c>
+   814f0:	110022c1 	add	w1, w22, #0x8
+   814f4:	7100003f 	cmp	w1, #0x0
+   814f8:	5400034d 	b.le	81560 <tfp_format+0x658>
+   814fc:	91002ea2 	add	x2, x21, #0xb
+   81500:	aa1503e0 	mov	x0, x21
+   81504:	2a0103f6 	mov	w22, w1
+   81508:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   8150c:	17ffffd6 	b	81464 <tfp_format+0x55c>
                 putf(putp, (char)(va_arg(va, int)));
+   81510:	f94037e0 	ldr	x0, [sp, #104]
+   81514:	8b36c000 	add	x0, x0, w22, sxtw
+   81518:	2a0103f6 	mov	w22, w1
+   8151c:	17ffff30 	b	811dc <tfp_format+0x2d4>
+                p.bf = va_arg(va, char *);
+   81520:	f94037e0 	ldr	x0, [sp, #104]
+   81524:	8b36c000 	add	x0, x0, w22, sxtw
+   81528:	2a0103f6 	mov	w22, w1
+   8152c:	17ffff85 	b	81340 <tfp_format+0x438>
+                ui2a(va_arg(va, unsigned int), &p);
+   81530:	f94037e0 	ldr	x0, [sp, #104]
+   81534:	8b36c000 	add	x0, x0, w22, sxtw
+   81538:	2a0103f6 	mov	w22, w1
+   8153c:	17ffff74 	b	8130c <tfp_format+0x404>
+                    li2a(va_arg(va, long int), &p);
+   81540:	110022c1 	add	w1, w22, #0x8
+   81544:	7100003f 	cmp	w1, #0x0
+   81548:	5400022d 	b.le	8158c <tfp_format+0x684>
+   8154c:	91003ea2 	add	x2, x21, #0xf
+   81550:	aa1503e0 	mov	x0, x21
+   81554:	2a0103f6 	mov	w22, w1
+   81558:	927df055 	and	x21, x2, #0xfffffffffffffff8
+   8155c:	17ffffdd 	b	814d0 <tfp_format+0x5c8>
+                    i2a(va_arg(va, int), &p);
+   81560:	f94037e0 	ldr	x0, [sp, #104]
+   81564:	8b36c000 	add	x0, x0, w22, sxtw
+   81568:	2a0103f6 	mov	w22, w1
+   8156c:	17ffffbe 	b	81464 <tfp_format+0x55c>
+                    lli2a(va_arg(va, long long int), &p);
    81570:	f94037e0 	ldr	x0, [sp, #104]
    81574:	8b36c000 	add	x0, x0, w22, sxtw
    81578:	2a0103f6 	mov	w22, w1
-   8157c:	17ffff30 	b	8123c <tfp_format+0x2d4>
-                p.bf = va_arg(va, char *);
-   81580:	f94037e0 	ldr	x0, [sp, #104]
-   81584:	8b36c000 	add	x0, x0, w22, sxtw
-   81588:	2a0103f6 	mov	w22, w1
-   8158c:	17ffff85 	b	813a0 <tfp_format+0x438>
-                ui2a(va_arg(va, unsigned int), &p);
-   81590:	f94037e0 	ldr	x0, [sp, #104]
-   81594:	8b36c000 	add	x0, x0, w22, sxtw
-   81598:	2a0103f6 	mov	w22, w1
-   8159c:	17ffff74 	b	8136c <tfp_format+0x404>
-                    li2a(va_arg(va, long int), &p);
-   815a0:	110022c1 	add	w1, w22, #0x8
-   815a4:	7100003f 	cmp	w1, #0x0
-   815a8:	5400022d 	b.le	815ec <tfp_format+0x684>
-   815ac:	91003ea2 	add	x2, x21, #0xf
-   815b0:	aa1503e0 	mov	x0, x21
-   815b4:	2a0103f6 	mov	w22, w1
-   815b8:	927df055 	and	x21, x2, #0xfffffffffffffff8
-   815bc:	17ffffdd 	b	81530 <tfp_format+0x5c8>
-                    i2a(va_arg(va, int), &p);
-   815c0:	f94037e0 	ldr	x0, [sp, #104]
-   815c4:	8b36c000 	add	x0, x0, w22, sxtw
-   815c8:	2a0103f6 	mov	w22, w1
-   815cc:	17ffffbe 	b	814c4 <tfp_format+0x55c>
-                    lli2a(va_arg(va, long long int), &p);
-   815d0:	f94037e0 	ldr	x0, [sp, #104]
-   815d4:	8b36c000 	add	x0, x0, w22, sxtw
-   815d8:	2a0103f6 	mov	w22, w1
-   815dc:	17ffff26 	b	81274 <tfp_format+0x30c>
+   8157c:	17ffff26 	b	81214 <tfp_format+0x30c>
                 p.base = 10;
-   815e0:	b90097fa 	str	w26, [sp, #148]
+   81580:	b90097fa 	str	w26, [sp, #148]
                     lli2a(va_arg(va, long long int), &p);
-   815e4:	36ffe436 	tbz	w22, #31, 81268 <tfp_format+0x300>
-   815e8:	17ffffc1 	b	814ec <tfp_format+0x584>
+   81584:	36ffe436 	tbz	w22, #31, 81208 <tfp_format+0x300>
+   81588:	17ffffc1 	b	8148c <tfp_format+0x584>
                     li2a(va_arg(va, long int), &p);
-   815ec:	f94037e0 	ldr	x0, [sp, #104]
-   815f0:	8b36c000 	add	x0, x0, w22, sxtw
-   815f4:	2a0103f6 	mov	w22, w1
-   815f8:	17ffffce 	b	81530 <tfp_format+0x5c8>
-   815fc:	d503201f 	nop
+   8158c:	f94037e0 	ldr	x0, [sp, #104]
+   81590:	8b36c000 	add	x0, x0, w22, sxtw
+   81594:	2a0103f6 	mov	w22, w1
+   81598:	17ffffce 	b	814d0 <tfp_format+0x5c8>
+   8159c:	d503201f 	nop
 
-0000000000081600 <init_printf>:
+00000000000815a0 <init_printf>:
     stdout_putf = putf;
-   81600:	b00000a2 	adrp	x2, 96000 <stdout_putf>
-   81604:	91000043 	add	x3, x2, #0x0
-   81608:	f9000041 	str	x1, [x2]
+   815a0:	b00000a2 	adrp	x2, 96000 <stdout_putf>
+   815a4:	91000043 	add	x3, x2, #0x0
+   815a8:	f9000041 	str	x1, [x2]
     stdout_putp = putp;
-   8160c:	f9000460 	str	x0, [x3, #8]
+   815ac:	f9000460 	str	x0, [x3, #8]
 }
-   81610:	d65f03c0 	ret
-   81614:	d503201f 	nop
+   815b0:	d65f03c0 	ret
+   815b4:	d503201f 	nop
 
-0000000000081618 <tfp_printf>:
+00000000000815b8 <tfp_printf>:
 {
-   81618:	a9b77bfd 	stp	x29, x30, [sp, #-144]!
+   815b8:	a9b77bfd 	stp	x29, x30, [sp, #-144]!
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   8161c:	b00000a8 	adrp	x8, 96000 <stdout_putf>
-   81620:	9100010b 	add	x11, x8, #0x0
+   815bc:	b00000a8 	adrp	x8, 96000 <stdout_putf>
+   815c0:	9100010b 	add	x11, x8, #0x0
 {
-   81624:	910003fd 	mov	x29, sp
-   81628:	f9002fe1 	str	x1, [sp, #88]
-   8162c:	aa0003ea 	mov	x10, x0
+   815c4:	910003fd 	mov	x29, sp
+   815c8:	f9002fe1 	str	x1, [sp, #88]
+   815cc:	aa0003ea 	mov	x10, x0
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   81630:	f9400101 	ldr	x1, [x8]
+   815d0:	f9400101 	ldr	x1, [x8]
     va_start(va, fmt);
-   81634:	910143e9 	add	x9, sp, #0x50
+   815d4:	910143e9 	add	x9, sp, #0x50
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   81638:	f9400560 	ldr	x0, [x11, #8]
+   815d8:	f9400560 	ldr	x0, [x11, #8]
     va_start(va, fmt);
-   8163c:	910243eb 	add	x11, sp, #0x90
-   81640:	a9032feb 	stp	x11, x11, [sp, #48]
-   81644:	128006e8 	mov	w8, #0xffffffc8            	// #-56
-   81648:	f90023e9 	str	x9, [sp, #64]
-   8164c:	b9004be8 	str	w8, [sp, #72]
-   81650:	b9004fff 	str	wzr, [sp, #76]
+   815dc:	910243eb 	add	x11, sp, #0x90
+   815e0:	a9032feb 	stp	x11, x11, [sp, #48]
+   815e4:	128006e8 	mov	w8, #0xffffffc8            	// #-56
+   815e8:	f90023e9 	str	x9, [sp, #64]
+   815ec:	b9004be8 	str	w8, [sp, #72]
+   815f0:	b9004fff 	str	wzr, [sp, #76]
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   81654:	a94327e8 	ldp	x8, x9, [sp, #48]
-   81658:	a90127e8 	stp	x8, x9, [sp, #16]
-   8165c:	a94427e8 	ldp	x8, x9, [sp, #64]
-   81660:	a90227e8 	stp	x8, x9, [sp, #32]
+   815f4:	a94327e8 	ldp	x8, x9, [sp, #48]
+   815f8:	a90127e8 	stp	x8, x9, [sp, #16]
+   815fc:	a94427e8 	ldp	x8, x9, [sp, #64]
+   81600:	a90227e8 	stp	x8, x9, [sp, #32]
 {
-   81664:	a9060fe2 	stp	x2, x3, [sp, #96]
+   81604:	a9060fe2 	stp	x2, x3, [sp, #96]
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   81668:	910043e3 	add	x3, sp, #0x10
-   8166c:	aa0a03e2 	mov	x2, x10
+   81608:	910043e3 	add	x3, sp, #0x10
+   8160c:	aa0a03e2 	mov	x2, x10
 {
-   81670:	a90717e4 	stp	x4, x5, [sp, #112]
-   81674:	a9081fe6 	stp	x6, x7, [sp, #128]
+   81610:	a90717e4 	stp	x4, x5, [sp, #112]
+   81614:	a9081fe6 	stp	x6, x7, [sp, #128]
     tfp_format(stdout_putp, stdout_putf, fmt, va);
-   81678:	97fffe3c 	bl	80f68 <tfp_format>
+   81618:	97fffe3c 	bl	80f08 <tfp_format>
 }
-   8167c:	a8c97bfd 	ldp	x29, x30, [sp], #144
-   81680:	d65f03c0 	ret
-   81684:	d503201f 	nop
+   8161c:	a8c97bfd 	ldp	x29, x30, [sp], #144
+   81620:	d65f03c0 	ret
+   81624:	d503201f 	nop
 
-0000000000081688 <tfp_vsnprintf>:
+0000000000081628 <tfp_vsnprintf>:
   if (size < 1)
-   81688:	b5000061 	cbnz	x1, 81694 <tfp_vsnprintf+0xc>
+   81628:	b5000061 	cbnz	x1, 81634 <tfp_vsnprintf+0xc>
     return 0;
-   8168c:	52800000 	mov	w0, #0x0                   	// #0
+   8162c:	52800000 	mov	w0, #0x0                   	// #0
 }
-   81690:	d65f03c0 	ret
+   81630:	d65f03c0 	ret
 {
-   81694:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
-   81698:	aa0003e5 	mov	x5, x0
+   81634:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
+   81638:	aa0003e5 	mov	x5, x0
   data.dest_capacity = size-1;
-   8169c:	d1000424 	sub	x4, x1, #0x1
+   8163c:	d1000424 	sub	x4, x1, #0x1
 {
-   816a0:	910003fd 	mov	x29, sp
+   81640:	910003fd 	mov	x29, sp
   tfp_format(&data, _vsnprintf_putcf, format, ap);
-   816a4:	a9402069 	ldp	x9, x8, [x3]
-   816a8:	9100e3e0 	add	x0, sp, #0x38
-   816ac:	a9411867 	ldp	x7, x6, [x3, #16]
-   816b0:	f0ffffe1 	adrp	x1, 80000 <_start>
-   816b4:	910043e3 	add	x3, sp, #0x10
-   816b8:	913c8021 	add	x1, x1, #0xf20
-   816bc:	a90123e9 	stp	x9, x8, [sp, #16]
-   816c0:	a9021be7 	stp	x7, x6, [sp, #32]
+   81644:	a9402069 	ldp	x9, x8, [x3]
+   81648:	9100e3e0 	add	x0, sp, #0x38
+   8164c:	a9411867 	ldp	x7, x6, [x3, #16]
+   81650:	f0ffffe1 	adrp	x1, 80000 <_start>
+   81654:	910043e3 	add	x3, sp, #0x10
+   81658:	913b0021 	add	x1, x1, #0xec0
+   8165c:	a90123e9 	stp	x9, x8, [sp, #16]
+   81660:	a9021be7 	stp	x7, x6, [sp, #32]
   data.dest = str;
-   816c4:	a90397e4 	stp	x4, x5, [sp, #56]
+   81664:	a90397e4 	stp	x4, x5, [sp, #56]
   data.num_chars = 0;
-   816c8:	f90027ff 	str	xzr, [sp, #72]
+   81668:	f90027ff 	str	xzr, [sp, #72]
   tfp_format(&data, _vsnprintf_putcf, format, ap);
-   816cc:	97fffe27 	bl	80f68 <tfp_format>
+   8166c:	97fffe27 	bl	80f08 <tfp_format>
   if (data.num_chars < data.dest_capacity)
-   816d0:	f9401fe0 	ldr	x0, [sp, #56]
-   816d4:	f94027e1 	ldr	x1, [sp, #72]
-   816d8:	eb00003f 	cmp	x1, x0
-   816dc:	540000c2 	b.cs	816f4 <tfp_vsnprintf+0x6c>  // b.hs, b.nlast
+   81670:	f9401fe0 	ldr	x0, [sp, #56]
+   81674:	f94027e1 	ldr	x1, [sp, #72]
+   81678:	eb00003f 	cmp	x1, x0
+   8167c:	540000c2 	b.cs	81694 <tfp_vsnprintf+0x6c>  // b.hs, b.nlast
     data.dest[data.num_chars] = '\0';
-   816e0:	f94023e0 	ldr	x0, [sp, #64]
-   816e4:	3821681f 	strb	wzr, [x0, x1]
+   81680:	f94023e0 	ldr	x0, [sp, #64]
+   81684:	3821681f 	strb	wzr, [x0, x1]
   return data.num_chars;
-   816e8:	b9404be0 	ldr	w0, [sp, #72]
+   81688:	b9404be0 	ldr	w0, [sp, #72]
 }
-   816ec:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   816f0:	d65f03c0 	ret
+   8168c:	a8c57bfd 	ldp	x29, x30, [sp], #80
+   81690:	d65f03c0 	ret
     data.dest[data.dest_capacity] = '\0';
-   816f4:	f94023e1 	ldr	x1, [sp, #64]
-   816f8:	3820683f 	strb	wzr, [x1, x0]
+   81694:	f94023e1 	ldr	x1, [sp, #64]
+   81698:	3820683f 	strb	wzr, [x1, x0]
   return data.num_chars;
-   816fc:	b9404be0 	ldr	w0, [sp, #72]
+   8169c:	b9404be0 	ldr	w0, [sp, #72]
 }
-   81700:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   81704:	d65f03c0 	ret
+   816a0:	a8c57bfd 	ldp	x29, x30, [sp], #80
+   816a4:	d65f03c0 	ret
 
-0000000000081708 <tfp_snprintf>:
+00000000000816a8 <tfp_snprintf>:
 {
-   81708:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
+   816a8:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
   va_start(ap, format);
-   8170c:	128004e8 	mov	w8, #0xffffffd8            	// #-40
+   816ac:	128004e8 	mov	w8, #0xffffffd8            	// #-40
 {
-   81710:	910003fd 	mov	x29, sp
+   816b0:	910003fd 	mov	x29, sp
   va_start(ap, format);
-   81714:	910203ea 	add	x10, sp, #0x80
-   81718:	a9032bea 	stp	x10, x10, [sp, #48]
-   8171c:	910143e9 	add	x9, sp, #0x50
-   81720:	f90023e9 	str	x9, [sp, #64]
-   81724:	29097fe8 	stp	w8, wzr, [sp, #72]
+   816b4:	910203ea 	add	x10, sp, #0x80
+   816b8:	a9032bea 	stp	x10, x10, [sp, #48]
+   816bc:	910143e9 	add	x9, sp, #0x50
+   816c0:	f90023e9 	str	x9, [sp, #64]
+   816c4:	29097fe8 	stp	w8, wzr, [sp, #72]
   retval = tfp_vsnprintf(str, size, format, ap);
-   81728:	a94327e8 	ldp	x8, x9, [sp, #48]
-   8172c:	a90127e8 	stp	x8, x9, [sp, #16]
-   81730:	a94427e8 	ldp	x8, x9, [sp, #64]
-   81734:	a90227e8 	stp	x8, x9, [sp, #32]
+   816c8:	a94327e8 	ldp	x8, x9, [sp, #48]
+   816cc:	a90127e8 	stp	x8, x9, [sp, #16]
+   816d0:	a94427e8 	ldp	x8, x9, [sp, #64]
+   816d4:	a90227e8 	stp	x8, x9, [sp, #32]
 {
-   81738:	a90593e3 	stp	x3, x4, [sp, #88]
+   816d8:	a90593e3 	stp	x3, x4, [sp, #88]
   retval = tfp_vsnprintf(str, size, format, ap);
-   8173c:	910043e3 	add	x3, sp, #0x10
+   816dc:	910043e3 	add	x3, sp, #0x10
 {
-   81740:	a9069be5 	stp	x5, x6, [sp, #104]
-   81744:	f9003fe7 	str	x7, [sp, #120]
+   816e0:	a9069be5 	stp	x5, x6, [sp, #104]
+   816e4:	f9003fe7 	str	x7, [sp, #120]
   retval = tfp_vsnprintf(str, size, format, ap);
-   81748:	97ffffd0 	bl	81688 <tfp_vsnprintf>
+   816e8:	97ffffd0 	bl	81628 <tfp_vsnprintf>
 }
-   8174c:	a8c87bfd 	ldp	x29, x30, [sp], #128
-   81750:	d65f03c0 	ret
-   81754:	d503201f 	nop
+   816ec:	a8c87bfd 	ldp	x29, x30, [sp], #128
+   816f0:	d65f03c0 	ret
+   816f4:	d503201f 	nop
 
-0000000000081758 <tfp_vsprintf>:
+00000000000816f8 <tfp_vsprintf>:
 
 int tfp_vsprintf(char *str, const char *format, va_list ap)
 {
-   81758:	aa0203e4 	mov	x4, x2
-   8175c:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
-   81760:	aa0003e5 	mov	x5, x0
-   81764:	910003fd 	mov	x29, sp
+   816f8:	aa0203e4 	mov	x4, x2
+   816fc:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   81700:	aa0003e5 	mov	x5, x0
+   81704:	910003fd 	mov	x29, sp
   struct _vsprintf_putcf_data data;
   data.dest = str;
   data.num_chars = 0;
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   81768:	a9401c86 	ldp	x6, x7, [x4]
-   8176c:	f9000be6 	str	x6, [sp, #16]
-   81770:	aa0103e2 	mov	x2, x1
-   81774:	910043e3 	add	x3, sp, #0x10
-   81778:	f9400886 	ldr	x6, [x4, #16]
-   8177c:	f9000fe7 	str	x7, [sp, #24]
-   81780:	9100c3e0 	add	x0, sp, #0x30
-   81784:	f0ffffe1 	adrp	x1, 80000 <_start>
-   81788:	f9400c84 	ldr	x4, [x4, #24]
-   8178c:	913d4021 	add	x1, x1, #0xf50
-   81790:	a90213e6 	stp	x6, x4, [sp, #32]
+   81708:	a9401c86 	ldp	x6, x7, [x4]
+   8170c:	f9000be6 	str	x6, [sp, #16]
+   81710:	aa0103e2 	mov	x2, x1
+   81714:	910043e3 	add	x3, sp, #0x10
+   81718:	f9400886 	ldr	x6, [x4, #16]
+   8171c:	f9000fe7 	str	x7, [sp, #24]
+   81720:	9100c3e0 	add	x0, sp, #0x30
+   81724:	f0ffffe1 	adrp	x1, 80000 <_start>
+   81728:	f9400c84 	ldr	x4, [x4, #24]
+   8172c:	913bc021 	add	x1, x1, #0xef0
+   81730:	a90213e6 	stp	x6, x4, [sp, #32]
   data.num_chars = 0;
-   81794:	a9037fe5 	stp	x5, xzr, [sp, #48]
+   81734:	a9037fe5 	stp	x5, xzr, [sp, #48]
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   81798:	97fffdf4 	bl	80f68 <tfp_format>
+   81738:	97fffdf4 	bl	80f08 <tfp_format>
   data.dest[data.num_chars] = '\0';
-   8179c:	a94303e1 	ldp	x1, x0, [sp, #48]
-   817a0:	3820683f 	strb	wzr, [x1, x0]
+   8173c:	a94303e1 	ldp	x1, x0, [sp, #48]
+   81740:	3820683f 	strb	wzr, [x1, x0]
   return data.num_chars;
 }
-   817a4:	b9403be0 	ldr	w0, [sp, #56]
-   817a8:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   817ac:	d65f03c0 	ret
+   81744:	b9403be0 	ldr	w0, [sp, #56]
+   81748:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   8174c:	d65f03c0 	ret
 
-00000000000817b0 <tfp_sprintf>:
+0000000000081750 <tfp_sprintf>:
 
 int tfp_sprintf(char *str, const char *format, ...)
 {
-   817b0:	a9b57bfd 	stp	x29, x30, [sp, #-176]!
+   81750:	a9b57bfd 	stp	x29, x30, [sp, #-176]!
   va_list ap;
   int retval;
 
   va_start(ap, format);
-   817b4:	128005e8 	mov	w8, #0xffffffd0            	// #-48
+   81754:	128005e8 	mov	w8, #0xffffffd0            	// #-48
 {
-   817b8:	aa0103ec 	mov	x12, x1
-   817bc:	910003fd 	mov	x29, sp
+   81758:	aa0103ec 	mov	x12, x1
+   8175c:	910003fd 	mov	x29, sp
   va_start(ap, format);
-   817c0:	910203e9 	add	x9, sp, #0x80
-   817c4:	9102c3ea 	add	x10, sp, #0xb0
-   817c8:	a9042bea 	stp	x10, x10, [sp, #64]
+   81760:	910203e9 	add	x9, sp, #0x80
+   81764:	9102c3ea 	add	x10, sp, #0xb0
+   81768:	a9042bea 	stp	x10, x10, [sp, #64]
 {
-   817cc:	aa0003ed 	mov	x13, x0
+   8176c:	aa0003ed 	mov	x13, x0
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   817d0:	f0ffffe1 	adrp	x1, 80000 <_start>
+   81770:	f0ffffe1 	adrp	x1, 80000 <_start>
   va_start(ap, format);
-   817d4:	f9002be9 	str	x9, [sp, #80]
+   81774:	f9002be9 	str	x9, [sp, #80]
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   817d8:	9100c3e0 	add	x0, sp, #0x30
+   81778:	9100c3e0 	add	x0, sp, #0x30
   va_start(ap, format);
-   817dc:	290b7fe8 	stp	w8, wzr, [sp, #88]
+   8177c:	290b7fe8 	stp	w8, wzr, [sp, #88]
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   817e0:	913d4021 	add	x1, x1, #0xf50
-   817e4:	a9442fea 	ldp	x10, x11, [sp, #64]
-   817e8:	a9012fea 	stp	x10, x11, [sp, #16]
-   817ec:	a94527e8 	ldp	x8, x9, [sp, #80]
-   817f0:	a90227e8 	stp	x8, x9, [sp, #32]
+   81780:	913bc021 	add	x1, x1, #0xef0
+   81784:	a9442fea 	ldp	x10, x11, [sp, #64]
+   81788:	a9012fea 	stp	x10, x11, [sp, #16]
+   8178c:	a94527e8 	ldp	x8, x9, [sp, #80]
+   81790:	a90227e8 	stp	x8, x9, [sp, #32]
   data.num_chars = 0;
-   817f4:	a9037fed 	stp	x13, xzr, [sp, #48]
-   817f8:	a9062fea 	stp	x10, x11, [sp, #96]
-   817fc:	a90727e8 	stp	x8, x9, [sp, #112]
+   81794:	a9037fed 	stp	x13, xzr, [sp, #48]
+   81798:	a9062fea 	stp	x10, x11, [sp, #96]
+   8179c:	a90727e8 	stp	x8, x9, [sp, #112]
 {
-   81800:	a9080fe2 	stp	x2, x3, [sp, #128]
+   817a0:	a9080fe2 	stp	x2, x3, [sp, #128]
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   81804:	910043e3 	add	x3, sp, #0x10
-   81808:	aa0c03e2 	mov	x2, x12
+   817a4:	910043e3 	add	x3, sp, #0x10
+   817a8:	aa0c03e2 	mov	x2, x12
 {
-   8180c:	a90917e4 	stp	x4, x5, [sp, #144]
-   81810:	a90a1fe6 	stp	x6, x7, [sp, #160]
+   817ac:	a90917e4 	stp	x4, x5, [sp, #144]
+   817b0:	a90a1fe6 	stp	x6, x7, [sp, #160]
   tfp_format(&data, _vsprintf_putcf, format, ap);
-   81814:	97fffdd5 	bl	80f68 <tfp_format>
+   817b4:	97fffdd5 	bl	80f08 <tfp_format>
   data.dest[data.num_chars] = '\0';
-   81818:	a94303e1 	ldp	x1, x0, [sp, #48]
-   8181c:	3820683f 	strb	wzr, [x1, x0]
+   817b8:	a94303e1 	ldp	x1, x0, [sp, #48]
+   817bc:	3820683f 	strb	wzr, [x1, x0]
   retval = tfp_vsprintf(str, format, ap);
   va_end(ap);
   return retval;
 }
-   81820:	b9403be0 	ldr	w0, [sp, #56]
-   81824:	a8cb7bfd 	ldp	x29, x30, [sp], #176
-   81828:	d65f03c0 	ret
-   8182c:	d503201f 	nop
+   817c0:	b9403be0 	ldr	w0, [sp, #56]
+   817c4:	a8cb7bfd 	ldp	x29, x30, [sp], #176
+   817c8:	d65f03c0 	ret
+   817cc:	d503201f 	nop
 
-0000000000081830 <panic>:
+00000000000817d0 <panic>:
 #endif
 
 // xv6
 void panic(char *s)
 {
-   81830:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   817d0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
   printf("panic: ");
-   81834:	b0000022 	adrp	x2, 86000 <__asm_dcache_level+0xc>
+   817d4:	b0000022 	adrp	x2, 86000 <__asm_dcache_level+0xc>
 {
-   81838:	910003fd 	mov	x29, sp
-   8183c:	f9000bf3 	str	x19, [sp, #16]
-   81840:	aa0003f3 	mov	x19, x0
+   817d8:	910003fd 	mov	x29, sp
+   817dc:	f9000bf3 	str	x19, [sp, #16]
+   817e0:	aa0003f3 	mov	x19, x0
   printf("panic: ");
-   81844:	9119a040 	add	x0, x2, #0x668
-   81848:	97ffff74 	bl	81618 <tfp_printf>
+   817e4:	9117e040 	add	x0, x2, #0x5f8
+   817e8:	97ffff74 	bl	815b8 <tfp_printf>
   printf("%s\n", s);
-   8184c:	aa1303e1 	mov	x1, x19
-   81850:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81854:	9119c000 	add	x0, x0, #0x670
-   81858:	97ffff70 	bl	81618 <tfp_printf>
+   817ec:	aa1303e1 	mov	x1, x19
+   817f0:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   817f4:	91180000 	add	x0, x0, #0x600
+   817f8:	97ffff70 	bl	815b8 <tfp_printf>
 //   panicked = 1; // freeze uart output from other CPUs
     asm volatile("msr	daifset, #0b0010 "); // disable irq
-   8185c:	d50342df 	msr	daifset, #0x2
+   817fc:	d50342df 	msr	daifset, #0x2
   for(;;)
-   81860:	14000000 	b	81860 <panic+0x30>
-   81864:	d503201f 	nop
+   81800:	14000000 	b	81800 <panic+0x30>
+   81804:	d503201f 	nop
 
-0000000000081868 <debug_hexdump>:
+0000000000081808 <debug_hexdump>:
 }
 
 // circle debug.cpp
 // will dump at least 16 bytes....
 void debug_hexdump (const void *pStart, unsigned nBytes)
 {
-   81868:	d10203ff 	sub	sp, sp, #0x80
+   81808:	d10203ff 	sub	sp, sp, #0x80
 	unsigned char *pOffset = (unsigned char *) pStart;
 	
 	printf("Dumping 0x%x bytes starting at 0x%lx\r\n", nBytes,
-   8186c:	aa0003e2 	mov	x2, x0
+   8180c:	aa0003e2 	mov	x2, x0
 {
-   81870:	a9057bfd 	stp	x29, x30, [sp, #80]
-   81874:	910143fd 	add	x29, sp, #0x50
-   81878:	a90653f3 	stp	x19, x20, [sp, #96]
-   8187c:	aa0003f4 	mov	x20, x0
+   81810:	a9057bfd 	stp	x29, x30, [sp, #80]
+   81814:	910143fd 	add	x29, sp, #0x50
+   81818:	a90653f3 	stp	x19, x20, [sp, #96]
+   8181c:	aa0003f4 	mov	x20, x0
 	printf("Dumping 0x%x bytes starting at 0x%lx\r\n", nBytes,
-   81880:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81884:	9119e000 	add	x0, x0, #0x678
+   81820:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81824:	91182000 	add	x0, x0, #0x608
 {
-   81888:	a9075bf5 	stp	x21, x22, [sp, #112]
-   8188c:	2a0103f5 	mov	w21, w1
+   81828:	a9075bf5 	stp	x21, x22, [sp, #112]
+   8182c:	2a0103f5 	mov	w21, w1
 	printf("Dumping 0x%x bytes starting at 0x%lx\r\n", nBytes,
-   81890:	97ffff62 	bl	81618 <tfp_printf>
+   81830:	97ffff62 	bl	815b8 <tfp_printf>
 				(unsigned long) pOffset);
 	
 	while (nBytes > 0)
-   81894:	34000575 	cbz	w21, 81940 <debug_hexdump+0xd8>
-   81898:	927c6ea2 	and	x2, x21, #0xfffffff0
+   81834:	34000575 	cbz	w21, 818e0 <debug_hexdump+0xd8>
+   81838:	927c6ea2 	and	x2, x21, #0xfffffff0
 	unsigned char *pOffset = (unsigned char *) pStart;
-   8189c:	aa1403f3 	mov	x19, x20
-   818a0:	91004042 	add	x2, x2, #0x10
+   8183c:	aa1403f3 	mov	x19, x20
+   81840:	91004042 	add	x2, x2, #0x10
 	while (nBytes > 0)
-   818a4:	0b1402b5 	add	w21, w21, w20
-   818a8:	b0000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
-   818ac:	8b020294 	add	x20, x20, x2
+   81844:	0b1402b5 	add	w21, w21, w20
+   81848:	b0000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
+   8184c:	8b020294 	add	x20, x20, x2
 	{
 		printf(
-   818b0:	911a82d6 	add	x22, x22, #0x6a0
-   818b4:	14000003 	b	818c0 <debug_hexdump+0x58>
+   81850:	9118c2d6 	add	x22, x22, #0x630
+   81854:	14000003 	b	81860 <debug_hexdump+0x58>
 	while (nBytes > 0)
-   818b8:	6b1302bf 	cmp	w21, w19
-   818bc:	54000420 	b.eq	81940 <debug_hexdump+0xd8>  // b.none
+   81858:	6b1302bf 	cmp	w21, w19
+   8185c:	54000420 	b.eq	818e0 <debug_hexdump+0xd8>  // b.none
 		printf(
-   818c0:	39402e68 	ldrb	w8, [x19, #11]
-   818c4:	92403e61 	and	x1, x19, #0xffff
-   818c8:	39402a69 	ldrb	w9, [x19, #10]
-   818cc:	aa1603e0 	mov	x0, x22
-   818d0:	3940266a 	ldrb	w10, [x19, #9]
+   81860:	39402e68 	ldrb	w8, [x19, #11]
+   81864:	92403e61 	and	x1, x19, #0xffff
+   81868:	39402a69 	ldrb	w9, [x19, #10]
+   8186c:	aa1603e0 	mov	x0, x22
+   81870:	3940266a 	ldrb	w10, [x19, #9]
 				(unsigned) pOffset[0],  (unsigned) pOffset[1],  (unsigned) pOffset[2],  (unsigned) pOffset[3],
 				(unsigned) pOffset[4],  (unsigned) pOffset[5],  (unsigned) pOffset[6],  (unsigned) pOffset[7],
 				(unsigned) pOffset[8],  (unsigned) pOffset[9],  (unsigned) pOffset[10], (unsigned) pOffset[11],
 				(unsigned) pOffset[12], (unsigned) pOffset[13], (unsigned) pOffset[14], (unsigned) pOffset[15]);
 
 		pOffset += 16;
-   818d4:	91004273 	add	x19, x19, #0x10
+   81874:	91004273 	add	x19, x19, #0x10
 		printf(
-   818d8:	385f826b 	ldurb	w11, [x19, #-8]
-   818dc:	385f726c 	ldurb	w12, [x19, #-9]
-   818e0:	385f626d 	ldurb	w13, [x19, #-10]
-   818e4:	385f5267 	ldurb	w7, [x19, #-11]
-   818e8:	385f4266 	ldurb	w6, [x19, #-12]
-   818ec:	385f3265 	ldurb	w5, [x19, #-13]
-   818f0:	385f2264 	ldurb	w4, [x19, #-14]
-   818f4:	385f1263 	ldurb	w3, [x19, #-15]
-   818f8:	385f0262 	ldurb	w2, [x19, #-16]
-   818fc:	b90003ed 	str	w13, [sp]
-   81900:	b9000bec 	str	w12, [sp, #8]
-   81904:	b90013eb 	str	w11, [sp, #16]
-   81908:	b9001bea 	str	w10, [sp, #24]
-   8190c:	b90023e9 	str	w9, [sp, #32]
-   81910:	b9002be8 	str	w8, [sp, #40]
-   81914:	385ff268 	ldurb	w8, [x19, #-1]
-   81918:	385fe269 	ldurb	w9, [x19, #-2]
-   8191c:	385fd26a 	ldurb	w10, [x19, #-3]
-   81920:	385fc26b 	ldurb	w11, [x19, #-4]
-   81924:	b90033eb 	str	w11, [sp, #48]
-   81928:	b9003bea 	str	w10, [sp, #56]
-   8192c:	b90043e9 	str	w9, [sp, #64]
-   81930:	b9004be8 	str	w8, [sp, #72]
-   81934:	97ffff39 	bl	81618 <tfp_printf>
+   81878:	385f826b 	ldurb	w11, [x19, #-8]
+   8187c:	385f726c 	ldurb	w12, [x19, #-9]
+   81880:	385f626d 	ldurb	w13, [x19, #-10]
+   81884:	385f5267 	ldurb	w7, [x19, #-11]
+   81888:	385f4266 	ldurb	w6, [x19, #-12]
+   8188c:	385f3265 	ldurb	w5, [x19, #-13]
+   81890:	385f2264 	ldurb	w4, [x19, #-14]
+   81894:	385f1263 	ldurb	w3, [x19, #-15]
+   81898:	385f0262 	ldurb	w2, [x19, #-16]
+   8189c:	b90003ed 	str	w13, [sp]
+   818a0:	b9000bec 	str	w12, [sp, #8]
+   818a4:	b90013eb 	str	w11, [sp, #16]
+   818a8:	b9001bea 	str	w10, [sp, #24]
+   818ac:	b90023e9 	str	w9, [sp, #32]
+   818b0:	b9002be8 	str	w8, [sp, #40]
+   818b4:	385ff268 	ldurb	w8, [x19, #-1]
+   818b8:	385fe269 	ldurb	w9, [x19, #-2]
+   818bc:	385fd26a 	ldurb	w10, [x19, #-3]
+   818c0:	385fc26b 	ldurb	w11, [x19, #-4]
+   818c4:	b90033eb 	str	w11, [sp, #48]
+   818c8:	b9003bea 	str	w10, [sp, #56]
+   818cc:	b90043e9 	str	w9, [sp, #64]
+   818d0:	b9004be8 	str	w8, [sp, #72]
+   818d4:	97ffff39 	bl	815b8 <tfp_printf>
 		if (nBytes >= 16)
-   81938:	eb14027f 	cmp	x19, x20
-   8193c:	54fffbe1 	b.ne	818b8 <debug_hexdump+0x50>  // b.any
+   818d8:	eb14027f 	cmp	x19, x20
+   818dc:	54fffbe1 	b.ne	81858 <debug_hexdump+0x50>  // b.any
 		else
 		{
 			nBytes = 0;
 		}
 	}
 }
-   81940:	a9457bfd 	ldp	x29, x30, [sp, #80]
-   81944:	a94653f3 	ldp	x19, x20, [sp, #96]
-   81948:	a9475bf5 	ldp	x21, x22, [sp, #112]
-   8194c:	910203ff 	add	sp, sp, #0x80
-   81950:	d65f03c0 	ret
-   81954:	d503201f 	nop
+   818e0:	a9457bfd 	ldp	x29, x30, [sp, #80]
+   818e4:	a94653f3 	ldp	x19, x20, [sp, #96]
+   818e8:	a9475bf5 	ldp	x21, x22, [sp, #112]
+   818ec:	910203ff 	add	sp, sp, #0x80
+   818f0:	d65f03c0 	ret
+   818f4:	d503201f 	nop
 
-0000000000081958 <assertion_failed>:
+00000000000818f8 <assertion_failed>:
 
 // circle assert.cpp        
 void assertion_failed (const char *pExpr, const char *pFile, unsigned nLine) {
-   81958:	aa0103e4 	mov	x4, x1
-   8195c:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   818f8:	aa0103e4 	mov	x4, x1
+   818fc:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
     printf("assertion failed: %s at %s:%u\n", pExpr, pFile, nLine); 
-   81960:	aa0003e1 	mov	x1, x0
-   81964:	2a0203e3 	mov	w3, w2
-   81968:	aa0403e2 	mov	x2, x4
+   81900:	aa0003e1 	mov	x1, x0
+   81904:	2a0203e3 	mov	w3, w2
+   81908:	aa0403e2 	mov	x2, x4
 void assertion_failed (const char *pExpr, const char *pFile, unsigned nLine) {
-   8196c:	910003fd 	mov	x29, sp
+   8190c:	910003fd 	mov	x29, sp
     printf("assertion failed: %s at %s:%u\n", pExpr, pFile, nLine); 
-   81970:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81974:	911c0000 	add	x0, x0, #0x700
-   81978:	97ffff28 	bl	81618 <tfp_printf>
+   81910:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81914:	911a4000 	add	x0, x0, #0x690
+   81918:	97ffff28 	bl	815b8 <tfp_printf>
     panic("kernel hangs"); 
-   8197c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81980:	911c8000 	add	x0, x0, #0x720
-   81984:	97ffffab 	bl	81830 <panic>
+   8191c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81920:	911ac000 	add	x0, x0, #0x6b0
+   81924:	97ffffab 	bl	817d0 <panic>
 
-0000000000081988 <memset>:
+0000000000081928 <memset>:
 
 /* c: the fill value (byte); n: size, in bytes */
 void *memset(void *dst, int c, uint n) {
     char *cdst = (char *)dst;
     int i;
     for (i = 0; i < n; i++) {
-   81988:	34000122 	cbz	w2, 819ac <memset+0x24>
-   8198c:	51000442 	sub	w2, w2, #0x1
-   81990:	12001c23 	and	w3, w1, #0xff
-   81994:	91000442 	add	x2, x2, #0x1
-   81998:	aa0003e1 	mov	x1, x0
-   8199c:	8b000042 	add	x2, x2, x0
+   81928:	34000122 	cbz	w2, 8194c <memset+0x24>
+   8192c:	51000442 	sub	w2, w2, #0x1
+   81930:	12001c23 	and	w3, w1, #0xff
+   81934:	91000442 	add	x2, x2, #0x1
+   81938:	aa0003e1 	mov	x1, x0
+   8193c:	8b000042 	add	x2, x2, x0
         cdst[i] = c;
-   819a0:	38001423 	strb	w3, [x1], #1
+   81940:	38001423 	strb	w3, [x1], #1
     for (i = 0; i < n; i++) {
-   819a4:	eb02003f 	cmp	x1, x2
-   819a8:	54ffffc1 	b.ne	819a0 <memset+0x18>  // b.any
+   81944:	eb02003f 	cmp	x1, x2
+   81948:	54ffffc1 	b.ne	81940 <memset+0x18>  // b.any
     }
     return dst;
 }
-   819ac:	d65f03c0 	ret
+   8194c:	d65f03c0 	ret
 
-00000000000819b0 <memzero>:
+0000000000081950 <memzero>:
     for (i = 0; i < n; i++) {
-   819b0:	34000101 	cbz	w1, 819d0 <memzero+0x20>
-   819b4:	51000421 	sub	w1, w1, #0x1
-   819b8:	8b010002 	add	x2, x0, x1
-   819bc:	d503201f 	nop
+   81950:	34000101 	cbz	w1, 81970 <memzero+0x20>
+   81954:	51000421 	sub	w1, w1, #0x1
+   81958:	8b010002 	add	x2, x0, x1
+   8195c:	d503201f 	nop
         cdst[i] = c;
-   819c0:	3900001f 	strb	wzr, [x0]
+   81960:	3900001f 	strb	wzr, [x0]
     for (i = 0; i < n; i++) {
-   819c4:	eb02001f 	cmp	x0, x2
-   819c8:	91000400 	add	x0, x0, #0x1
-   819cc:	54ffffa1 	b.ne	819c0 <memzero+0x10>  // b.any
+   81964:	eb02001f 	cmp	x0, x2
+   81968:	91000400 	add	x0, x0, #0x1
+   8196c:	54ffffa1 	b.ne	81960 <memzero+0x10>  // b.any
 
 void memzero(void *dst, uint n) {
     memset(dst, 0, n);
 }
-   819d0:	d65f03c0 	ret
-   819d4:	d503201f 	nop
+   81970:	d65f03c0 	ret
+   81974:	d503201f 	nop
 
-00000000000819d8 <memcmp>:
+0000000000081978 <memcmp>:
 int memcmp(const void *v1, const void *v2, uint n) {
     const uchar *s1, *s2;
 
     s1 = v1;
     s2 = v2;
     while (n-- > 0) {
-   819d8:	51000446 	sub	w6, w2, #0x1
-   819dc:	340001a2 	cbz	w2, 81a10 <memcmp+0x38>
-   819e0:	d2800002 	mov	x2, #0x0                   	// #0
-   819e4:	14000004 	b	819f4 <memcmp+0x1c>
-   819e8:	eb0200df 	cmp	x6, x2
-   819ec:	aa0503e2 	mov	x2, x5
-   819f0:	54000100 	b.eq	81a10 <memcmp+0x38>  // b.none
+   81978:	51000446 	sub	w6, w2, #0x1
+   8197c:	340001a2 	cbz	w2, 819b0 <memcmp+0x38>
+   81980:	d2800002 	mov	x2, #0x0                   	// #0
+   81984:	14000004 	b	81994 <memcmp+0x1c>
+   81988:	eb0200df 	cmp	x6, x2
+   8198c:	aa0503e2 	mov	x2, x5
+   81990:	54000100 	b.eq	819b0 <memcmp+0x38>  // b.none
         if (*s1 != *s2)
-   819f4:	38626803 	ldrb	w3, [x0, x2]
-   819f8:	91000445 	add	x5, x2, #0x1
-   819fc:	38626824 	ldrb	w4, [x1, x2]
-   81a00:	6b04007f 	cmp	w3, w4
-   81a04:	54ffff20 	b.eq	819e8 <memcmp+0x10>  // b.none
+   81994:	38626803 	ldrb	w3, [x0, x2]
+   81998:	91000445 	add	x5, x2, #0x1
+   8199c:	38626824 	ldrb	w4, [x1, x2]
+   819a0:	6b04007f 	cmp	w3, w4
+   819a4:	54ffff20 	b.eq	81988 <memcmp+0x10>  // b.none
             return *s1 - *s2;
-   81a08:	4b040060 	sub	w0, w3, w4
+   819a8:	4b040060 	sub	w0, w3, w4
         s1++, s2++;
     }
 
     return 0;
 }
-   81a0c:	d65f03c0 	ret
+   819ac:	d65f03c0 	ret
     return 0;
-   81a10:	52800000 	mov	w0, #0x0                   	// #0
+   819b0:	52800000 	mov	w0, #0x0                   	// #0
 }
-   81a14:	d65f03c0 	ret
+   819b4:	d65f03c0 	ret
 
-0000000000081a18 <memmove>:
+00000000000819b8 <memmove>:
 void *
 memmove(void *dst, const void *src, uint n) {
     const char *s;
     char *d;
 
     if (n == 0)
-   81a18:	34000162 	cbz	w2, 81a44 <memmove+0x2c>
+   819b8:	34000162 	cbz	w2, 819e4 <memmove+0x2c>
         return dst;
 
     s = src;
     d = dst;
     if (s < d && s + n > d) {
-   81a1c:	eb00003f 	cmp	x1, x0
-   81a20:	51000445 	sub	w5, w2, #0x1
-   81a24:	54000123 	b.cc	81a48 <memmove+0x30>  // b.lo, b.ul, b.last
+   819bc:	eb00003f 	cmp	x1, x0
+   819c0:	51000445 	sub	w5, w2, #0x1
+   819c4:	54000123 	b.cc	819e8 <memmove+0x30>  // b.lo, b.ul, b.last
 memmove(void *dst, const void *src, uint n) {
-   81a28:	d2800002 	mov	x2, #0x0                   	// #0
-   81a2c:	d503201f 	nop
+   819c8:	d2800002 	mov	x2, #0x0                   	// #0
+   819cc:	d503201f 	nop
         d += n;
         while (n-- > 0)
             *--d = *--s;
     } else
         while (n-- > 0)
             *d++ = *s++;
-   81a30:	38626824 	ldrb	w4, [x1, x2]
+   819d0:	38626824 	ldrb	w4, [x1, x2]
         while (n-- > 0)
-   81a34:	eb0200bf 	cmp	x5, x2
+   819d4:	eb0200bf 	cmp	x5, x2
             *d++ = *s++;
-   81a38:	38226804 	strb	w4, [x0, x2]
+   819d8:	38226804 	strb	w4, [x0, x2]
         while (n-- > 0)
-   81a3c:	91000442 	add	x2, x2, #0x1
-   81a40:	54ffff81 	b.ne	81a30 <memmove+0x18>  // b.any
+   819dc:	91000442 	add	x2, x2, #0x1
+   819e0:	54ffff81 	b.ne	819d0 <memmove+0x18>  // b.any
 
     return dst;
 }
-   81a44:	d65f03c0 	ret
+   819e4:	d65f03c0 	ret
     if (s < d && s + n > d) {
-   81a48:	2a0203e2 	mov	w2, w2
-   81a4c:	8b020024 	add	x4, x1, x2
-   81a50:	eb00009f 	cmp	x4, x0
-   81a54:	54fffea9 	b.ls	81a28 <memmove+0x10>  // b.plast
+   819e8:	2a0203e2 	mov	w2, w2
+   819ec:	8b020024 	add	x4, x1, x2
+   819f0:	eb00009f 	cmp	x4, x0
+   819f4:	54fffea9 	b.ls	819c8 <memmove+0x10>  // b.plast
         d += n;
-   81a58:	92800021 	mov	x1, #0xfffffffffffffffe    	// #-2
-   81a5c:	8b020002 	add	x2, x0, x2
+   819f8:	92800021 	mov	x1, #0xfffffffffffffffe    	// #-2
+   819fc:	8b020002 	add	x2, x0, x2
         while (n-- > 0)
-   81a60:	cb254025 	sub	x5, x1, w5, uxtw
+   81a00:	cb254025 	sub	x5, x1, w5, uxtw
         d += n;
-   81a64:	92800001 	mov	x1, #0xffffffffffffffff    	// #-1
+   81a04:	92800001 	mov	x1, #0xffffffffffffffff    	// #-1
             *--d = *--s;
-   81a68:	38616883 	ldrb	w3, [x4, x1]
-   81a6c:	38216843 	strb	w3, [x2, x1]
+   81a08:	38616883 	ldrb	w3, [x4, x1]
+   81a0c:	38216843 	strb	w3, [x2, x1]
         while (n-- > 0)
-   81a70:	d1000421 	sub	x1, x1, #0x1
-   81a74:	eb0100bf 	cmp	x5, x1
-   81a78:	54ffff81 	b.ne	81a68 <memmove+0x50>  // b.any
+   81a10:	d1000421 	sub	x1, x1, #0x1
+   81a14:	eb0100bf 	cmp	x5, x1
+   81a18:	54ffff81 	b.ne	81a08 <memmove+0x50>  // b.any
 }
-   81a7c:	d65f03c0 	ret
+   81a1c:	d65f03c0 	ret
 
-0000000000081a80 <memcpy>:
+0000000000081a20 <memcpy>:
 // memcpy exists to placate GCC.  Use memmove.
 // NB: gcc will gen code to invoke memcpy for struct assignment. so the
 // func below must be right (e.g. cannot assume any alignment)
 void *
 memcpy(void *dst, const void *src, uint n) {
     return memmove(dst, src, n);
-   81a80:	17ffffe6 	b	81a18 <memmove>
-   81a84:	d503201f 	nop
+   81a20:	17ffffe6 	b	819b8 <memmove>
+   81a24:	d503201f 	nop
 
-0000000000081a88 <strncmp>:
+0000000000081a28 <strncmp>:
 }
 
 int strncmp(const char *p, const char *q, uint n) {
     while (n > 0 && *p && *p == *q)
-   81a88:	340001e2 	cbz	w2, 81ac4 <strncmp+0x3c>
-   81a8c:	51000446 	sub	w6, w2, #0x1
-   81a90:	d2800002 	mov	x2, #0x0                   	// #0
-   81a94:	14000005 	b	81aa8 <strncmp+0x20>
-   81a98:	54000121 	b.ne	81abc <strncmp+0x34>  // b.any
-   81a9c:	eb0200df 	cmp	x6, x2
-   81aa0:	aa0503e2 	mov	x2, x5
-   81aa4:	54000100 	b.eq	81ac4 <strncmp+0x3c>  // b.none
-   81aa8:	38626803 	ldrb	w3, [x0, x2]
-   81aac:	91000445 	add	x5, x2, #0x1
-   81ab0:	38626824 	ldrb	w4, [x1, x2]
-   81ab4:	6b04007f 	cmp	w3, w4
-   81ab8:	35ffff03 	cbnz	w3, 81a98 <strncmp+0x10>
+   81a28:	340001e2 	cbz	w2, 81a64 <strncmp+0x3c>
+   81a2c:	51000446 	sub	w6, w2, #0x1
+   81a30:	d2800002 	mov	x2, #0x0                   	// #0
+   81a34:	14000005 	b	81a48 <strncmp+0x20>
+   81a38:	54000121 	b.ne	81a5c <strncmp+0x34>  // b.any
+   81a3c:	eb0200df 	cmp	x6, x2
+   81a40:	aa0503e2 	mov	x2, x5
+   81a44:	54000100 	b.eq	81a64 <strncmp+0x3c>  // b.none
+   81a48:	38626803 	ldrb	w3, [x0, x2]
+   81a4c:	91000445 	add	x5, x2, #0x1
+   81a50:	38626824 	ldrb	w4, [x1, x2]
+   81a54:	6b04007f 	cmp	w3, w4
+   81a58:	35ffff03 	cbnz	w3, 81a38 <strncmp+0x10>
         n--, p++, q++;
     if (n == 0)
         return 0;
     return (uchar)*p - (uchar)*q;
-   81abc:	4b040060 	sub	w0, w3, w4
+   81a5c:	4b040060 	sub	w0, w3, w4
 }
-   81ac0:	d65f03c0 	ret
+   81a60:	d65f03c0 	ret
         return 0;
-   81ac4:	52800000 	mov	w0, #0x0                   	// #0
+   81a64:	52800000 	mov	w0, #0x0                   	// #0
 }
-   81ac8:	d65f03c0 	ret
-   81acc:	d503201f 	nop
+   81a68:	d65f03c0 	ret
+   81a6c:	d503201f 	nop
 
-0000000000081ad0 <strncpy>:
+0000000000081a70 <strncpy>:
 char *
 strncpy(char *s, const char *t, int n) {
     char *os;
 
     os = s;
     while (n-- > 0 && (*s++ = *t++) != 0)
-   81ad0:	aa0103e5 	mov	x5, x1
-   81ad4:	aa0003e1 	mov	x1, x0
-   81ad8:	14000004 	b	81ae8 <strncpy+0x18>
-   81adc:	384014a4 	ldrb	w4, [x5], #1
-   81ae0:	38001424 	strb	w4, [x1], #1
-   81ae4:	340000a4 	cbz	w4, 81af8 <strncpy+0x28>
-   81ae8:	2a0203e3 	mov	w3, w2
-   81aec:	51000442 	sub	w2, w2, #0x1
-   81af0:	7100007f 	cmp	w3, #0x0
-   81af4:	54ffff4c 	b.gt	81adc <strncpy+0xc>
+   81a70:	aa0103e5 	mov	x5, x1
+   81a74:	aa0003e1 	mov	x1, x0
+   81a78:	14000004 	b	81a88 <strncpy+0x18>
+   81a7c:	384014a4 	ldrb	w4, [x5], #1
+   81a80:	38001424 	strb	w4, [x1], #1
+   81a84:	340000a4 	cbz	w4, 81a98 <strncpy+0x28>
+   81a88:	2a0203e3 	mov	w3, w2
+   81a8c:	51000442 	sub	w2, w2, #0x1
+   81a90:	7100007f 	cmp	w3, #0x0
+   81a94:	54ffff4c 	b.gt	81a7c <strncpy+0xc>
         ;
     while (n-- > 0)
-   81af8:	7100005f 	cmp	w2, #0x0
-   81afc:	0b010063 	add	w3, w3, w1
-   81b00:	540000ed 	b.le	81b1c <strncpy+0x4c>
-   81b04:	d503201f 	nop
+   81a98:	7100005f 	cmp	w2, #0x0
+   81a9c:	0b010063 	add	w3, w3, w1
+   81aa0:	540000ed 	b.le	81abc <strncpy+0x4c>
+   81aa4:	d503201f 	nop
         *s++ = 0;
-   81b08:	3800143f 	strb	wzr, [x1], #1
+   81aa8:	3800143f 	strb	wzr, [x1], #1
     while (n-- > 0)
-   81b0c:	2a2103e2 	mvn	w2, w1
-   81b10:	0b030042 	add	w2, w2, w3
-   81b14:	7100005f 	cmp	w2, #0x0
-   81b18:	54ffff8c 	b.gt	81b08 <strncpy+0x38>
+   81aac:	2a2103e2 	mvn	w2, w1
+   81ab0:	0b030042 	add	w2, w2, w3
+   81ab4:	7100005f 	cmp	w2, #0x0
+   81ab8:	54ffff8c 	b.gt	81aa8 <strncpy+0x38>
     return os;
 }
-   81b1c:	d65f03c0 	ret
+   81abc:	d65f03c0 	ret
 
-0000000000081b20 <safestrcpy>:
+0000000000081ac0 <safestrcpy>:
 char *
 safestrcpy(char *s, const char *t, int n) {
     char *os;
 
     os = s;
     if (n <= 0)
-   81b20:	7100005f 	cmp	w2, #0x0
-   81b24:	5400016d 	b.le	81b50 <safestrcpy+0x30>
-   81b28:	51000442 	sub	w2, w2, #0x1
-   81b2c:	aa0003e3 	mov	x3, x0
-   81b30:	8b020024 	add	x4, x1, x2
-   81b34:	14000004 	b	81b44 <safestrcpy+0x24>
+   81ac0:	7100005f 	cmp	w2, #0x0
+   81ac4:	5400016d 	b.le	81af0 <safestrcpy+0x30>
+   81ac8:	51000442 	sub	w2, w2, #0x1
+   81acc:	aa0003e3 	mov	x3, x0
+   81ad0:	8b020024 	add	x4, x1, x2
+   81ad4:	14000004 	b	81ae4 <safestrcpy+0x24>
         return os;
     while (--n > 0 && (*s++ = *t++) != 0)
-   81b38:	38401422 	ldrb	w2, [x1], #1
-   81b3c:	38001462 	strb	w2, [x3], #1
-   81b40:	34000062 	cbz	w2, 81b4c <safestrcpy+0x2c>
-   81b44:	eb04003f 	cmp	x1, x4
-   81b48:	54ffff81 	b.ne	81b38 <safestrcpy+0x18>  // b.any
+   81ad8:	38401422 	ldrb	w2, [x1], #1
+   81adc:	38001462 	strb	w2, [x3], #1
+   81ae0:	34000062 	cbz	w2, 81aec <safestrcpy+0x2c>
+   81ae4:	eb04003f 	cmp	x1, x4
+   81ae8:	54ffff81 	b.ne	81ad8 <safestrcpy+0x18>  // b.any
         ;
     *s = 0;
-   81b4c:	3900007f 	strb	wzr, [x3]
+   81aec:	3900007f 	strb	wzr, [x3]
     return os;
 }
-   81b50:	d65f03c0 	ret
-   81b54:	d503201f 	nop
+   81af0:	d65f03c0 	ret
+   81af4:	d503201f 	nop
 
-0000000000081b58 <strlen>:
+0000000000081af8 <strlen>:
 
 int strlen(const char *s) {
     int n;
 
     for (n = 0; s[n]; n++)
-   81b58:	39400001 	ldrb	w1, [x0]
-   81b5c:	34000101 	cbz	w1, 81b7c <strlen+0x24>
-   81b60:	d1000403 	sub	x3, x0, #0x1
-   81b64:	d2800021 	mov	x1, #0x1                   	// #1
-   81b68:	2a0103e0 	mov	w0, w1
-   81b6c:	91000421 	add	x1, x1, #0x1
-   81b70:	38616862 	ldrb	w2, [x3, x1]
-   81b74:	35ffffa2 	cbnz	w2, 81b68 <strlen+0x10>
+   81af8:	39400001 	ldrb	w1, [x0]
+   81afc:	34000101 	cbz	w1, 81b1c <strlen+0x24>
+   81b00:	d1000403 	sub	x3, x0, #0x1
+   81b04:	d2800021 	mov	x1, #0x1                   	// #1
+   81b08:	2a0103e0 	mov	w0, w1
+   81b0c:	91000421 	add	x1, x1, #0x1
+   81b10:	38616862 	ldrb	w2, [x3, x1]
+   81b14:	35ffffa2 	cbnz	w2, 81b08 <strlen+0x10>
         ;
     return n;
 }
-   81b78:	d65f03c0 	ret
+   81b18:	d65f03c0 	ret
     for (n = 0; s[n]; n++)
-   81b7c:	52800000 	mov	w0, #0x0                   	// #0
+   81b1c:	52800000 	mov	w0, #0x0                   	// #0
 }
-   81b80:	d65f03c0 	ret
-   81b84:	d503201f 	nop
+   81b20:	d65f03c0 	ret
+   81b24:	d503201f 	nop
 
-0000000000081b88 <atoi>:
+0000000000081b28 <atoi>:
 
 int atoi(const char *s) {
     int n;
     n = 0;
     while ('0' <= *s && *s <= '9')
-   81b88:	39400002 	ldrb	w2, [x0]
+   81b28:	39400002 	ldrb	w2, [x0]
 int atoi(const char *s) {
-   81b8c:	aa0003e3 	mov	x3, x0
+   81b2c:	aa0003e3 	mov	x3, x0
     while ('0' <= *s && *s <= '9')
-   81b90:	5100c040 	sub	w0, w2, #0x30
-   81b94:	12001c00 	and	w0, w0, #0xff
-   81b98:	7100241f 	cmp	w0, #0x9
+   81b30:	5100c040 	sub	w0, w2, #0x30
+   81b34:	12001c00 	and	w0, w0, #0xff
+   81b38:	7100241f 	cmp	w0, #0x9
     n = 0;
-   81b9c:	52800000 	mov	w0, #0x0                   	// #0
+   81b3c:	52800000 	mov	w0, #0x0                   	// #0
     while ('0' <= *s && *s <= '9')
-   81ba0:	54000148 	b.hi	81bc8 <atoi+0x40>  // b.pmore
-   81ba4:	d503201f 	nop
+   81b40:	54000148 	b.hi	81b68 <atoi+0x40>  // b.pmore
+   81b44:	d503201f 	nop
         n = n * 10 + *s++ - '0';
-   81ba8:	0b000800 	add	w0, w0, w0, lsl #2
-   81bac:	0b000440 	add	w0, w2, w0, lsl #1
+   81b48:	0b000800 	add	w0, w0, w0, lsl #2
+   81b4c:	0b000440 	add	w0, w2, w0, lsl #1
     while ('0' <= *s && *s <= '9')
-   81bb0:	38401c62 	ldrb	w2, [x3, #1]!
+   81b50:	38401c62 	ldrb	w2, [x3, #1]!
         n = n * 10 + *s++ - '0';
-   81bb4:	5100c000 	sub	w0, w0, #0x30
+   81b54:	5100c000 	sub	w0, w0, #0x30
     while ('0' <= *s && *s <= '9')
-   81bb8:	5100c041 	sub	w1, w2, #0x30
-   81bbc:	12001c21 	and	w1, w1, #0xff
-   81bc0:	7100243f 	cmp	w1, #0x9
-   81bc4:	54ffff29 	b.ls	81ba8 <atoi+0x20>  // b.plast
+   81b58:	5100c041 	sub	w1, w2, #0x30
+   81b5c:	12001c21 	and	w1, w1, #0xff
+   81b60:	7100243f 	cmp	w1, #0x9
+   81b64:	54ffff29 	b.ls	81b48 <atoi+0x20>  // b.plast
     return n;
 }
-   81bc8:	d65f03c0 	ret
-   81bcc:	00000000 	udf	#0
+   81b68:	d65f03c0 	ret
+   81b6c:	00000000 	udf	#0
 
-0000000000081bd0 <initlock>:
+0000000000081b70 <initlock>:
 
 // #define SPINLOCK_DEBUG 1
 
 void initlock(struct spinlock *lk, char *name) {
     lk->name = name;
     lk->locked = 0;
-   81bd0:	b900001f 	str	wzr, [x0]
+   81b70:	b900001f 	str	wzr, [x0]
     lk->cpu = 0;
-   81bd4:	a900fc01 	stp	x1, xzr, [x0, #8]
+   81b74:	a900fc01 	stp	x1, xzr, [x0, #8]
 }
-   81bd8:	d65f03c0 	ret
-   81bdc:	d503201f 	nop
+   81b78:	d65f03c0 	ret
+   81b7c:	d503201f 	nop
 
-0000000000081be0 <holding>:
+0000000000081b80 <holding>:
 // Check whether this cpu is holding the lock.
 // Interrupts must be off.
 int holding(struct spinlock *lk) {
     int r;
     // W("%lx %s %d", (unsigned long)lk, lk->name, lk->locked);
     r = (lk->locked && lk->cpu == mycpu());
-   81be0:	b9400001 	ldr	w1, [x0]
-   81be4:	340000e1 	cbz	w1, 81c00 <holding+0x20>
-   81be8:	900000a1 	adrp	x1, 95000 <wordsworth.1725+0xee10>
-   81bec:	f9400802 	ldr	x2, [x0, #16]
-   81bf0:	f9478c20 	ldr	x0, [x1, #3864]
-   81bf4:	eb00005f 	cmp	x2, x0
-   81bf8:	1a9f17e0 	cset	w0, eq	// eq = none
+   81b80:	b9400001 	ldr	w1, [x0]
+   81b84:	340000e1 	cbz	w1, 81ba0 <holding+0x20>
+   81b88:	900000a1 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   81b8c:	f9400802 	ldr	x2, [x0, #16]
+   81b90:	f9478020 	ldr	x0, [x1, #3840]
+   81b94:	eb00005f 	cmp	x2, x0
+   81b98:	1a9f17e0 	cset	w0, eq	// eq = none
     return r;
 }
-   81bfc:	d65f03c0 	ret
+   81b9c:	d65f03c0 	ret
     r = (lk->locked && lk->cpu == mycpu());
-   81c00:	52800000 	mov	w0, #0x0                   	// #0
+   81ba0:	52800000 	mov	w0, #0x0                   	// #0
 }
-   81c04:	d65f03c0 	ret
+   81ba4:	d65f03c0 	ret
 
-0000000000081c08 <push_off>:
+0000000000081ba8 <push_off>:
 // it takes two pop_off()s to undo two push_off()s.  Also, if interrupts
 // are initially off, then push_off, pop_off leaves them off.
 //
 // "intena" is the irq status (on/off) when noff (i.e. the "balance") is 0.
 // hence, the irq status must be restored when noff reaches 0 again
 void push_off(void) {
-   81c08:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   81c0c:	910003fd 	mov	x29, sp
-   81c10:	f9000bf3 	str	x19, [sp, #16]
+   81ba8:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   81bac:	910003fd 	mov	x29, sp
+   81bb0:	f9000bf3 	str	x19, [sp, #16]
 void irq_vector_init( void );    
 void enable_irq( void ); 
 void disable_irq( void );
 int is_irq_masked(void); 
 /*return 1 if irq enabled, 0 otherwise*/
 static inline int intr_get(void) {return 1-is_irq_masked();}; 
-   81c14:	940010b9 	bl	85ef8 <is_irq_masked>
-   81c18:	2a0003f3 	mov	w19, w0
+   81bb4:	940010d1 	bl	85ef8 <is_irq_masked>
+   81bb8:	2a0003f3 	mov	w19, w0
     int old = intr_get();
 
     disable_irq();
-   81c1c:	940010b5 	bl	85ef0 <disable_irq>
+   81bbc:	940010cd 	bl	85ef0 <disable_irq>
     if (mycpu()->noff == 0)
-   81c20:	900000a1 	adrp	x1, 95000 <wordsworth.1725+0xee10>
-   81c24:	f9478c23 	ldr	x3, [x1, #3864]
-   81c28:	b9400862 	ldr	w2, [x3, #8]
-   81c2c:	35000082 	cbnz	w2, 81c3c <push_off+0x34>
-   81c30:	52800020 	mov	w0, #0x1                   	// #1
-   81c34:	4b130000 	sub	w0, w0, w19
+   81bc0:	900000a1 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   81bc4:	f9478023 	ldr	x3, [x1, #3840]
+   81bc8:	b9400862 	ldr	w2, [x3, #8]
+   81bcc:	35000082 	cbnz	w2, 81bdc <push_off+0x34>
+   81bd0:	52800020 	mov	w0, #0x1                   	// #1
+   81bd4:	4b130000 	sub	w0, w0, w19
         mycpu()->intena = old;
-   81c38:	b9000c60 	str	w0, [x3, #12]
+   81bd8:	b9000c60 	str	w0, [x3, #12]
     mycpu()->noff += 1;
-   81c3c:	f9478c21 	ldr	x1, [x1, #3864]
-   81c40:	11000442 	add	w2, w2, #0x1
+   81bdc:	f9478021 	ldr	x1, [x1, #3840]
+   81be0:	11000442 	add	w2, w2, #0x1
 }
-   81c44:	f9400bf3 	ldr	x19, [sp, #16]
+   81be4:	f9400bf3 	ldr	x19, [sp, #16]
     mycpu()->noff += 1;
-   81c48:	b9000822 	str	w2, [x1, #8]
+   81be8:	b9000822 	str	w2, [x1, #8]
 }
-   81c4c:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   81c50:	d65f03c0 	ret
-   81c54:	d503201f 	nop
+   81bec:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81bf0:	d65f03c0 	ret
+   81bf4:	d503201f 	nop
 
-0000000000081c58 <acquire>:
+0000000000081bf8 <acquire>:
 void acquire(struct spinlock *lk) {
-   81c58:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   81c5c:	910003fd 	mov	x29, sp
-   81c60:	a90153f3 	stp	x19, x20, [sp, #16]
-   81c64:	aa0003f3 	mov	x19, x0
-   81c68:	900000b4 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   81bf8:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   81bfc:	910003fd 	mov	x29, sp
+   81c00:	a90153f3 	stp	x19, x20, [sp, #16]
+   81c04:	aa0003f3 	mov	x19, x0
+   81c08:	900000b4 	adrp	x20, 95000 <wordsworth.1725+0xee10>
     push_off(); // disable interrupts to avoid deadlock.
-   81c6c:	97ffffe7 	bl	81c08 <push_off>
+   81c0c:	97ffffe7 	bl	81ba8 <push_off>
     if (!lk || holding(lk)) {
-   81c70:	b4000273 	cbz	x19, 81cbc <acquire+0x64>
+   81c10:	b4000273 	cbz	x19, 81c5c <acquire+0x64>
     r = (lk->locked && lk->cpu == mycpu());
-   81c74:	b9400261 	ldr	w1, [x19]
-   81c78:	900000b4 	adrp	x20, 95000 <wordsworth.1725+0xee10>
-   81c7c:	34000101 	cbz	w1, 81c9c <acquire+0x44>
-   81c80:	f9478e80 	ldr	x0, [x20, #3864]
-   81c84:	f9400a62 	ldr	x2, [x19, #16]
-   81c88:	eb00005f 	cmp	x2, x0
-   81c8c:	54000180 	b.eq	81cbc <acquire+0x64>  // b.none
+   81c14:	b9400261 	ldr	w1, [x19]
+   81c18:	900000b4 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   81c1c:	34000101 	cbz	w1, 81c3c <acquire+0x44>
+   81c20:	f9478280 	ldr	x0, [x20, #3840]
+   81c24:	f9400a62 	ldr	x2, [x19, #16]
+   81c28:	eb00005f 	cmp	x2, x0
+   81c2c:	54000180 	b.eq	81c5c <acquire+0x64>  // b.none
     while (lk->locked == 1)
-   81c90:	7100043f 	cmp	w1, #0x1
-   81c94:	54000041 	b.ne	81c9c <acquire+0x44>  // b.any
-   81c98:	14000000 	b	81c98 <acquire+0x40>
+   81c30:	7100043f 	cmp	w1, #0x1
+   81c34:	54000041 	b.ne	81c3c <acquire+0x44>  // b.any
+   81c38:	14000000 	b	81c38 <acquire+0x40>
     lk->locked = 1;
-   81c9c:	52800020 	mov	w0, #0x1                   	// #1
-   81ca0:	b9000260 	str	w0, [x19]
+   81c3c:	52800020 	mov	w0, #0x1                   	// #1
+   81c40:	b9000260 	str	w0, [x19]
     __sync_synchronize();
-   81ca4:	d5033bbf 	dmb	ish
+   81c44:	d5033bbf 	dmb	ish
     lk->cpu = mycpu();
-   81ca8:	f9478e94 	ldr	x20, [x20, #3864]
-   81cac:	f9000a74 	str	x20, [x19, #16]
+   81c48:	f9478294 	ldr	x20, [x20, #3840]
+   81c4c:	f9000a74 	str	x20, [x19, #16]
 }
-   81cb0:	a94153f3 	ldp	x19, x20, [sp, #16]
-   81cb4:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   81cb8:	d65f03c0 	ret
+   81c50:	a94153f3 	ldp	x19, x20, [sp, #16]
+   81c54:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81c58:	d65f03c0 	ret
         printf("%s ", lk->name);
-   81cbc:	f9400661 	ldr	x1, [x19, #8]
-   81cc0:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81cc4:	911cc000 	add	x0, x0, #0x730
-   81cc8:	97fffe54 	bl	81618 <tfp_printf>
+   81c5c:	f9400661 	ldr	x1, [x19, #8]
+   81c60:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81c64:	911b0000 	add	x0, x0, #0x6c0
+   81c68:	97fffe54 	bl	815b8 <tfp_printf>
         panic("acquire");
-   81ccc:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81cd0:	911ce000 	add	x0, x0, #0x738
-   81cd4:	97fffed7 	bl	81830 <panic>
-   81cd8:	b9400261 	ldr	w1, [x19]
-   81cdc:	17ffffed 	b	81c90 <acquire+0x38>
+   81c6c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81c70:	911b2000 	add	x0, x0, #0x6c8
+   81c74:	97fffed7 	bl	817d0 <panic>
+   81c78:	b9400261 	ldr	w1, [x19]
+   81c7c:	17ffffed 	b	81c30 <acquire+0x38>
 
-0000000000081ce0 <pop_off>:
+0000000000081c80 <pop_off>:
 
 // pop_off must be done with a positive counter (noff)
 //  i.e. it's a bug if irq is already enabled and then pop_off
 void pop_off(void) {
-   81ce0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   81ce4:	910003fd 	mov	x29, sp
-   81ce8:	a90153f3 	stp	x19, x20, [sp, #16]
-   81cec:	94001083 	bl	85ef8 <is_irq_masked>
+   81c80:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   81c84:	910003fd 	mov	x29, sp
+   81c88:	a90153f3 	stp	x19, x20, [sp, #16]
+   81c8c:	9400109b 	bl	85ef8 <is_irq_masked>
     struct cpu *c = mycpu();
     if (intr_get())
-   81cf0:	7100041f 	cmp	w0, #0x1
-   81cf4:	54000080 	b.eq	81d04 <pop_off+0x24>  // b.none
+   81c90:	7100041f 	cmp	w0, #0x1
+   81c94:	54000080 	b.eq	81ca4 <pop_off+0x24>  // b.none
         panic("pop_off - interruptible");
-   81cf8:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81cfc:	911d0000 	add	x0, x0, #0x740
-   81d00:	97fffecc 	bl	81830 <panic>
+   81c98:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81c9c:	911b4000 	add	x0, x0, #0x6d0
+   81ca0:	97fffecc 	bl	817d0 <panic>
     if (c->noff < 1)
-   81d04:	900000b3 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   81d08:	f9478e74 	ldr	x20, [x19, #3864]
-   81d0c:	b9400a80 	ldr	w0, [x20, #8]
-   81d10:	7100001f 	cmp	w0, #0x0
-   81d14:	5400014d 	b.le	81d3c <pop_off+0x5c>
+   81ca4:	900000b3 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   81ca8:	f9478274 	ldr	x20, [x19, #3840]
+   81cac:	b9400a80 	ldr	w0, [x20, #8]
+   81cb0:	7100001f 	cmp	w0, #0x0
+   81cb4:	5400014d 	b.le	81cdc <pop_off+0x5c>
         panic("pop_off");
     c->noff -= 1;
-   81d18:	f9478e73 	ldr	x19, [x19, #3864]
-   81d1c:	51000400 	sub	w0, w0, #0x1
-   81d20:	b9000a60 	str	w0, [x19, #8]
+   81cb8:	f9478273 	ldr	x19, [x19, #3840]
+   81cbc:	51000400 	sub	w0, w0, #0x1
+   81cc0:	b9000a60 	str	w0, [x19, #8]
     if (c->noff == 0 && c->intena)
-   81d24:	35000060 	cbnz	w0, 81d30 <pop_off+0x50>
-   81d28:	b9400e60 	ldr	w0, [x19, #12]
-   81d2c:	35000120 	cbnz	w0, 81d50 <pop_off+0x70>
+   81cc4:	35000060 	cbnz	w0, 81cd0 <pop_off+0x50>
+   81cc8:	b9400e60 	ldr	w0, [x19, #12]
+   81ccc:	35000120 	cbnz	w0, 81cf0 <pop_off+0x70>
         enable_irq();
 }
-   81d30:	a94153f3 	ldp	x19, x20, [sp, #16]
-   81d34:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   81d38:	d65f03c0 	ret
+   81cd0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   81cd4:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81cd8:	d65f03c0 	ret
         panic("pop_off");
-   81d3c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81d40:	911d6000 	add	x0, x0, #0x758
-   81d44:	97fffebb 	bl	81830 <panic>
-   81d48:	b9400a80 	ldr	w0, [x20, #8]
-   81d4c:	17fffff3 	b	81d18 <pop_off+0x38>
+   81cdc:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81ce0:	911ba000 	add	x0, x0, #0x6e8
+   81ce4:	97fffebb 	bl	817d0 <panic>
+   81ce8:	b9400a80 	ldr	w0, [x20, #8]
+   81cec:	17fffff3 	b	81cb8 <pop_off+0x38>
 }
-   81d50:	a94153f3 	ldp	x19, x20, [sp, #16]
-   81d54:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81cf0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   81cf4:	a8c27bfd 	ldp	x29, x30, [sp], #32
         enable_irq();
-   81d58:	14001064 	b	85ee8 <enable_irq>
-   81d5c:	d503201f 	nop
+   81cf8:	1400107c 	b	85ee8 <enable_irq>
+   81cfc:	d503201f 	nop
 
-0000000000081d60 <release>:
+0000000000081d00 <release>:
 void release(struct spinlock *lk) {
-   81d60:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   81d64:	910003fd 	mov	x29, sp
-   81d68:	f9000bf3 	str	x19, [sp, #16]
-   81d6c:	aa0003f3 	mov	x19, x0
+   81d00:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   81d04:	910003fd 	mov	x29, sp
+   81d08:	f9000bf3 	str	x19, [sp, #16]
+   81d0c:	aa0003f3 	mov	x19, x0
     if (!lk || !holding(lk)) {
-   81d70:	b4000060 	cbz	x0, 81d7c <release+0x1c>
+   81d10:	b4000060 	cbz	x0, 81d1c <release+0x1c>
     r = (lk->locked && lk->cpu == mycpu());
-   81d74:	b9400000 	ldr	w0, [x0]
-   81d78:	350001c0 	cbnz	w0, 81db0 <release+0x50>
+   81d14:	b9400000 	ldr	w0, [x0]
+   81d18:	350001c0 	cbnz	w0, 81d50 <release+0x50>
         printf("%s ", lk->name);
-   81d7c:	f9400661 	ldr	x1, [x19, #8]
-   81d80:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81d84:	911cc000 	add	x0, x0, #0x730
-   81d88:	97fffe24 	bl	81618 <tfp_printf>
+   81d1c:	f9400661 	ldr	x1, [x19, #8]
+   81d20:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81d24:	911b0000 	add	x0, x0, #0x6c0
+   81d28:	97fffe24 	bl	815b8 <tfp_printf>
         panic("release");
-   81d8c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81d90:	911d8000 	add	x0, x0, #0x760
-   81d94:	97fffea7 	bl	81830 <panic>
+   81d2c:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81d30:	911bc000 	add	x0, x0, #0x6f0
+   81d34:	97fffea7 	bl	817d0 <panic>
     lk->cpu = 0;
-   81d98:	f9000a7f 	str	xzr, [x19, #16]
+   81d38:	f9000a7f 	str	xzr, [x19, #16]
     __sync_synchronize();
-   81d9c:	d5033bbf 	dmb	ish
+   81d3c:	d5033bbf 	dmb	ish
     lk->locked = 0;
-   81da0:	b900027f 	str	wzr, [x19]
+   81d40:	b900027f 	str	wzr, [x19]
 }
-   81da4:	f9400bf3 	ldr	x19, [sp, #16]
-   81da8:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81d44:	f9400bf3 	ldr	x19, [sp, #16]
+   81d48:	a8c27bfd 	ldp	x29, x30, [sp], #32
     pop_off();
-   81dac:	17ffffcd 	b	81ce0 <pop_off>
+   81d4c:	17ffffcd 	b	81c80 <pop_off>
     r = (lk->locked && lk->cpu == mycpu());
-   81db0:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   81db4:	f9400a61 	ldr	x1, [x19, #16]
-   81db8:	f9478c00 	ldr	x0, [x0, #3864]
-   81dbc:	eb00003f 	cmp	x1, x0
-   81dc0:	54fffde1 	b.ne	81d7c <release+0x1c>  // b.any
+   81d50:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   81d54:	f9400a61 	ldr	x1, [x19, #16]
+   81d58:	f9478000 	ldr	x0, [x0, #3840]
+   81d5c:	eb00003f 	cmp	x1, x0
+   81d60:	54fffde1 	b.ne	81d1c <release+0x1c>  // b.any
     lk->cpu = 0;
-   81dc4:	f9000a7f 	str	xzr, [x19, #16]
+   81d64:	f9000a7f 	str	xzr, [x19, #16]
     __sync_synchronize();
-   81dc8:	d5033bbf 	dmb	ish
+   81d68:	d5033bbf 	dmb	ish
     lk->locked = 0;
-   81dcc:	b900027f 	str	wzr, [x19]
+   81d6c:	b900027f 	str	wzr, [x19]
 }
-   81dd0:	f9400bf3 	ldr	x19, [sp, #16]
-   81dd4:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   81d70:	f9400bf3 	ldr	x19, [sp, #16]
+   81d74:	a8c27bfd 	ldp	x29, x30, [sp], #32
     pop_off();
-   81dd8:	17ffffc2 	b	81ce0 <pop_off>
-   81ddc:	00000000 	udf	#0
+   81d78:	17ffffc2 	b	81c80 <pop_off>
+   81d7c:	00000000 	udf	#0
 
-0000000000081de0 <adjust_sys_timer>:
+0000000000081d80 <adjust_sys_timer>:
 
 // we have added/removed a virt timer, now adjust the phys timer accordingly
 // caller must hold timerlock
 // return 0 on success
 static int adjust_sys_timer(void)
 {
-   81de0:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
-   81de4:	910003fd 	mov	x29, sp
-   81de8:	a90363f7 	stp	x23, x24, [sp, #48]
+   81d80:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   81d84:	910003fd 	mov	x29, sp
+   81d88:	a90363f7 	stp	x23, x24, [sp, #48]
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81dec:	d2860118 	mov	x24, #0x3008                	// #12296
-   81df0:	d2860097 	mov	x23, #0x3004                	// #12292
-   81df4:	f2a7e018 	movk	x24, #0x3f00, lsl #16
-   81df8:	f2a7e017 	movk	x23, #0x3f00, lsl #16
+   81d8c:	d2860118 	mov	x24, #0x3008                	// #12296
+   81d90:	d2860097 	mov	x23, #0x3004                	// #12292
+   81d94:	f2a7e018 	movk	x24, #0x3f00, lsl #16
+   81d98:	f2a7e017 	movk	x23, #0x3f00, lsl #16
 {
-   81dfc:	a90153f3 	stp	x19, x20, [sp, #16]
-   81e00:	b00000b3 	adrp	x19, 96000 <stdout_putf>
-   81e04:	d2800014 	mov	x20, #0x0                   	// #0
-   81e08:	91004273 	add	x19, x19, #0x10
-   81e0c:	a9025bf5 	stp	x21, x22, [sp, #32]
+   81d9c:	a90153f3 	stp	x19, x20, [sp, #16]
+   81da0:	b00000b3 	adrp	x19, 96000 <stdout_putf>
+   81da4:	d2800014 	mov	x20, #0x0                   	// #0
+   81da8:	91004273 	add	x19, x19, #0x10
+   81dac:	a9025bf5 	stp	x21, x22, [sp, #32]
 	unsigned long next = (unsigned long)-1; // upcoming firing time, to be determined
-   81e10:	92800015 	mov	x21, #0xffffffffffffffff    	// #-1
+   81db0:	92800015 	mov	x21, #0xffffffffffffffff    	// #-1
 				(*timers[tt].handler)(tt, timers[tt].param, timers[tt].context);
 				timers[tt].handler = 0; 
 			} else 
 				/* give "next" a bit slack so current_counter() won't exceed
 				"next" before we retuen from this function */
 				next = timers[tt].elapseat + 10*1000 /*10ms*/;
-   81e14:	d284e216 	mov	x22, #0x2710                	// #10000
-   81e18:	14000008 	b	81e38 <adjust_sys_timer+0x58>
+   81db4:	d284e216 	mov	x22, #0x2710                	// #10000
+   81db8:	14000008 	b	81dd8 <adjust_sys_timer+0x58>
 				(*timers[tt].handler)(tt, timers[tt].param, timers[tt].context);
-   81e1c:	a9410a61 	ldp	x1, x2, [x19, #16]
-   81e20:	d63f0060 	blr	x3
+   81dbc:	a9410a61 	ldp	x1, x2, [x19, #16]
+   81dc0:	d63f0060 	blr	x3
 				timers[tt].handler = 0; 
-   81e24:	f900027f 	str	xzr, [x19]
+   81dc4:	f900027f 	str	xzr, [x19]
 	for (int tt = 0; tt < N_TIMERS; tt++) {
-   81e28:	91000694 	add	x20, x20, #0x1
-   81e2c:	91008273 	add	x19, x19, #0x20
-   81e30:	f100529f 	cmp	x20, #0x14
-   81e34:	54000240 	b.eq	81e7c <adjust_sys_timer+0x9c>  // b.none
+   81dc8:	91000694 	add	x20, x20, #0x1
+   81dcc:	91008273 	add	x19, x19, #0x20
+   81dd0:	f100529f 	cmp	x20, #0x14
+   81dd4:	54000240 	b.eq	81e1c <adjust_sys_timer+0x9c>  // b.none
 		if (!timers[tt].handler)
-   81e38:	f9400263 	ldr	x3, [x19]
-   81e3c:	b4ffff63 	cbz	x3, 81e28 <adjust_sys_timer+0x48>
+   81dd8:	f9400263 	ldr	x3, [x19]
+   81ddc:	b4ffff63 	cbz	x3, 81dc8 <adjust_sys_timer+0x48>
 		if (timers[tt].elapseat < next) {
-   81e40:	f9400661 	ldr	x1, [x19, #8]
-   81e44:	eb15003f 	cmp	x1, x21
-   81e48:	54ffff02 	b.cs	81e28 <adjust_sys_timer+0x48>  // b.hs, b.nlast
+   81de0:	f9400661 	ldr	x1, [x19, #8]
+   81de4:	eb15003f 	cmp	x1, x21
+   81de8:	54ffff02 	b.cs	81dc8 <adjust_sys_timer+0x48>  // b.hs, b.nlast
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81e4c:	b9400302 	ldr	w2, [x24]
+   81dec:	b9400302 	ldr	w2, [x24]
 				(*timers[tt].handler)(tt, timers[tt].param, timers[tt].context);
-   81e50:	aa1403e0 	mov	x0, x20
+   81df0:	aa1403e0 	mov	x0, x20
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81e54:	b94002e4 	ldr	w4, [x23]
-   81e58:	2a0403e4 	mov	w4, w4
-   81e5c:	aa028082 	orr	x2, x4, x2, lsl #32
+   81df4:	b94002e4 	ldr	w4, [x23]
+   81df8:	2a0403e4 	mov	w4, w4
+   81dfc:	aa028082 	orr	x2, x4, x2, lsl #32
 			if (timers[tt].elapseat < current_counter()) {
-   81e60:	eb02003f 	cmp	x1, x2
-   81e64:	54fffdc3 	b.cc	81e1c <adjust_sys_timer+0x3c>  // b.lo, b.ul, b.last
-   81e68:	91000694 	add	x20, x20, #0x1
+   81e00:	eb02003f 	cmp	x1, x2
+   81e04:	54fffdc3 	b.cc	81dbc <adjust_sys_timer+0x3c>  // b.lo, b.ul, b.last
+   81e08:	91000694 	add	x20, x20, #0x1
 				next = timers[tt].elapseat + 10*1000 /*10ms*/;
-   81e6c:	8b160035 	add	x21, x1, x22
+   81e0c:	8b160035 	add	x21, x1, x22
 	for (int tt = 0; tt < N_TIMERS; tt++) {
-   81e70:	91008273 	add	x19, x19, #0x20
-   81e74:	f100529f 	cmp	x20, #0x14
-   81e78:	54fffe01 	b.ne	81e38 <adjust_sys_timer+0x58>  // b.any
+   81e10:	91008273 	add	x19, x19, #0x20
+   81e14:	f100529f 	cmp	x20, #0x14
+   81e18:	54fffe01 	b.ne	81dd8 <adjust_sys_timer+0x58>  // b.any
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81e7c:	d2860100 	mov	x0, #0x3008                	// #12296
-   81e80:	d2860081 	mov	x1, #0x3004                	// #12292
-   81e84:	f2a7e000 	movk	x0, #0x3f00, lsl #16
-   81e88:	f2a7e001 	movk	x1, #0x3f00, lsl #16
-   81e8c:	b9400000 	ldr	w0, [x0]
-   81e90:	b9400021 	ldr	w1, [x1]
-   81e94:	2a0103e1 	mov	w1, w1
-   81e98:	aa008020 	orr	x0, x1, x0, lsl #32
+   81e1c:	d2860100 	mov	x0, #0x3008                	// #12296
+   81e20:	d2860081 	mov	x1, #0x3004                	// #12292
+   81e24:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   81e28:	f2a7e001 	movk	x1, #0x3f00, lsl #16
+   81e2c:	b9400000 	ldr	w0, [x0]
+   81e30:	b9400021 	ldr	w1, [x1]
+   81e34:	2a0103e1 	mov	w1, w1
+   81e38:	aa008020 	orr	x0, x1, x0, lsl #32
 		}
 	}
 
 	// a known bug (TBD. may occur: when qemu is very slow, or on actual hw
 	// timer expired, but handler not called?? should we handle it?
 	BUG_ON(current_counter() > next); 
-   81e9c:	eb0002bf 	cmp	x21, x0
-   81ea0:	54000183 	b.cc	81ed0 <adjust_sys_timer+0xf0>  // b.lo, b.ul, b.last
+   81e3c:	eb0002bf 	cmp	x21, x0
+   81e40:	54000183 	b.cc	81e70 <adjust_sys_timer+0xf0>  // b.lo, b.ul, b.last
 
 	// if no valid handlers, we leave TIMER_C1 as is. it will trigger a timer
 	// irq when wrapping around (~4000 sec later). this is fine as our isr
 	// compares 64bit counters. 
 	if (next == 0xFFFFFFFFFFFFFFFF) 
-   81ea4:	b10006bf 	cmn	x21, #0x1
-   81ea8:	54000080 	b.eq	81eb8 <adjust_sys_timer+0xd8>  // b.none
+   81e44:	b10006bf 	cmn	x21, #0x1
+   81e48:	54000080 	b.eq	81e58 <adjust_sys_timer+0xd8>  // b.none
 		return 0; 
 
 	// the compare reg is only 32 bits so we have to ignore the high 32 bits of
 	// the counter. this is ok even if the low 32 bits have to wrap around 
 	// in order to match TIMER_C1 (cf the isr)	
 	put32(TIMER_C1, (unsigned)next);  
-   81eac:	d2860200 	mov	x0, #0x3010                	// #12304
-   81eb0:	f2a7e000 	movk	x0, #0x3f00, lsl #16
-   81eb4:	b9000015 	str	w21, [x0]
+   81e4c:	d2860200 	mov	x0, #0x3010                	// #12304
+   81e50:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   81e54:	b9000015 	str	w21, [x0]
 
 	return 0; 
 }
-   81eb8:	52800000 	mov	w0, #0x0                   	// #0
-   81ebc:	a94153f3 	ldp	x19, x20, [sp, #16]
-   81ec0:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   81ec4:	a94363f7 	ldp	x23, x24, [sp, #48]
-   81ec8:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   81ecc:	d65f03c0 	ret
+   81e58:	52800000 	mov	w0, #0x0                   	// #0
+   81e5c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   81e60:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   81e64:	a94363f7 	ldp	x23, x24, [sp, #48]
+   81e68:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   81e6c:	d65f03c0 	ret
 	BUG_ON(current_counter() > next); 
-   81ed0:	b0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   81ed4:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   81ed8:	911da021 	add	x1, x1, #0x768
-   81edc:	911dc000 	add	x0, x0, #0x770
-   81ee0:	52801ae2 	mov	w2, #0xd7                  	// #215
-   81ee4:	97fffe9d 	bl	81958 <assertion_failed>
+   81e70:	b0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   81e74:	b0000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   81e78:	911be021 	add	x1, x1, #0x6f8
+   81e7c:	911c0000 	add	x0, x0, #0x700
+   81e80:	52801ae2 	mov	w2, #0xd7                  	// #215
+   81e84:	97fffe9d 	bl	818f8 <assertion_failed>
 	if (next == 0xFFFFFFFFFFFFFFFF) 
-   81ee8:	17fffff1 	b	81eac <adjust_sys_timer+0xcc>
-   81eec:	d503201f 	nop
+   81e88:	17fffff1 	b	81e4c <adjust_sys_timer+0xcc>
+   81e8c:	d503201f 	nop
 
-0000000000081ef0 <generic_timer_init>:
+0000000000081e90 <generic_timer_init>:
 	asm volatile("msr CNTP_CTL_EL0, %0" : : "r"(1));
-   81ef0:	52800020 	mov	w0, #0x1                   	// #1
-   81ef4:	d51be220 	msr	cntp_ctl_el0, x0
+   81e90:	52800020 	mov	w0, #0x1                   	// #1
+   81e94:	d51be220 	msr	cntp_ctl_el0, x0
 	generic_timer_reset(interval);	// kickoff 1st time firing
-   81ef8:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   81e98:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
 	asm volatile("msr CNTP_TVAL_EL0, %0" : : "r"(intv));  // TVAL is 32bit, signed
-   81efc:	b9457800 	ldr	w0, [x0, #1400]
-   81f00:	d51be200 	msr	cntp_tval_el0, x0
+   81e9c:	b9456000 	ldr	w0, [x0, #1376]
+   81ea0:	d51be200 	msr	cntp_tval_el0, x0
 }
-   81f04:	d65f03c0 	ret
+   81ea4:	d65f03c0 	ret
 
-0000000000081f08 <handle_generic_timer_irq>:
+0000000000081ea8 <handle_generic_timer_irq>:
 	generic_timer_reset(interval);
-   81f08:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   81ea8:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
 	asm volatile("msr CNTP_TVAL_EL0, %0" : : "r"(intv));  // TVAL is 32bit, signed
-   81f0c:	b9457800 	ldr	w0, [x0, #1400]
-   81f10:	d51be200 	msr	cntp_tval_el0, x0
+   81eac:	b9456000 	ldr	w0, [x0, #1376]
+   81eb0:	d51be200 	msr	cntp_tval_el0, x0
 	timer_tick();
-   81f14:	1400074f 	b	83c50 <timer_tick>
+   81eb4:	14000751 	b	83bf8 <timer_tick>
 
-0000000000081f18 <ms_delay>:
+0000000000081eb8 <ms_delay>:
 	delay(cycles_per_ms * ms); 
-   81f18:	52944bc1 	mov	w1, #0xa25e                	// #41566
-   81f1c:	72a000c1 	movk	w1, #0x6, lsl #16
-   81f20:	1b017c00 	mul	w0, w0, w1
-   81f24:	14001017 	b	85f80 <delay>
+   81eb8:	52944bc1 	mov	w1, #0xa25e                	// #41566
+   81ebc:	72a000c1 	movk	w1, #0x6, lsl #16
+   81ec0:	1b017c00 	mul	w0, w0, w1
+   81ec4:	1400102f 	b	85f80 <delay>
 
-0000000000081f28 <us_delay>:
+0000000000081ec8 <us_delay>:
 	delay(cycles_per_us * us); 
-   81f28:	52803641 	mov	w1, #0x1b2                 	// #434
-   81f2c:	1b017c00 	mul	w0, w0, w1
-   81f30:	14001014 	b	85f80 <delay>
-   81f34:	d503201f 	nop
+   81ec8:	52803641 	mov	w1, #0x1b2                 	// #434
+   81ecc:	1b017c00 	mul	w0, w0, w1
+   81ed0:	1400102c 	b	85f80 <delay>
+   81ed4:	d503201f 	nop
 
-0000000000081f38 <current_time>:
+0000000000081ed8 <current_time>:
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81f38:	d2860102 	mov	x2, #0x3008                	// #12296
-   81f3c:	d2860085 	mov	x5, #0x3004                	// #12292
-   81f40:	f2a7e002 	movk	x2, #0x3f00, lsl #16
-   81f44:	f2a7e005 	movk	x5, #0x3f00, lsl #16
+   81ed8:	d2860102 	mov	x2, #0x3008                	// #12296
+   81edc:	d2860085 	mov	x5, #0x3004                	// #12292
+   81ee0:	f2a7e002 	movk	x2, #0x3f00, lsl #16
+   81ee4:	f2a7e005 	movk	x5, #0x3f00, lsl #16
 	*sec =  (unsigned) (cur / TICKPERSEC); 
-   81f48:	d2869b63 	mov	x3, #0x34db                	// #13531
+   81ee8:	d2869b63 	mov	x3, #0x34db                	// #13531
 	cur -= (*sec) * TICKPERSEC; 
-   81f4c:	52884804 	mov	w4, #0x4240                	// #16960
+   81eec:	52884804 	mov	w4, #0x4240                	// #16960
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81f50:	b9400042 	ldr	w2, [x2]
+   81ef0:	b9400042 	ldr	w2, [x2]
 	*sec =  (unsigned) (cur / TICKPERSEC); 
-   81f54:	f2baf6c3 	movk	x3, #0xd7b6, lsl #16
+   81ef4:	f2baf6c3 	movk	x3, #0xd7b6, lsl #16
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81f58:	b94000a5 	ldr	w5, [x5]
+   81ef8:	b94000a5 	ldr	w5, [x5]
 	*sec =  (unsigned) (cur / TICKPERSEC); 
-   81f5c:	f2dbd043 	movk	x3, #0xde82, lsl #32
-   81f60:	f2e86363 	movk	x3, #0x431b, lsl #48
+   81efc:	f2dbd043 	movk	x3, #0xde82, lsl #32
+   81f00:	f2e86363 	movk	x3, #0x431b, lsl #48
 	cur -= (*sec) * TICKPERSEC; 
-   81f64:	72a001e4 	movk	w4, #0xf, lsl #16
+   81f04:	72a001e4 	movk	w4, #0xf, lsl #16
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81f68:	2a0503e5 	mov	w5, w5
+   81f08:	2a0503e5 	mov	w5, w5
 	*msec = (unsigned) (cur / TICKPERMS);	
-   81f6c:	d29ef9e6 	mov	x6, #0xf7cf                	// #63439
+   81f0c:	d29ef9e6 	mov	x6, #0xf7cf                	// #63439
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   81f70:	aa0280a2 	orr	x2, x5, x2, lsl #32
+   81f10:	aa0280a2 	orr	x2, x5, x2, lsl #32
 	*msec = (unsigned) (cur / TICKPERMS);	
-   81f74:	f2bc6a66 	movk	x6, #0xe353, lsl #16
-   81f78:	f2d374a6 	movk	x6, #0x9ba5, lsl #32
-   81f7c:	f2e41886 	movk	x6, #0x20c4, lsl #48
+   81f14:	f2bc6a66 	movk	x6, #0xe353, lsl #16
+   81f18:	f2d374a6 	movk	x6, #0x9ba5, lsl #32
+   81f1c:	f2e41886 	movk	x6, #0x20c4, lsl #48
 	*sec =  (unsigned) (cur / TICKPERSEC); 
-   81f80:	9bc37c43 	umulh	x3, x2, x3
-   81f84:	d352fc63 	lsr	x3, x3, #18
-   81f88:	b9000003 	str	w3, [x0]
+   81f20:	9bc37c43 	umulh	x3, x2, x3
+   81f24:	d352fc63 	lsr	x3, x3, #18
+   81f28:	b9000003 	str	w3, [x0]
 	cur -= (*sec) * TICKPERSEC; 
-   81f8c:	1b037c83 	mul	w3, w4, w3
-   81f90:	cb234042 	sub	x2, x2, w3, uxtw
+   81f2c:	1b037c83 	mul	w3, w4, w3
+   81f30:	cb234042 	sub	x2, x2, w3, uxtw
 	*msec = (unsigned) (cur / TICKPERMS);	
-   81f94:	d343fc42 	lsr	x2, x2, #3
-   81f98:	9bc67c42 	umulh	x2, x2, x6
-   81f9c:	d344fc42 	lsr	x2, x2, #4
-   81fa0:	b9000022 	str	w2, [x1]
+   81f34:	d343fc42 	lsr	x2, x2, #3
+   81f38:	9bc67c42 	umulh	x2, x2, x6
+   81f3c:	d344fc42 	lsr	x2, x2, #4
+   81f40:	b9000022 	str	w2, [x1]
 }
-   81fa4:	d65f03c0 	ret
+   81f44:	d65f03c0 	ret
 
-0000000000081fa8 <sys_timer_init>:
+0000000000081f48 <sys_timer_init>:
 {
-   81fa8:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   81f48:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
 	initlock(&timerlock, "timer"); 
-   81fac:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   81fb0:	b0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   81f4c:	900000a0 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   81f50:	b0000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
 {
-   81fb4:	910003fd 	mov	x29, sp
+   81f54:	910003fd 	mov	x29, sp
 	initlock(&timerlock, "timer"); 
-   81fb8:	f9477000 	ldr	x0, [x0, #3808]
-   81fbc:	911e4021 	add	x1, x1, #0x790
-   81fc0:	97ffff04 	bl	81bd0 <initlock>
+   81f58:	f9476400 	ldr	x0, [x0, #3784]
+   81f5c:	911c8021 	add	x1, x1, #0x720
+   81f60:	97ffff04 	bl	81b70 <initlock>
 }
-   81fc4:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   81f64:	a8c17bfd 	ldp	x29, x30, [sp], #16
 	memzero(timers, sizeof(timers)); 	// all field zeros	
-   81fc8:	b00000a0 	adrp	x0, 96000 <stdout_putf>
-   81fcc:	52805001 	mov	w1, #0x280                 	// #640
-   81fd0:	91004000 	add	x0, x0, #0x10
-   81fd4:	17fffe77 	b	819b0 <memzero>
+   81f68:	b00000a0 	adrp	x0, 96000 <stdout_putf>
+   81f6c:	52805001 	mov	w1, #0x280                 	// #640
+   81f70:	91004000 	add	x0, x0, #0x10
+   81f74:	17fffe77 	b	81950 <memzero>
 
-0000000000081fd8 <ktimer_start>:
+0000000000081f78 <ktimer_start>:
 	adjust_sys_timer(); 
 	return t; 
 }
 
 int ktimer_start(unsigned delayms, TKernelTimerHandler *handler, 
 		void *para, void *context) {
-   81fd8:	a9ba7bfd 	stp	x29, x30, [sp, #-96]!
-   81fdc:	910003fd 	mov	x29, sp
-   81fe0:	a90363f7 	stp	x23, x24, [sp, #48]
+   81f78:	a9ba7bfd 	stp	x29, x30, [sp, #-96]!
+   81f7c:	910003fd 	mov	x29, sp
+   81f80:	a90363f7 	stp	x23, x24, [sp, #48]
 	int ret;
 	acquire(&timerlock); 
-   81fe4:	900000b7 	adrp	x23, 95000 <wordsworth.1725+0xee10>
+   81f84:	900000b7 	adrp	x23, 95000 <wordsworth.1725+0xee10>
 		void *para, void *context) {
-   81fe8:	2a0003f8 	mov	w24, w0
+   81f88:	2a0003f8 	mov	w24, w0
 	acquire(&timerlock); 
-   81fec:	f94772e0 	ldr	x0, [x23, #3808]
+   81f8c:	f94766e0 	ldr	x0, [x23, #3784]
 		void *para, void *context) {
-   81ff0:	a90153f3 	stp	x19, x20, [sp, #16]
-   81ff4:	aa0103f4 	mov	x20, x1
-   81ff8:	a9025bf5 	stp	x21, x22, [sp, #32]
-   81ffc:	aa0203f5 	mov	x21, x2
-   82000:	aa0303f6 	mov	x22, x3
-   82004:	f90023f9 	str	x25, [sp, #64]
+   81f90:	a90153f3 	stp	x19, x20, [sp, #16]
+   81f94:	aa0103f4 	mov	x20, x1
+   81f98:	a9025bf5 	stp	x21, x22, [sp, #32]
+   81f9c:	aa0203f5 	mov	x21, x2
+   81fa0:	aa0303f6 	mov	x22, x3
+   81fa4:	f90023f9 	str	x25, [sp, #64]
 	acquire(&timerlock); 
-   82008:	97ffff14 	bl	81c58 <acquire>
+   81fa8:	97ffff14 	bl	81bf8 <acquire>
 	for (t = 0; t < N_TIMERS; t++) {
-   8200c:	900000b9 	adrp	x25, 96000 <stdout_putf>
-   82010:	52800013 	mov	w19, #0x0                   	// #0
-   82014:	91004320 	add	x0, x25, #0x10
-   82018:	14000004 	b	82028 <ktimer_start+0x50>
-   8201c:	11000673 	add	w19, w19, #0x1
-   82020:	7100527f 	cmp	w19, #0x14
-   82024:	54000400 	b.eq	820a4 <ktimer_start+0xcc>  // b.none
+   81fac:	b00000b9 	adrp	x25, 96000 <stdout_putf>
+   81fb0:	52800013 	mov	w19, #0x0                   	// #0
+   81fb4:	91004320 	add	x0, x25, #0x10
+   81fb8:	14000004 	b	81fc8 <ktimer_start+0x50>
+   81fbc:	11000673 	add	w19, w19, #0x1
+   81fc0:	7100527f 	cmp	w19, #0x14
+   81fc4:	54000400 	b.eq	82044 <ktimer_start+0xcc>  // b.none
 		if (timers[t].handler == 0) 
-   82028:	f9400001 	ldr	x1, [x0]
-   8202c:	91008000 	add	x0, x0, #0x20
-   82030:	b5ffff61 	cbnz	x1, 8201c <ktimer_start+0x44>
+   81fc8:	f9400001 	ldr	x1, [x0]
+   81fcc:	91008000 	add	x0, x0, #0x20
+   81fd0:	b5ffff61 	cbnz	x1, 81fbc <ktimer_start+0x44>
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82034:	d2860101 	mov	x1, #0x3008                	// #12296
-   82038:	d2860080 	mov	x0, #0x3004                	// #12292
-   8203c:	f2a7e001 	movk	x1, #0x3f00, lsl #16
-   82040:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   81fd4:	d2860101 	mov	x1, #0x3008                	// #12296
+   81fd8:	d2860080 	mov	x0, #0x3004                	// #12292
+   81fdc:	f2a7e001 	movk	x1, #0x3f00, lsl #16
+   81fe0:	f2a7e000 	movk	x0, #0x3f00, lsl #16
 	BUG_ON(cur + TICKPERMS * delayms < cur); // 64bit counter wraps around??
-   82044:	52807d04 	mov	w4, #0x3e8                 	// #1000
+   81fe4:	52807d04 	mov	w4, #0x3e8                 	// #1000
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82048:	b9400025 	ldr	w5, [x1]
-   8204c:	b9400001 	ldr	w1, [x0]
+   81fe8:	b9400025 	ldr	w5, [x1]
+   81fec:	b9400001 	ldr	w1, [x0]
 	BUG_ON(cur + TICKPERMS * delayms < cur); // 64bit counter wraps around??
-   82050:	1b047f00 	mul	w0, w24, w4
+   81ff0:	1b047f00 	mul	w0, w24, w4
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82054:	2a0103e1 	mov	w1, w1
-   82058:	aa058024 	orr	x4, x1, x5, lsl #32
-   8205c:	ab000084 	adds	x4, x4, x0
-   82060:	54000322 	b.cs	820c4 <ktimer_start+0xec>  // b.hs, b.nlast
+   81ff4:	2a0103e1 	mov	w1, w1
+   81ff8:	aa058024 	orr	x4, x1, x5, lsl #32
+   81ffc:	ab000084 	adds	x4, x4, x0
+   82000:	54000322 	b.cs	82064 <ktimer_start+0xec>  // b.hs, b.nlast
 	timers[t].handler = handler; 
-   82064:	91004339 	add	x25, x25, #0x10
-   82068:	d37b7e61 	ubfiz	x1, x19, #5, #32
-   8206c:	8b010320 	add	x0, x25, x1
-   82070:	f8216b34 	str	x20, [x25, x1]
+   82004:	91004339 	add	x25, x25, #0x10
+   82008:	d37b7e61 	ubfiz	x1, x19, #5, #32
+   8200c:	8b010320 	add	x0, x25, x1
+   82010:	f8216b34 	str	x20, [x25, x1]
 	timers[t].param = para; 
-   82074:	a900d404 	stp	x4, x21, [x0, #8]
+   82014:	a900d404 	stp	x4, x21, [x0, #8]
 	timers[t].context = context; 
-   82078:	f9000c16 	str	x22, [x0, #24]
+   82018:	f9000c16 	str	x22, [x0, #24]
 	adjust_sys_timer(); 
-   8207c:	97ffff59 	bl	81de0 <adjust_sys_timer>
+   8201c:	97ffff59 	bl	81d80 <adjust_sys_timer>
 	ret = ktimer_start_nolock(delayms, handler, para, context); 
 	release(&timerlock); 
-   82080:	f94772e0 	ldr	x0, [x23, #3808]
-   82084:	97ffff37 	bl	81d60 <release>
+   82020:	f94766e0 	ldr	x0, [x23, #3784]
+   82024:	97ffff37 	bl	81d00 <release>
 	return ret;
 }
-   82088:	2a1303e0 	mov	w0, w19
-   8208c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82090:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   82094:	a94363f7 	ldp	x23, x24, [sp, #48]
-   82098:	f94023f9 	ldr	x25, [sp, #64]
-   8209c:	a8c67bfd 	ldp	x29, x30, [sp], #96
-   820a0:	d65f03c0 	ret
+   82028:	2a1303e0 	mov	w0, w19
+   8202c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   82030:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   82034:	a94363f7 	ldp	x23, x24, [sp, #48]
+   82038:	f94023f9 	ldr	x25, [sp, #64]
+   8203c:	a8c67bfd 	ldp	x29, x30, [sp], #96
+   82040:	d65f03c0 	ret
 		E("ktimer_start failed. # max timer reached"); 
-   820a4:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   820a8:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   820ac:	911da021 	add	x1, x1, #0x768
-   820b0:	911f2000 	add	x0, x0, #0x7c8
-   820b4:	52801ec2 	mov	w2, #0xf6                  	// #246
+   82044:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82048:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   8204c:	911be021 	add	x1, x1, #0x6f8
+   82050:	911d6000 	add	x0, x0, #0x758
+   82054:	52801ec2 	mov	w2, #0xf6                  	// #246
 		return -1; 
-   820b8:	12800013 	mov	w19, #0xffffffff            	// #-1
+   82058:	12800013 	mov	w19, #0xffffffff            	// #-1
 		E("ktimer_start failed. # max timer reached"); 
-   820bc:	97fffd57 	bl	81618 <tfp_printf>
+   8205c:	97fffd57 	bl	815b8 <tfp_printf>
 		return -1; 
-   820c0:	17fffff0 	b	82080 <ktimer_start+0xa8>
+   82060:	17fffff0 	b	82020 <ktimer_start+0xa8>
 	BUG_ON(cur + TICKPERMS * delayms < cur); // 64bit counter wraps around??
-   820c4:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   820c8:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   820cc:	911da021 	add	x1, x1, #0x768
-   820d0:	911e6000 	add	x0, x0, #0x798
-   820d4:	52801f62 	mov	w2, #0xfb                  	// #251
-   820d8:	f9002fe4 	str	x4, [sp, #88]
-   820dc:	97fffe1f 	bl	81958 <assertion_failed>
-   820e0:	f9402fe4 	ldr	x4, [sp, #88]
-   820e4:	17ffffe0 	b	82064 <ktimer_start+0x8c>
+   82064:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82068:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   8206c:	911be021 	add	x1, x1, #0x6f8
+   82070:	911ca000 	add	x0, x0, #0x728
+   82074:	52801f62 	mov	w2, #0xfb                  	// #251
+   82078:	f9002fe4 	str	x4, [sp, #88]
+   8207c:	97fffe1f 	bl	818f8 <assertion_failed>
+   82080:	f9402fe4 	ldr	x4, [sp, #88]
+   82084:	17ffffe0 	b	82004 <ktimer_start+0x8c>
 
-00000000000820e8 <ktimer_cancel>:
+0000000000082088 <ktimer_cancel>:
 // return 0 on okay, -1 if no such timer/handler, 
 //	-2 if already fired (will clean anyway)
 int ktimer_cancel(int t) {
 	unsigned long cur; 
 
 	if (t < 0 || t >= N_TIMERS)
-   820e8:	71004c1f 	cmp	w0, #0x13
-   820ec:	54000488 	b.hi	8217c <ktimer_cancel+0x94>  // b.pmore
+   82088:	71004c1f 	cmp	w0, #0x13
+   8208c:	54000488 	b.hi	8211c <ktimer_cancel+0x94>  // b.pmore
 int ktimer_cancel(int t) {
-   820f0:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82090:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   820f4:	d2860101 	mov	x1, #0x3008                	// #12296
-   820f8:	f2a7e001 	movk	x1, #0x3f00, lsl #16
+   82094:	d2860101 	mov	x1, #0x3008                	// #12296
+   82098:	f2a7e001 	movk	x1, #0x3f00, lsl #16
 int ktimer_cancel(int t) {
-   820fc:	910003fd 	mov	x29, sp
-   82100:	a90153f3 	stp	x19, x20, [sp, #16]
-   82104:	2a0003f3 	mov	w19, w0
+   8209c:	910003fd 	mov	x29, sp
+   820a0:	a90153f3 	stp	x19, x20, [sp, #16]
+   820a4:	2a0003f3 	mov	w19, w0
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82108:	d2860080 	mov	x0, #0x3004                	// #12292
-   8210c:	f2a7e000 	movk	x0, #0x3f00, lsl #16
-   82110:	b9400022 	ldr	w2, [x1]
+   820a8:	d2860080 	mov	x0, #0x3004                	// #12292
+   820ac:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   820b0:	b9400022 	ldr	w2, [x1]
 		return -1; 
 
 	cur = current_counter();
 	acquire(&timerlock); 
-   82114:	f0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   820b4:	f0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82118:	b9400001 	ldr	w1, [x0]
+   820b8:	b9400001 	ldr	w1, [x0]
 	acquire(&timerlock); 
-   8211c:	f9477294 	ldr	x20, [x20, #3808]
+   820bc:	f9476694 	ldr	x20, [x20, #3784]
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82120:	2a0103e1 	mov	w1, w1
+   820c0:	2a0103e1 	mov	w1, w1
 int ktimer_cancel(int t) {
-   82124:	f90013f5 	str	x21, [sp, #32]
+   820c4:	f90013f5 	str	x21, [sp, #32]
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   82128:	aa028035 	orr	x21, x1, x2, lsl #32
+   820c8:	aa028035 	orr	x21, x1, x2, lsl #32
 	acquire(&timerlock); 
-   8212c:	aa1403e0 	mov	x0, x20
-   82130:	97fffeca 	bl	81c58 <acquire>
+   820cc:	aa1403e0 	mov	x0, x20
+   820d0:	97fffeca 	bl	81bf8 <acquire>
 
 	if (!timers[t].handler) {	// invalid handler
-   82134:	937b7e61 	sbfiz	x1, x19, #5, #32
-   82138:	900000a2 	adrp	x2, 96000 <stdout_putf>
-   8213c:	91004042 	add	x2, x2, #0x10
-   82140:	8b010043 	add	x3, x2, x1
-   82144:	f8616840 	ldr	x0, [x2, x1]
-   82148:	b40002a0 	cbz	x0, 8219c <ktimer_cancel+0xb4>
+   820d4:	937b7e61 	sbfiz	x1, x19, #5, #32
+   820d8:	900000a2 	adrp	x2, 96000 <stdout_putf>
+   820dc:	91004042 	add	x2, x2, #0x10
+   820e0:	8b010043 	add	x3, x2, x1
+   820e4:	f8616840 	ldr	x0, [x2, x1]
+   820e8:	b40002a0 	cbz	x0, 8213c <ktimer_cancel+0xb4>
 		release(&timerlock); 
 		return -1; 
 	}
 
 	if (timers[t].elapseat < cur) { // already fired? 
-   8214c:	f9400460 	ldr	x0, [x3, #8]
-   82150:	eb15001f 	cmp	x0, x21
-   82154:	54000183 	b.cc	82184 <ktimer_cancel+0x9c>  // b.lo, b.ul, b.last
+   820ec:	f9400460 	ldr	x0, [x3, #8]
+   820f0:	eb15001f 	cmp	x0, x21
+   820f4:	54000183 	b.cc	82124 <ktimer_cancel+0x9c>  // b.lo, b.ul, b.last
 		timers[t].param = 0; 
 		release(&timerlock); 
 		return -2; 
 	}
 
 	timers[t].handler = 0; 
-   82158:	f821685f 	str	xzr, [x2, x1]
+   820f8:	f821685f 	str	xzr, [x2, x1]
 
 	adjust_sys_timer(); 	
-   8215c:	97ffff21 	bl	81de0 <adjust_sys_timer>
+   820fc:	97ffff21 	bl	81d80 <adjust_sys_timer>
 	release(&timerlock);
-   82160:	aa1403e0 	mov	x0, x20
-   82164:	97fffeff 	bl	81d60 <release>
+   82100:	aa1403e0 	mov	x0, x20
+   82104:	97fffeff 	bl	81d00 <release>
 
 	return 0;  
-   82168:	52800000 	mov	w0, #0x0                   	// #0
+   82108:	52800000 	mov	w0, #0x0                   	// #0
 }
-   8216c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82170:	f94013f5 	ldr	x21, [sp, #32]
-   82174:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   82178:	d65f03c0 	ret
+   8210c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   82110:	f94013f5 	ldr	x21, [sp, #32]
+   82114:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   82118:	d65f03c0 	ret
 		return -1; 
-   8217c:	12800000 	mov	w0, #0xffffffff            	// #-1
+   8211c:	12800000 	mov	w0, #0xffffffff            	// #-1
 }
-   82180:	d65f03c0 	ret
+   82120:	d65f03c0 	ret
 		timers[t].handler = 0; 
-   82184:	f821685f 	str	xzr, [x2, x1]
+   82124:	f821685f 	str	xzr, [x2, x1]
 		release(&timerlock); 
-   82188:	aa1403e0 	mov	x0, x20
+   82128:	aa1403e0 	mov	x0, x20
 		timers[t].context = 0; 
-   8218c:	a9017c7f 	stp	xzr, xzr, [x3, #16]
+   8212c:	a9017c7f 	stp	xzr, xzr, [x3, #16]
 		release(&timerlock); 
-   82190:	97fffef4 	bl	81d60 <release>
+   82130:	97fffef4 	bl	81d00 <release>
 		return -2; 
-   82194:	12800020 	mov	w0, #0xfffffffe            	// #-2
-   82198:	17fffff5 	b	8216c <ktimer_cancel+0x84>
+   82134:	12800020 	mov	w0, #0xfffffffe            	// #-2
+   82138:	17fffff5 	b	8210c <ktimer_cancel+0x84>
 		release(&timerlock); 
-   8219c:	aa1403e0 	mov	x0, x20
-   821a0:	97fffef0 	bl	81d60 <release>
+   8213c:	aa1403e0 	mov	x0, x20
+   82140:	97fffef0 	bl	81d00 <release>
 		return -1; 
-   821a4:	12800000 	mov	w0, #0xffffffff            	// #-1
-   821a8:	17fffff1 	b	8216c <ktimer_cancel+0x84>
-   821ac:	d503201f 	nop
+   82144:	12800000 	mov	w0, #0xffffffff            	// #-1
+   82148:	17fffff1 	b	8210c <ktimer_cancel+0x84>
+   8214c:	d503201f 	nop
 
-00000000000821b0 <sys_timer_irq>:
+0000000000082150 <sys_timer_irq>:
 void sys_timer_irq(void) 
 {
 	V("called");	
 
 	// timer1 must have pending match. below could happen under high load. why?
 	BUG_ON(!(get32(TIMER_CS) & TIMER_CS_M1));  
-   821b0:	d2860000 	mov	x0, #0x3000                	// #12288
+   82150:	d2860000 	mov	x0, #0x3000                	// #12288
 {
-   821b4:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82154:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
 	BUG_ON(!(get32(TIMER_CS) & TIMER_CS_M1));  
-   821b8:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   82158:	f2a7e000 	movk	x0, #0x3f00, lsl #16
 {
-   821bc:	910003fd 	mov	x29, sp
+   8215c:	910003fd 	mov	x29, sp
 	BUG_ON(!(get32(TIMER_CS) & TIMER_CS_M1));  
-   821c0:	b9400000 	ldr	w0, [x0]
+   82160:	b9400000 	ldr	w0, [x0]
 {
-   821c4:	a90153f3 	stp	x19, x20, [sp, #16]
-   821c8:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82164:	a90153f3 	stp	x19, x20, [sp, #16]
+   82168:	a9025bf5 	stp	x21, x22, [sp, #32]
 	BUG_ON(!(get32(TIMER_CS) & TIMER_CS_M1));  
-   821cc:	360804c0 	tbz	w0, #1, 82264 <sys_timer_irq+0xb4>
+   8216c:	360804c0 	tbz	w0, #1, 82204 <sys_timer_irq+0xb4>
 	put32(TIMER_CS, TIMER_CS_M1);	// clear timer1 match
-   821d0:	d2860000 	mov	x0, #0x3000                	// #12288
+   82170:	d2860000 	mov	x0, #0x3000                	// #12288
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   821d4:	d2860102 	mov	x2, #0x3008                	// #12296
+   82174:	d2860102 	mov	x2, #0x3008                	// #12296
 	put32(TIMER_CS, TIMER_CS_M1);	// clear timer1 match
-   821d8:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   82178:	f2a7e000 	movk	x0, #0x3f00, lsl #16
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   821dc:	d2860081 	mov	x1, #0x3004                	// #12292
+   8217c:	d2860081 	mov	x1, #0x3004                	// #12292
 	put32(TIMER_CS, TIMER_CS_M1);	// clear timer1 match
-   821e0:	52800043 	mov	w3, #0x2                   	// #2
+   82180:	52800043 	mov	w3, #0x2                   	// #2
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   821e4:	f2a7e002 	movk	x2, #0x3f00, lsl #16
-   821e8:	f2a7e001 	movk	x1, #0x3f00, lsl #16
+   82184:	f2a7e002 	movk	x2, #0x3f00, lsl #16
+   82188:	f2a7e001 	movk	x1, #0x3f00, lsl #16
 	put32(TIMER_CS, TIMER_CS_M1);	// clear timer1 match
-   821ec:	b9000003 	str	w3, [x0]
+   8218c:	b9000003 	str	w3, [x0]
 
 	unsigned long cur = current_counter(); 
 
 	acquire(&timerlock); 
-   821f0:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
-   821f4:	900000b3 	adrp	x19, 96000 <stdout_putf>
+   82190:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
+   82194:	900000b3 	adrp	x19, 96000 <stdout_putf>
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   821f8:	b9400055 	ldr	w21, [x2]
-   821fc:	91004273 	add	x19, x19, #0x10
-   82200:	b9400021 	ldr	w1, [x1]
+   82198:	b9400055 	ldr	w21, [x2]
+   8219c:	91004273 	add	x19, x19, #0x10
+   821a0:	b9400021 	ldr	w1, [x1]
 	acquire(&timerlock); 
-   82204:	d2800014 	mov	x20, #0x0                   	// #0
-   82208:	f94772c0 	ldr	x0, [x22, #3808]
+   821a4:	d2800014 	mov	x20, #0x0                   	// #0
+   821a8:	f94766c0 	ldr	x0, [x22, #3784]
 	return ((unsigned long) get32(TIMER_CHI) << 32) | get32(TIMER_CLO); 
-   8220c:	2a0103e1 	mov	w1, w1
-   82210:	aa158035 	orr	x21, x1, x21, lsl #32
+   821ac:	2a0103e1 	mov	w1, w1
+   821b0:	aa158035 	orr	x21, x1, x21, lsl #32
 	acquire(&timerlock); 
-   82214:	97fffe91 	bl	81c58 <acquire>
+   821b4:	97fffe91 	bl	81bf8 <acquire>
 	for (int t = 0; t < N_TIMERS; t++) {
 		TKernelTimerHandler *h = timers[t].handler; 
-   82218:	f9400263 	ldr	x3, [x19]
+   821b8:	f9400263 	ldr	x3, [x19]
 		if (h == 0) 
 			continue; 
 		if (timers[t].elapseat <= cur) { // should fire  
 			V("called, id %d h %lx", t, (unsigned long)timers[t].handler);	
 			timers[t].handler = 0; 
 			(*h)(t, timers[t].param, timers[t].context); 			
-   8221c:	aa1403e0 	mov	x0, x20
-   82220:	91000694 	add	x20, x20, #0x1
+   821bc:	aa1403e0 	mov	x0, x20
+   821c0:	91000694 	add	x20, x20, #0x1
 		if (h == 0) 
-   82224:	b40000e3 	cbz	x3, 82240 <sys_timer_irq+0x90>
+   821c4:	b40000e3 	cbz	x3, 821e0 <sys_timer_irq+0x90>
 		if (timers[t].elapseat <= cur) { // should fire  
-   82228:	f9400661 	ldr	x1, [x19, #8]
-   8222c:	eb15003f 	cmp	x1, x21
-   82230:	54000088 	b.hi	82240 <sys_timer_irq+0x90>  // b.pmore
+   821c8:	f9400661 	ldr	x1, [x19, #8]
+   821cc:	eb15003f 	cmp	x1, x21
+   821d0:	54000088 	b.hi	821e0 <sys_timer_irq+0x90>  // b.pmore
 			(*h)(t, timers[t].param, timers[t].context); 			
-   82234:	a9410a61 	ldp	x1, x2, [x19, #16]
+   821d4:	a9410a61 	ldp	x1, x2, [x19, #16]
 			timers[t].handler = 0; 
-   82238:	f900027f 	str	xzr, [x19]
+   821d8:	f900027f 	str	xzr, [x19]
 			(*h)(t, timers[t].param, timers[t].context); 			
-   8223c:	d63f0060 	blr	x3
+   821dc:	d63f0060 	blr	x3
 	for (int t = 0; t < N_TIMERS; t++) {
-   82240:	91008273 	add	x19, x19, #0x20
-   82244:	f100529f 	cmp	x20, #0x14
-   82248:	54fffe81 	b.ne	82218 <sys_timer_irq+0x68>  // b.any
+   821e0:	91008273 	add	x19, x19, #0x20
+   821e4:	f100529f 	cmp	x20, #0x14
+   821e8:	54fffe81 	b.ne	821b8 <sys_timer_irq+0x68>  // b.any
 		}		
 	}
 	adjust_sys_timer(); 
-   8224c:	97fffee5 	bl	81de0 <adjust_sys_timer>
+   821ec:	97fffee5 	bl	81d80 <adjust_sys_timer>
 	release(&timerlock);
-   82250:	f94772c0 	ldr	x0, [x22, #3808]
+   821f0:	f94766c0 	ldr	x0, [x22, #3784]
 }
-   82254:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82258:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   8225c:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   821f4:	a94153f3 	ldp	x19, x20, [sp, #16]
+   821f8:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   821fc:	a8c37bfd 	ldp	x29, x30, [sp], #48
 	release(&timerlock);
-   82260:	17fffec0 	b	81d60 <release>
+   82200:	17fffec0 	b	81d00 <release>
 	BUG_ON(!(get32(TIMER_CS) & TIMER_CS_M1));  
-   82264:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82268:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   8226c:	911da021 	add	x1, x1, #0x768
-   82270:	91202000 	add	x0, x0, #0x808
-   82274:	528026c2 	mov	w2, #0x136                 	// #310
-   82278:	97fffdb8 	bl	81958 <assertion_failed>
-   8227c:	17ffffd5 	b	821d0 <sys_timer_irq+0x20>
+   82204:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82208:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   8220c:	911be021 	add	x1, x1, #0x6f8
+   82210:	911e6000 	add	x0, x0, #0x798
+   82214:	528026c2 	mov	w2, #0x136                 	// #310
+   82218:	97fffdb8 	bl	818f8 <assertion_failed>
+   8221c:	17ffffd5 	b	82170 <sys_timer_irq+0x20>
 
-0000000000082280 <mbox_call>:
+0000000000082220 <mbox_call>:
  * Returns 0 on failure, non-zero on success
  * 
  * caller must hold mboxlock
  */
 int mbox_call(unsigned char ch)
 {
-   82280:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   82220:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
     // the buf addr (pa) w/ ch (chan id) in LSB 
     unsigned int r = (((unsigned int)((unsigned long)&mbox)&~0xF) | (ch&0xF));
     r = BUS_ADDRESS(r); 
     /* wait until we can write to the mailbox */
     do{asm volatile("nop");}while(*MBOX_STATUS & MBOX_FULL);
-   82284:	d2971301 	mov	x1, #0xb898                	// #47256
-   82288:	f2a7e001 	movk	x1, #0x3f00, lsl #16
+   82224:	d2971301 	mov	x1, #0xb898                	// #47256
+   82228:	f2a7e001 	movk	x1, #0x3f00, lsl #16
 {
-   8228c:	910003fd 	mov	x29, sp
-   82290:	a90363f7 	stp	x23, x24, [sp, #48]
+   8222c:	910003fd 	mov	x29, sp
+   82230:	a90363f7 	stp	x23, x24, [sp, #48]
     unsigned int r = (((unsigned int)((unsigned long)&mbox)&~0xF) | (ch&0xF));
-   82294:	f0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
+   82234:	f0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
 {
-   82298:	a90153f3 	stp	x19, x20, [sp, #16]
+   82238:	a90153f3 	stp	x19, x20, [sp, #16]
     unsigned int r = (((unsigned int)((unsigned long)&mbox)&~0xF) | (ch&0xF));
-   8229c:	12000c14 	and	w20, w0, #0xf
-   822a0:	f9476f00 	ldr	x0, [x24, #3800]
+   8223c:	12000c14 	and	w20, w0, #0xf
+   82240:	f9476300 	ldr	x0, [x24, #3776]
 {
-   822a4:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82244:	a9025bf5 	stp	x21, x22, [sp, #32]
     unsigned int r = (((unsigned int)((unsigned long)&mbox)&~0xF) | (ch&0xF));
-   822a8:	2a000294 	orr	w20, w20, w0
+   82248:	2a000294 	orr	w20, w20, w0
     r = BUS_ADDRESS(r); 
-   822ac:	32020694 	orr	w20, w20, #0xc0000000
+   8224c:	32020694 	orr	w20, w20, #0xc0000000
     do{asm volatile("nop");}while(*MBOX_STATUS & MBOX_FULL);
-   822b0:	d503201f 	nop
-   822b4:	b9400020 	ldr	w0, [x1]
-   822b8:	37ffffc0 	tbnz	w0, #31, 822b0 <mbox_call+0x30>
+   82250:	d503201f 	nop
+   82254:	b9400020 	ldr	w0, [x1]
+   82258:	37ffffc0 	tbnz	w0, #31, 82250 <mbox_call+0x30>
     __asm__ volatile ("dmb sy" ::: "memory");    // mem barrier, ensuring msg in mem
-   822bc:	d5033fbf 	dmb	sy
+   8225c:	d5033fbf 	dmb	sy
     __asm_flush_dcache_range((void *)mbox, (char *)mbox + sizeof(mbox)); 
-   822c0:	f9476f00 	ldr	x0, [x24, #3800]
+   82260:	f9476300 	ldr	x0, [x24, #3776]
     /* write the address of our message to the mailbox with channel identifier */
     *MBOX_WRITE = r; 
     /* now wait for the response */
     while(1) {
         /* is there a response? */
         do{asm volatile("nop");}while(*MBOX_STATUS & MBOX_EMPTY);
-   822c4:	d2971313 	mov	x19, #0xb898                	// #47256
+   82264:	d2971313 	mov	x19, #0xb898                	// #47256
         /* is it a response to our message? */
         if(r == *MBOX_READ) {
-   822c8:	d2971017 	mov	x23, #0xb880                	// #47232
+   82268:	d2971017 	mov	x23, #0xb880                	// #47232
             __asm_invalidate_dcache_range((void *)mbox, (char *)mbox + sizeof(mbox)); 
             /* is it a valid successful response? (strange it's benign) */
             if (mbox[1]!=MBOX_RESPONSE) I("mbox[1] is %08x", mbox[1]);            
             return mbox[1]==MBOX_RESPONSE;
         } else {
             W("got an irrelvant msg. bug?"); 
-   822cc:	90000035 	adrp	x21, 86000 <__asm_dcache_level+0xc>
+   8226c:	90000035 	adrp	x21, 86000 <__asm_dcache_level+0xc>
     __asm_flush_dcache_range((void *)mbox, (char *)mbox + sizeof(mbox)); 
-   822d0:	91024001 	add	x1, x0, #0x90
+   82270:	91024001 	add	x1, x0, #0x90
             W("got an irrelvant msg. bug?"); 
-   822d4:	912162b5 	add	x21, x21, #0x858
+   82274:	911fa2b5 	add	x21, x21, #0x7e8
     __asm_flush_dcache_range((void *)mbox, (char *)mbox + sizeof(mbox)); 
-   822d8:	94000f2d 	bl	85f8c <__asm_flush_dcache_range>
+   82278:	94000f45 	bl	85f8c <__asm_flush_dcache_range>
         do{asm volatile("nop");}while(*MBOX_STATUS & MBOX_EMPTY);
-   822dc:	f2a7e013 	movk	x19, #0x3f00, lsl #16
+   8227c:	f2a7e013 	movk	x19, #0x3f00, lsl #16
     *MBOX_WRITE = r; 
-   822e0:	d2971400 	mov	x0, #0xb8a0                	// #47264
+   82280:	d2971400 	mov	x0, #0xb8a0                	// #47264
         if(r == *MBOX_READ) {
-   822e4:	f2a7e017 	movk	x23, #0x3f00, lsl #16
+   82284:	f2a7e017 	movk	x23, #0x3f00, lsl #16
     *MBOX_WRITE = r; 
-   822e8:	f2a7e000 	movk	x0, #0x3f00, lsl #16
+   82288:	f2a7e000 	movk	x0, #0x3f00, lsl #16
             W("got an irrelvant msg. bug?"); 
-   822ec:	90000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
+   8228c:	90000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
     *MBOX_WRITE = r; 
-   822f0:	b9000014 	str	w20, [x0]
-   822f4:	d503201f 	nop
+   82290:	b9000014 	str	w20, [x0]
+   82294:	d503201f 	nop
         do{asm volatile("nop");}while(*MBOX_STATUS & MBOX_EMPTY);
-   822f8:	d503201f 	nop
-   822fc:	b9400260 	ldr	w0, [x19]
-   82300:	37f7ffc0 	tbnz	w0, #30, 822f8 <mbox_call+0x78>
+   82298:	d503201f 	nop
+   8229c:	b9400260 	ldr	w0, [x19]
+   822a0:	37f7ffc0 	tbnz	w0, #30, 82298 <mbox_call+0x78>
         if(r == *MBOX_READ) {
-   82304:	b94002e3 	ldr	w3, [x23]
+   822a4:	b94002e3 	ldr	w3, [x23]
             W("got an irrelvant msg. bug?"); 
-   82308:	aa1503e1 	mov	x1, x21
-   8230c:	912222c0 	add	x0, x22, #0x888
-   82310:	52800822 	mov	w2, #0x41                  	// #65
+   822a8:	aa1503e1 	mov	x1, x21
+   822ac:	912062c0 	add	x0, x22, #0x818
+   822b0:	52800822 	mov	w2, #0x41                  	// #65
         if(r == *MBOX_READ) {
-   82314:	6b14007f 	cmp	w3, w20
-   82318:	54000060 	b.eq	82324 <mbox_call+0xa4>  // b.none
+   822b4:	6b14007f 	cmp	w3, w20
+   822b8:	54000060 	b.eq	822c4 <mbox_call+0xa4>  // b.none
             W("got an irrelvant msg. bug?"); 
-   8231c:	97fffcbf 	bl	81618 <tfp_printf>
+   822bc:	97fffcbf 	bl	815b8 <tfp_printf>
     while(1) {
-   82320:	17fffff6 	b	822f8 <mbox_call+0x78>
+   822c0:	17fffff6 	b	82298 <mbox_call+0x78>
             __asm_invalidate_dcache_range((void *)mbox, (char *)mbox + sizeof(mbox)); 
-   82324:	f9476f13 	ldr	x19, [x24, #3800]
-   82328:	91024261 	add	x1, x19, #0x90
-   8232c:	aa1303e0 	mov	x0, x19
-   82330:	94000f24 	bl	85fc0 <__asm_invalidate_dcache_range>
+   822c4:	f9476313 	ldr	x19, [x24, #3776]
+   822c8:	91024261 	add	x1, x19, #0x90
+   822cc:	aa1303e0 	mov	x0, x19
+   822d0:	94000f3c 	bl	85fc0 <__asm_invalidate_dcache_range>
             if (mbox[1]!=MBOX_RESPONSE) I("mbox[1] is %08x", mbox[1]);            
-   82334:	b9400661 	ldr	w1, [x19, #4]
-   82338:	52b00000 	mov	w0, #0x80000000            	// #-2147483648
-   8233c:	6b00003f 	cmp	w1, w0
-   82340:	54000100 	b.eq	82360 <mbox_call+0xe0>  // b.none
-   82344:	b9400663 	ldr	w3, [x19, #4]
-   82348:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   8234c:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82350:	91216021 	add	x1, x1, #0x858
-   82354:	91218000 	add	x0, x0, #0x860
-   82358:	528007c2 	mov	w2, #0x3e                  	// #62
-   8235c:	97fffcaf 	bl	81618 <tfp_printf>
+   822d4:	b9400661 	ldr	w1, [x19, #4]
+   822d8:	52b00000 	mov	w0, #0x80000000            	// #-2147483648
+   822dc:	6b00003f 	cmp	w1, w0
+   822e0:	54000100 	b.eq	82300 <mbox_call+0xe0>  // b.none
+   822e4:	b9400663 	ldr	w3, [x19, #4]
+   822e8:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   822ec:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   822f0:	911fa021 	add	x1, x1, #0x7e8
+   822f4:	911fc000 	add	x0, x0, #0x7f0
+   822f8:	528007c2 	mov	w2, #0x3e                  	// #62
+   822fc:	97fffcaf 	bl	815b8 <tfp_printf>
             return mbox[1]==MBOX_RESPONSE;
-   82360:	f9476f18 	ldr	x24, [x24, #3800]
-   82364:	52b00000 	mov	w0, #0x80000000            	// #-2147483648
+   82300:	f9476318 	ldr	x24, [x24, #3776]
+   82304:	52b00000 	mov	w0, #0x80000000            	// #-2147483648
         }
     }
     return 0;
 }
-   82368:	a94153f3 	ldp	x19, x20, [sp, #16]
+   82308:	a94153f3 	ldp	x19, x20, [sp, #16]
             return mbox[1]==MBOX_RESPONSE;
-   8236c:	b9400701 	ldr	w1, [x24, #4]
+   8230c:	b9400701 	ldr	w1, [x24, #4]
 }
-   82370:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   82310:	a9425bf5 	ldp	x21, x22, [sp, #32]
             return mbox[1]==MBOX_RESPONSE;
-   82374:	6b00003f 	cmp	w1, w0
-   82378:	1a9f17e0 	cset	w0, eq	// eq = none
+   82314:	6b00003f 	cmp	w1, w0
+   82318:	1a9f17e0 	cset	w0, eq	// eq = none
 }
-   8237c:	a94363f7 	ldp	x23, x24, [sp, #48]
-   82380:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   82384:	d65f03c0 	ret
+   8231c:	a94363f7 	ldp	x23, x24, [sp, #48]
+   82320:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   82324:	d65f03c0 	ret
 
-0000000000082388 <fb_detect_scr_dim>:
+0000000000082328 <fb_detect_scr_dim>:
     return: 0 on success 
 
     FL's 720p monitor: 1360 768
     qemu 640 480 (initial? subject to reconfig for larger fb)
 */
 int fb_detect_scr_dim(uint *w, uint *h) {
-   82388:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82328:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
     mbox[0] = 8*4;     // size of the whole buf that follows
-   8238c:	52800404 	mov	w4, #0x20                  	// #32
+   8232c:	52800404 	mov	w4, #0x20                  	// #32
     mbox[1] = MBOX_REQUEST; // cpu->gpu request
         mbox[2] = 0x40003;     // rls framebuffer
-   82390:	52800063 	mov	w3, #0x3                   	// #3
+   82330:	52800063 	mov	w3, #0x3                   	// #3
 int fb_detect_scr_dim(uint *w, uint *h) {
-   82394:	910003fd 	mov	x29, sp
-   82398:	a90153f3 	stp	x19, x20, [sp, #16]
+   82334:	910003fd 	mov	x29, sp
+   82338:	a90153f3 	stp	x19, x20, [sp, #16]
     mbox[0] = 8*4;     // size of the whole buf that follows
-   8239c:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   8233c:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
         mbox[2] = 0x40003;     // rls framebuffer
-   823a0:	72a00083 	movk	w3, #0x4, lsl #16
+   82340:	72a00083 	movk	w3, #0x4, lsl #16
     mbox[0] = 8*4;     // size of the whole buf that follows
-   823a4:	f9476e73 	ldr	x19, [x19, #3800]
+   82344:	f9476273 	ldr	x19, [x19, #3776]
 int fb_detect_scr_dim(uint *w, uint *h) {
-   823a8:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82348:	a9025bf5 	stp	x21, x22, [sp, #32]
         mbox[3] = 8;           // total buf size
-   823ac:	52800102 	mov	w2, #0x8                   	// #8
+   8234c:	52800102 	mov	w2, #0x8                   	// #8
 int fb_detect_scr_dim(uint *w, uint *h) {
-   823b0:	aa0003f4 	mov	x20, x0
-   823b4:	aa0103f5 	mov	x21, x1
+   82350:	aa0003f4 	mov	x20, x0
+   82354:	aa0103f5 	mov	x21, x1
     mbox[0] = 8*4;     // size of the whole buf that follows
-   823b8:	b9000264 	str	w4, [x19]
+   82358:	b9000264 	str	w4, [x19]
         mbox[4] = 0;           // req para size
         mbox[5] = 0;           // resp: width
         mbox[6] = 0;           // resp: height
     mbox[7] = MBOX_TAG_LAST;
 
     if(!mbox_call(MBOX_CH_PROP)) {
-   823bc:	2a0203e0 	mov	w0, w2
+   8235c:	2a0203e0 	mov	w0, w2
     mbox[1] = MBOX_REQUEST; // cpu->gpu request
-   823c0:	b900067f 	str	wzr, [x19, #4]
+   82360:	b900067f 	str	wzr, [x19, #4]
         mbox[2] = 0x40003;     // rls framebuffer
-   823c4:	b9000a63 	str	w3, [x19, #8]
+   82364:	b9000a63 	str	w3, [x19, #8]
         mbox[3] = 8;           // total buf size
-   823c8:	b9000e62 	str	w2, [x19, #12]
+   82368:	b9000e62 	str	w2, [x19, #12]
         mbox[4] = 0;           // req para size
-   823cc:	b900127f 	str	wzr, [x19, #16]
+   8236c:	b900127f 	str	wzr, [x19, #16]
         mbox[5] = 0;           // resp: width
-   823d0:	b900167f 	str	wzr, [x19, #20]
+   82370:	b900167f 	str	wzr, [x19, #20]
         mbox[6] = 0;           // resp: height
-   823d4:	b9001a7f 	str	wzr, [x19, #24]
+   82374:	b9001a7f 	str	wzr, [x19, #24]
     mbox[7] = MBOX_TAG_LAST;
-   823d8:	b9001e7f 	str	wzr, [x19, #28]
+   82378:	b9001e7f 	str	wzr, [x19, #28]
     if(!mbox_call(MBOX_CH_PROP)) {
-   823dc:	97ffffa9 	bl	82280 <mbox_call>
-   823e0:	340004a0 	cbz	w0, 82474 <fb_detect_scr_dim+0xec>
+   8237c:	97ffffa9 	bl	82220 <mbox_call>
+   82380:	340004a0 	cbz	w0, 82414 <fb_detect_scr_dim+0xec>
         E("failed to get screen dim");
         return -1;
     } 
 
     *w=mbox[5];*h=mbox[6]; I("detected screen dim %d %d", *w, *h);
-   823e4:	b9401660 	ldr	w0, [x19, #20]
-   823e8:	90000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
-   823ec:	b9000280 	str	w0, [x20]
-   823f0:	912162c1 	add	x1, x22, #0x858
-   823f4:	52801a02 	mov	w2, #0xd0                  	// #208
-   823f8:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   823fc:	b9401a64 	ldr	w4, [x19, #24]
-   82400:	9123a000 	add	x0, x0, #0x8e8
-   82404:	b90002a4 	str	w4, [x21]
-   82408:	b9400283 	ldr	w3, [x20]
-   8240c:	97fffc83 	bl	81618 <tfp_printf>
+   82384:	b9401660 	ldr	w0, [x19, #20]
+   82388:	90000036 	adrp	x22, 86000 <__asm_dcache_level+0xc>
+   8238c:	b9000280 	str	w0, [x20]
+   82390:	911fa2c1 	add	x1, x22, #0x7e8
+   82394:	52801a02 	mov	w2, #0xd0                  	// #208
+   82398:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   8239c:	b9401a64 	ldr	w4, [x19, #24]
+   823a0:	9121e000 	add	x0, x0, #0x878
+   823a4:	b90002a4 	str	w4, [x21]
+   823a8:	b9400283 	ldr	w3, [x20]
+   823ac:	97fffc83 	bl	815b8 <tfp_printf>
 
     if (*w == 1184 || *h == 624) {
-   82410:	b9400280 	ldr	w0, [x20]
-   82414:	7112801f 	cmp	w0, #0x4a0
-   82418:	54000120 	b.eq	8243c <fb_detect_scr_dim+0xb4>  // b.none
-   8241c:	b94002a1 	ldr	w1, [x21]
+   823b0:	b9400280 	ldr	w0, [x20]
+   823b4:	7112801f 	cmp	w0, #0x4a0
+   823b8:	54000120 	b.eq	823dc <fb_detect_scr_dim+0xb4>  // b.none
+   823bc:	b94002a1 	ldr	w1, [x21]
         W("detected screen 1184x624. assume a Waveshare HAT. force 480 320");
         *w = 480; *h = 320;
     }    
     return 0; 
-   82420:	52800000 	mov	w0, #0x0                   	// #0
+   823c0:	52800000 	mov	w0, #0x0                   	// #0
     if (*w == 1184 || *h == 624) {
-   82424:	7109c03f 	cmp	w1, #0x270
-   82428:	540000a0 	b.eq	8243c <fb_detect_scr_dim+0xb4>  // b.none
+   823c4:	7109c03f 	cmp	w1, #0x270
+   823c8:	540000a0 	b.eq	823dc <fb_detect_scr_dim+0xb4>  // b.none
 }
-   8242c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82430:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   82434:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   82438:	d65f03c0 	ret
+   823cc:	a94153f3 	ldp	x19, x20, [sp, #16]
+   823d0:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   823d4:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   823d8:	d65f03c0 	ret
         W("detected screen 1184x624. assume a Waveshare HAT. force 480 320");
-   8243c:	912162c1 	add	x1, x22, #0x858
-   82440:	52801a62 	mov	w2, #0xd3                  	// #211
-   82444:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82448:	91246000 	add	x0, x0, #0x918
-   8244c:	97fffc73 	bl	81618 <tfp_printf>
+   823dc:	911fa2c1 	add	x1, x22, #0x7e8
+   823e0:	52801a62 	mov	w2, #0xd3                  	// #211
+   823e4:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   823e8:	9122a000 	add	x0, x0, #0x8a8
+   823ec:	97fffc73 	bl	815b8 <tfp_printf>
         *w = 480; *h = 320;
-   82450:	52803c00 	mov	w0, #0x1e0                 	// #480
-   82454:	b9000280 	str	w0, [x20]
-   82458:	52802801 	mov	w1, #0x140                 	// #320
-   8245c:	b90002a1 	str	w1, [x21]
+   823f0:	52803c00 	mov	w0, #0x1e0                 	// #480
+   823f4:	b9000280 	str	w0, [x20]
+   823f8:	52802801 	mov	w1, #0x140                 	// #320
+   823fc:	b90002a1 	str	w1, [x21]
     return 0; 
-   82460:	52800000 	mov	w0, #0x0                   	// #0
+   82400:	52800000 	mov	w0, #0x0                   	// #0
 }
-   82464:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82468:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   8246c:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   82470:	d65f03c0 	ret
+   82404:	a94153f3 	ldp	x19, x20, [sp, #16]
+   82408:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   8240c:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   82410:	d65f03c0 	ret
         E("failed to get screen dim");
-   82474:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82478:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   8247c:	91216021 	add	x1, x1, #0x858
-   82480:	9122e000 	add	x0, x0, #0x8b8
-   82484:	52801982 	mov	w2, #0xcc                  	// #204
-   82488:	97fffc64 	bl	81618 <tfp_printf>
+   82414:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82418:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   8241c:	911fa021 	add	x1, x1, #0x7e8
+   82420:	91212000 	add	x0, x0, #0x848
+   82424:	52801982 	mov	w2, #0xcc                  	// #204
+   82428:	97fffc64 	bl	815b8 <tfp_printf>
         return -1;
-   8248c:	12800000 	mov	w0, #0xffffffff            	// #-1
-   82490:	17ffffe7 	b	8242c <fb_detect_scr_dim+0xa4>
-   82494:	d503201f 	nop
+   8242c:	12800000 	mov	w0, #0xffffffff            	// #-1
+   82430:	17ffffe7 	b	823cc <fb_detect_scr_dim+0xa4>
+   82434:	d503201f 	nop
 
-0000000000082498 <fb_set_voffsets>:
+0000000000082438 <fb_set_voffsets>:
 
 // set virt offset
 // caller must hold mboxlock
 // 0 on success
 int fb_set_voffsets(int offsetx, int offsety) {
-   82498:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82438:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
 
     mbox[0] = 8*4;
-   8249c:	52800404 	mov	w4, #0x20                  	// #32
+   8243c:	52800404 	mov	w4, #0x20                  	// #32
     mbox[1] = MBOX_REQUEST;
     
     mbox[2] = 0x48009; 
-   824a0:	52900123 	mov	w3, #0x8009                	// #32777
+   82440:	52900123 	mov	w3, #0x8009                	// #32777
 int fb_set_voffsets(int offsetx, int offsety) {
-   824a4:	910003fd 	mov	x29, sp
-   824a8:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82444:	910003fd 	mov	x29, sp
+   82448:	a9025bf5 	stp	x21, x22, [sp, #32]
     mbox[0] = 8*4;
-   824ac:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
+   8244c:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
     mbox[2] = 0x48009; 
-   824b0:	72a00083 	movk	w3, #0x4, lsl #16
+   82450:	72a00083 	movk	w3, #0x4, lsl #16
 int fb_set_voffsets(int offsetx, int offsety) {
-   824b4:	a90153f3 	stp	x19, x20, [sp, #16]
+   82454:	a90153f3 	stp	x19, x20, [sp, #16]
     mbox[3] = 8;
-   824b8:	52800102 	mov	w2, #0x8                   	// #8
+   82458:	52800102 	mov	w2, #0x8                   	// #8
 int fb_set_voffsets(int offsetx, int offsety) {
-   824bc:	2a0003f4 	mov	w20, w0
+   8245c:	2a0003f4 	mov	w20, w0
     mbox[0] = 8*4;
-   824c0:	f9476ed3 	ldr	x19, [x22, #3800]
+   82460:	f94762d3 	ldr	x19, [x22, #3776]
 int fb_set_voffsets(int offsetx, int offsety) {
-   824c4:	2a0103f5 	mov	w21, w1
+   82464:	2a0103f5 	mov	w21, w1
     mbox[5] =  offsetx;           //FrameBufferInfo.x_offset
     mbox[6] =  offsety;           //FrameBufferInfo.y.offset    
 
     mbox[7] = MBOX_TAG_LAST;
 
     if(!mbox_call(MBOX_CH_PROP)) {
-   824c8:	2a0203e0 	mov	w0, w2
+   82468:	2a0203e0 	mov	w0, w2
     mbox[0] = 8*4;
-   824cc:	b9000264 	str	w4, [x19]
+   8246c:	b9000264 	str	w4, [x19]
     mbox[1] = MBOX_REQUEST;
-   824d0:	b900067f 	str	wzr, [x19, #4]
+   82470:	b900067f 	str	wzr, [x19, #4]
     mbox[2] = 0x48009; 
-   824d4:	b9000a63 	str	w3, [x19, #8]
+   82474:	b9000a63 	str	w3, [x19, #8]
     mbox[3] = 8;
-   824d8:	b9000e62 	str	w2, [x19, #12]
+   82478:	b9000e62 	str	w2, [x19, #12]
     mbox[4] = 8;
-   824dc:	b9001262 	str	w2, [x19, #16]
+   8247c:	b9001262 	str	w2, [x19, #16]
     mbox[5] =  offsetx;           //FrameBufferInfo.x_offset
-   824e0:	b9001674 	str	w20, [x19, #20]
+   82480:	b9001674 	str	w20, [x19, #20]
     mbox[6] =  offsety;           //FrameBufferInfo.y.offset    
-   824e4:	b9001a61 	str	w1, [x19, #24]
+   82484:	b9001a61 	str	w1, [x19, #24]
     mbox[7] = MBOX_TAG_LAST;
-   824e8:	b9001e7f 	str	wzr, [x19, #28]
+   82488:	b9001e7f 	str	wzr, [x19, #28]
     if(!mbox_call(MBOX_CH_PROP)) {
-   824ec:	97ffff65 	bl	82280 <mbox_call>
-   824f0:	34000320 	cbz	w0, 82554 <fb_set_voffsets+0xbc>
+   8248c:	97ffff65 	bl	82220 <mbox_call>
+   82490:	34000320 	cbz	w0, 824f4 <fb_set_voffsets+0xbc>
         E("failed to set virt offsets, requested x=%d y=%d", offsetx, offsety);
         return -1;
     }     
      if (mbox[5] != offsetx || mbox[6] != offsety) {
-   824f4:	b9401660 	ldr	w0, [x19, #20]
-   824f8:	6b00029f 	cmp	w20, w0
-   824fc:	54000121 	b.ne	82520 <fb_set_voffsets+0x88>  // b.any
-   82500:	b9401a61 	ldr	w1, [x19, #24]
+   82494:	b9401660 	ldr	w0, [x19, #20]
+   82498:	6b00029f 	cmp	w20, w0
+   8249c:	54000121 	b.ne	824c0 <fb_set_voffsets+0x88>  // b.any
+   824a0:	b9401a61 	ldr	w1, [x19, #24]
             offsetx, offsety, mbox[5], mbox[6]);
         return -1;     
      }
      V("set OK: offsetx %u offsety %u res: offsetx %u offsety %u", 
             offsetx, offsety, mbox[5], mbox[6]);
      return 0; 
-   82504:	52800000 	mov	w0, #0x0                   	// #0
+   824a4:	52800000 	mov	w0, #0x0                   	// #0
      if (mbox[5] != offsetx || mbox[6] != offsety) {
-   82508:	6b0102bf 	cmp	w21, w1
-   8250c:	540000a1 	b.ne	82520 <fb_set_voffsets+0x88>  // b.any
+   824a8:	6b0102bf 	cmp	w21, w1
+   824ac:	540000a1 	b.ne	824c0 <fb_set_voffsets+0x88>  // b.any
 }
-   82510:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82514:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   82518:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   8251c:	d65f03c0 	ret
+   824b0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   824b4:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   824b8:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   824bc:	d65f03c0 	ret
         E("failed set: offsetx %u offsety %u res: offsetx %u offsety %u", 
-   82520:	f9476ed6 	ldr	x22, [x22, #3800]
-   82524:	2a1503e4 	mov	w4, w21
-   82528:	2a1403e3 	mov	w3, w20
-   8252c:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82530:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82534:	91216021 	add	x1, x1, #0x858
-   82538:	b94016c5 	ldr	w5, [x22, #20]
-   8253c:	9126e000 	add	x0, x0, #0x9b8
-   82540:	b9401ac6 	ldr	w6, [x22, #24]
-   82544:	52801dc2 	mov	w2, #0xee                  	// #238
-   82548:	97fffc34 	bl	81618 <tfp_printf>
+   824c0:	f94762d6 	ldr	x22, [x22, #3776]
+   824c4:	2a1503e4 	mov	w4, w21
+   824c8:	2a1403e3 	mov	w3, w20
+   824cc:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   824d0:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   824d4:	911fa021 	add	x1, x1, #0x7e8
+   824d8:	b94016c5 	ldr	w5, [x22, #20]
+   824dc:	91252000 	add	x0, x0, #0x948
+   824e0:	b9401ac6 	ldr	w6, [x22, #24]
+   824e4:	52801dc2 	mov	w2, #0xee                  	// #238
+   824e8:	97fffc34 	bl	815b8 <tfp_printf>
         return -1;     
-   8254c:	12800000 	mov	w0, #0xffffffff            	// #-1
-   82550:	17fffff0 	b	82510 <fb_set_voffsets+0x78>
+   824ec:	12800000 	mov	w0, #0xffffffff            	// #-1
+   824f0:	17fffff0 	b	824b0 <fb_set_voffsets+0x78>
         E("failed to set virt offsets, requested x=%d y=%d", offsetx, offsety);
-   82554:	2a1503e4 	mov	w4, w21
-   82558:	2a1403e3 	mov	w3, w20
-   8255c:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82560:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82564:	91216021 	add	x1, x1, #0x858
-   82568:	9125c000 	add	x0, x0, #0x970
-   8256c:	52801d42 	mov	w2, #0xea                  	// #234
-   82570:	97fffc2a 	bl	81618 <tfp_printf>
+   824f4:	2a1503e4 	mov	w4, w21
+   824f8:	2a1403e3 	mov	w3, w20
+   824fc:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82500:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   82504:	911fa021 	add	x1, x1, #0x7e8
+   82508:	91240000 	add	x0, x0, #0x900
+   8250c:	52801d42 	mov	w2, #0xea                  	// #234
+   82510:	97fffc2a 	bl	815b8 <tfp_printf>
         return -1;
-   82574:	12800000 	mov	w0, #0xffffffff            	// #-1
-   82578:	17ffffe6 	b	82510 <fb_set_voffsets+0x78>
-   8257c:	d503201f 	nop
+   82514:	12800000 	mov	w0, #0xffffffff            	// #-1
+   82518:	17ffffe6 	b	824b0 <fb_set_voffsets+0x78>
+   8251c:	d503201f 	nop
 
-0000000000082580 <fb_fini>:
+0000000000082520 <fb_fini>:
 }
 
 /* finalize the fb, clean up. 
     return 0 on success (display will go blank)
 */
 int fb_fini(void) {
-   82580:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   82584:	910003fd 	mov	x29, sp
-   82588:	a90153f3 	stp	x19, x20, [sp, #16]
+   82520:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82524:	910003fd 	mov	x29, sp
+   82528:	a90153f3 	stp	x19, x20, [sp, #16]
     int ret = 0; 
 
     acquire(&mboxlock); 
     if (!the_fb.fb || !the_fb.size) {
-   8258c:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   8252c:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
 int fb_fini(void) {
-   82590:	f90013f5 	str	x21, [sp, #32]
+   82530:	f90013f5 	str	x21, [sp, #32]
     acquire(&mboxlock); 
-   82594:	f0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
-   82598:	913982a0 	add	x0, x21, #0xe60
-   8259c:	97fffdaf 	bl	81c58 <acquire>
+   82534:	f0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   82538:	913922a0 	add	x0, x21, #0xe48
+   8253c:	97fffdaf 	bl	81bf8 <acquire>
     if (!the_fb.fb || !the_fb.size) {
-   825a0:	f942c260 	ldr	x0, [x19, #1408]
-   825a4:	b4000620 	cbz	x0, 82668 <fb_fini+0xe8>
-   825a8:	91160261 	add	x1, x19, #0x580
-   825ac:	b9403422 	ldr	w2, [x1, #52]
-   825b0:	340005c2 	cbz	w2, 82668 <fb_fini+0xe8>
+   82540:	f942b660 	ldr	x0, [x19, #1384]
+   82544:	b4000620 	cbz	x0, 82608 <fb_fini+0xe8>
+   82548:	9115a261 	add	x1, x19, #0x568
+   8254c:	b9403422 	ldr	w2, [x1, #52]
+   82550:	340005c2 	cbz	w2, 82608 <fb_fini+0xe8>
         ret = -1; 
         goto out; 
     }
 
 #ifdef PLAT_RPI3QEMU    // avoid artifacts: qemu does not clear old fb
     memset(the_fb.fb, 0, the_fb.size);     
-   825b4:	52800001 	mov	w1, #0x0                   	// #0
-   825b8:	97fffcf4 	bl	81988 <memset>
+   82554:	52800001 	mov	w1, #0x0                   	// #0
+   82558:	97fffcf4 	bl	81928 <memset>
 #endif
 
     mbox[0] = 6*4;     // size of the whole buf that follows
-   825bc:	f0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
-   825c0:	52800303 	mov	w3, #0x18                  	// #24
+   8255c:	f0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   82560:	52800303 	mov	w3, #0x18                  	// #24
     mbox[1] = MBOX_REQUEST; // cpu->gpu request
 
     mbox[2] = 0x48001;     // rls framebuffer
-   825c4:	52900022 	mov	w2, #0x8001                	// #32769
+   82564:	52900022 	mov	w2, #0x8001                	// #32769
     mbox[3] = 0;           // total buf size
     mbox[4] = 0;           // req para size
         
     mbox[5] = MBOX_TAG_LAST;
 
     if(!mbox_call(MBOX_CH_PROP))
-   825c8:	52800100 	mov	w0, #0x8                   	// #8
+   82568:	52800100 	mov	w0, #0x8                   	// #8
     mbox[0] = 6*4;     // size of the whole buf that follows
-   825cc:	f9476c21 	ldr	x1, [x1, #3800]
+   8256c:	f9476021 	ldr	x1, [x1, #3776]
     mbox[2] = 0x48001;     // rls framebuffer
-   825d0:	72a00082 	movk	w2, #0x4, lsl #16
+   82570:	72a00082 	movk	w2, #0x4, lsl #16
     mbox[0] = 6*4;     // size of the whole buf that follows
-   825d4:	b9000023 	str	w3, [x1]
+   82574:	b9000023 	str	w3, [x1]
     mbox[1] = MBOX_REQUEST; // cpu->gpu request
-   825d8:	b900043f 	str	wzr, [x1, #4]
+   82578:	b900043f 	str	wzr, [x1, #4]
     mbox[2] = 0x48001;     // rls framebuffer
-   825dc:	b9000822 	str	w2, [x1, #8]
+   8257c:	b9000822 	str	w2, [x1, #8]
     mbox[3] = 0;           // total buf size
-   825e0:	b9000c3f 	str	wzr, [x1, #12]
+   82580:	b9000c3f 	str	wzr, [x1, #12]
     mbox[4] = 0;           // req para size
-   825e4:	b900103f 	str	wzr, [x1, #16]
+   82584:	b900103f 	str	wzr, [x1, #16]
     mbox[5] = MBOX_TAG_LAST;
-   825e8:	b900143f 	str	wzr, [x1, #20]
+   82588:	b900143f 	str	wzr, [x1, #20]
     if(!mbox_call(MBOX_CH_PROP))
-   825ec:	97ffff25 	bl	82280 <mbox_call>
-   825f0:	340002e0 	cbz	w0, 8264c <fb_fini+0xcc>
+   8258c:	97ffff25 	bl	82220 <mbox_call>
+   82590:	340002e0 	cbz	w0, 825ec <fb_fini+0xcc>
         I("failed to rls fb with GPU (could be benign)"); 
         // response code always 0x80000001 (failure). couldn't figure out why
 
     if (free_phys_region((unsigned long)the_fb.fb, the_fb.size)) {
-   825f4:	91160261 	add	x1, x19, #0x580
-   825f8:	f942c260 	ldr	x0, [x19, #1408]
-   825fc:	b9403421 	ldr	w1, [x1, #52]
-   82600:	940003f4 	bl	835d0 <free_phys_region>
-   82604:	2a0003f4 	mov	w20, w0
-   82608:	35000120 	cbnz	w0, 8262c <fb_fini+0xac>
+   82594:	9115a261 	add	x1, x19, #0x568
+   82598:	f942b660 	ldr	x0, [x19, #1384]
+   8259c:	b9403421 	ldr	w1, [x1, #52]
+   825a0:	940003f4 	bl	83570 <free_phys_region>
+   825a4:	2a0003f4 	mov	w20, w0
+   825a8:	35000120 	cbnz	w0, 825cc <fb_fini+0xac>
         E("failed to free fb memory. bug?"); 
         ret = -2; 
     }
     the_fb.fb = 0; 
-   8260c:	f902c27f 	str	xzr, [x19, #1408]
+   825ac:	f902b67f 	str	xzr, [x19, #1384]
 out:
     release(&mboxlock);          
-   82610:	913982a0 	add	x0, x21, #0xe60
-   82614:	97fffdd3 	bl	81d60 <release>
+   825b0:	913922a0 	add	x0, x21, #0xe48
+   825b4:	97fffdd3 	bl	81d00 <release>
     return ret; 
 }
-   82618:	2a1403e0 	mov	w0, w20
-   8261c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   82620:	f94013f5 	ldr	x21, [sp, #32]
-   82624:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   82628:	d65f03c0 	ret
+   825b8:	2a1403e0 	mov	w0, w20
+   825bc:	a94153f3 	ldp	x19, x20, [sp, #16]
+   825c0:	f94013f5 	ldr	x21, [sp, #32]
+   825c4:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   825c8:	d65f03c0 	ret
         ret = -2; 
-   8262c:	12800034 	mov	w20, #0xfffffffe            	// #-2
+   825cc:	12800034 	mov	w20, #0xfffffffe            	// #-2
         E("failed to free fb memory. bug?"); 
-   82630:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82634:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82638:	91216021 	add	x1, x1, #0x858
-   8263c:	91292000 	add	x0, x0, #0xa48
-   82640:	528030a2 	mov	w2, #0x185                 	// #389
-   82644:	97fffbf5 	bl	81618 <tfp_printf>
+   825d0:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   825d4:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   825d8:	911fa021 	add	x1, x1, #0x7e8
+   825dc:	91276000 	add	x0, x0, #0x9d8
+   825e0:	528030a2 	mov	w2, #0x185                 	// #389
+   825e4:	97fffbf5 	bl	815b8 <tfp_printf>
         ret = -2; 
-   82648:	17fffff1 	b	8260c <fb_fini+0x8c>
+   825e8:	17fffff1 	b	825ac <fb_fini+0x8c>
         I("failed to rls fb with GPU (could be benign)"); 
-   8264c:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82650:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82654:	91216021 	add	x1, x1, #0x858
-   82658:	91282000 	add	x0, x0, #0xa08
-   8265c:	52803022 	mov	w2, #0x181                 	// #385
-   82660:	97fffbee 	bl	81618 <tfp_printf>
-   82664:	17ffffe4 	b	825f4 <fb_fini+0x74>
+   825ec:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   825f0:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   825f4:	911fa021 	add	x1, x1, #0x7e8
+   825f8:	91266000 	add	x0, x0, #0x998
+   825fc:	52803022 	mov	w2, #0x181                 	// #385
+   82600:	97fffbee 	bl	815b8 <tfp_printf>
+   82604:	17ffffe4 	b	82594 <fb_fini+0x74>
         ret = -1; 
-   82668:	12800014 	mov	w20, #0xffffffff            	// #-1
-   8266c:	17ffffe9 	b	82610 <fb_fini+0x90>
+   82608:	12800014 	mov	w20, #0xffffffff            	// #-1
+   8260c:	17ffffe9 	b	825b0 <fb_fini+0x90>
 
-0000000000082670 <fb_print>:
+0000000000082610 <fb_print>:
     unsigned char *fb = the_fb.fb; 
 
     // get our font
     psf_t *font = (psf_t*)&_binary_font_psf_start;
     // draw next character if it's not zero
     while(*s) {
-   82670:	39400043 	ldrb	w3, [x2]
+   82610:	39400043 	ldrb	w3, [x2]
     unsigned pitch = the_fb.pitch; 
-   82674:	f0000084 	adrp	x4, 95000 <wordsworth.1725+0xee10>
-   82678:	91160085 	add	x5, x4, #0x580
+   82614:	f0000084 	adrp	x4, 95000 <wordsworth.1725+0xee10>
+   82618:	9115a085 	add	x5, x4, #0x568
     unsigned char *fb = the_fb.fb; 
-   8267c:	f942c08f 	ldr	x15, [x4, #1408]
+   8261c:	f942b48f 	ldr	x15, [x4, #1384]
     unsigned pitch = the_fb.pitch; 
-   82680:	b94018aa 	ldr	w10, [x5, #24]
+   82620:	b94018aa 	ldr	w10, [x5, #24]
     while(*s) {
-   82684:	34000f23 	cbz	w3, 82868 <fb_print+0x1f8>
+   82624:	34000f23 	cbz	w3, 82808 <fb_print+0x1f8>
 {
-   82688:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   82628:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
         /* get offset of the glyph. Need to adjust this to support unicode table */
         unsigned char *glyph = (unsigned char*)&_binary_font_psf_start +
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   8268c:	f0000084 	adrp	x4, 95000 <wordsworth.1725+0xee10>
+   8262c:	f0000084 	adrp	x4, 95000 <wordsworth.1725+0xee10>
         } else {
             // display a character
             for(j=0;j<font->height;j++){
                 // display one row
                 line=offs;
                 mask=1<<(font->width-1);
-   82690:	5280002e 	mov	w14, #0x1                   	// #1
+   82630:	5280002e 	mov	w14, #0x1                   	// #1
 {
-   82694:	910003fd 	mov	x29, sp
+   82634:	910003fd 	mov	x29, sp
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82698:	f9479c84 	ldr	x4, [x4, #3896]
+   82638:	f9479084 	ldr	x4, [x4, #3872]
 {
-   8269c:	a90153f3 	stp	x19, x20, [sp, #16]
-   826a0:	910011f1 	add	x17, x15, #0x4
-   826a4:	a9025bf5 	stp	x21, x22, [sp, #32]
+   8263c:	a90153f3 	stp	x19, x20, [sp, #16]
+   82640:	910011f1 	add	x17, x15, #0x4
+   82644:	a9025bf5 	stp	x21, x22, [sp, #32]
         unsigned char *glyph = (unsigned char*)&_binary_font_psf_start +
-   826a8:	aa0403f4 	mov	x20, x4
+   82648:	aa0403f4 	mov	x20, x4
                 for(i=0;i<font->width;i++){
                     // if bit set, we use white color, otherwise black
                     *((unsigned int*)(fb + line))=((int)*glyph) & mask?0xFFFFFF:0;
-   826ac:	12bfe008 	mov	w8, #0xffffff              	// #16777215
+   8264c:	12bfe008 	mov	w8, #0xffffff              	// #16777215
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   826b0:	39402085 	ldrb	w5, [x4, #8]
-   826b4:	39402489 	ldrb	w9, [x4, #9]
-   826b8:	92401ca5 	and	x5, x5, #0xff
-   826bc:	3940288c 	ldrb	w12, [x4, #10]
-   826c0:	39402c96 	ldrb	w22, [x4, #11]
-   826c4:	d3781d29 	ubfiz	x9, x9, #8, #8
-   826c8:	39404086 	ldrb	w6, [x4, #16]
-   826cc:	39404487 	ldrb	w7, [x4, #17]
-   826d0:	aa050129 	orr	x9, x9, x5
-   826d4:	3940489e 	ldrb	w30, [x4, #18]
-   826d8:	92401cc6 	and	x6, x6, #0xff
-   826dc:	39404c8d 	ldrb	w13, [x4, #19]
-   826e0:	d3701d8c 	ubfiz	x12, x12, #16, #8
-   826e4:	39405085 	ldrb	w5, [x4, #20]
-   826e8:	d3781ce7 	ubfiz	x7, x7, #8, #8
-   826ec:	3940548b 	ldrb	w11, [x4, #21]
-   826f0:	aa0600e7 	orr	x7, x7, x6
-   826f4:	92401ca5 	and	x5, x5, #0xff
-   826f8:	39405886 	ldrb	w6, [x4, #22]
-   826fc:	39405c92 	ldrb	w18, [x4, #23]
-   82700:	aa09018c 	orr	x12, x12, x9
+   82650:	39402085 	ldrb	w5, [x4, #8]
+   82654:	39402489 	ldrb	w9, [x4, #9]
+   82658:	92401ca5 	and	x5, x5, #0xff
+   8265c:	3940288c 	ldrb	w12, [x4, #10]
+   82660:	39402c96 	ldrb	w22, [x4, #11]
+   82664:	d3781d29 	ubfiz	x9, x9, #8, #8
+   82668:	39404086 	ldrb	w6, [x4, #16]
+   8266c:	39404487 	ldrb	w7, [x4, #17]
+   82670:	aa050129 	orr	x9, x9, x5
+   82674:	3940489e 	ldrb	w30, [x4, #18]
+   82678:	92401cc6 	and	x6, x6, #0xff
+   8267c:	39404c8d 	ldrb	w13, [x4, #19]
+   82680:	d3701d8c 	ubfiz	x12, x12, #16, #8
+   82684:	39405085 	ldrb	w5, [x4, #20]
+   82688:	d3781ce7 	ubfiz	x7, x7, #8, #8
+   8268c:	3940548b 	ldrb	w11, [x4, #21]
+   82690:	aa0600e7 	orr	x7, x7, x6
+   82694:	92401ca5 	and	x5, x5, #0xff
+   82698:	39405886 	ldrb	w6, [x4, #22]
+   8269c:	39405c92 	ldrb	w18, [x4, #23]
+   826a0:	aa09018c 	orr	x12, x12, x9
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82704:	39407090 	ldrb	w16, [x4, #28]
+   826a4:	39407090 	ldrb	w16, [x4, #28]
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82708:	d3781d6b 	ubfiz	x11, x11, #8, #8
+   826a8:	d3781d6b 	ubfiz	x11, x11, #8, #8
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   8270c:	39407493 	ldrb	w19, [x4, #29]
+   826ac:	39407493 	ldrb	w19, [x4, #29]
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82710:	aa05016b 	orr	x11, x11, x5
+   826b0:	aa05016b 	orr	x11, x11, x5
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82714:	39407885 	ldrb	w5, [x4, #30]
-   82718:	92401e10 	and	x16, x16, #0xff
-   8271c:	39407c95 	ldrb	w21, [x4, #31]
+   826b4:	39407885 	ldrb	w5, [x4, #30]
+   826b8:	92401e10 	and	x16, x16, #0xff
+   826bc:	39407c95 	ldrb	w21, [x4, #31]
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82720:	d3701cc6 	ubfiz	x6, x6, #16, #8
+   826c0:	d3701cc6 	ubfiz	x6, x6, #16, #8
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82724:	d3781e73 	ubfiz	x19, x19, #8, #8
+   826c4:	d3781e73 	ubfiz	x19, x19, #8, #8
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82728:	d3701fde 	ubfiz	x30, x30, #16, #8
+   826c8:	d3701fde 	ubfiz	x30, x30, #16, #8
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   8272c:	aa100273 	orr	x19, x19, x16
-   82730:	d3701ca5 	ubfiz	x5, x5, #16, #8
+   826cc:	aa100273 	orr	x19, x19, x16
+   826d0:	d3701ca5 	ubfiz	x5, x5, #16, #8
             for(j=0;j<font->height;j++){
-   82734:	39406090 	ldrb	w16, [x4, #24]
+   826d4:	39406090 	ldrb	w16, [x4, #24]
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82738:	aa1300a5 	orr	x5, x5, x19
+   826d8:	aa1300a5 	orr	x5, x5, x19
             for(j=0;j<font->height;j++){
-   8273c:	39406489 	ldrb	w9, [x4, #25]
+   826dc:	39406489 	ldrb	w9, [x4, #25]
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82740:	53081eb3 	lsl	w19, w21, #24
-   82744:	aa050273 	orr	x19, x19, x5
+   826e0:	53081eb3 	lsl	w19, w21, #24
+   826e4:	aa050273 	orr	x19, x19, x5
             for(j=0;j<font->height;j++){
-   82748:	39406885 	ldrb	w5, [x4, #26]
-   8274c:	92401e10 	and	x16, x16, #0xff
-   82750:	39406c95 	ldrb	w21, [x4, #27]
-   82754:	d3781d24 	ubfiz	x4, x9, #8, #8
+   826e8:	39406885 	ldrb	w5, [x4, #26]
+   826ec:	92401e10 	and	x16, x16, #0xff
+   826f0:	39406c95 	ldrb	w21, [x4, #27]
+   826f4:	d3781d24 	ubfiz	x4, x9, #8, #8
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82758:	aa0b00c6 	orr	x6, x6, x11
+   826f8:	aa0b00c6 	orr	x6, x6, x11
             for(j=0;j<font->height;j++){
-   8275c:	aa100089 	orr	x9, x4, x16
+   826fc:	aa100089 	orr	x9, x4, x16
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82760:	11001e6b 	add	w11, w19, #0x7
+   82700:	11001e6b 	add	w11, w19, #0x7
                 mask=1<<(font->width-1);
-   82764:	51000670 	sub	w16, w19, #0x1
+   82704:	51000670 	sub	w16, w19, #0x1
             for(j=0;j<font->height;j++){
-   82768:	d3701ca4 	ubfiz	x4, x5, #16, #8
+   82708:	d3701ca4 	ubfiz	x4, x5, #16, #8
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   8276c:	53081ed6 	lsl	w22, w22, #24
-   82770:	aa0703c7 	orr	x7, x30, x7
+   8270c:	53081ed6 	lsl	w22, w22, #24
+   82710:	aa0703c7 	orr	x7, x30, x7
             for(j=0;j<font->height;j++){
-   82774:	aa090084 	orr	x4, x4, x9
+   82714:	aa090084 	orr	x4, x4, x9
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82778:	2a0d60fe 	orr	w30, w7, w13, lsl #24
-   8277c:	aa0c02cc 	orr	x12, x22, x12
+   82718:	2a0d60fe 	orr	w30, w7, w13, lsl #24
+   8271c:	aa0c02cc 	orr	x12, x22, x12
         int i,j, line,mask, bytesperline=(font->width+7)/8;
-   82780:	2a1303ed 	mov	w13, w19
+   82720:	2a1303ed 	mov	w13, w19
          font->headersize + (*((unsigned char*)s)<font->numglyph?*s:0)*font->bytesperglyph;
-   82784:	2a1260d2 	orr	w18, w6, w18, lsl #24
-   82788:	0b0e0273 	add	w19, w19, w14
-   8278c:	53037d6b 	lsr	w11, w11, #3
+   82724:	2a1260d2 	orr	w18, w6, w18, lsl #24
+   82728:	0b0e0273 	add	w19, w19, w14
+   8272c:	53037d6b 	lsr	w11, w11, #3
             for(j=0;j<font->height;j++){
-   82790:	2a156089 	orr	w9, w4, w21, lsl #24
+   82730:	2a156089 	orr	w9, w4, w21, lsl #24
                 mask=1<<(font->width-1);
-   82794:	1ad021ce 	lsl	w14, w14, w16
-   82798:	14000009 	b	827bc <fb_print+0x14c>
+   82734:	1ad021ce 	lsl	w14, w14, w16
+   82738:	14000009 	b	8275c <fb_print+0x14c>
         if(*s == '\n') {
-   8279c:	7100287f 	cmp	w3, #0xa
-   827a0:	54000281 	b.ne	827f0 <fb_print+0x180>  // b.any
+   8273c:	7100287f 	cmp	w3, #0xa
+   82740:	54000281 	b.ne	82790 <fb_print+0x180>  // b.any
             *x = 0; *y += font->height;
-   827a4:	b900001f 	str	wzr, [x0]
-   827a8:	b9400023 	ldr	w3, [x1]
-   827ac:	0b090063 	add	w3, w3, w9
-   827b0:	b9000023 	str	w3, [x1]
+   82744:	b900001f 	str	wzr, [x0]
+   82748:	b9400023 	ldr	w3, [x1]
+   8274c:	0b090063 	add	w3, w3, w9
+   82750:	b9000023 	str	w3, [x1]
     while(*s) {
-   827b4:	38401c43 	ldrb	w3, [x2, #1]!
-   827b8:	34000143 	cbz	w3, 827e0 <fb_print+0x170>
+   82754:	38401c43 	ldrb	w3, [x2, #1]!
+   82758:	34000143 	cbz	w3, 82780 <fb_print+0x170>
         unsigned char *glyph = (unsigned char*)&_binary_font_psf_start +
-   827bc:	1b127c66 	mul	w6, w3, w18
-   827c0:	6b1e007f 	cmp	w3, w30
-   827c4:	8b0c00c6 	add	x6, x6, x12
-   827c8:	9a8c30c6 	csel	x6, x6, x12, cc	// cc = lo, ul, last
+   8275c:	1b127c66 	mul	w6, w3, w18
+   82760:	6b1e007f 	cmp	w3, w30
+   82764:	8b0c00c6 	add	x6, x6, x12
+   82768:	9a8c30c6 	csel	x6, x6, x12, cc	// cc = lo, ul, last
         if(*s == '\r') {
-   827cc:	7100347f 	cmp	w3, #0xd
-   827d0:	54fffe61 	b.ne	8279c <fb_print+0x12c>  // b.any
+   8276c:	7100347f 	cmp	w3, #0xd
+   82770:	54fffe61 	b.ne	8273c <fb_print+0x12c>  // b.any
             *x = 0;
-   827d4:	b900001f 	str	wzr, [x0]
+   82774:	b900001f 	str	wzr, [x0]
     while(*s) {
-   827d8:	38401c43 	ldrb	w3, [x2, #1]!
-   827dc:	35ffff03 	cbnz	w3, 827bc <fb_print+0x14c>
+   82778:	38401c43 	ldrb	w3, [x2, #1]!
+   8277c:	35ffff03 	cbnz	w3, 8275c <fb_print+0x14c>
             *x += (font->width+1);
         }
         // next character
         s++;
     }
 }
-   827e0:	a94153f3 	ldp	x19, x20, [sp, #16]
-   827e4:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   827e8:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   827ec:	d65f03c0 	ret
+   82780:	a94153f3 	ldp	x19, x20, [sp, #16]
+   82784:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   82788:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   8278c:	d65f03c0 	ret
         int offs = (*y * pitch) + (*x * 4);
-   827f0:	b9400003 	ldr	w3, [x0]
+   82790:	b9400003 	ldr	w3, [x0]
             for(j=0;j<font->height;j++){
-   827f4:	34000349 	cbz	w9, 8285c <fb_print+0x1ec>
+   82794:	34000349 	cbz	w9, 827fc <fb_print+0x1ec>
         int offs = (*y * pitch) + (*x * 4);
-   827f8:	b9400035 	ldr	w21, [x1]
-   827fc:	531e7463 	lsl	w3, w3, #2
+   82798:	b9400035 	ldr	w21, [x1]
+   8279c:	531e7463 	lsl	w3, w3, #2
         unsigned char *glyph = (unsigned char*)&_binary_font_psf_start +
-   82800:	8b1400c6 	add	x6, x6, x20
+   827a0:	8b1400c6 	add	x6, x6, x20
             for(j=0;j<font->height;j++){
-   82804:	52800016 	mov	w22, #0x0                   	// #0
+   827a4:	52800016 	mov	w22, #0x0                   	// #0
         int offs = (*y * pitch) + (*x * 4);
-   82808:	1b150d55 	madd	w21, w10, w21, w3
-   8280c:	d503201f 	nop
+   827a8:	1b150d55 	madd	w21, w10, w21, w3
+   827ac:	d503201f 	nop
                 for(i=0;i<font->width;i++){
-   82810:	340001ad 	cbz	w13, 82844 <fb_print+0x1d4>
-   82814:	93407ea3 	sxtw	x3, w21
+   827b0:	340001ad 	cbz	w13, 827e4 <fb_print+0x1d4>
+   827b4:	93407ea3 	sxtw	x3, w21
                 mask=1<<(font->width-1);
-   82818:	2a0e03e4 	mov	w4, w14
-   8281c:	8b304867 	add	x7, x3, w16, uxtw #2
-   82820:	8b0301e3 	add	x3, x15, x3
-   82824:	8b1100e7 	add	x7, x7, x17
+   827b8:	2a0e03e4 	mov	w4, w14
+   827bc:	8b304867 	add	x7, x3, w16, uxtw #2
+   827c0:	8b0301e3 	add	x3, x15, x3
+   827c4:	8b1100e7 	add	x7, x7, x17
                     *((unsigned int*)(fb + line))=((int)*glyph) & mask?0xFFFFFF:0;
-   82828:	394000c5 	ldrb	w5, [x6]
-   8282c:	6a0400bf 	tst	w5, w4
+   827c8:	394000c5 	ldrb	w5, [x6]
+   827cc:	6a0400bf 	tst	w5, w4
                     mask>>=1;
-   82830:	13017c84 	asr	w4, w4, #1
+   827d0:	13017c84 	asr	w4, w4, #1
                     *((unsigned int*)(fb + line))=((int)*glyph) & mask?0xFFFFFF:0;
-   82834:	1a9f1105 	csel	w5, w8, wzr, ne	// ne = any
-   82838:	b8004465 	str	w5, [x3], #4
+   827d4:	1a9f1105 	csel	w5, w8, wzr, ne	// ne = any
+   827d8:	b8004465 	str	w5, [x3], #4
                 for(i=0;i<font->width;i++){
-   8283c:	eb07007f 	cmp	x3, x7
-   82840:	54ffff41 	b.ne	82828 <fb_print+0x1b8>  // b.any
+   827dc:	eb07007f 	cmp	x3, x7
+   827e0:	54ffff41 	b.ne	827c8 <fb_print+0x1b8>  // b.any
             for(j=0;j<font->height;j++){
-   82844:	110006d6 	add	w22, w22, #0x1
+   827e4:	110006d6 	add	w22, w22, #0x1
                 glyph+=bytesperline;
-   82848:	8b0b00c6 	add	x6, x6, x11
+   827e8:	8b0b00c6 	add	x6, x6, x11
             for(j=0;j<font->height;j++){
-   8284c:	6b0902df 	cmp	w22, w9
-   82850:	0b0a02b5 	add	w21, w21, w10
-   82854:	54fffde1 	b.ne	82810 <fb_print+0x1a0>  // b.any
-   82858:	b9400003 	ldr	w3, [x0]
+   827ec:	6b0902df 	cmp	w22, w9
+   827f0:	0b0a02b5 	add	w21, w21, w10
+   827f4:	54fffde1 	b.ne	827b0 <fb_print+0x1a0>  // b.any
+   827f8:	b9400003 	ldr	w3, [x0]
             *x += (font->width+1);
-   8285c:	0b130063 	add	w3, w3, w19
-   82860:	b9000003 	str	w3, [x0]
-   82864:	17ffffd4 	b	827b4 <fb_print+0x144>
-   82868:	d65f03c0 	ret
-   8286c:	d503201f 	nop
+   827fc:	0b130063 	add	w3, w3, w19
+   82800:	b9000003 	str	w3, [x0]
+   82804:	17ffffd4 	b	82754 <fb_print+0x144>
+   82808:	d65f03c0 	ret
+   8280c:	d503201f 	nop
 
-0000000000082870 <fb_showpicture>:
+0000000000082810 <fb_showpicture>:
 #define IMG_DATA header_data      
 #define IMG_HEIGHT height
 #define IMG_WIDTH width
 
 void fb_showpicture()
 {
-   82870:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
+   82810:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
     int x,y;
     unsigned char *ptr=the_fb.fb;
     char *data=IMG_DATA, pixel[4];
     // fill framebuf. crop img data per the framebuf size
     unsigned int img_fb_height = the_fb.vheight < IMG_HEIGHT ? the_fb.vheight : IMG_HEIGHT; 
-   82874:	52800ecb 	mov	w11, #0x76                  	// #118
+   82814:	52800ecb 	mov	w11, #0x76                  	// #118
     unsigned int img_fb_width = the_fb.vwidth < IMG_WIDTH ? the_fb.vwidth : IMG_WIDTH; 
-   82878:	52800e8a 	mov	w10, #0x74                  	// #116
+   82818:	52800e8a 	mov	w10, #0x74                  	// #116
 {
-   8287c:	910003fd 	mov	x29, sp
-   82880:	a90153f3 	stp	x19, x20, [sp, #16]
+   8281c:	910003fd 	mov	x29, sp
+   82820:	a90153f3 	stp	x19, x20, [sp, #16]
     unsigned char *ptr=the_fb.fb;
-   82884:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   82888:	91160269 	add	x9, x19, #0x580
-   8288c:	f942c265 	ldr	x5, [x19, #1408]
+   82824:	f0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   82828:	9115a269 	add	x9, x19, #0x568
+   8282c:	f942b665 	ldr	x5, [x19, #1384]
 {
-   82890:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82830:	a9025bf5 	stp	x21, x22, [sp, #32]
 
     // copy the image pixels to the start (top) of framebuf    
     //ptr += (vheight-img_fb_height)/2*pitch + (vwidth-img_fb_width)*2;  
     ptr += (the_fb.vwidth-img_fb_width)/2*PIXELSIZE;  // top center
     ptr += (the_fb.vheight-img_fb_height)/2*the_fb.pitch; 
-   82894:	b9401921 	ldr	w1, [x9, #24]
+   82834:	b9401921 	ldr	w1, [x9, #24]
     unsigned int img_fb_height = the_fb.vheight < IMG_HEIGHT ? the_fb.vheight : IMG_HEIGHT; 
-   82898:	2942092c 	ldp	w12, w2, [x9, #16]
+   82838:	2942092c 	ldp	w12, w2, [x9, #16]
     
     for(y=0;y<img_fb_height;y++) {
-   8289c:	b9003fff 	str	wzr, [sp, #60]
+   8283c:	b9003fff 	str	wzr, [sp, #60]
     unsigned int img_fb_height = the_fb.vheight < IMG_HEIGHT ? the_fb.vheight : IMG_HEIGHT; 
-   828a0:	6b0b005f 	cmp	w2, w11
-   828a4:	1a8b904b 	csel	w11, w2, w11, ls	// ls = plast
+   82840:	6b0b005f 	cmp	w2, w11
+   82844:	1a8b904b 	csel	w11, w2, w11, ls	// ls = plast
     unsigned int img_fb_width = the_fb.vwidth < IMG_WIDTH ? the_fb.vwidth : IMG_WIDTH; 
-   828a8:	6b0a019f 	cmp	w12, w10
+   82848:	6b0a019f 	cmp	w12, w10
     ptr += (the_fb.vheight-img_fb_height)/2*the_fb.pitch; 
-   828ac:	4b0b0040 	sub	w0, w2, w11
+   8284c:	4b0b0040 	sub	w0, w2, w11
     unsigned int img_fb_width = the_fb.vwidth < IMG_WIDTH ? the_fb.vwidth : IMG_WIDTH; 
-   828b0:	1a8a918a 	csel	w10, w12, w10, ls	// ls = plast
+   82850:	1a8a918a 	csel	w10, w12, w10, ls	// ls = plast
     ptr += (the_fb.vwidth-img_fb_width)/2*PIXELSIZE;  // top center
-   828b4:	4b0a0183 	sub	w3, w12, w10
+   82854:	4b0a0183 	sub	w3, w12, w10
     ptr += (the_fb.vheight-img_fb_height)/2*the_fb.pitch; 
-   828b8:	53017c00 	lsr	w0, w0, #1
+   82858:	53017c00 	lsr	w0, w0, #1
     ptr += (the_fb.vwidth-img_fb_width)/2*PIXELSIZE;  // top center
-   828bc:	53017c63 	lsr	w3, w3, #1
+   8285c:	53017c63 	lsr	w3, w3, #1
     ptr += (the_fb.vheight-img_fb_height)/2*the_fb.pitch; 
-   828c0:	1b017c00 	mul	w0, w0, w1
+   82860:	1b017c00 	mul	w0, w0, w1
     ptr += (the_fb.vwidth-img_fb_width)/2*PIXELSIZE;  // top center
-   828c4:	531e7461 	lsl	w1, w3, #2
+   82864:	531e7461 	lsl	w1, w3, #2
     ptr += (the_fb.vheight-img_fb_height)/2*the_fb.pitch; 
-   828c8:	8b010000 	add	x0, x0, x1
-   828cc:	8b0000a5 	add	x5, x5, x0
+   82868:	8b010000 	add	x0, x0, x1
+   8286c:	8b0000a5 	add	x5, x5, x0
     for(y=0;y<img_fb_height;y++) {
-   828d0:	34000622 	cbz	w2, 82994 <fb_showpicture+0x124>
+   82870:	34000622 	cbz	w2, 82934 <fb_showpicture+0x124>
     char *data=IMG_DATA, pixel[4];
-   828d4:	90000023 	adrp	x3, 86000 <__asm_dcache_level+0xc>
+   82874:	90000023 	adrp	x3, 86000 <__asm_dcache_level+0xc>
             *((unsigned int*)ptr)=the_fb.isrgb ? *((unsigned int *)&pixel) 
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
             // *((unsigned int*)ptr)=(!the_fb.isrgb) ? *((unsigned int *)&pixel) : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
             ptr+=4;
         }
         ptr+=the_fb.pitch-img_fb_width*4;
-   828d8:	531e754d 	lsl	w13, w10, #2
+   82878:	531e754d 	lsl	w13, w10, #2
     char *data=IMG_DATA, pixel[4];
-   828dc:	912a0063 	add	x3, x3, #0xa80
+   8287c:	91284063 	add	x3, x3, #0xa10
         for(x=0;x<img_fb_width;x++) {
-   828e0:	b9003bff 	str	wzr, [sp, #56]
-   828e4:	3400042c 	cbz	w12, 82968 <fb_showpicture+0xf8>
+   82880:	b9003bff 	str	wzr, [sp, #56]
+   82884:	3400042c 	cbz	w12, 82908 <fb_showpicture+0xf8>
             HEADER_PIXEL(data, pixel);
-   828e8:	39400861 	ldrb	w1, [x3, #2]
-   828ec:	91001063 	add	x3, x3, #0x4
-   828f0:	385fd062 	ldurb	w2, [x3, #-3]
-   828f4:	51008421 	sub	w1, w1, #0x21
-   828f8:	385fc060 	ldurb	w0, [x3, #-4]
-   828fc:	51008442 	sub	w2, w2, #0x21
-   82900:	385ff064 	ldurb	w4, [x3, #-1]
-   82904:	13027c27 	asr	w7, w1, #2
-   82908:	51008400 	sub	w0, w0, #0x21
-   8290c:	13047c48 	asr	w8, w2, #4
-   82910:	2a0210e2 	orr	w2, w7, w2, lsl #4
-   82914:	51008484 	sub	w4, w4, #0x21
-   82918:	12001c42 	and	w2, w2, #0xff
-   8291c:	2a000900 	orr	w0, w8, w0, lsl #2
+   82888:	39400861 	ldrb	w1, [x3, #2]
+   8288c:	91001063 	add	x3, x3, #0x4
+   82890:	385fd062 	ldurb	w2, [x3, #-3]
+   82894:	51008421 	sub	w1, w1, #0x21
+   82898:	385fc060 	ldurb	w0, [x3, #-4]
+   8289c:	51008442 	sub	w2, w2, #0x21
+   828a0:	385ff064 	ldurb	w4, [x3, #-1]
+   828a4:	13027c27 	asr	w7, w1, #2
+   828a8:	51008400 	sub	w0, w0, #0x21
+   828ac:	13047c48 	asr	w8, w2, #4
+   828b0:	2a0210e2 	orr	w2, w7, w2, lsl #4
+   828b4:	51008484 	sub	w4, w4, #0x21
+   828b8:	12001c42 	and	w2, w2, #0xff
+   828bc:	2a000900 	orr	w0, w8, w0, lsl #2
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
-   82920:	b9402926 	ldr	w6, [x9, #40]
+   828c0:	b9402926 	ldr	w6, [x9, #40]
             HEADER_PIXEL(data, pixel);
-   82924:	2a011881 	orr	w1, w4, w1, lsl #6
-   82928:	12001c00 	and	w0, w0, #0xff
-   8292c:	12001c21 	and	w1, w1, #0xff
+   828c4:	2a011881 	orr	w1, w4, w1, lsl #6
+   828c8:	12001c00 	and	w0, w0, #0xff
+   828cc:	12001c21 	and	w1, w1, #0xff
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
-   82930:	53185c44 	lsl	w4, w2, #8
+   828d0:	53185c44 	lsl	w4, w2, #8
             HEADER_PIXEL(data, pixel);
-   82934:	3900c3e0 	strb	w0, [sp, #48]
+   828d4:	3900c3e0 	strb	w0, [sp, #48]
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
-   82938:	2a004080 	orr	w0, w4, w0, lsl #16
+   828d8:	2a004080 	orr	w0, w4, w0, lsl #16
             HEADER_PIXEL(data, pixel);
-   8293c:	3900c7e2 	strb	w2, [sp, #49]
+   828dc:	3900c7e2 	strb	w2, [sp, #49]
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
-   82940:	2a010000 	orr	w0, w0, w1
+   828e0:	2a010000 	orr	w0, w0, w1
             HEADER_PIXEL(data, pixel);
-   82944:	3900cbe1 	strb	w1, [sp, #50]
+   828e4:	3900cbe1 	strb	w1, [sp, #50]
                 : (unsigned int)(pixel[0]<<16 | pixel[1]<<8 | pixel[2]);
-   82948:	34000046 	cbz	w6, 82950 <fb_showpicture+0xe0>
-   8294c:	b94033e0 	ldr	w0, [sp, #48]
+   828e8:	34000046 	cbz	w6, 828f0 <fb_showpicture+0xe0>
+   828ec:	b94033e0 	ldr	w0, [sp, #48]
             *((unsigned int*)ptr)=the_fb.isrgb ? *((unsigned int *)&pixel) 
-   82950:	b80044a0 	str	w0, [x5], #4
+   828f0:	b80044a0 	str	w0, [x5], #4
         for(x=0;x<img_fb_width;x++) {
-   82954:	b9403be0 	ldr	w0, [sp, #56]
-   82958:	11000400 	add	w0, w0, #0x1
-   8295c:	b9003be0 	str	w0, [sp, #56]
-   82960:	6b0a001f 	cmp	w0, w10
-   82964:	54fffc23 	b.cc	828e8 <fb_showpicture+0x78>  // b.lo, b.ul, b.last
+   828f4:	b9403be0 	ldr	w0, [sp, #56]
+   828f8:	11000400 	add	w0, w0, #0x1
+   828fc:	b9003be0 	str	w0, [sp, #56]
+   82900:	6b0a001f 	cmp	w0, w10
+   82904:	54fffc23 	b.cc	82888 <fb_showpicture+0x78>  // b.lo, b.ul, b.last
     for(y=0;y<img_fb_height;y++) {
-   82968:	b9403fe0 	ldr	w0, [sp, #60]
+   82908:	b9403fe0 	ldr	w0, [sp, #60]
         ptr+=the_fb.pitch-img_fb_width*4;
-   8296c:	b9401921 	ldr	w1, [x9, #24]
+   8290c:	b9401921 	ldr	w1, [x9, #24]
     for(y=0;y<img_fb_height;y++) {
-   82970:	11000400 	add	w0, w0, #0x1
-   82974:	b9003fe0 	str	w0, [sp, #60]
+   82910:	11000400 	add	w0, w0, #0x1
+   82914:	b9003fe0 	str	w0, [sp, #60]
         ptr+=the_fb.pitch-img_fb_width*4;
-   82978:	4b0d0021 	sub	w1, w1, w13
+   82918:	4b0d0021 	sub	w1, w1, w13
     for(y=0;y<img_fb_height;y++) {
-   8297c:	6b0b001f 	cmp	w0, w11
+   8291c:	6b0b001f 	cmp	w0, w11
         ptr+=the_fb.pitch-img_fb_width*4;
-   82980:	8b0100a5 	add	x5, x5, x1
+   82920:	8b0100a5 	add	x5, x5, x1
     for(y=0;y<img_fb_height;y++) {
-   82984:	54fffae3 	b.cc	828e0 <fb_showpicture+0x70>  // b.lo, b.ul, b.last
-   82988:	29420923 	ldp	w3, w2, [x9, #16]
-   8298c:	4b0a0063 	sub	w3, w3, w10
-   82990:	53017c63 	lsr	w3, w3, #1
+   82924:	54fffae3 	b.cc	82880 <fb_showpicture+0x70>  // b.lo, b.ul, b.last
+   82928:	29420923 	ldp	w3, w2, [x9, #16]
+   8292c:	4b0a0063 	sub	w3, w3, w10
+   82930:	53017c63 	lsr	w3, w3, #1
     }
 
     // show text strings
     x = (the_fb.vwidth-img_fb_width)/2;
     y = the_fb.vheight/2 + img_fb_height/2;
-   82994:	53017d6b 	lsr	w11, w11, #1
+   82934:	53017d6b 	lsr	w11, w11, #1
     fb_print(&x, &y, "UVA OS");
     char res[16]; 
     sprintf(res, " %dx%d", the_fb.width, the_fb.height); // debug info 
-   82998:	91160273 	add	x19, x19, #0x580
+   82938:	9115a273 	add	x19, x19, #0x568
     y = the_fb.vheight/2 + img_fb_height/2;
-   8299c:	0b42056b 	add	w11, w11, w2, lsr #1
+   8293c:	0b42056b 	add	w11, w11, w2, lsr #1
     fb_print(&x, &y, "UVA OS");
-   829a0:	9100f3f5 	add	x21, sp, #0x3c
-   829a4:	9100e3f4 	add	x20, sp, #0x38
-   829a8:	aa1503e1 	mov	x1, x21
-   829ac:	aa1403e0 	mov	x0, x20
-   829b0:	d0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
-   829b4:	9101a042 	add	x2, x2, #0x68
+   82940:	9100f3f5 	add	x21, sp, #0x3c
+   82944:	9100e3f4 	add	x20, sp, #0x38
+   82948:	aa1503e1 	mov	x1, x21
+   8294c:	aa1403e0 	mov	x0, x20
+   82950:	b0000082 	adrp	x2, 93000 <wordsworth.1725+0xce10>
+   82954:	913fe042 	add	x2, x2, #0xff8
     y = the_fb.vheight/2 + img_fb_height/2;
-   829b8:	29072fe3 	stp	w3, w11, [sp, #56]
+   82958:	29072fe3 	stp	w3, w11, [sp, #56]
     fb_print(&x, &y, "UVA OS");
-   829bc:	97ffff2d 	bl	82670 <fb_print>
+   8295c:	97ffff2d 	bl	82610 <fb_print>
     sprintf(res, " %dx%d", the_fb.width, the_fb.height); // debug info 
-   829c0:	910103f6 	add	x22, sp, #0x40
-   829c4:	29410e62 	ldp	w2, w3, [x19, #8]
-   829c8:	aa1603e0 	mov	x0, x22
-   829cc:	d0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   829d0:	9101c021 	add	x1, x1, #0x70
-   829d4:	97fffb77 	bl	817b0 <tfp_sprintf>
+   82960:	910103f6 	add	x22, sp, #0x40
+   82964:	29410e62 	ldp	w2, w3, [x19, #8]
+   82968:	aa1603e0 	mov	x0, x22
+   8296c:	d0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   82970:	91000021 	add	x1, x1, #0x0
+   82974:	97fffb77 	bl	81750 <tfp_sprintf>
     fb_print(&x, &y, res);
-   829d8:	aa1603e2 	mov	x2, x22
-   829dc:	aa1503e1 	mov	x1, x21
-   829e0:	aa1403e0 	mov	x0, x20
-   829e4:	97ffff23 	bl	82670 <fb_print>
+   82978:	aa1603e2 	mov	x2, x22
+   8297c:	aa1503e1 	mov	x1, x21
+   82980:	aa1403e0 	mov	x0, x20
+   82984:	97ffff23 	bl	82610 <fb_print>
     // __asm_flush_dcache_range(the_fb.fb, the_fb.fb + the_fb.size); 
 }
-   829e8:	a94153f3 	ldp	x19, x20, [sp, #16]
-   829ec:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   829f0:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   829f4:	d65f03c0 	ret
+   82988:	a94153f3 	ldp	x19, x20, [sp, #16]
+   8298c:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   82990:	a8c57bfd 	ldp	x29, x30, [sp], #80
+   82994:	d65f03c0 	ret
 
-00000000000829f8 <fb_init>:
+0000000000082998 <fb_init>:
 int fb_init(void) {
-   829f8:	d10143ff 	sub	sp, sp, #0x50
-   829fc:	a9017bfd 	stp	x29, x30, [sp, #16]
-   82a00:	910043fd 	add	x29, sp, #0x10
-   82a04:	a9035bf5 	stp	x21, x22, [sp, #48]
+   82998:	d10143ff 	sub	sp, sp, #0x50
+   8299c:	a9017bfd 	stp	x29, x30, [sp, #16]
+   829a0:	910043fd 	add	x29, sp, #0x10
+   829a4:	a9035bf5 	stp	x21, x22, [sp, #48]
     mbox[0] = 35*4;     // size of the whole buf that follows
-   82a08:	f0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   829a8:	f0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
     acquire(&mboxlock); 
-   82a0c:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
-   82a10:	913982c0 	add	x0, x22, #0xe60
+   829ac:	f0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
+   829b0:	913922c0 	add	x0, x22, #0xe48
 int fb_init(void) {
-   82a14:	a90253f3 	stp	x19, x20, [sp, #32]
-   82a18:	a90463f7 	stp	x23, x24, [sp, #64]
+   829b4:	a90253f3 	stp	x19, x20, [sp, #32]
+   829b8:	a90463f7 	stp	x23, x24, [sp, #64]
     acquire(&mboxlock); 
-   82a1c:	97fffc8f 	bl	81c58 <acquire>
+   829bc:	97fffc8f 	bl	81bf8 <acquire>
     mbox[0] = 35*4;     // size of the whole buf that follows
-   82a20:	52801182 	mov	w2, #0x8c                  	// #140
-   82a24:	f9476eb3 	ldr	x19, [x21, #3800]
+   829c0:	52801182 	mov	w2, #0x8c                  	// #140
+   829c4:	f94762b3 	ldr	x19, [x21, #3776]
     mbox[5] = fbs->width;           //(val) FrameBufferInfo.width
-   82a28:	f0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
+   829c8:	f0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
     mbox[2] = 0x48003;  //set phy width & height
-   82a2c:	52900060 	mov	w0, #0x8003                	// #32771
+   829cc:	52900060 	mov	w0, #0x8003                	// #32771
     mbox[5] = fbs->width;           //(val) FrameBufferInfo.width
-   82a30:	91160314 	add	x20, x24, #0x580
+   829d0:	9115a314 	add	x20, x24, #0x568
     mbox[2] = 0x48003;  //set phy width & height
-   82a34:	72a00080 	movk	w0, #0x4, lsl #16
+   829d4:	72a00080 	movk	w0, #0x4, lsl #16
     mbox[3] = 8;        // total buf size of this tag
-   82a38:	52800101 	mov	w1, #0x8                   	// #8
+   829d8:	52800101 	mov	w1, #0x8                   	// #8
     mbox[0] = 35*4;     // size of the whole buf that follows
-   82a3c:	b9000262 	str	w2, [x19]
+   829dc:	b9000262 	str	w2, [x19]
     mbox[7] = 0x48004;  //set virt width & height
-   82a40:	52900089 	mov	w9, #0x8004                	// #32772
+   829e0:	52900089 	mov	w9, #0x8004                	// #32772
     mbox[1] = MBOX_REQUEST; // cpu->gpu request
-   82a44:	b900067f 	str	wzr, [x19, #4]
+   829e4:	b900067f 	str	wzr, [x19, #4]
     mbox[7] = 0x48004;  //set virt width & height
-   82a48:	72a00089 	movk	w9, #0x4, lsl #16
+   829e8:	72a00089 	movk	w9, #0x4, lsl #16
     mbox[2] = 0x48003;  //set phy width & height
-   82a4c:	b9000a60 	str	w0, [x19, #8]
+   829ec:	b9000a60 	str	w0, [x19, #8]
     mbox[12] = 0x48009; //set virt offset
-   82a50:	52900128 	mov	w8, #0x8009                	// #32777
+   829f0:	52900128 	mov	w8, #0x8009                	// #32777
     mbox[3] = 8;        // total buf size of this tag
-   82a54:	b9000e61 	str	w1, [x19, #12]
+   829f4:	b9000e61 	str	w1, [x19, #12]
     mbox[12] = 0x48009; //set virt offset
-   82a58:	72a00088 	movk	w8, #0x4, lsl #16
+   829f8:	72a00088 	movk	w8, #0x4, lsl #16
     mbox[5] = fbs->width;           //(val) FrameBufferInfo.width
-   82a5c:	b9400a80 	ldr	w0, [x20, #8]
+   829fc:	b9400a80 	ldr	w0, [x20, #8]
     mbox[17] = 0x48005; //set depth
-   82a60:	529000a7 	mov	w7, #0x8005                	// #32773
+   82a00:	529000a7 	mov	w7, #0x8005                	// #32773
     mbox[4] = 8;        // req val size (needed?), to be overwritten as resp val size
-   82a64:	b9001261 	str	w1, [x19, #16]
+   82a04:	b9001261 	str	w1, [x19, #16]
     mbox[17] = 0x48005; //set depth
-   82a68:	72a00087 	movk	w7, #0x4, lsl #16
+   82a08:	72a00087 	movk	w7, #0x4, lsl #16
     mbox[5] = fbs->width;           //(val) FrameBufferInfo.width
-   82a6c:	b9001660 	str	w0, [x19, #20]
+   82a0c:	b9001660 	str	w0, [x19, #20]
     mbox[18] = 4;
-   82a70:	52800082 	mov	w2, #0x4                   	// #4
+   82a10:	52800082 	mov	w2, #0x4                   	// #4
     mbox[6] = fbs->height;          //(val) FrameBufferInfo.height
-   82a74:	b9400e80 	ldr	w0, [x20, #12]
+   82a14:	b9400e80 	ldr	w0, [x20, #12]
     mbox[21] = 0x48006;     //set pixel order
-   82a78:	529000c6 	mov	w6, #0x8006                	// #32774
+   82a18:	529000c6 	mov	w6, #0x8006                	// #32774
     mbox[6] = fbs->height;          //(val) FrameBufferInfo.height
-   82a7c:	b9001a60 	str	w0, [x19, #24]
+   82a1c:	b9001a60 	str	w0, [x19, #24]
     mbox[21] = 0x48006;     //set pixel order
-   82a80:	72a00086 	movk	w6, #0x4, lsl #16
+   82a20:	72a00086 	movk	w6, #0x4, lsl #16
     mbox[7] = 0x48004;  //set virt width & height
-   82a84:	b9001e69 	str	w9, [x19, #28]
+   82a24:	b9001e69 	str	w9, [x19, #28]
     mbox[25] = 0x40001;     //get framebuffer, gets alignment on request
-   82a88:	52800025 	mov	w5, #0x1                   	// #1
+   82a28:	52800025 	mov	w5, #0x1                   	// #1
     mbox[8] = 8;
-   82a8c:	b9002261 	str	w1, [x19, #32]
+   82a2c:	b9002261 	str	w1, [x19, #32]
     mbox[25] = 0x40001;     //get framebuffer, gets alignment on request
-   82a90:	72a00085 	movk	w5, #0x4, lsl #16
+   82a30:	72a00085 	movk	w5, #0x4, lsl #16
     mbox[10] = fbs->vwidth;        //FrameBufferInfo.virtual_width
-   82a94:	b9401289 	ldr	w9, [x20, #16]
+   82a34:	b9401289 	ldr	w9, [x20, #16]
     mbox[28] = 4096;        //req: alignment; resp: FrameBufferInfo.pointer
-   82a98:	52820004 	mov	w4, #0x1000                	// #4096
+   82a38:	52820004 	mov	w4, #0x1000                	// #4096
     mbox[9] = 8;
-   82a9c:	b9002661 	str	w1, [x19, #36]
+   82a3c:	b9002661 	str	w1, [x19, #36]
     mbox[30] = 0x40008;     //get pitch
-   82aa0:	52800103 	mov	w3, #0x8                   	// #8
+   82a40:	52800103 	mov	w3, #0x8                   	// #8
     mbox[10] = fbs->vwidth;        //FrameBufferInfo.virtual_width
-   82aa4:	b9002a69 	str	w9, [x19, #40]
+   82a44:	b9002a69 	str	w9, [x19, #40]
     mbox[30] = 0x40008;     //get pitch
-   82aa8:	72a00083 	movk	w3, #0x4, lsl #16
+   82a48:	72a00083 	movk	w3, #0x4, lsl #16
     mbox[11] = fbs->vheight;         //FrameBufferInfo.virtual_height
-   82aac:	b9401689 	ldr	w9, [x20, #20]
+   82a4c:	b9401689 	ldr	w9, [x20, #20]
     if(mbox_call(MBOX_CH_PROP) 
-   82ab0:	2a0103e0 	mov	w0, w1
+   82a50:	2a0103e0 	mov	w0, w1
     mbox[11] = fbs->vheight;         //FrameBufferInfo.virtual_height
-   82ab4:	b9002e69 	str	w9, [x19, #44]
+   82a54:	b9002e69 	str	w9, [x19, #44]
     mbox[12] = 0x48009; //set virt offset
-   82ab8:	b9003268 	str	w8, [x19, #48]
+   82a58:	b9003268 	str	w8, [x19, #48]
     mbox[13] = 8;
-   82abc:	b9003661 	str	w1, [x19, #52]
+   82a5c:	b9003661 	str	w1, [x19, #52]
     mbox[15] = fbs->offsetx;           
-   82ac0:	b9402e88 	ldr	w8, [x20, #44]
+   82a60:	b9402e88 	ldr	w8, [x20, #44]
     mbox[14] = 8;
-   82ac4:	b9003a61 	str	w1, [x19, #56]
+   82a64:	b9003a61 	str	w1, [x19, #56]
     mbox[15] = fbs->offsetx;           
-   82ac8:	b9003e68 	str	w8, [x19, #60]
+   82a68:	b9003e68 	str	w8, [x19, #60]
     mbox[16] = fbs->offsety;           
-   82acc:	b9403288 	ldr	w8, [x20, #48]
-   82ad0:	b9004268 	str	w8, [x19, #64]
+   82a6c:	b9403288 	ldr	w8, [x20, #48]
+   82a70:	b9004268 	str	w8, [x19, #64]
     mbox[17] = 0x48005; //set depth
-   82ad4:	b9004667 	str	w7, [x19, #68]
+   82a74:	b9004667 	str	w7, [x19, #68]
     mbox[18] = 4;
-   82ad8:	b9004a62 	str	w2, [x19, #72]
+   82a78:	b9004a62 	str	w2, [x19, #72]
     mbox[20] = fbs->depth;       
-   82adc:	b9402687 	ldr	w7, [x20, #36]
+   82a7c:	b9402687 	ldr	w7, [x20, #36]
     mbox[19] = 4;
-   82ae0:	b9004e62 	str	w2, [x19, #76]
+   82a80:	b9004e62 	str	w2, [x19, #76]
     mbox[20] = fbs->depth;       
-   82ae4:	b9005267 	str	w7, [x19, #80]
+   82a84:	b9005267 	str	w7, [x19, #80]
     mbox[21] = 0x48006;     //set pixel order
-   82ae8:	b9005666 	str	w6, [x19, #84]
+   82a88:	b9005666 	str	w6, [x19, #84]
     mbox[22] = 4;
-   82aec:	b9005a62 	str	w2, [x19, #88]
+   82a8c:	b9005a62 	str	w2, [x19, #88]
     mbox[23] = 4;
-   82af0:	b9005e62 	str	w2, [x19, #92]
+   82a90:	b9005e62 	str	w2, [x19, #92]
     mbox[24] = fbs->isrgb;           //RGB, not BGR preferably
-   82af4:	b9402a86 	ldr	w6, [x20, #40]
-   82af8:	b9006266 	str	w6, [x19, #96]
+   82a94:	b9402a86 	ldr	w6, [x20, #40]
+   82a98:	b9006266 	str	w6, [x19, #96]
     mbox[25] = 0x40001;     //get framebuffer, gets alignment on request
-   82afc:	b9006665 	str	w5, [x19, #100]
+   82a9c:	b9006665 	str	w5, [x19, #100]
     mbox[26] = 8;
-   82b00:	b9006a61 	str	w1, [x19, #104]
+   82aa0:	b9006a61 	str	w1, [x19, #104]
     mbox[27] = 8;           // fxl: should be 4?? (req para size)
-   82b04:	b9006e61 	str	w1, [x19, #108]
+   82aa4:	b9006e61 	str	w1, [x19, #108]
     mbox[28] = 4096;        //req: alignment; resp: FrameBufferInfo.pointer
-   82b08:	b9007264 	str	w4, [x19, #112]
+   82aa8:	b9007264 	str	w4, [x19, #112]
     mbox[29] = 0;           //resp: FrameBufferInfo.size
-   82b0c:	b900767f 	str	wzr, [x19, #116]
+   82aac:	b900767f 	str	wzr, [x19, #116]
     mbox[30] = 0x40008;     //get pitch
-   82b10:	b9007a63 	str	w3, [x19, #120]
+   82ab0:	b9007a63 	str	w3, [x19, #120]
     mbox[31] = 4;
-   82b14:	b9007e62 	str	w2, [x19, #124]
+   82ab4:	b9007e62 	str	w2, [x19, #124]
     mbox[32] = 4;
-   82b18:	b9008262 	str	w2, [x19, #128]
+   82ab8:	b9008262 	str	w2, [x19, #128]
     mbox[33] = 0;           //FrameBufferInfo.pitch
-   82b1c:	b900867f 	str	wzr, [x19, #132]
+   82abc:	b900867f 	str	wzr, [x19, #132]
     mbox[34] = MBOX_TAG_LAST;   // the end of tag seq
-   82b20:	b9008a7f 	str	wzr, [x19, #136]
+   82ac0:	b9008a7f 	str	wzr, [x19, #136]
     if(mbox_call(MBOX_CH_PROP) 
-   82b24:	97fffdd7 	bl	82280 <mbox_call>
-   82b28:	34000ae0 	cbz	w0, 82c84 <fb_init+0x28c>
+   82ac4:	97fffdd7 	bl	82220 <mbox_call>
+   82ac8:	34000ae0 	cbz	w0, 82c24 <fb_init+0x28c>
         && mbox[20]==fbs->depth /*depth*/ 
-   82b2c:	b9405261 	ldr	w1, [x19, #80]
-   82b30:	b9402680 	ldr	w0, [x20, #36]
-   82b34:	6b00003f 	cmp	w1, w0
-   82b38:	54000a61 	b.ne	82c84 <fb_init+0x28c>  // b.any
+   82acc:	b9405261 	ldr	w1, [x19, #80]
+   82ad0:	b9402680 	ldr	w0, [x20, #36]
+   82ad4:	6b00003f 	cmp	w1, w0
+   82ad8:	54000a61 	b.ne	82c24 <fb_init+0x28c>  // b.any
         && mbox[28]!=0 /*framebuf*/) {
-   82b3c:	b9407260 	ldr	w0, [x19, #112]
-   82b40:	34000a20 	cbz	w0, 82c84 <fb_init+0x28c>
+   82adc:	b9407260 	ldr	w0, [x19, #112]
+   82ae0:	34000a20 	cbz	w0, 82c24 <fb_init+0x28c>
         mbox[28]&=0x3FFFFFFF;  
-   82b44:	b9407260 	ldr	w0, [x19, #112]
-   82b48:	90000037 	adrp	x23, 86000 <__asm_dcache_level+0xc>
-   82b4c:	12007400 	and	w0, w0, #0x3fffffff
-   82b50:	b9007260 	str	w0, [x19, #112]
+   82ae4:	b9407260 	ldr	w0, [x19, #112]
+   82ae8:	90000037 	adrp	x23, 86000 <__asm_dcache_level+0xc>
+   82aec:	12007400 	and	w0, w0, #0x3fffffff
+   82af0:	b9007260 	str	w0, [x19, #112]
         fbs->fb = (unsigned char *)((unsigned long)mbox[28]);   // save framebuf ptr
-   82b54:	b9407260 	ldr	w0, [x19, #112]
+   82af4:	b9407260 	ldr	w0, [x19, #112]
         fbs->width=mbox[5];
-   82b58:	b9401664 	ldr	w4, [x19, #20]
+   82af8:	b9401664 	ldr	w4, [x19, #20]
         fbs->height=mbox[6];
-   82b5c:	b9401a65 	ldr	w5, [x19, #24]
+   82afc:	b9401a65 	ldr	w5, [x19, #24]
         fbs->fb = (unsigned char *)((unsigned long)mbox[28]);   // save framebuf ptr
-   82b60:	2a0003e0 	mov	w0, w0
+   82b00:	2a0003e0 	mov	w0, w0
         fbs->vwidth=mbox[10];
-   82b64:	b9402a66 	ldr	w6, [x19, #40]
+   82b04:	b9402a66 	ldr	w6, [x19, #40]
         fbs->vheight=mbox[11];        
-   82b68:	b9402e67 	ldr	w7, [x19, #44]
+   82b08:	b9402e67 	ldr	w7, [x19, #44]
         fbs->depth=mbox[20]; 
-   82b6c:	b9405261 	ldr	w1, [x19, #80]
+   82b0c:	b9405261 	ldr	w1, [x19, #80]
         fbs->isrgb=mbox[24];         // channel order        
-   82b70:	b9406268 	ldr	w8, [x19, #96]
+   82b10:	b9406268 	ldr	w8, [x19, #96]
         fbs->pitch=mbox[33];
-   82b74:	b9408662 	ldr	w2, [x19, #132]
+   82b14:	b9408662 	ldr	w2, [x19, #132]
         if(fbs->pitch * fbs->vheight > mbox[29])  // possible that pitch*vheight < actual allocation
-   82b78:	b9407663 	ldr	w3, [x19, #116]
+   82b18:	b9407663 	ldr	w3, [x19, #116]
         fbs->fb = (unsigned char *)((unsigned long)mbox[28]);   // save framebuf ptr
-   82b7c:	f902c300 	str	x0, [x24, #1408]
+   82b1c:	f902b700 	str	x0, [x24, #1384]
         fbs->height=mbox[6];
-   82b80:	29011684 	stp	w4, w5, [x20, #8]
+   82b20:	29011684 	stp	w4, w5, [x20, #8]
         if(fbs->pitch * fbs->vheight > mbox[29])  // possible that pitch*vheight < actual allocation
-   82b84:	1b027ce0 	mul	w0, w7, w2
+   82b24:	1b027ce0 	mul	w0, w7, w2
         fbs->vheight=mbox[11];        
-   82b88:	29021e86 	stp	w6, w7, [x20, #16]
+   82b28:	29021e86 	stp	w6, w7, [x20, #16]
         fbs->pitch=mbox[33];
-   82b8c:	b9001a82 	str	w2, [x20, #24]
+   82b2c:	b9001a82 	str	w2, [x20, #24]
         fbs->isrgb=mbox[24];         // channel order        
-   82b90:	2904a281 	stp	w1, w8, [x20, #36]
+   82b30:	2904a281 	stp	w1, w8, [x20, #36]
         if(fbs->pitch * fbs->vheight > mbox[29])  // possible that pitch*vheight < actual allocation
-   82b94:	6b03001f 	cmp	w0, w3
-   82b98:	540003c8 	b.hi	82c10 <fb_init+0x218>  // b.pmore
+   82b34:	6b03001f 	cmp	w0, w3
+   82b38:	540003c8 	b.hi	82bb0 <fb_init+0x218>  // b.pmore
         I("From GPU: fb pa: 0x%08x w %u h %u vw %u vh %u pitch %u isrgb %u", 
-   82b9c:	f9476eb5 	ldr	x21, [x21, #3800]
+   82b3c:	f94762b5 	ldr	x21, [x21, #3776]
         fbs->size = PGROUNDUP(fbs->pitch * fbs->vheight);  // roundup b/c we'll reserve pages for it
-   82ba0:	113ffc00 	add	w0, w0, #0xfff
-   82ba4:	91160318 	add	x24, x24, #0x580
+   82b40:	113ffc00 	add	w0, w0, #0xfff
+   82b44:	9115a318 	add	x24, x24, #0x568
         I("From GPU: fb pa: 0x%08x w %u h %u vw %u vh %u pitch %u isrgb %u", 
-   82ba8:	912162f7 	add	x23, x23, #0x858
-   82bac:	aa1703e1 	mov	x1, x23
-   82bb0:	b94072a3 	ldr	w3, [x21, #112]
-   82bb4:	b9000be8 	str	w8, [sp, #8]
+   82b48:	911fa2f7 	add	x23, x23, #0x7e8
+   82b4c:	aa1703e1 	mov	x1, x23
+   82b50:	b94072a3 	ldr	w3, [x21, #112]
+   82b54:	b9000be8 	str	w8, [sp, #8]
         fbs->size = PGROUNDUP(fbs->pitch * fbs->vheight);  // roundup b/c we'll reserve pages for it
-   82bb8:	12144c08 	and	w8, w0, #0xfffff000
+   82b58:	12144c08 	and	w8, w0, #0xfffff000
         I("From GPU: fb pa: 0x%08x w %u h %u vw %u vh %u pitch %u isrgb %u", 
-   82bbc:	b90003e2 	str	w2, [sp]
-   82bc0:	52802922 	mov	w2, #0x149                 	// #329
-   82bc4:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   82bc8:	9102c000 	add	x0, x0, #0xb0
+   82b5c:	b90003e2 	str	w2, [sp]
+   82b60:	52802922 	mov	w2, #0x149                 	// #329
+   82b64:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   82b68:	91010000 	add	x0, x0, #0x40
         fbs->size = PGROUNDUP(fbs->pitch * fbs->vheight);  // roundup b/c we'll reserve pages for it
-   82bcc:	b9003708 	str	w8, [x24, #52]
+   82b6c:	b9003708 	str	w8, [x24, #52]
         I("From GPU: fb pa: 0x%08x w %u h %u vw %u vh %u pitch %u isrgb %u", 
-   82bd0:	97fffa92 	bl	81618 <tfp_printf>
+   82b70:	97fffa92 	bl	815b8 <tfp_printf>
     release(&mboxlock); 
-   82bd4:	913982c0 	add	x0, x22, #0xe60
-   82bd8:	97fffc62 	bl	81d60 <release>
+   82b74:	913922c0 	add	x0, x22, #0xe48
+   82b78:	97fffc62 	bl	81d00 <release>
     if (reserve_phys_region(mbox[28], fbs->size)) {
-   82bdc:	b9403701 	ldr	w1, [x24, #52]
-   82be0:	b94072a0 	ldr	w0, [x21, #112]
-   82be4:	2a0003e0 	mov	w0, w0
-   82be8:	94000262 	bl	83570 <reserve_phys_region>
-   82bec:	35000600 	cbnz	w0, 82cac <fb_init+0x2b4>
+   82b7c:	b9403701 	ldr	w1, [x24, #52]
+   82b80:	b94072a0 	ldr	w0, [x21, #112]
+   82b84:	2a0003e0 	mov	w0, w0
+   82b88:	94000262 	bl	83510 <reserve_phys_region>
+   82b8c:	35000600 	cbnz	w0, 82c4c <fb_init+0x2b4>
     if (ret==0 && once)
-   82bf0:	b9403b00 	ldr	w0, [x24, #56]
-   82bf4:	35000360 	cbnz	w0, 82c60 <fb_init+0x268>
+   82b90:	b9403b00 	ldr	w0, [x24, #56]
+   82b94:	35000360 	cbnz	w0, 82c00 <fb_init+0x268>
 }
-   82bf8:	a9417bfd 	ldp	x29, x30, [sp, #16]
-   82bfc:	a94253f3 	ldp	x19, x20, [sp, #32]
-   82c00:	a9435bf5 	ldp	x21, x22, [sp, #48]
-   82c04:	a94463f7 	ldp	x23, x24, [sp, #64]
-   82c08:	910143ff 	add	sp, sp, #0x50
-   82c0c:	d65f03c0 	ret
+   82b98:	a9417bfd 	ldp	x29, x30, [sp, #16]
+   82b9c:	a94253f3 	ldp	x19, x20, [sp, #32]
+   82ba0:	a9435bf5 	ldp	x21, x22, [sp, #48]
+   82ba4:	a94463f7 	ldp	x23, x24, [sp, #64]
+   82ba8:	910143ff 	add	sp, sp, #0x50
+   82bac:	d65f03c0 	ret
             {W("pitch %d x vheight %d!= mbox[29] %u", fbs->pitch, fbs->vheight, mbox[29]);BUG();}
-   82c10:	b9407665 	ldr	w5, [x19, #116]
-   82c14:	2a0703e4 	mov	w4, w7
-   82c18:	2a0203e3 	mov	w3, w2
-   82c1c:	912162f3 	add	x19, x23, #0x858
-   82c20:	aa1303e1 	mov	x1, x19
-   82c24:	528028e2 	mov	w2, #0x147                 	// #327
-   82c28:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   82c2c:	9101e000 	add	x0, x0, #0x78
-   82c30:	97fffa7a 	bl	81618 <tfp_printf>
-   82c34:	528028e2 	mov	w2, #0x147                 	// #327
-   82c38:	aa1303e1 	mov	x1, x19
-   82c3c:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82c40:	910d8000 	add	x0, x0, #0x360
-   82c44:	97fffb45 	bl	81958 <assertion_failed>
-   82c48:	29421e86 	ldp	w6, w7, [x20, #16]
-   82c4c:	b9401a82 	ldr	w2, [x20, #24]
-   82c50:	29411684 	ldp	w4, w5, [x20, #8]
-   82c54:	b9402a88 	ldr	w8, [x20, #40]
-   82c58:	1b077c40 	mul	w0, w2, w7
-   82c5c:	17ffffd0 	b	82b9c <fb_init+0x1a4>
+   82bb0:	b9407665 	ldr	w5, [x19, #116]
+   82bb4:	2a0703e4 	mov	w4, w7
+   82bb8:	2a0203e3 	mov	w3, w2
+   82bbc:	911fa2f3 	add	x19, x23, #0x7e8
+   82bc0:	aa1303e1 	mov	x1, x19
+   82bc4:	528028e2 	mov	w2, #0x147                 	// #327
+   82bc8:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   82bcc:	91002000 	add	x0, x0, #0x8
+   82bd0:	97fffa7a 	bl	815b8 <tfp_printf>
+   82bd4:	528028e2 	mov	w2, #0x147                 	// #327
+   82bd8:	aa1303e1 	mov	x1, x19
+   82bdc:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   82be0:	910d8000 	add	x0, x0, #0x360
+   82be4:	97fffb45 	bl	818f8 <assertion_failed>
+   82be8:	29421e86 	ldp	w6, w7, [x20, #16]
+   82bec:	b9401a82 	ldr	w2, [x20, #24]
+   82bf0:	29411684 	ldp	w4, w5, [x20, #8]
+   82bf4:	b9402a88 	ldr	w8, [x20, #40]
+   82bf8:	1b077c40 	mul	w0, w2, w7
+   82bfc:	17ffffd0 	b	82b3c <fb_init+0x1a4>
         {fb_showpicture(); once=0;}
-   82c60:	97ffff04 	bl	82870 <fb_showpicture>
-   82c64:	b9003b1f 	str	wzr, [x24, #56]
+   82c00:	97ffff04 	bl	82810 <fb_showpicture>
+   82c04:	b9003b1f 	str	wzr, [x24, #56]
         return 0; 
-   82c68:	52800000 	mov	w0, #0x0                   	// #0
+   82c08:	52800000 	mov	w0, #0x0                   	// #0
 }
-   82c6c:	a9417bfd 	ldp	x29, x30, [sp, #16]
-   82c70:	a94253f3 	ldp	x19, x20, [sp, #32]
-   82c74:	a9435bf5 	ldp	x21, x22, [sp, #48]
-   82c78:	a94463f7 	ldp	x23, x24, [sp, #64]
-   82c7c:	910143ff 	add	sp, sp, #0x50
-   82c80:	d65f03c0 	ret
+   82c0c:	a9417bfd 	ldp	x29, x30, [sp, #16]
+   82c10:	a94253f3 	ldp	x19, x20, [sp, #32]
+   82c14:	a9435bf5 	ldp	x21, x22, [sp, #48]
+   82c18:	a94463f7 	ldp	x23, x24, [sp, #64]
+   82c1c:	910143ff 	add	sp, sp, #0x50
+   82c20:	d65f03c0 	ret
         E("Unable to set scr res to %d x %d\n", fbs->width, fbs->height);
-   82c84:	91160313 	add	x19, x24, #0x580
-   82c88:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
-   82c8c:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   82c90:	91216021 	add	x1, x1, #0x858
-   82c94:	91042000 	add	x0, x0, #0x108
-   82c98:	528029a2 	mov	w2, #0x14d                 	// #333
-   82c9c:	29411263 	ldp	w3, w4, [x19, #8]
-   82ca0:	97fffa5e 	bl	81618 <tfp_printf>
+   82c24:	9115a313 	add	x19, x24, #0x568
+   82c28:	90000021 	adrp	x1, 86000 <__asm_dcache_level+0xc>
+   82c2c:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   82c30:	911fa021 	add	x1, x1, #0x7e8
+   82c34:	91026000 	add	x0, x0, #0x98
+   82c38:	528029a2 	mov	w2, #0x14d                 	// #333
+   82c3c:	29411263 	ldp	w3, w4, [x19, #8]
+   82c40:	97fffa5e 	bl	815b8 <tfp_printf>
         return -2; 
-   82ca4:	12800020 	mov	w0, #0xfffffffe            	// #-2
-   82ca8:	17ffffd4 	b	82bf8 <fb_init+0x200>
+   82c44:	12800020 	mov	w0, #0xfffffffe            	// #-2
+   82c48:	17ffffd4 	b	82b98 <fb_init+0x200>
         E("failed to reserve fb mem. pa 0x%x size 0x%x already in use.",
-   82cac:	b94072a3 	ldr	w3, [x21, #112]
-   82cb0:	aa1703e1 	mov	x1, x23
-   82cb4:	b9403704 	ldr	w4, [x24, #52]
-   82cb8:	52802a62 	mov	w2, #0x153                 	// #339
-   82cbc:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   82cc0:	91050000 	add	x0, x0, #0x140
-   82cc4:	97fffa55 	bl	81618 <tfp_printf>
+   82c4c:	b94072a3 	ldr	w3, [x21, #112]
+   82c50:	aa1703e1 	mov	x1, x23
+   82c54:	b9403704 	ldr	w4, [x24, #52]
+   82c58:	52802a62 	mov	w2, #0x153                 	// #339
+   82c5c:	d0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   82c60:	91034000 	add	x0, x0, #0xd0
+   82c64:	97fffa55 	bl	815b8 <tfp_printf>
             mbox[28], fbs->size); BUG(); 
-   82cc8:	aa1703e1 	mov	x1, x23
-   82ccc:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82cd0:	52802a82 	mov	w2, #0x154                 	// #340
-   82cd4:	910d8000 	add	x0, x0, #0x360
-   82cd8:	97fffb20 	bl	81958 <assertion_failed>
+   82c68:	aa1703e1 	mov	x1, x23
+   82c6c:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   82c70:	52802a82 	mov	w2, #0x154                 	// #340
+   82c74:	910d8000 	add	x0, x0, #0x360
+   82c78:	97fffb20 	bl	818f8 <assertion_failed>
         return -1; 
-   82cdc:	12800000 	mov	w0, #0xffffffff            	// #-1
-   82ce0:	17ffffc6 	b	82bf8 <fb_init+0x200>
-   82ce4:	00000000 	udf	#0
+   82c7c:	12800000 	mov	w0, #0xffffffff            	// #-1
+   82c80:	17ffffc6 	b	82b98 <fb_init+0x200>
+   82c84:	00000000 	udf	#0
 
-0000000000082ce8 <donut_canvas_init>:
+0000000000082c88 <donut_canvas_init>:
 _Static_assert(22*K*2  <= NN/2); // rows
 
 static char b[N_DONUTS][1760];        // text buffer (W 80 H 22?
 static signed char z[N_DONUTS][1760]; // z buffer
 
 void donut_canvas_init(void) {
-   82ce8:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
-   82cec:	910003fd 	mov	x29, sp
+   82c88:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   82c8c:	910003fd 	mov	x29, sp
     fb_fini();
-   82cf0:	97fffe24 	bl	82580 <fb_fini>
+   82c90:	97fffe24 	bl	82520 <fb_fini>
     // acquire(&mboxlock);      //it's a test. so no lock
 
     the_fb.width = NN;
-   82cf4:	f0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   82cf8:	d2805001 	mov	x1, #0x280                 	// #640
-   82cfc:	f2c05001 	movk	x1, #0x280, lsl #32
-   82d00:	f9479000 	ldr	x0, [x0, #3872]
+   82c94:	f0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   82c98:	d2805001 	mov	x1, #0x280                 	// #640
+   82c9c:	f2c05001 	movk	x1, #0x280, lsl #32
+   82ca0:	f9478400 	ldr	x0, [x0, #3848]
     the_fb.height = NN;
 
     the_fb.vwidth = NN;
-   82d04:	a9008401 	stp	x1, x1, [x0, #8]
+   82ca4:	a9008401 	stp	x1, x1, [x0, #8]
     the_fb.vheight = NN;
 
     if (fb_init() != 0)
-   82d08:	97ffff3c 	bl	829f8 <fb_init>
-   82d0c:	35000060 	cbnz	w0, 82d18 <donut_canvas_init+0x30>
+   82ca8:	97ffff3c 	bl	82998 <fb_init>
+   82cac:	35000060 	cbnz	w0, 82cb8 <donut_canvas_init+0x30>
         BUG();
 }
-   82d10:	a8c17bfd 	ldp	x29, x30, [sp], #16
-   82d14:	d65f03c0 	ret
-   82d18:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   82cb0:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   82cb4:	d65f03c0 	ret
+   82cb8:	a8c17bfd 	ldp	x29, x30, [sp], #16
         BUG();
-   82d1c:	d0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   82d20:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   82d24:	91068021 	add	x1, x1, #0x1a0
-   82d28:	910d8000 	add	x0, x0, #0x360
-   82d2c:	528007e2 	mov	w2, #0x3f                  	// #63
-   82d30:	17fffb0a 	b	81958 <assertion_failed>
-   82d34:	d503201f 	nop
+   82cbc:	d0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   82cc0:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   82cc4:	9104c021 	add	x1, x1, #0x130
+   82cc8:	910d8000 	add	x0, x0, #0x360
+   82ccc:	528007e2 	mov	w2, #0x3f                  	// #63
+   82cd0:	17fffb0a 	b	818f8 <assertion_failed>
+   82cd4:	d503201f 	nop
 
-0000000000082d38 <donut_pixel>:
+0000000000082cd8 <donut_pixel>:
 // draw dots on canvas, closer to the original js version (see comment at the end)
 // Q4: quest: "two donuts". understand code below
 // Q7: quest: "donuts in sync"
 static int frame_count[N_DONUTS] = {0};
 void donut_pixel(int idx) {
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
-   82d38:	93407c05 	sxtw	x5, w0
+   82cd8:	93407c05 	sxtw	x5, w0
                     lumince = lumince<0? 0 : lumince/5; 
                     lumince = lumince<255? lumince : 255; 
 
                 int o = x + 80 * y; // fxl: 80 chars per row
                 signed char zz = (x6 - K2) >> 15;
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82d3c:	937d7c01 	sbfiz	x1, x0, #3, #32
-   82d40:	cb050021 	sub	x1, x1, x5
+   82cdc:	937d7c01 	sbfiz	x1, x0, #3, #32
+   82ce0:	cb050021 	sub	x1, x1, x5
             R(9, 7, cj, sj) // rotate j
         }
         //R(5, 7, cA, sA);
         //R(5, 8, cB, sB);
 
         for (int t = 0; t <=idx%4; t++) {
-   82d44:	6b0003e3 	negs	w3, w0
-   82d48:	5280dc02 	mov	w2, #0x6e0                 	// #1760
+   82ce4:	6b0003e3 	negs	w3, w0
+   82ce8:	5280dc02 	mov	w2, #0x6e0                 	// #1760
 void donut_pixel(int idx) {
-   82d4c:	a9b27bfd 	stp	x29, x30, [sp, #-224]!
+   82cec:	a9b27bfd 	stp	x29, x30, [sp, #-224]!
         for (int t = 0; t <=idx%4; t++) {
-   82d50:	12000404 	and	w4, w0, #0x3
+   82cf0:	12000404 	and	w4, w0, #0x3
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82d54:	d37df021 	lsl	x1, x1, #3
+   82cf4:	d37df021 	lsl	x1, x1, #3
         for (int t = 0; t <=idx%4; t++) {
-   82d58:	12000463 	and	w3, w3, #0x3
-   82d5c:	5a834483 	csneg	w3, w4, w3, mi	// mi = first
-   82d60:	9b227c02 	smull	x2, w0, w2
-   82d64:	7100081f 	cmp	w0, #0x2
+   82cf8:	12000463 	and	w3, w3, #0x3
+   82cfc:	5a834483 	csneg	w3, w4, w3, mi	// mi = first
+   82d00:	9b227c02 	smull	x2, w0, w2
+   82d04:	7100081f 	cmp	w0, #0x2
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82d68:	cb050020 	sub	x0, x1, x5
+   82d08:	cb050020 	sub	x0, x1, x5
 void donut_pixel(int idx) {
-   82d6c:	910003fd 	mov	x29, sp
+   82d0c:	910003fd 	mov	x29, sp
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82d70:	d37be800 	lsl	x0, x0, #5
+   82d10:	d37be800 	lsl	x0, x0, #5
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82d74:	d00000e1 	adrp	x1, a0000 <z+0x9d08>
+   82d14:	d00000e1 	adrp	x1, a0000 <z+0x9d08>
         for (int t = 0; t <=idx%4; t++) {
-   82d78:	b9007fe3 	str	w3, [sp, #124]
+   82d18:	b9007fe3 	str	w3, [sp, #124]
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82d7c:	913b6023 	add	x3, x1, #0xed8
+   82d1c:	913b6023 	add	x3, x1, #0xed8
         memset(z[idx], 127, 1760); // z buffer
-   82d80:	900000a1 	adrp	x1, 96000 <stdout_putf>
-   82d84:	910be021 	add	x1, x1, #0x2f8
+   82d20:	900000a1 	adrp	x1, 96000 <stdout_putf>
+   82d24:	910be021 	add	x1, x1, #0x2f8
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82d88:	f90067e0 	str	x0, [sp, #200]
+   82d28:	f90067e0 	str	x0, [sp, #200]
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82d8c:	8b030040 	add	x0, x2, x3
+   82d2c:	8b030040 	add	x0, x2, x3
 void donut_pixel(int idx) {
-   82d90:	a90573fb 	stp	x27, x28, [sp, #80]
+   82d30:	a90573fb 	stp	x27, x28, [sp, #80]
                     lumince = lumince<0? 0 : lumince/5; 
-   82d94:	528cccfc 	mov	w28, #0x6667                	// #26215
+   82d34:	528cccfc 	mov	w28, #0x6667                	// #26215
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
-   82d98:	52808003 	mov	w3, #0x400                 	// #1024
+   82d38:	52808003 	mov	w3, #0x400                 	// #1024
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82d9c:	f9003be0 	str	x0, [sp, #112]
+   82d3c:	f9003be0 	str	x0, [sp, #112]
         memset(z[idx], 127, 1760); // z buffer
-   82da0:	8b010040 	add	x0, x2, x1
+   82d40:	8b010040 	add	x0, x2, x1
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
-   82da4:	52800004 	mov	w4, #0x0                   	// #0
-   82da8:	52800007 	mov	w7, #0x0                   	// #0
-   82dac:	12807fe6 	mov	w6, #0xfffffc00            	// #-1024
+   82d44:	52800004 	mov	w4, #0x0                   	// #0
+   82d48:	52800007 	mov	w7, #0x0                   	// #0
+   82d4c:	12807fe6 	mov	w6, #0xfffffc00            	// #-1024
                     lumince = lumince<0? 0 : lumince/5; 
-   82db0:	72acccdc 	movk	w28, #0x6666, lsl #16
+   82d50:	72acccdc 	movk	w28, #0x6666, lsl #16
 void donut_pixel(int idx) {
-   82db4:	a90153f3 	stp	x19, x20, [sp, #16]
+   82d54:	a90153f3 	stp	x19, x20, [sp, #16]
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
-   82db8:	52800013 	mov	w19, #0x0                   	// #0
+   82d58:	52800013 	mov	w19, #0x0                   	// #0
 void donut_pixel(int idx) {
-   82dbc:	a9025bf5 	stp	x21, x22, [sp, #32]
-   82dc0:	a90363f7 	stp	x23, x24, [sp, #48]
-   82dc4:	a9046bf9 	stp	x25, x26, [sp, #64]
+   82d5c:	a9025bf5 	stp	x21, x22, [sp, #32]
+   82d60:	a90363f7 	stp	x23, x24, [sp, #48]
+   82d64:	a9046bf9 	stp	x25, x26, [sp, #64]
                     lumince = lumince<0? 0 : lumince/5; 
-   82dc8:	b9006be4 	str	w4, [sp, #104]
-   82dcc:	b9006fe3 	str	w3, [sp, #108]
-   82dd0:	b9007be3 	str	w3, [sp, #120]
-   82dd4:	f90043e5 	str	x5, [sp, #128]
-   82dd8:	29141be7 	stp	w7, w6, [sp, #160]
+   82d68:	b9006be4 	str	w4, [sp, #104]
+   82d6c:	b9006fe3 	str	w3, [sp, #108]
+   82d70:	b9007be3 	str	w3, [sp, #120]
+   82d74:	f90043e5 	str	x5, [sp, #128]
+   82d78:	29141be7 	stp	w7, w6, [sp, #160]
         memset(z[idx], 127, 1760); // z buffer
-   82ddc:	f90057e0 	str	x0, [sp, #168]
-   82de0:	1a9f17e0 	cset	w0, eq	// eq = none
-   82de4:	b900c7e0 	str	w0, [sp, #196]
+   82d7c:	f90057e0 	str	x0, [sp, #168]
+   82d80:	1a9f17e0 	cset	w0, eq	// eq = none
+   82d84:	b900c7e0 	str	w0, [sp, #196]
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82de8:	f9403be0 	ldr	x0, [sp, #112]
-   82dec:	5280dc02 	mov	w2, #0x6e0                 	// #1760
-   82df0:	52800001 	mov	w1, #0x0                   	// #0
+   82d88:	f9403be0 	ldr	x0, [sp, #112]
+   82d8c:	5280dc02 	mov	w2, #0x6e0                 	// #1760
+   82d90:	52800001 	mov	w1, #0x0                   	// #0
         int sj = 0, cj = 1024;
-   82df4:	5280801a 	mov	w26, #0x400                 	// #1024
-   82df8:	52800019 	mov	w25, #0x0                   	// #0
-   82dfc:	52801ff7 	mov	w23, #0xff                  	// #255
+   82d94:	5280801a 	mov	w26, #0x400                 	// #1024
+   82d98:	52800019 	mov	w25, #0x0                   	// #0
+   82d9c:	52801ff7 	mov	w23, #0xff                  	// #255
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
-   82e00:	97fffae2 	bl	81988 <memset>
+   82da0:	97fffae2 	bl	81928 <memset>
                 R(5, 8, ci, si) // rotate i
-   82e04:	52a00616 	mov	w22, #0x300000              	// #3145728
+   82da4:	52a00616 	mov	w22, #0x300000              	// #3145728
         memset(z[idx], 127, 1760); // z buffer
-   82e08:	f94057e0 	ldr	x0, [sp, #168]
-   82e0c:	5280dc02 	mov	w2, #0x6e0                 	// #1760
-   82e10:	52800fe1 	mov	w1, #0x7f                  	// #127
-   82e14:	97fffadd 	bl	81988 <memset>
+   82da8:	f94057e0 	ldr	x0, [sp, #168]
+   82dac:	5280dc02 	mov	w2, #0x6e0                 	// #1760
+   82db0:	52800fe1 	mov	w1, #0x7f                  	// #127
+   82db4:	97fffadd 	bl	81928 <memset>
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82e18:	900000a0 	adrp	x0, 96000 <stdout_putf>
-   82e1c:	910be018 	add	x24, x0, #0x2f8
+   82db8:	900000a0 	adrp	x0, 96000 <stdout_putf>
+   82dbc:	910be018 	add	x24, x0, #0x2f8
                     b[idx][o] = lumince;
-   82e20:	d00000e0 	adrp	x0, a0000 <z+0x9d08>
-   82e24:	913b601b 	add	x27, x0, #0xed8
+   82dc0:	d00000e0 	adrp	x0, a0000 <z+0x9d08>
+   82dc4:	913b601b 	add	x27, x0, #0xed8
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82e28:	f94067e0 	ldr	x0, [sp, #200]
+   82dc8:	f94067e0 	ldr	x0, [sp, #200]
         memset(z[idx], 127, 1760); // z buffer
-   82e2c:	52800b5e 	mov	w30, #0x5a                  	// #90
-   82e30:	294d17e4 	ldp	w4, w5, [sp, #104]
+   82dcc:	52800b5e 	mov	w30, #0x5a                  	// #90
+   82dd0:	294d17e4 	ldp	w4, w5, [sp, #104]
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82e34:	8b000318 	add	x24, x24, x0
-   82e38:	b9407be3 	ldr	w3, [sp, #120]
+   82dd4:	8b000318 	add	x24, x24, x0
+   82dd8:	b9407be3 	ldr	w3, [sp, #120]
                     b[idx][o] = lumince;
-   82e3c:	8b00037b 	add	x27, x27, x0
-   82e40:	29541be7 	ldp	w7, w6, [sp, #160]
+   82ddc:	8b00037b 	add	x27, x27, x0
+   82de0:	29541be7 	ldp	w7, w6, [sp, #160]
                     x5 = sA * sj >> 10,
-   82e44:	1b197cac 	mul	w12, w5, w25
+   82de4:	1b197cac 	mul	w12, w5, w25
                     x2 = cA * sj >> 10,
-   82e48:	1b197c8d 	mul	w13, w4, w25
+   82de8:	1b197c8d 	mul	w13, w4, w25
             int si = 0, ci = 1024; // sine and cosine of angle i
-   82e4c:	52808000 	mov	w0, #0x400                 	// #1024
+   82dec:	52808000 	mov	w0, #0x400                 	// #1024
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82e50:	1b1a7c6f 	mul	w15, w3, w26
+   82df0:	1b1a7c6f 	mul	w15, w3, w26
                     x6 = K2 + R1 * 1024 * x5 + cA * x3,
-   82e54:	12165590 	and	w16, w12, #0xfffffc00
-   82e58:	1120034e 	add	w14, w26, #0x800
-   82e5c:	11540210 	add	w16, w16, #0x500, lsl #12
+   82df4:	12165590 	and	w16, w12, #0xfffffc00
+   82df8:	1120034e 	add	w14, w26, #0x800
+   82dfc:	11540210 	add	w16, w16, #0x500, lsl #12
                     x5 = sA * sj >> 10,
-   82e60:	130a7d8c 	asr	w12, w12, #10
+   82e00:	130a7d8c 	asr	w12, w12, #10
                     x2 = cA * sj >> 10,
-   82e64:	130a7dad 	asr	w13, w13, #10
+   82e04:	130a7dad 	asr	w13, w13, #10
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82e68:	130a7def 	asr	w15, w15, #10
-   82e6c:	2a0003f1 	mov	w17, w0
-   82e70:	5280288b 	mov	w11, #0x144                 	// #324
+   82e08:	130a7def 	asr	w15, w15, #10
+   82e0c:	2a0003f1 	mov	w17, w0
+   82e10:	5280288b 	mov	w11, #0x144                 	// #324
             int si = 0, ci = 1024; // sine and cosine of angle i
-   82e74:	52800001 	mov	w1, #0x0                   	// #0
+   82e14:	52800001 	mov	w1, #0x0                   	// #0
                     x3 = si * x0 >> 10,
-   82e78:	1b0e7c28 	mul	w8, w1, w14
+   82e18:	1b0e7c28 	mul	w8, w1, w14
                 R(5, 8, ci, si) // rotate i
-   82e7c:	0b010834 	add	w20, w1, w1, lsl #2
+   82e1c:	0b010834 	add	w20, w1, w1, lsl #2
                     x1 = ci * x0 >> 10,
-   82e80:	1b0e7e35 	mul	w21, w17, w14
+   82e20:	1b0e7e35 	mul	w21, w17, w14
                 R(5, 8, ci, si) // rotate i
-   82e84:	0b110a22 	add	w2, w17, w17, lsl #2
-   82e88:	4b942234 	sub	w20, w17, w20, asr #8
+   82e24:	0b110a22 	add	w2, w17, w17, lsl #2
+   82e28:	4b942234 	sub	w20, w17, w20, asr #8
                     x7 = cj * si >> 10,
-   82e8c:	4b012d09 	sub	w9, w8, w1, lsl #11
+   82e2c:	4b012d09 	sub	w9, w8, w1, lsl #11
                     x3 = si * x0 >> 10,
-   82e90:	130a7d08 	asr	w8, w8, #10
+   82e30:	130a7d08 	asr	w8, w8, #10
                 R(5, 8, ci, si) // rotate i
-   82e94:	0b822021 	add	w1, w1, w2, asr #8
+   82e34:	0b822021 	add	w1, w1, w2, asr #8
                     x1 = ci * x0 >> 10,
-   82e98:	130a7eb5 	asr	w21, w21, #10
+   82e38:	130a7eb5 	asr	w21, w21, #10
                     x7 = cj * si >> 10,
-   82e9c:	130a7d29 	asr	w9, w9, #10
+   82e3c:	130a7d29 	asr	w9, w9, #10
                 R(5, 8, ci, si) // rotate i
-   82ea0:	1b14da82 	msub	w2, w20, w20, w22
+   82e40:	1b14da82 	msub	w2, w20, w20, w22
                     x4 = R1 * x2 - (sA * x3 >> 10),
-   82ea4:	1b087caa 	mul	w10, w5, w8
+   82e44:	1b087caa 	mul	w10, w5, w8
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82ea8:	1b157e72 	mul	w18, w19, w21
+   82e48:	1b157e72 	mul	w18, w19, w21
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82eac:	1b067d20 	mul	w0, w9, w6
+   82e4c:	1b067d20 	mul	w0, w9, w6
                     x4 = R1 * x2 - (sA * x3 >> 10),
-   82eb0:	4b8a29aa 	sub	w10, w13, w10, asr #10
+   82e50:	4b8a29aa 	sub	w10, w13, w10, asr #10
                 R(5, 8, ci, si) // rotate i
-   82eb4:	1b018822 	msub	w2, w1, w1, w2
+   82e54:	1b018822 	msub	w2, w1, w1, w2
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82eb8:	1b157c75 	mul	w21, w3, w21
+   82e58:	1b157c75 	mul	w21, w3, w21
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82ebc:	0b8029a0 	add	w0, w13, w0, asr #10
-   82ec0:	1b077d29 	mul	w9, w9, w7
+   82e5c:	0b8029a0 	add	w0, w13, w0, asr #10
+   82e60:	1b077d29 	mul	w9, w9, w7
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82ec4:	1b0ac872 	msub	w18, w3, w10, w18
+   82e64:	1b0ac872 	msub	w18, w3, w10, w18
                 R(5, 8, ci, si) // rotate i
-   82ec8:	130b7c42 	asr	w2, w2, #11
+   82e68:	130b7c42 	asr	w2, w2, #11
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82ecc:	1b0a566a 	madd	w10, w19, w10, w21
+   82e6c:	1b0a566a 	madd	w10, w19, w10, w21
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82ed0:	1b13a400 	msub	w0, w0, w19, w9
-   82ed4:	52800009 	mov	w9, #0x0                   	// #0
+   82e70:	1b13a400 	msub	w0, w0, w19, w9
+   82e74:	52800009 	mov	w9, #0x0                   	// #0
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82ed8:	531c6e55 	lsl	w21, w18, #4
+   82e78:	531c6e55 	lsl	w21, w18, #4
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82edc:	1b1181e0 	msub	w0, w15, w17, w0
+   82e7c:	1b1181e0 	msub	w0, w15, w17, w0
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82ee0:	4b1202b2 	sub	w18, w21, w18
+   82e80:	4b1202b2 	sub	w18, w21, w18
                     x6 = K2 + R1 * 1024 * x5 + cA * x3,
-   82ee4:	1b084088 	madd	w8, w4, w8, w16
+   82e84:	1b084088 	madd	w8, w4, w8, w16
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82ee8:	531c6d55 	lsl	w21, w10, #4
+   82e88:	531c6d55 	lsl	w21, w10, #4
                 R(5, 8, ci, si) // rotate i
-   82eec:	1b027e91 	mul	w17, w20, w2
+   82e8c:	1b027e91 	mul	w17, w20, w2
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82ef0:	4b0a02aa 	sub	w10, w21, w10
+   82e90:	4b0a02aa 	sub	w10, w21, w10
                     lumince = (((-cA * x7 - cB * ((-sA * x7 >> 10) + x2) - ci * (cj * sB >> 10)) >> 10) - x5); 
-   82ef4:	130a7c00 	asr	w0, w0, #10
+   82e94:	130a7c00 	asr	w0, w0, #10
                 R(5, 8, ci, si) // rotate i
-   82ef8:	1b027c21 	mul	w1, w1, w2
+   82e98:	1b027c21 	mul	w1, w1, w2
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82efc:	531f7a52 	lsl	w18, w18, #1
+   82e9c:	531f7a52 	lsl	w18, w18, #1
                     lumince = lumince<0? 0 : lumince/5; 
-   82f00:	6b0c0000 	subs	w0, w0, w12
+   82ea0:	6b0c0000 	subs	w0, w0, w12
                 R(5, 8, ci, si) // rotate i
-   82f04:	130a7e31 	asr	w17, w17, #10
+   82ea4:	130a7e31 	asr	w17, w17, #10
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82f08:	1ac80d4a 	sdiv	w10, w10, w8
+   82ea8:	1ac80d4a 	sdiv	w10, w10, w8
                     lumince = lumince<0? 0 : lumince/5; 
-   82f0c:	540000c4 	b.mi	82f24 <donut_pixel+0x1ec>  // b.first
-   82f10:	9b3c7c09 	smull	x9, w0, w28
-   82f14:	9361fd29 	asr	x9, x9, #33
-   82f18:	4b807d29 	sub	w9, w9, w0, asr #31
-   82f1c:	7103fd3f 	cmp	w9, #0xff
-   82f20:	1a97d129 	csel	w9, w9, w23, le
+   82eac:	540000c4 	b.mi	82ec4 <donut_pixel+0x1ec>  // b.first
+   82eb0:	9b3c7c09 	smull	x9, w0, w28
+   82eb4:	9361fd29 	asr	x9, x9, #33
+   82eb8:	4b807d29 	sub	w9, w9, w0, asr #31
+   82ebc:	7103fd3f 	cmp	w9, #0xff
+   82ec0:	1a97d129 	csel	w9, w9, w23, le
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82f24:	11002d40 	add	w0, w10, #0xb
+   82ec4:	11002d40 	add	w0, w10, #0xb
                 R(5, 8, ci, si) // rotate i
-   82f28:	130a7c21 	asr	w1, w1, #10
+   82ec8:	130a7c21 	asr	w1, w1, #10
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82f2c:	7100501f 	cmp	w0, #0x14
-   82f30:	54000208 	b.hi	82f70 <donut_pixel+0x238>  // b.pmore
+   82ecc:	7100501f 	cmp	w0, #0x14
+   82ed0:	54000208 	b.hi	82f10 <donut_pixel+0x238>  // b.pmore
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82f34:	1ac80e52 	sdiv	w18, w18, w8
+   82ed4:	1ac80e52 	sdiv	w18, w18, w8
                     y = 12 + 15 * (cB * x4 + sB * x1) / x6,
-   82f38:	11003142 	add	w2, w10, #0xc
+   82ed8:	11003142 	add	w2, w10, #0xc
                 signed char zz = (x6 - K2) >> 15;
-   82f3c:	51540108 	sub	w8, w8, #0x500, lsl #12
+   82edc:	51540108 	sub	w8, w8, #0x500, lsl #12
                 int o = x + 80 * y; // fxl: 80 chars per row
-   82f40:	0b020842 	add	w2, w2, w2, lsl #2
+   82ee0:	0b020842 	add	w2, w2, w2, lsl #2
                 signed char zz = (x6 - K2) >> 15;
-   82f44:	934f5908 	sbfx	x8, x8, #15, #8
+   82ee4:	934f5908 	sbfx	x8, x8, #15, #8
                     x = 25 + 30 * (cB * x1 - sB * x4) / x6,
-   82f48:	11006640 	add	w0, w18, #0x19
+   82ee8:	11006640 	add	w0, w18, #0x19
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82f4c:	11006252 	add	w18, w18, #0x18
-   82f50:	71013a5f 	cmp	w18, #0x4e
-   82f54:	540000e8 	b.hi	82f70 <donut_pixel+0x238>  // b.pmore
+   82eec:	11006252 	add	w18, w18, #0x18
+   82ef0:	71013a5f 	cmp	w18, #0x4e
+   82ef4:	540000e8 	b.hi	82f10 <donut_pixel+0x238>  // b.pmore
                 int o = x + 80 * y; // fxl: 80 chars per row
-   82f58:	0b021002 	add	w2, w0, w2, lsl #4
+   82ef8:	0b021002 	add	w2, w0, w2, lsl #4
                 if (22 > y && y > 0 && x > 0 && 80 > x && zz < z[idx][o]) { // fxl: z depth will control visibility
-   82f5c:	38e2cb00 	ldrsb	w0, [x24, w2, sxtw]
-   82f60:	6b08001f 	cmp	w0, w8
-   82f64:	5400006d 	b.le	82f70 <donut_pixel+0x238>
+   82efc:	38e2cb00 	ldrsb	w0, [x24, w2, sxtw]
+   82f00:	6b08001f 	cmp	w0, w8
+   82f04:	5400006d 	b.le	82f10 <donut_pixel+0x238>
                     z[idx][o] = zz;
-   82f68:	3822cb08 	strb	w8, [x24, w2, sxtw]
+   82f08:	3822cb08 	strb	w8, [x24, w2, sxtw]
                     b[idx][o] = lumince;
-   82f6c:	3822cb69 	strb	w9, [x27, w2, sxtw]
+   82f0c:	3822cb69 	strb	w9, [x27, w2, sxtw]
             for (int i = 0; i < 324; i++) {
-   82f70:	7100056b 	subs	w11, w11, #0x1
-   82f74:	54fff821 	b.ne	82e78 <donut_pixel+0x140>  // b.any
+   82f10:	7100056b 	subs	w11, w11, #0x1
+   82f14:	54fff821 	b.ne	82e18 <donut_pixel+0x140>  // b.any
             R(9, 7, cj, sj) // rotate j
-   82f78:	0b190f21 	add	w1, w25, w25, lsl #3
-   82f7c:	0b1a0f40 	add	w0, w26, w26, lsl #3
+   82f18:	0b190f21 	add	w1, w25, w25, lsl #3
+   82f1c:	0b1a0f40 	add	w0, w26, w26, lsl #3
         for (int j = 0; j < 90; j++) {
-   82f80:	710007de 	subs	w30, w30, #0x1
+   82f20:	710007de 	subs	w30, w30, #0x1
             R(9, 7, cj, sj) // rotate j
-   82f84:	4b811f5a 	sub	w26, w26, w1, asr #7
-   82f88:	0b801f39 	add	w25, w25, w0, asr #7
-   82f8c:	1b1adb40 	msub	w0, w26, w26, w22
-   82f90:	1b198320 	msub	w0, w25, w25, w0
-   82f94:	130b7c00 	asr	w0, w0, #11
-   82f98:	1b007f5a 	mul	w26, w26, w0
-   82f9c:	1b007f39 	mul	w25, w25, w0
-   82fa0:	130a7f5a 	asr	w26, w26, #10
-   82fa4:	130a7f39 	asr	w25, w25, #10
+   82f24:	4b811f5a 	sub	w26, w26, w1, asr #7
+   82f28:	0b801f39 	add	w25, w25, w0, asr #7
+   82f2c:	1b1adb40 	msub	w0, w26, w26, w22
+   82f30:	1b198320 	msub	w0, w25, w25, w0
+   82f34:	130b7c00 	asr	w0, w0, #11
+   82f38:	1b007f5a 	mul	w26, w26, w0
+   82f3c:	1b007f39 	mul	w25, w25, w0
+   82f40:	130a7f5a 	asr	w26, w26, #10
+   82f44:	130a7f39 	asr	w25, w25, #10
         for (int j = 0; j < 90; j++) {
-   82fa8:	54fff4e1 	b.ne	82e44 <donut_pixel+0x10c>  // b.any
+   82f48:	54fff4e1 	b.ne	82de4 <donut_pixel+0x10c>  // b.any
         for (int t = 0; t <=idx%4; t++) {
-   82fac:	b9407fe0 	ldr	w0, [sp, #124]
-   82fb0:	52800008 	mov	w8, #0x0                   	// #0
+   82f4c:	b9407fe0 	ldr	w0, [sp, #124]
+   82f50:	52800008 	mov	w8, #0x0                   	// #0
             R(5, 7, cA, sA);
-   82fb4:	52a00609 	mov	w9, #0x300000              	// #3145728
+   82f54:	52a00609 	mov	w9, #0x300000              	// #3145728
         for (int t = 0; t <=idx%4; t++) {
-   82fb8:	37f80460 	tbnz	w0, #31, 83044 <donut_pixel+0x30c>
-   82fbc:	294d17e4 	ldp	w4, w5, [sp, #104]
-   82fc0:	b9407be3 	ldr	w3, [sp, #120]
+   82f58:	37f80460 	tbnz	w0, #31, 82fe4 <donut_pixel+0x30c>
+   82f5c:	294d17e4 	ldp	w4, w5, [sp, #104]
+   82f60:	b9407be3 	ldr	w3, [sp, #120]
             R(5, 7, cA, sA);
-   82fc4:	0b0508a6 	add	w6, w5, w5, lsl #2
+   82f64:	0b0508a6 	add	w6, w5, w5, lsl #2
             R(5, 8, cB, sB);
-   82fc8:	0b030861 	add	w1, w3, w3, lsl #2
+   82f68:	0b030861 	add	w1, w3, w3, lsl #2
             R(5, 7, cA, sA);
-   82fcc:	0b040882 	add	w2, w4, w4, lsl #2
+   82f6c:	0b040882 	add	w2, w4, w4, lsl #2
             R(5, 8, cB, sB);
-   82fd0:	0b130a60 	add	w0, w19, w19, lsl #2
-   82fd4:	4b812261 	sub	w1, w19, w1, asr #8
+   82f70:	0b130a60 	add	w0, w19, w19, lsl #2
+   82f74:	4b812261 	sub	w1, w19, w1, asr #8
             R(5, 7, cA, sA);
-   82fd8:	4b861c84 	sub	w4, w4, w6, asr #7
-   82fdc:	0b821ca2 	add	w2, w5, w2, asr #7
+   82f78:	4b861c84 	sub	w4, w4, w6, asr #7
+   82f7c:	0b821ca2 	add	w2, w5, w2, asr #7
             R(5, 8, cB, sB);
-   82fe0:	0b802060 	add	w0, w3, w0, asr #8
+   82f80:	0b802060 	add	w0, w3, w0, asr #8
         for (int t = 0; t <=idx%4; t++) {
-   82fe4:	b9407fe3 	ldr	w3, [sp, #124]
-   82fe8:	11000508 	add	w8, w8, #0x1
+   82f84:	b9407fe3 	ldr	w3, [sp, #124]
+   82f88:	11000508 	add	w8, w8, #0x1
             R(5, 7, cA, sA);
-   82fec:	1b04a485 	msub	w5, w4, w4, w9
+   82f8c:	1b04a485 	msub	w5, w4, w4, w9
         for (int t = 0; t <=idx%4; t++) {
-   82ff0:	6b03011f 	cmp	w8, w3
+   82f90:	6b03011f 	cmp	w8, w3
             R(5, 8, cB, sB);
-   82ff4:	1b01a423 	msub	w3, w1, w1, w9
+   82f94:	1b01a423 	msub	w3, w1, w1, w9
             R(5, 7, cA, sA);
-   82ff8:	1b029445 	msub	w5, w2, w2, w5
+   82f98:	1b029445 	msub	w5, w2, w2, w5
             R(5, 8, cB, sB);
-   82ffc:	1b008c03 	msub	w3, w0, w0, w3
+   82f9c:	1b008c03 	msub	w3, w0, w0, w3
             R(5, 7, cA, sA);
-   83000:	130b7ca5 	asr	w5, w5, #11
+   82fa0:	130b7ca5 	asr	w5, w5, #11
             R(5, 8, cB, sB);
-   83004:	130b7c63 	asr	w3, w3, #11
+   82fa4:	130b7c63 	asr	w3, w3, #11
             R(5, 7, cA, sA);
-   83008:	1b057c84 	mul	w4, w4, w5
+   82fa8:	1b057c84 	mul	w4, w4, w5
             R(5, 8, cB, sB);
-   8300c:	1b037c21 	mul	w1, w1, w3
+   82fac:	1b037c21 	mul	w1, w1, w3
             R(5, 7, cA, sA);
-   83010:	1b057c42 	mul	w2, w2, w5
+   82fb0:	1b057c42 	mul	w2, w2, w5
             R(5, 8, cB, sB);
-   83014:	1b037c00 	mul	w0, w0, w3
+   82fb4:	1b037c00 	mul	w0, w0, w3
             R(5, 7, cA, sA);
-   83018:	130a7c84 	asr	w4, w4, #10
+   82fb8:	130a7c84 	asr	w4, w4, #10
             R(5, 8, cB, sB);
-   8301c:	130a7c33 	asr	w19, w1, #10
+   82fbc:	130a7c33 	asr	w19, w1, #10
             R(5, 7, cA, sA);
-   83020:	130a7c45 	asr	w5, w2, #10
+   82fc0:	130a7c45 	asr	w5, w2, #10
             R(5, 8, cB, sB);
-   83024:	130a7c03 	asr	w3, w0, #10
+   82fc4:	130a7c03 	asr	w3, w0, #10
         for (int t = 0; t <=idx%4; t++) {
-   83028:	54fffced 	b.le	82fc4 <donut_pixel+0x28c>
-   8302c:	4b0403e0 	neg	w0, w4
-   83030:	290d17e4 	stp	w4, w5, [sp, #104]
-   83034:	b9007be3 	str	w3, [sp, #120]
-   83038:	b900a3e0 	str	w0, [sp, #160]
-   8303c:	4b0503e0 	neg	w0, w5
-   83040:	b900a7e0 	str	w0, [sp, #164]
+   82fc8:	54fffced 	b.le	82f64 <donut_pixel+0x28c>
+   82fcc:	4b0403e0 	neg	w0, w4
+   82fd0:	290d17e4 	stp	w4, w5, [sp, #104]
+   82fd4:	b9007be3 	str	w3, [sp, #120]
+   82fd8:	b900a3e0 	str	w0, [sp, #160]
+   82fdc:	4b0503e0 	neg	w0, w5
+   82fe0:	b900a7e0 	str	w0, [sp, #164]
         }
 
         // screen_clear(idx);   // not needed
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83044:	f0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   83048:	91048000 	add	x0, x0, #0x120
-   8304c:	f94043e3 	ldr	x3, [sp, #128]
-   83050:	9101a001 	add	x1, x0, #0x68
+   82fe4:	90000020 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   82fe8:	91048000 	add	x0, x0, #0x120
+   82fec:	f94043e3 	ldr	x3, [sp, #128]
+   82ff0:	9101a001 	add	x1, x0, #0x68
                     // PIXEL clr = b[k]; // blue only
                     PIXEL clr = int2rgb(b[idx][k]); // to a color spectrum
                     // W("fb %lx idx %d xx %d yy %d pitch %d",
                     //     (unsigned long)the_fb.fb, idx, xx, yy, the_fb.pitch);
                     // expand to a neighborhood of 4 pixels
                     setpixel(the_fb.fb, xx, yy, the_fb.pitch, clr);
-   83054:	d0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
+   82ff4:	f0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83058:	d280001b 	mov	x27, #0x0                   	// #0
+   82ff8:	d280001b 	mov	x27, #0x0                   	// #0
         int y = 0, x = 0;
-   8305c:	5280001a 	mov	w26, #0x0                   	// #0
-   83060:	52800017 	mov	w23, #0x0                   	// #0
+   82ffc:	5280001a 	mov	w26, #0x0                   	// #0
+   83000:	52800017 	mov	w23, #0x0                   	// #0
                     setpixel(the_fb.fb, xx, yy, the_fb.pitch, clr);
-   83064:	f9479042 	ldr	x2, [x2, #3872]
+   83004:	f9478442 	ldr	x2, [x2, #3848]
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83068:	529999b9 	mov	w25, #0xcccd                	// #52429
-   8306c:	b8637821 	ldr	w1, [x1, x3, lsl #2]
+   83008:	529999b9 	mov	w25, #0xcccd                	// #52429
+   8300c:	b8637821 	ldr	w1, [x1, x3, lsl #2]
             if (k % 80) {
-   83070:	52866678 	mov	w24, #0x3333                	// #13107
+   83010:	52866678 	mov	w24, #0x3333                	// #13107
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83074:	b8637800 	ldr	w0, [x0, x3, lsl #2]
+   83014:	b8637800 	ldr	w0, [x0, x3, lsl #2]
             if (k % 80) {
-   83078:	2a1a03f5 	mov	w21, w26
-   8307c:	aa1b03f6 	mov	x22, x27
-   83080:	b900d3f3 	str	w19, [sp, #208]
-   83084:	2a1703f3 	mov	w19, w23
+   83018:	2a1a03f5 	mov	w21, w26
+   8301c:	aa1b03f6 	mov	x22, x27
+   83020:	b900d3f3 	str	w19, [sp, #208]
+   83024:	2a1703f3 	mov	w19, w23
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83088:	72b99999 	movk	w25, #0xcccc, lsl #16
+   83028:	72b99999 	movk	w25, #0xcccc, lsl #16
             if (k % 80) {
-   8308c:	72a06678 	movk	w24, #0x333, lsl #16
+   8302c:	72a06678 	movk	w24, #0x333, lsl #16
                     setpixel(the_fb.fb, xx+1, yy, the_fb.pitch, clr);
-   83090:	a9088be2 	stp	x2, x2, [sp, #136]
+   83030:	a9088be2 	stp	x2, x2, [sp, #136]
                     setpixel(the_fb.fb, xx, yy+1, the_fb.pitch, clr);
-   83094:	f9004fe2 	str	x2, [sp, #152]
+   83034:	f9004fe2 	str	x2, [sp, #152]
         int offsetx = xoff[idx], offsety = yoff[idx]; 
-   83098:	291607e0 	stp	w0, w1, [sp, #176]
-   8309c:	d503201f 	nop
-   830a0:	1b197ec0 	mul	w0, w22, w25
-   830a4:	13801000 	ror	w0, w0, #4
+   83038:	291607e0 	stp	w0, w1, [sp, #176]
+   8303c:	d503201f 	nop
+   83040:	1b197ec0 	mul	w0, w22, w25
+   83044:	13801000 	ror	w0, w0, #4
             if (k % 80) {
-   830a8:	6b18001f 	cmp	w0, w24
-   830ac:	54000ae9 	b.ls	83208 <donut_pixel+0x4d0>  // b.plast
+   83048:	6b18001f 	cmp	w0, w24
+   8304c:	54000ae9 	b.ls	831a8 <donut_pixel+0x4d0>  // b.plast
                 if (x < 50) {
-   830b0:	7100c6bf 	cmp	w21, #0x31
-   830b4:	5400028d 	b.le	83104 <donut_pixel+0x3cc>
+   83050:	7100c6bf 	cmp	w21, #0x31
+   83054:	5400028d 	b.le	830a4 <donut_pixel+0x3cc>
                     setpixel(the_fb.fb, xx+1, yy+1, the_fb.pitch, clr);
                 }
                 x++;
-   830b8:	110006b5 	add	w21, w21, #0x1
+   83058:	110006b5 	add	w21, w21, #0x1
         for (int k = 0; 1761 > k; k++) {
-   830bc:	910006d6 	add	x22, x22, #0x1
-   830c0:	f11b86df 	cmp	x22, #0x6e1
-   830c4:	54fffee1 	b.ne	830a0 <donut_pixel+0x368>  // b.any
+   8305c:	910006d6 	add	x22, x22, #0x1
+   83060:	f11b86df 	cmp	x22, #0x6e1
+   83064:	54fffee1 	b.ne	83040 <donut_pixel+0x368>  // b.any
                 y++;
                 x = 1;
             }
         }
         /* STUDENT: TODO: your code here */
         yield();
-   830c8:	b940d3f3 	ldr	w19, [sp, #208]
-   830cc:	940002cf 	bl	83c08 <yield>
+   83068:	b940d3f3 	ldr	w19, [sp, #208]
+   8306c:	940002d1 	bl	83bb0 <yield>
 
         frame_count[idx]++;
-   830d0:	f94043e2 	ldr	x2, [sp, #128]
-   830d4:	f0000080 	adrp	x0, 96000 <stdout_putf>
-   830d8:	910a4001 	add	x1, x0, #0x290
-   830dc:	b8627820 	ldr	w0, [x1, x2, lsl #2]
-   830e0:	11000400 	add	w0, w0, #0x1
-   830e4:	b8227820 	str	w0, [x1, x2, lsl #2]
-
-        // Exit condition: after ~3 seconds
-        // Suppose each frame is roughly 100 ms (adjust if different)
+   83070:	f94043e2 	ldr	x2, [sp, #128]
+   83074:	f0000080 	adrp	x0, 96000 <stdout_putf>
+   83078:	910a4001 	add	x1, x0, #0x290
+   8307c:	b8627820 	ldr	w0, [x1, x2, lsl #2]
+   83080:	11000400 	add	w0, w0, #0x1
+   83084:	b8227820 	str	w0, [x1, x2, lsl #2]
         if (frame_count[idx] == 100 && idx==2) {
-   830e8:	7101901f 	cmp	w0, #0x64
-   830ec:	b940c7e0 	ldr	w0, [sp, #196]
-   830f0:	7a400804 	ccmp	w0, #0x0, #0x4, eq	// eq = none
-   830f4:	54ffe7a0 	b.eq	82de8 <donut_pixel+0xb0>  // b.none
+   83088:	7101901f 	cmp	w0, #0x64
+   8308c:	b940c7e0 	ldr	w0, [sp, #196]
+   83090:	7a400804 	ccmp	w0, #0x0, #0x4, eq	// eq = none
+   83094:	54ffe7a0 	b.eq	82d88 <donut_pixel+0xb0>  // b.none
             exit_process(0);
-   830f8:	52800000 	mov	w0, #0x0                   	// #0
-   830fc:	940003b5 	bl	83fd0 <exit_process>
-   83100:	17ffff3a 	b	82de8 <donut_pixel+0xb0>
+   83098:	52800000 	mov	w0, #0x0                   	// #0
+   8309c:	940003c3 	bl	83fa8 <exit_process>
+   830a0:	17ffff3a 	b	82d88 <donut_pixel+0xb0>
                     int xx=x*K+offsetx, yy=y*K*2+offsety;
-   83104:	b940b3e1 	ldr	w1, [sp, #176]
+   830a4:	b940b3e1 	ldr	w1, [sp, #176]
                     PIXEL clr = int2rgb(b[idx][k]); // to a color spectrum
-   83108:	f9403be0 	ldr	x0, [sp, #112]
+   830a8:	f9403be0 	ldr	x0, [sp, #112]
                     int xx=x*K+offsetx, yy=y*K*2+offsety;
-   8310c:	0b15043b 	add	w27, w1, w21, lsl #1
-   83110:	b940b7e1 	ldr	w1, [sp, #180]
+   830ac:	0b15043b 	add	w27, w1, w21, lsl #1
+   830b0:	b940b7e1 	ldr	w1, [sp, #180]
                     PIXEL clr = int2rgb(b[idx][k]); // to a color spectrum
-   83114:	38766800 	ldrb	w0, [x0, x22]
+   830b4:	38766800 	ldrb	w0, [x0, x22]
                     int xx=x*K+offsetx, yy=y*K*2+offsety;
-   83118:	0b13083a 	add	w26, w1, w19, lsl #2
+   830b8:	0b13083a 	add	w26, w1, w19, lsl #2
 
 // map luminance [0..255] to rgb color
 // value: 0..255, PIXEL: argb
 static PIXEL int2rgb (int value) {
     int r,g,b;     
     if (value >= 0 && value <= 85) {
-   8311c:	7101541f 	cmp	w0, #0x55
-   83120:	540007a8 	b.hi	83214 <donut_pixel+0x4dc>  // b.pmore
+   830bc:	7101541f 	cmp	w0, #0x55
+   830c0:	540007a8 	b.hi	831b4 <donut_pixel+0x4dc>  // b.pmore
         // Black to Yellow (R stays 0, G increases, B stays 0)
         r = 0;
         g = (value * 3);
-   83124:	0b000400 	add	w0, w0, w0, lsl #1
-   83128:	53185c14 	lsl	w20, w0, #8
+   830c4:	0b000400 	add	w0, w0, w0, lsl #1
+   830c8:	53185c14 	lsl	w20, w0, #8
                     setpixel(the_fb.fb, xx, yy, the_fb.pitch, clr);
-   8312c:	f94047e1 	ldr	x1, [sp, #136]
+   830cc:	f94047e1 	ldr	x1, [sp, #136]
     assert(x >= 0 && y >= 0); // important guard
-   83130:	2a3b03e0 	mvn	w0, w27
-   83134:	2a3a03e7 	mvn	w7, w26
-   83138:	531f7c00 	lsr	w0, w0, #31
-   8313c:	b900c3e0 	str	w0, [sp, #192]
+   830d0:	2a3b03e0 	mvn	w0, w27
+   830d4:	2a3a03e7 	mvn	w7, w26
+   830d8:	531f7c00 	lsr	w0, w0, #31
+   830dc:	b900c3e0 	str	w0, [sp, #192]
                     setpixel(the_fb.fb, xx, yy, the_fb.pitch, clr);
-   83140:	f940002b 	ldr	x11, [x1]
+   830e0:	f940002b 	ldr	x11, [x1]
     assert(x >= 0 && y >= 0); // important guard
-   83144:	7100001f 	cmp	w0, #0x0
-   83148:	531f7cf7 	lsr	w23, w7, #31
+   830e4:	7100001f 	cmp	w0, #0x0
+   830e8:	531f7cf7 	lsr	w23, w7, #31
                     setpixel(the_fb.fb, xx, yy, the_fb.pitch, clr);
-   8314c:	b940182c 	ldr	w12, [x1, #24]
+   830ec:	b940182c 	ldr	w12, [x1, #24]
     assert(x >= 0 && y >= 0); // important guard
-   83150:	7a401ae4 	ccmp	w23, #0x0, #0x4, ne	// ne = any
-   83154:	aa0b03e9 	mov	x9, x11
-   83158:	540007e0 	b.eq	83254 <donut_pixel+0x51c>  // b.none
+   830f0:	7a401ae4 	ccmp	w23, #0x0, #0x4, ne	// ne = any
+   830f4:	aa0b03e9 	mov	x9, x11
+   830f8:	540007e0 	b.eq	831f4 <donut_pixel+0x51c>  // b.none
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   8315c:	531e776a 	lsl	w10, w27, #2
-   83160:	1b1a7d8c 	mul	w12, w12, w26
+   830fc:	531e776a 	lsl	w10, w27, #2
+   83100:	1b1a7d8c 	mul	w12, w12, w26
     assert(x >= 0 && y >= 0); // important guard
-   83164:	3100077f 	cmn	w27, #0x1
-   83168:	aa0903e7 	mov	x7, x9
+   83104:	3100077f 	cmn	w27, #0x1
+   83108:	aa0903e7 	mov	x7, x9
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   8316c:	93407d40 	sxtw	x0, w10
-   83170:	f9005fe0 	str	x0, [sp, #184]
-   83174:	8b00016b 	add	x11, x11, x0
+   8310c:	93407d40 	sxtw	x0, w10
+   83110:	f9005fe0 	str	x0, [sp, #184]
+   83114:	8b00016b 	add	x11, x11, x0
     assert(x >= 0 && y >= 0); // important guard
-   83178:	1a9fb7fb 	cset	w27, ge	// ge = tcont
+   83118:	1a9fb7fb 	cset	w27, ge	// ge = tcont
                     setpixel(the_fb.fb, xx+1, yy, the_fb.pitch, clr);
-   8317c:	f9404be0 	ldr	x0, [sp, #144]
+   8311c:	f9404be0 	ldr	x0, [sp, #144]
     assert(x >= 0 && y >= 0); // important guard
-   83180:	7100037f 	cmp	w27, #0x0
+   83120:	7100037f 	cmp	w27, #0x0
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   83184:	b82cc974 	str	w20, [x11, w12, sxtw]
+   83124:	b82cc974 	str	w20, [x11, w12, sxtw]
     assert(x >= 0 && y >= 0); // important guard
-   83188:	7a401ae4 	ccmp	w23, #0x0, #0x4, ne	// ne = any
+   83128:	7a401ae4 	ccmp	w23, #0x0, #0x4, ne	// ne = any
                     setpixel(the_fb.fb, xx+1, yy, the_fb.pitch, clr);
-   8318c:	b9401817 	ldr	w23, [x0, #24]
+   8312c:	b9401817 	ldr	w23, [x0, #24]
     assert(x >= 0 && y >= 0); // important guard
-   83190:	54000b00 	b.eq	832f0 <donut_pixel+0x5b8>  // b.none
+   83130:	54000b00 	b.eq	83290 <donut_pixel+0x5b8>  // b.none
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   83194:	1100114a 	add	w10, w10, #0x4
-   83198:	1b1a7ee8 	mul	w8, w23, w26
+   83134:	1100114a 	add	w10, w10, #0x4
+   83138:	1b1a7ee8 	mul	w8, w23, w26
                     setpixel(the_fb.fb, xx, yy+1, the_fb.pitch, clr);
-   8319c:	1100075a 	add	w26, w26, #0x1
+   8313c:	1100075a 	add	w26, w26, #0x1
     assert(x >= 0 && y >= 0); // important guard
-   831a0:	b940c3e0 	ldr	w0, [sp, #192]
+   83140:	b940c3e0 	ldr	w0, [sp, #192]
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831a4:	93407d57 	sxtw	x23, w10
+   83144:	93407d57 	sxtw	x23, w10
     assert(x >= 0 && y >= 0); // important guard
-   831a8:	2a3a03ea 	mvn	w10, w26
+   83148:	2a3a03ea 	mvn	w10, w26
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831ac:	8b170129 	add	x9, x9, x23
+   8314c:	8b170129 	add	x9, x9, x23
     assert(x >= 0 && y >= 0); // important guard
-   831b0:	531f7d4a 	lsr	w10, w10, #31
-   831b4:	7100015f 	cmp	w10, #0x0
-   831b8:	7a401804 	ccmp	w0, #0x0, #0x4, ne	// ne = any
+   83150:	531f7d4a 	lsr	w10, w10, #31
+   83154:	7100015f 	cmp	w10, #0x0
+   83158:	7a401804 	ccmp	w0, #0x0, #0x4, ne	// ne = any
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831bc:	b828c934 	str	w20, [x9, w8, sxtw]
+   8315c:	b828c934 	str	w20, [x9, w8, sxtw]
                     setpixel(the_fb.fb, xx, yy+1, the_fb.pitch, clr);
-   831c0:	f9404fe0 	ldr	x0, [sp, #152]
-   831c4:	aa0703e8 	mov	x8, x7
-   831c8:	b9401809 	ldr	w9, [x0, #24]
+   83160:	f9404fe0 	ldr	x0, [sp, #152]
+   83164:	aa0703e8 	mov	x8, x7
+   83168:	b9401809 	ldr	w9, [x0, #24]
     assert(x >= 0 && y >= 0); // important guard
-   831cc:	54000740 	b.eq	832b4 <donut_pixel+0x57c>  // b.none
+   8316c:	54000740 	b.eq	83254 <donut_pixel+0x57c>  // b.none
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831d0:	f9405fe0 	ldr	x0, [sp, #184]
-   831d4:	1b097f49 	mul	w9, w26, w9
+   83170:	f9405fe0 	ldr	x0, [sp, #184]
+   83174:	1b097f49 	mul	w9, w26, w9
     assert(x >= 0 && y >= 0); // important guard
-   831d8:	7100015f 	cmp	w10, #0x0
+   83178:	7100015f 	cmp	w10, #0x0
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831dc:	8b0000e7 	add	x7, x7, x0
+   8317c:	8b0000e7 	add	x7, x7, x0
                     setpixel(the_fb.fb, xx+1, yy+1, the_fb.pitch, clr);
-   831e0:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83180:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
     assert(x >= 0 && y >= 0); // important guard
-   831e4:	7a401b64 	ccmp	w27, #0x0, #0x4, ne	// ne = any
+   83184:	7a401b64 	ccmp	w27, #0x0, #0x4, ne	// ne = any
                     setpixel(the_fb.fb, xx+1, yy+1, the_fb.pitch, clr);
-   831e8:	f9479000 	ldr	x0, [x0, #3872]
+   83188:	f9478400 	ldr	x0, [x0, #3848]
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831ec:	b829c8f4 	str	w20, [x7, w9, sxtw]
+   8318c:	b829c8f4 	str	w20, [x7, w9, sxtw]
                     setpixel(the_fb.fb, xx+1, yy+1, the_fb.pitch, clr);
-   831f0:	b9401807 	ldr	w7, [x0, #24]
+   83190:	b9401807 	ldr	w7, [x0, #24]
     assert(x >= 0 && y >= 0); // important guard
-   831f4:	540004a0 	b.eq	83288 <donut_pixel+0x550>  // b.none
+   83194:	540004a0 	b.eq	83228 <donut_pixel+0x550>  // b.none
     *(PIXEL *)(buf + y * pit + x * PIXELSIZE) = p;
-   831f8:	1b077f46 	mul	w6, w26, w7
-   831fc:	8b170108 	add	x8, x8, x23
-   83200:	b826c914 	str	w20, [x8, w6, sxtw]
+   83198:	1b077f46 	mul	w6, w26, w7
+   8319c:	8b170108 	add	x8, x8, x23
+   831a0:	b826c914 	str	w20, [x8, w6, sxtw]
 }
-   83204:	17ffffad 	b	830b8 <donut_pixel+0x380>
+   831a4:	17ffffad 	b	83058 <donut_pixel+0x380>
                 y++;
-   83208:	11000673 	add	w19, w19, #0x1
+   831a8:	11000673 	add	w19, w19, #0x1
                 x = 1;
-   8320c:	52800035 	mov	w21, #0x1                   	// #1
-   83210:	17ffffab 	b	830bc <donut_pixel+0x384>
+   831ac:	52800035 	mov	w21, #0x1                   	// #1
+   831b0:	17ffffab 	b	8305c <donut_pixel+0x384>
         b = 0;
     } else if (value > 85 && value <= 170) {
-   83214:	51015801 	sub	w1, w0, #0x56
-   83218:	7101503f 	cmp	w1, #0x54
-   8321c:	54000108 	b.hi	8323c <donut_pixel+0x504>  // b.pmore
+   831b4:	51015801 	sub	w1, w0, #0x56
+   831b8:	7101503f 	cmp	w1, #0x54
+   831bc:	54000108 	b.hi	831dc <donut_pixel+0x504>  // b.pmore
         // Yellow to Cyan (G stays 255, R decreases, B increases)
         r = 255 - ((value - 85) * 3);
-   83220:	51015400 	sub	w0, w0, #0x55
-   83224:	4b000814 	sub	w20, w0, w0, lsl #2
+   831c0:	51015400 	sub	w0, w0, #0x55
+   831c4:	4b000814 	sub	w20, w0, w0, lsl #2
         g = 255;
         b = (value - 85) * 3;
-   83228:	0b000400 	add	w0, w0, w0, lsl #1
+   831c8:	0b000400 	add	w0, w0, w0, lsl #1
         r = 255 - ((value - 85) * 3);
-   8322c:	1103fe94 	add	w20, w20, #0xff
-   83230:	2a144000 	orr	w0, w0, w20, lsl #16
-   83234:	32181c14 	orr	w20, w0, #0xff00
-   83238:	17ffffbd 	b	8312c <donut_pixel+0x3f4>
+   831cc:	1103fe94 	add	w20, w20, #0xff
+   831d0:	2a144000 	orr	w0, w0, w20, lsl #16
+   831d4:	32181c14 	orr	w20, w0, #0xff00
+   831d8:	17ffffbd 	b	830cc <donut_pixel+0x3f4>
     } else if (value > 170 && value <= 255) {
         // Cyan to Blue (G decreases, B stays 255, R stays 0)
         r = 0;
         g = 255 - ((value - 170) * 3);
-   8323c:	5102a800 	sub	w0, w0, #0xaa
-   83240:	4b000800 	sub	w0, w0, w0, lsl #2
-   83244:	1103fc14 	add	w20, w0, #0xff
-   83248:	53185e94 	lsl	w20, w20, #8
-   8324c:	32001e94 	orr	w20, w20, #0xff
-   83250:	17ffffb7 	b	8312c <donut_pixel+0x3f4>
+   831dc:	5102a800 	sub	w0, w0, #0xaa
+   831e0:	4b000800 	sub	w0, w0, w0, lsl #2
+   831e4:	1103fc14 	add	w20, w0, #0xff
+   831e8:	53185e94 	lsl	w20, w20, #8
+   831ec:	32001e94 	orr	w20, w20, #0xff
+   831f0:	17ffffb7 	b	830cc <donut_pixel+0x3f4>
     assert(x >= 0 && y >= 0); // important guard
+   831f4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   831f8:	52800302 	mov	w2, #0x18                  	// #24
+   831fc:	9104c001 	add	x1, x0, #0x130
+   83200:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83204:	9104e000 	add	x0, x0, #0x138
+   83208:	f9005feb 	str	x11, [sp, #184]
+   8320c:	b900d7ec 	str	w12, [sp, #212]
+   83210:	97fff9ba 	bl	818f8 <assertion_failed>
+   83214:	f94047e0 	ldr	x0, [sp, #136]
+   83218:	b940d7ec 	ldr	w12, [sp, #212]
+   8321c:	f9405feb 	ldr	x11, [sp, #184]
+   83220:	f9400009 	ldr	x9, [x0]
+   83224:	17ffffb6 	b	830fc <donut_pixel+0x424>
+   83228:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   8322c:	52800302 	mov	w2, #0x18                  	// #24
+   83230:	9104c001 	add	x1, x0, #0x130
+   83234:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83238:	9104e000 	add	x0, x0, #0x138
+   8323c:	f9005fe8 	str	x8, [sp, #184]
+   83240:	b900c3e7 	str	w7, [sp, #192]
+   83244:	97fff9ad 	bl	818f8 <assertion_failed>
+   83248:	b940c3e7 	ldr	w7, [sp, #192]
+   8324c:	f9405fe8 	ldr	x8, [sp, #184]
+   83250:	17ffffd2 	b	83198 <donut_pixel+0x4c0>
    83254:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
    83258:	52800302 	mov	w2, #0x18                  	// #24
-   8325c:	91068001 	add	x1, x0, #0x1a0
+   8325c:	9104c001 	add	x1, x0, #0x130
    83260:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83264:	9106a000 	add	x0, x0, #0x1a8
-   83268:	f9005feb 	str	x11, [sp, #184]
-   8326c:	b900d7ec 	str	w12, [sp, #212]
-   83270:	97fff9ba 	bl	81958 <assertion_failed>
-   83274:	f94047e0 	ldr	x0, [sp, #136]
-   83278:	b940d7ec 	ldr	w12, [sp, #212]
-   8327c:	f9405feb 	ldr	x11, [sp, #184]
-   83280:	f9400009 	ldr	x9, [x0]
-   83284:	17ffffb6 	b	8315c <donut_pixel+0x424>
-   83288:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   8328c:	52800302 	mov	w2, #0x18                  	// #24
-   83290:	91068001 	add	x1, x0, #0x1a0
-   83294:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83298:	9106a000 	add	x0, x0, #0x1a8
-   8329c:	f9005fe8 	str	x8, [sp, #184]
-   832a0:	b900c3e7 	str	w7, [sp, #192]
-   832a4:	97fff9ad 	bl	81958 <assertion_failed>
-   832a8:	b940c3e7 	ldr	w7, [sp, #192]
-   832ac:	f9405fe8 	ldr	x8, [sp, #184]
-   832b0:	17ffffd2 	b	831f8 <donut_pixel+0x4c0>
-   832b4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   832b8:	52800302 	mov	w2, #0x18                  	// #24
-   832bc:	91068001 	add	x1, x0, #0x1a0
-   832c0:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   832c4:	9106a000 	add	x0, x0, #0x1a8
-   832c8:	b900c3e9 	str	w9, [sp, #192]
-   832cc:	b900d7ea 	str	w10, [sp, #212]
-   832d0:	f9006fe7 	str	x7, [sp, #216]
-   832d4:	97fff9a1 	bl	81958 <assertion_failed>
-   832d8:	f9404fe0 	ldr	x0, [sp, #152]
-   832dc:	b940c3e9 	ldr	w9, [sp, #192]
-   832e0:	b940d7ea 	ldr	w10, [sp, #212]
-   832e4:	f9400008 	ldr	x8, [x0]
-   832e8:	f9406fe7 	ldr	x7, [sp, #216]
-   832ec:	17ffffb9 	b	831d0 <donut_pixel+0x498>
-   832f0:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   832f4:	52800302 	mov	w2, #0x18                  	// #24
-   832f8:	91068001 	add	x1, x0, #0x1a0
-   832fc:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83300:	9106a000 	add	x0, x0, #0x1a8
-   83304:	b900d7ea 	str	w10, [sp, #212]
-   83308:	f9006fe9 	str	x9, [sp, #216]
-   8330c:	97fff993 	bl	81958 <assertion_failed>
-   83310:	f9404be0 	ldr	x0, [sp, #144]
-   83314:	b940d7ea 	ldr	w10, [sp, #212]
-   83318:	f9406fe9 	ldr	x9, [sp, #216]
-   8331c:	f9400007 	ldr	x7, [x0]
-   83320:	17ffff9d 	b	83194 <donut_pixel+0x45c>
-   83324:	d503201f 	nop
+   83264:	9104e000 	add	x0, x0, #0x138
+   83268:	b900c3e9 	str	w9, [sp, #192]
+   8326c:	b900d7ea 	str	w10, [sp, #212]
+   83270:	f9006fe7 	str	x7, [sp, #216]
+   83274:	97fff9a1 	bl	818f8 <assertion_failed>
+   83278:	f9404fe0 	ldr	x0, [sp, #152]
+   8327c:	b940c3e9 	ldr	w9, [sp, #192]
+   83280:	b940d7ea 	ldr	w10, [sp, #212]
+   83284:	f9400008 	ldr	x8, [x0]
+   83288:	f9406fe7 	ldr	x7, [sp, #216]
+   8328c:	17ffffb9 	b	83170 <donut_pixel+0x498>
+   83290:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83294:	52800302 	mov	w2, #0x18                  	// #24
+   83298:	9104c001 	add	x1, x0, #0x130
+   8329c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   832a0:	9104e000 	add	x0, x0, #0x138
+   832a4:	b900d7ea 	str	w10, [sp, #212]
+   832a8:	f9006fe9 	str	x9, [sp, #216]
+   832ac:	97fff993 	bl	818f8 <assertion_failed>
+   832b0:	f9404be0 	ldr	x0, [sp, #144]
+   832b4:	b940d7ea 	ldr	w10, [sp, #212]
+   832b8:	f9406fe9 	ldr	x9, [sp, #216]
+   832bc:	f9400007 	ldr	x7, [x0]
+   832c0:	17ffff9d 	b	83134 <donut_pixel+0x45c>
+   832c4:	d503201f 	nop
 
-0000000000083328 <donut>:
+00000000000832c8 <donut>:
     return (r<<16)|(g<<8)|b; 
 }
 
 // idx: region in the canvas
 // 
 void donut(int idx) {
-   83328:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
-   8332c:	910003fd 	mov	x29, sp
+   832c8:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   832cc:	910003fd 	mov	x29, sp
     donut_pixel(idx);
-   83330:	97fffe82 	bl	82d38 <donut_pixel>
-   83334:	00000000 	udf	#0
+   832d0:	97fffe82 	bl	82cd8 <donut_pixel>
+   832d4:	00000000 	udf	#0
 
-0000000000083338 <_reserve_phys_region>:
+00000000000832d8 <_reserve_phys_region>:
 	caller MUST hold alloc_lock
 	is_reserve: 1 for reserve, 0 for free
 	return 0 if OK  */
 static int _reserve_phys_region(unsigned long pa_start, 
 	unsigned long size, int is_reserve) {
 	if ((pa_start & ~PAGE_MASK) != 0 || (size & ~PAGE_MASK) != 0) // must align
-   83338:	aa010003 	orr	x3, x0, x1
-   8333c:	f2402c7f 	tst	x3, #0xfff
-   83340:	540005a1 	b.ne	833f4 <_reserve_phys_region+0xbc>  // b.any
+   832d8:	aa010003 	orr	x3, x0, x1
+   832dc:	f2402c7f 	tst	x3, #0xfff
+   832e0:	540005a1 	b.ne	83394 <_reserve_phys_region+0xbc>  // b.any
 		{W("pa_start %lx size %lx", pa_start, size);BUG(); return -1;}
 
 	for (unsigned i = ((pa_start-LOW_MEMORY)>>PAGE_SHIFT); 
-   83344:	9000014a 	adrp	x10, ab000 <b+0xa128>
-   83348:	90000149 	adrp	x9, ab000 <b+0xa128>
+   832e4:	9000014a 	adrp	x10, ab000 <b+0xa128>
+   832e8:	90000149 	adrp	x9, ab000 <b+0xa128>
 			i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
 		if (mem_map[i] == is_reserve)	
-   8334c:	912b6128 	add	x8, x9, #0xad8
+   832ec:	912b6128 	add	x8, x9, #0xad8
 	for (unsigned i = ((pa_start-LOW_MEMORY)>>PAGE_SHIFT); 
-   83350:	f9455d43 	ldr	x3, [x10, #2744]
-   83354:	cb030000 	sub	x0, x0, x3
+   832f0:	f9455d43 	ldr	x3, [x10, #2744]
+   832f4:	cb030000 	sub	x0, x0, x3
 			i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
-   83358:	8b010007 	add	x7, x0, x1
+   832f8:	8b010007 	add	x7, x0, x1
 	for (unsigned i = ((pa_start-LOW_MEMORY)>>PAGE_SHIFT); 
-   8335c:	d34cfc00 	lsr	x0, x0, #12
-   83360:	92407c04 	and	x4, x0, #0xffffffff
-   83364:	2a0003e5 	mov	w5, w0
-   83368:	eb47309f 	cmp	x4, x7, lsr #12
-   8336c:	aa0503e3 	mov	x3, x5
+   832fc:	d34cfc00 	lsr	x0, x0, #12
+   83300:	92407c04 	and	x4, x0, #0xffffffff
+   83304:	2a0003e5 	mov	w5, w0
+   83308:	eb47309f 	cmp	x4, x7, lsr #12
+   8330c:	aa0503e3 	mov	x3, x5
 			i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
-   83370:	d34cfce7 	lsr	x7, x7, #12
+   83310:	d34cfce7 	lsr	x7, x7, #12
 	for (unsigned i = ((pa_start-LOW_MEMORY)>>PAGE_SHIFT); 
-   83374:	54000083 	b.cc	83384 <_reserve_phys_region+0x4c>  // b.lo, b.ul, b.last
-   83378:	14000013 	b	833c4 <_reserve_phys_region+0x8c>
-   8337c:	eb2540ff 	cmp	x7, w5, uxtw
-   83380:	54000109 	b.ls	833a0 <_reserve_phys_region+0x68>  // b.plast
+   83314:	54000083 	b.cc	83324 <_reserve_phys_region+0x4c>  // b.lo, b.ul, b.last
+   83318:	14000013 	b	83364 <_reserve_phys_region+0x8c>
+   8331c:	eb2540ff 	cmp	x7, w5, uxtw
+   83320:	54000109 	b.ls	83340 <_reserve_phys_region+0x68>  // b.plast
 		if (mem_map[i] == is_reserve)	
-   83384:	38656906 	ldrb	w6, [x8, x5]
+   83324:	38656906 	ldrb	w6, [x8, x5]
 			i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
-   83388:	11000405 	add	w5, w0, #0x1
-   8338c:	aa0503e0 	mov	x0, x5
+   83328:	11000405 	add	w5, w0, #0x1
+   8332c:	aa0503e0 	mov	x0, x5
 		if (mem_map[i] == is_reserve)	
-   83390:	6b0200df 	cmp	w6, w2
-   83394:	54ffff41 	b.ne	8337c <_reserve_phys_region+0x44>  // b.any
+   83330:	6b0200df 	cmp	w6, w2
+   83334:	54ffff41 	b.ne	8331c <_reserve_phys_region+0x44>  // b.any
 			{return -2;}      // page already reserved / freed? 
-   83398:	12800020 	mov	w0, #0xfffffffe            	// #-2
+   83338:	12800020 	mov	w0, #0xfffffffe            	// #-2
 
 	I("%s: %s. pa_start %lx -- %lx size %lx",
 		 __func__, is_reserve?"reserved":"freed", 
 		 pa_start, pa_start+size, size);
 	return 0; 
 }
-   8339c:	d65f03c0 	ret
+   8333c:	d65f03c0 	ret
 		mem_map[i] = is_reserve; 
-   833a0:	912b6125 	add	x5, x9, #0xad8
-   833a4:	12001c44 	and	w4, w2, #0xff
-   833a8:	2a0303e0 	mov	w0, w3
-   833ac:	d503201f 	nop
+   83340:	912b6125 	add	x5, x9, #0xad8
+   83344:	12001c44 	and	w4, w2, #0xff
+   83348:	2a0303e0 	mov	w0, w3
+   8334c:	d503201f 	nop
 		i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
-   833b0:	11000463 	add	w3, w3, #0x1
+   83350:	11000463 	add	w3, w3, #0x1
 		mem_map[i] = is_reserve; 
-   833b4:	382068a4 	strb	w4, [x5, x0]
+   83354:	382068a4 	strb	w4, [x5, x0]
 		i<((pa_start-LOW_MEMORY+size)>>PAGE_SHIFT); i++){
-   833b8:	2a0303e0 	mov	w0, w3
+   83358:	2a0303e0 	mov	w0, w3
 	for (unsigned i = ((pa_start-LOW_MEMORY)>>PAGE_SHIFT); 
-   833bc:	eb2340ff 	cmp	x7, w3, uxtw
-   833c0:	54ffff88 	b.hi	833b0 <_reserve_phys_region+0x78>  // b.pmore
+   8335c:	eb2340ff 	cmp	x7, w3, uxtw
+   83360:	54ffff88 	b.hi	83350 <_reserve_phys_region+0x78>  // b.pmore
 	if (is_reserve) paging_pages_used += (size>>PAGE_SHIFT); 
-   833c4:	912ae14a 	add	x10, x10, #0xab8
-   833c8:	d34cfc21 	lsr	x1, x1, #12
-   833cc:	b9400940 	ldr	w0, [x10, #8]
-   833d0:	340000a2 	cbz	w2, 833e4 <_reserve_phys_region+0xac>
-   833d4:	0b010001 	add	w1, w0, w1
+   83364:	912ae14a 	add	x10, x10, #0xab8
+   83368:	d34cfc21 	lsr	x1, x1, #12
+   8336c:	b9400940 	ldr	w0, [x10, #8]
+   83370:	340000a2 	cbz	w2, 83384 <_reserve_phys_region+0xac>
+   83374:	0b010001 	add	w1, w0, w1
 	return 0; 
-   833d8:	52800000 	mov	w0, #0x0                   	// #0
+   83378:	52800000 	mov	w0, #0x0                   	// #0
 	if (is_reserve) paging_pages_used += (size>>PAGE_SHIFT); 
-   833dc:	b9000941 	str	w1, [x10, #8]
-   833e0:	d65f03c0 	ret
+   8337c:	b9000941 	str	w1, [x10, #8]
+   83380:	d65f03c0 	ret
 		else paging_pages_used -= (size>>PAGE_SHIFT);
-   833e4:	4b010001 	sub	w1, w0, w1
+   83384:	4b010001 	sub	w1, w0, w1
 	return 0; 
-   833e8:	52800000 	mov	w0, #0x0                   	// #0
+   83388:	52800000 	mov	w0, #0x0                   	// #0
 		else paging_pages_used -= (size>>PAGE_SHIFT);
-   833ec:	b9000941 	str	w1, [x10, #8]
-   833f0:	d65f03c0 	ret
+   8338c:	b9000941 	str	w1, [x10, #8]
+   83390:	d65f03c0 	ret
 	unsigned long size, int is_reserve) {
-   833f4:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   83394:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
 		{W("pa_start %lx size %lx", pa_start, size);BUG(); return -1;}
-   833f8:	aa0103e4 	mov	x4, x1
-   833fc:	aa0003e3 	mov	x3, x0
+   83398:	aa0103e4 	mov	x4, x1
+   8339c:	aa0003e3 	mov	x3, x0
 	unsigned long size, int is_reserve) {
-   83400:	910003fd 	mov	x29, sp
+   833a0:	910003fd 	mov	x29, sp
 		{W("pa_start %lx size %lx", pa_start, size);BUG(); return -1;}
-   83404:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   833a4:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
 	unsigned long size, int is_reserve) {
-   83408:	f9000bf3 	str	x19, [sp, #16]
+   833a8:	f9000bf3 	str	x19, [sp, #16]
 		{W("pa_start %lx size %lx", pa_start, size);BUG(); return -1;}
-   8340c:	91070033 	add	x19, x1, #0x1c0
-   83410:	52800a02 	mov	w2, #0x50                  	// #80
-   83414:	aa1303e1 	mov	x1, x19
-   83418:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   8341c:	91072000 	add	x0, x0, #0x1c8
-   83420:	97fff87e 	bl	81618 <tfp_printf>
-   83424:	aa1303e1 	mov	x1, x19
-   83428:	52800a02 	mov	w2, #0x50                  	// #80
-   8342c:	f0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   83430:	910d8000 	add	x0, x0, #0x360
-   83434:	97fff949 	bl	81958 <assertion_failed>
-   83438:	12800000 	mov	w0, #0xffffffff            	// #-1
+   833ac:	91054033 	add	x19, x1, #0x150
+   833b0:	52800a02 	mov	w2, #0x50                  	// #80
+   833b4:	aa1303e1 	mov	x1, x19
+   833b8:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   833bc:	91056000 	add	x0, x0, #0x158
+   833c0:	97fff87e 	bl	815b8 <tfp_printf>
+   833c4:	aa1303e1 	mov	x1, x19
+   833c8:	52800a02 	mov	w2, #0x50                  	// #80
+   833cc:	f0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   833d0:	910d8000 	add	x0, x0, #0x360
+   833d4:	97fff949 	bl	818f8 <assertion_failed>
+   833d8:	12800000 	mov	w0, #0xffffffff            	// #-1
 }
-   8343c:	f9400bf3 	ldr	x19, [sp, #16]
-   83440:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   83444:	d65f03c0 	ret
+   833dc:	f9400bf3 	ldr	x19, [sp, #16]
+   833e0:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   833e4:	d65f03c0 	ret
 
-0000000000083448 <get_free_page>:
+00000000000833e8 <get_free_page>:
 unsigned long get_free_page() {
-   83448:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   8344c:	910003fd 	mov	x29, sp
-   83450:	a90153f3 	stp	x19, x20, [sp, #16]
+   833e8:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   833ec:	910003fd 	mov	x29, sp
+   833f0:	a90153f3 	stp	x19, x20, [sp, #16]
 	acquire(&alloc_lock);
-   83454:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
-   83458:	9139e280 	add	x0, x20, #0xe78
+   833f4:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   833f8:	91398280 	add	x0, x20, #0xe60
 unsigned long get_free_page() {
-   8345c:	f90013f5 	str	x21, [sp, #32]
+   833fc:	f90013f5 	str	x21, [sp, #32]
 	acquire(&alloc_lock);
-   83460:	97fff9fe 	bl	81c58 <acquire>
+   83400:	97fff9fe 	bl	81bf8 <acquire>
 	for (int i = 0; i < PAGING_PAGES-MALLOC_PAGES; i++){
-   83464:	90000155 	adrp	x21, ab000 <b+0xa128>
-   83468:	912ae2a0 	add	x0, x21, #0xab8
-   8346c:	f9400802 	ldr	x2, [x0, #16]
-   83470:	f1200042 	subs	x2, x2, #0x800
-   83474:	540003c0 	b.eq	834ec <get_free_page+0xa4>  // b.none
-   83478:	90000143 	adrp	x3, ab000 <b+0xa128>
-   8347c:	d2800000 	mov	x0, #0x0                   	// #0
+   83404:	90000155 	adrp	x21, ab000 <b+0xa128>
+   83408:	912ae2a0 	add	x0, x21, #0xab8
+   8340c:	f9400802 	ldr	x2, [x0, #16]
+   83410:	f1200042 	subs	x2, x2, #0x800
+   83414:	540003c0 	b.eq	8348c <get_free_page+0xa4>  // b.none
+   83418:	90000143 	adrp	x3, ab000 <b+0xa128>
+   8341c:	d2800000 	mov	x0, #0x0                   	// #0
 		if (mem_map[i] == 0){
-   83480:	912b6063 	add	x3, x3, #0xad8
-   83484:	14000002 	b	8348c <get_free_page+0x44>
+   83420:	912b6063 	add	x3, x3, #0xad8
+   83424:	14000002 	b	8342c <get_free_page+0x44>
 	for (int i = 0; i < PAGING_PAGES-MALLOC_PAGES; i++){
-   83488:	54000320 	b.eq	834ec <get_free_page+0xa4>  // b.none
+   83428:	54000320 	b.eq	8348c <get_free_page+0xa4>  // b.none
 		if (mem_map[i] == 0){
-   8348c:	38636801 	ldrb	w1, [x0, x3]
-   83490:	2a0003f3 	mov	w19, w0
-   83494:	91000400 	add	x0, x0, #0x1
+   8342c:	38636801 	ldrb	w1, [x0, x3]
+   83430:	2a0003f3 	mov	w19, w0
+   83434:	91000400 	add	x0, x0, #0x1
 	for (int i = 0; i < PAGING_PAGES-MALLOC_PAGES; i++){
-   83498:	eb02001f 	cmp	x0, x2
+   83438:	eb02001f 	cmp	x0, x2
 		if (mem_map[i] == 0){
-   8349c:	35ffff61 	cbnz	w1, 83488 <get_free_page+0x40>
+   8343c:	35ffff61 	cbnz	w1, 83428 <get_free_page+0x40>
 			mem_map[i] = 1; paging_pages_used++;
-   834a0:	912ae2a2 	add	x2, x21, #0xab8
-   834a4:	52800021 	mov	w1, #0x1                   	// #1
-   834a8:	3833c861 	strb	w1, [x3, w19, sxtw]
+   83440:	912ae2a2 	add	x2, x21, #0xab8
+   83444:	52800021 	mov	w1, #0x1                   	// #1
+   83448:	3833c861 	strb	w1, [x3, w19, sxtw]
 			release(&alloc_lock);
-   834ac:	9139e280 	add	x0, x20, #0xe78
+   8344c:	91398280 	add	x0, x20, #0xe60
 			unsigned long page = LOW_MEMORY + i*PAGE_SIZE;
-   834b0:	53144e73 	lsl	w19, w19, #12
+   83450:	53144e73 	lsl	w19, w19, #12
 			mem_map[i] = 1; paging_pages_used++;
-   834b4:	b9400841 	ldr	w1, [x2, #8]
-   834b8:	11000421 	add	w1, w1, #0x1
-   834bc:	b9000841 	str	w1, [x2, #8]
+   83454:	b9400841 	ldr	w1, [x2, #8]
+   83458:	11000421 	add	w1, w1, #0x1
+   8345c:	b9000841 	str	w1, [x2, #8]
 			release(&alloc_lock);
-   834c0:	97fffa28 	bl	81d60 <release>
+   83460:	97fffa28 	bl	81d00 <release>
 			unsigned long page = LOW_MEMORY + i*PAGE_SIZE;
-   834c4:	f9455ea0 	ldr	x0, [x21, #2744]
+   83464:	f9455ea0 	ldr	x0, [x21, #2744]
 			memzero_aligned((void *)page, PAGE_SIZE);
-   834c8:	d2820001 	mov	x1, #0x1000                	// #4096
+   83468:	d2820001 	mov	x1, #0x1000                	// #4096
 			unsigned long page = LOW_MEMORY + i*PAGE_SIZE;
-   834cc:	8b33c013 	add	x19, x0, w19, sxtw
+   8346c:	8b33c013 	add	x19, x0, w19, sxtw
 			memzero_aligned((void *)page, PAGE_SIZE);
-   834d0:	aa1303e0 	mov	x0, x19
-   834d4:	94000aa0 	bl	85f54 <memzero_aligned>
+   83470:	aa1303e0 	mov	x0, x19
+   83474:	94000ab8 	bl	85f54 <memzero_aligned>
 }
-   834d8:	aa1303e0 	mov	x0, x19
-   834dc:	a94153f3 	ldp	x19, x20, [sp, #16]
-   834e0:	f94013f5 	ldr	x21, [sp, #32]
-   834e4:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   834e8:	d65f03c0 	ret
+   83478:	aa1303e0 	mov	x0, x19
+   8347c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83480:	f94013f5 	ldr	x21, [sp, #32]
+   83484:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83488:	d65f03c0 	ret
 	release(&alloc_lock);
-   834ec:	9139e280 	add	x0, x20, #0xe78
+   8348c:	91398280 	add	x0, x20, #0xe60
 	return 0;
-   834f0:	d2800013 	mov	x19, #0x0                   	// #0
+   83490:	d2800013 	mov	x19, #0x0                   	// #0
 	release(&alloc_lock);
-   834f4:	97fffa1b 	bl	81d60 <release>
+   83494:	97fffa1b 	bl	81d00 <release>
 }
-   834f8:	aa1303e0 	mov	x0, x19
+   83498:	aa1303e0 	mov	x0, x19
+   8349c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   834a0:	f94013f5 	ldr	x21, [sp, #32]
+   834a4:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   834a8:	d65f03c0 	ret
+   834ac:	d503201f 	nop
+
+00000000000834b0 <free_page>:
+void free_page(unsigned long p){
+   834b0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   834b4:	910003fd 	mov	x29, sp
+   834b8:	a90153f3 	stp	x19, x20, [sp, #16]
+	acquire(&alloc_lock);
+   834bc:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   834c0:	91398294 	add	x20, x20, #0xe60
+void free_page(unsigned long p){
+   834c4:	aa0003f3 	mov	x19, x0
+	acquire(&alloc_lock);
+   834c8:	aa1403e0 	mov	x0, x20
+   834cc:	97fff9cb 	bl	81bf8 <acquire>
+	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
+   834d0:	90000140 	adrp	x0, ab000 <b+0xa128>
+   834d4:	90000141 	adrp	x1, ab000 <b+0xa128>
+   834d8:	912ae003 	add	x3, x0, #0xab8
+   834dc:	912b6021 	add	x1, x1, #0xad8
+   834e0:	f9455c04 	ldr	x4, [x0, #2744]
+	release(&alloc_lock);
+   834e4:	aa1403e0 	mov	x0, x20
+	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
+   834e8:	b9400862 	ldr	w2, [x3, #8]
+   834ec:	cb040273 	sub	x19, x19, x4
+   834f0:	51000442 	sub	w2, w2, #0x1
+   834f4:	d34cfe73 	lsr	x19, x19, #12
+   834f8:	3833683f 	strb	wzr, [x1, x19]
+}
    834fc:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83500:	f94013f5 	ldr	x21, [sp, #32]
-   83504:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   83508:	d65f03c0 	ret
+	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
+   83500:	b9000862 	str	w2, [x3, #8]
+}
+   83504:	a8c27bfd 	ldp	x29, x30, [sp], #32
+	release(&alloc_lock);
+   83508:	17fff9fe 	b	81d00 <release>
    8350c:	d503201f 	nop
 
-0000000000083510 <free_page>:
-void free_page(unsigned long p){
-   83510:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   83514:	910003fd 	mov	x29, sp
-   83518:	a90153f3 	stp	x19, x20, [sp, #16]
-	acquire(&alloc_lock);
-   8351c:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
-   83520:	9139e294 	add	x20, x20, #0xe78
-void free_page(unsigned long p){
-   83524:	aa0003f3 	mov	x19, x0
-	acquire(&alloc_lock);
-   83528:	aa1403e0 	mov	x0, x20
-   8352c:	97fff9cb 	bl	81c58 <acquire>
-	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
-   83530:	90000140 	adrp	x0, ab000 <b+0xa128>
-   83534:	90000141 	adrp	x1, ab000 <b+0xa128>
-   83538:	912ae003 	add	x3, x0, #0xab8
-   8353c:	912b6021 	add	x1, x1, #0xad8
-   83540:	f9455c04 	ldr	x4, [x0, #2744]
-	release(&alloc_lock);
-   83544:	aa1403e0 	mov	x0, x20
-	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
-   83548:	b9400862 	ldr	w2, [x3, #8]
-   8354c:	cb040273 	sub	x19, x19, x4
-   83550:	51000442 	sub	w2, w2, #0x1
-   83554:	d34cfe73 	lsr	x19, x19, #12
-   83558:	3833683f 	strb	wzr, [x1, x19]
-}
-   8355c:	a94153f3 	ldp	x19, x20, [sp, #16]
-	mem_map[(p - LOW_MEMORY)>>PAGE_SHIFT] = 0; paging_pages_used--;
-   83560:	b9000862 	str	w2, [x3, #8]
-}
-   83564:	a8c27bfd 	ldp	x29, x30, [sp], #32
-	release(&alloc_lock);
-   83568:	17fff9fe 	b	81d60 <release>
-   8356c:	d503201f 	nop
-
-0000000000083570 <reserve_phys_region>:
+0000000000083510 <reserve_phys_region>:
 
 /* same as above. but caller MUST NOT hold alloc_lock */
 int reserve_phys_region(unsigned long pa_start, unsigned long size) {
+   83510:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   83514:	910003fd 	mov	x29, sp
+   83518:	a90153f3 	stp	x19, x20, [sp, #16]
+	int ret; 
+	acquire(&alloc_lock); 
+   8351c:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   83520:	91398273 	add	x19, x19, #0xe60
+int reserve_phys_region(unsigned long pa_start, unsigned long size) {
+   83524:	aa0003f4 	mov	x20, x0
+	acquire(&alloc_lock); 
+   83528:	aa1303e0 	mov	x0, x19
+int reserve_phys_region(unsigned long pa_start, unsigned long size) {
+   8352c:	f90013f5 	str	x21, [sp, #32]
+   83530:	aa0103f5 	mov	x21, x1
+	acquire(&alloc_lock); 
+   83534:	97fff9b1 	bl	81bf8 <acquire>
+	ret = _reserve_phys_region(pa_start, size, 1/*reserve*/);
+   83538:	aa1503e1 	mov	x1, x21
+   8353c:	52800022 	mov	w2, #0x1                   	// #1
+   83540:	aa1403e0 	mov	x0, x20
+   83544:	97ffff65 	bl	832d8 <_reserve_phys_region>
+   83548:	2a0003e1 	mov	w1, w0
+	release(&alloc_lock); 
+   8354c:	aa1303e0 	mov	x0, x19
+	ret = _reserve_phys_region(pa_start, size, 1/*reserve*/);
+   83550:	2a0103f3 	mov	w19, w1
+	release(&alloc_lock); 
+   83554:	97fff9eb 	bl	81d00 <release>
+	return ret; 
+}
+   83558:	2a1303e0 	mov	w0, w19
+   8355c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83560:	f94013f5 	ldr	x21, [sp, #32]
+   83564:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83568:	d65f03c0 	ret
+   8356c:	d503201f 	nop
+
+0000000000083570 <free_phys_region>:
+
+/* same as above. but caller MUST NOT hold alloc_lock */
+int free_phys_region(unsigned long pa_start, unsigned long size) {
    83570:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
    83574:	910003fd 	mov	x29, sp
    83578:	a90153f3 	stp	x19, x20, [sp, #16]
 	int ret; 
 	acquire(&alloc_lock); 
    8357c:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   83580:	9139e273 	add	x19, x19, #0xe78
-int reserve_phys_region(unsigned long pa_start, unsigned long size) {
+   83580:	91398273 	add	x19, x19, #0xe60
+int free_phys_region(unsigned long pa_start, unsigned long size) {
    83584:	aa0003f4 	mov	x20, x0
 	acquire(&alloc_lock); 
    83588:	aa1303e0 	mov	x0, x19
-int reserve_phys_region(unsigned long pa_start, unsigned long size) {
+int free_phys_region(unsigned long pa_start, unsigned long size) {
    8358c:	f90013f5 	str	x21, [sp, #32]
    83590:	aa0103f5 	mov	x21, x1
 	acquire(&alloc_lock); 
-   83594:	97fff9b1 	bl	81c58 <acquire>
-	ret = _reserve_phys_region(pa_start, size, 1/*reserve*/);
+   83594:	97fff999 	bl	81bf8 <acquire>
+	ret = _reserve_phys_region(pa_start, size, 0/*free*/);
    83598:	aa1503e1 	mov	x1, x21
-   8359c:	52800022 	mov	w2, #0x1                   	// #1
+   8359c:	52800002 	mov	w2, #0x0                   	// #0
    835a0:	aa1403e0 	mov	x0, x20
-   835a4:	97ffff65 	bl	83338 <_reserve_phys_region>
+   835a4:	97ffff4d 	bl	832d8 <_reserve_phys_region>
    835a8:	2a0003e1 	mov	w1, w0
 	release(&alloc_lock); 
    835ac:	aa1303e0 	mov	x0, x19
-	ret = _reserve_phys_region(pa_start, size, 1/*reserve*/);
+	ret = _reserve_phys_region(pa_start, size, 0/*free*/);
    835b0:	2a0103f3 	mov	w19, w1
 	release(&alloc_lock); 
-   835b4:	97fff9eb 	bl	81d60 <release>
+   835b4:	97fff9d3 	bl	81d00 <release>
 	return ret; 
 }
    835b8:	2a1303e0 	mov	w0, w19
@@ -5112,2744 +5109,2753 @@ int reserve_phys_region(unsigned long pa_start, unsigned long size) {
    835c8:	d65f03c0 	ret
    835cc:	d503201f 	nop
 
-00000000000835d0 <free_phys_region>:
-
-/* same as above. but caller MUST NOT hold alloc_lock */
-int free_phys_region(unsigned long pa_start, unsigned long size) {
-   835d0:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   835d4:	910003fd 	mov	x29, sp
-   835d8:	a90153f3 	stp	x19, x20, [sp, #16]
-	int ret; 
-	acquire(&alloc_lock); 
-   835dc:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   835e0:	9139e273 	add	x19, x19, #0xe78
-int free_phys_region(unsigned long pa_start, unsigned long size) {
-   835e4:	aa0003f4 	mov	x20, x0
-	acquire(&alloc_lock); 
-   835e8:	aa1303e0 	mov	x0, x19
-int free_phys_region(unsigned long pa_start, unsigned long size) {
-   835ec:	f90013f5 	str	x21, [sp, #32]
-   835f0:	aa0103f5 	mov	x21, x1
-	acquire(&alloc_lock); 
-   835f4:	97fff999 	bl	81c58 <acquire>
-	ret = _reserve_phys_region(pa_start, size, 0/*free*/);
-   835f8:	aa1503e1 	mov	x1, x21
-   835fc:	52800002 	mov	w2, #0x0                   	// #0
-   83600:	aa1403e0 	mov	x0, x20
-   83604:	97ffff4d 	bl	83338 <_reserve_phys_region>
-   83608:	2a0003e1 	mov	w1, w0
-	release(&alloc_lock); 
-   8360c:	aa1303e0 	mov	x0, x19
-	ret = _reserve_phys_region(pa_start, size, 0/*free*/);
-   83610:	2a0103f3 	mov	w19, w1
-	release(&alloc_lock); 
-   83614:	97fff9d3 	bl	81d60 <release>
-	return ret; 
-}
-   83618:	2a1303e0 	mov	w0, w19
-   8361c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83620:	f94013f5 	ldr	x21, [sp, #32]
-   83624:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   83628:	d65f03c0 	ret
-   8362c:	d503201f 	nop
-
-0000000000083630 <paging_init>:
+00000000000835d0 <paging_init>:
 
 /* init kernel's memory mgmt 
 	return: # of paging pages */
 unsigned int paging_init() {
-   83630:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   835d0:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
 	LOW_MEMORY = PGROUNDUP((unsigned long)&kernel_end);
 	PAGING_PAGES = (HIGH_MEMORY0 - LOW_MEMORY) / PAGE_SIZE; // comment above
-   83634:	d2a78200 	mov	x0, #0x3c100000            	// #1007681536
+   835d4:	d2a78200 	mov	x0, #0x3c100000            	// #1007681536
 unsigned int paging_init() {
-   83638:	910003fd 	mov	x29, sp
-   8363c:	a90153f3 	stp	x19, x20, [sp, #16]
+   835d8:	910003fd 	mov	x29, sp
+   835dc:	a90153f3 	stp	x19, x20, [sp, #16]
 	LOW_MEMORY = PGROUNDUP((unsigned long)&kernel_end);
-   83640:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
-   83644:	90000153 	adrp	x19, ab000 <b+0xa128>
-   83648:	f9478294 	ldr	x20, [x20, #3840]
-   8364c:	912ae262 	add	x2, x19, #0xab8
+   835e0:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   835e4:	90000153 	adrp	x19, ab000 <b+0xa128>
+   835e8:	f9477694 	ldr	x20, [x20, #3816]
+   835ec:	912ae262 	add	x2, x19, #0xab8
 unsigned int paging_init() {
-   83650:	f90013f5 	str	x21, [sp, #32]
+   835f0:	f90013f5 	str	x21, [sp, #32]
 	LOW_MEMORY = PGROUNDUP((unsigned long)&kernel_end);
-   83654:	913ffe81 	add	x1, x20, #0xfff
-   83658:	9274cc21 	and	x1, x1, #0xfffffffffffff000
-   8365c:	f9055e61 	str	x1, [x19, #2744]
+   835f4:	913ffe81 	add	x1, x20, #0xfff
+   835f8:	9274cc21 	and	x1, x1, #0xfffffffffffff000
+   835fc:	f9055e61 	str	x1, [x19, #2744]
 	PAGING_PAGES = (HIGH_MEMORY0 - LOW_MEMORY) / PAGE_SIZE; // comment above
-   83660:	cb010000 	sub	x0, x0, x1
-   83664:	d34cfc00 	lsr	x0, x0, #12
-   83668:	f9000840 	str	x0, [x2, #16]
+   83600:	cb010000 	sub	x0, x0, x1
+   83604:	d34cfc00 	lsr	x0, x0, #12
+   83608:	f9000840 	str	x0, [x2, #16]
 	
     BUG_ON(2 * MALLOC_PAGES >= PAGING_PAGES); // too many malloc pages 
-   8366c:	f140041f 	cmp	x0, #0x1, lsl #12
-   83670:	54000aa9 	b.ls	837c4 <paging_init+0x194>  // b.plast
+   8360c:	f140041f 	cmp	x0, #0x1, lsl #12
+   83610:	54000aa9 	b.ls	83764 <paging_init+0x194>  // b.plast
 
     /* reserve a virtually contig region for malloc()  */
     if (MALLOC_PAGES) {
         acquire(&alloc_lock); 
-   83674:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
-   83678:	9139e2a0 	add	x0, x21, #0xe78
-   8367c:	97fff977 	bl	81c58 <acquire>
+   83614:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   83618:	913982a0 	add	x0, x21, #0xe60
+   8361c:	97fff977 	bl	81bf8 <acquire>
 		int ret = _reserve_phys_region(HIGH_MEMORY0-MALLOC_PAGES*PAGE_SIZE, 
-   83680:	52800022 	mov	w2, #0x1                   	// #1
-   83684:	d2a01001 	mov	x1, #0x800000              	// #8388608
-   83688:	d2a77200 	mov	x0, #0x3b900000            	// #999292928
-   8368c:	97ffff2b 	bl	83338 <_reserve_phys_region>
+   83620:	52800022 	mov	w2, #0x1                   	// #1
+   83624:	d2a01001 	mov	x1, #0x800000              	// #8388608
+   83628:	d2a77200 	mov	x0, #0x3b900000            	// #999292928
+   8362c:	97ffff2b 	bl	832d8 <_reserve_phys_region>
 			MALLOC_PAGES*PAGE_SIZE, 1); 
         BUG_ON(ret); 
-   83690:	35000b80 	cbnz	w0, 83800 <paging_init+0x1d0>
+   83630:	35000b80 	cbnz	w0, 837a0 <paging_init+0x1d0>
         release(&alloc_lock);
-   83694:	9139e2a0 	add	x0, x21, #0xe78
-   83698:	97fff9b2 	bl	81d60 <release>
+   83634:	913982a0 	add	x0, x21, #0xe60
+   83638:	97fff9b2 	bl	81d00 <release>
     }
 
 	printf("phys mem: %08x -- %08x\n", PHYS_BASE, PHYS_BASE + PHYS_SIZE);
-   8369c:	52a7e002 	mov	w2, #0x3f000000            	// #1056964608
-   836a0:	52800001 	mov	w1, #0x0                   	// #0
-   836a4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   836a8:	91094000 	add	x0, x0, #0x250
-   836ac:	97fff7db 	bl	81618 <tfp_printf>
+   8363c:	52a7e002 	mov	w2, #0x3f000000            	// #1056964608
+   83640:	52800001 	mov	w1, #0x0                   	// #0
+   83644:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83648:	91078000 	add	x0, x0, #0x1e0
+   8364c:	97fff7db 	bl	815b8 <tfp_printf>
 	printf("\t kernel: %08x -- %08lx\n", KERNEL_START, (unsigned long)(&kernel_end));
-   836b0:	aa1403e2 	mov	x2, x20
-   836b4:	52a00101 	mov	w1, #0x80000               	// #524288
-   836b8:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   836bc:	9109a000 	add	x0, x0, #0x268
-   836c0:	97fff7d6 	bl	81618 <tfp_printf>
+   83650:	aa1403e2 	mov	x2, x20
+   83654:	52a00101 	mov	w1, #0x80000               	// #524288
+   83658:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   8365c:	9107e000 	add	x0, x0, #0x1f8
+   83660:	97fff7d6 	bl	815b8 <tfp_printf>
 	printf("\t paging mem: %08lx -- %08x\n", LOW_MEMORY, HIGH_MEMORY0-(MALLOC_PAGES<<PAGE_SHIFT));
-   836c4:	f9455e61 	ldr	x1, [x19, #2744]
-   836c8:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   836cc:	52a77202 	mov	w2, #0x3b900000            	// #999292928
-   836d0:	910a2000 	add	x0, x0, #0x288
-   836d4:	97fff7d1 	bl	81618 <tfp_printf>
+   83664:	f9455e61 	ldr	x1, [x19, #2744]
+   83668:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   8366c:	52a77202 	mov	w2, #0x3b900000            	// #999292928
+   83670:	91086000 	add	x0, x0, #0x218
+   83674:	97fff7d1 	bl	815b8 <tfp_printf>
 	printf("\t\t %lu%s %ld pages\n", 
 		int_val((HIGH_MEMORY0 - LOW_MEMORY)),
-   836d8:	f9455e60 	ldr	x0, [x19, #2744]
-   836dc:	d2a78201 	mov	x1, #0x3c100000            	// #1007681536
-   836e0:	cb000021 	sub	x1, x1, x0
-   836e4:	f10ffc3f 	cmp	x1, #0x3ff
-   836e8:	54000129 	b.ls	8370c <paging_init+0xdc>  // b.plast
-   836ec:	b2404fe0 	mov	x0, #0xfffff               	// #1048575
-   836f0:	eb00003f 	cmp	x1, x0
-   836f4:	54000508 	b.hi	83794 <paging_init+0x164>  // b.pmore
+   83678:	f9455e60 	ldr	x0, [x19, #2744]
+   8367c:	d2a78201 	mov	x1, #0x3c100000            	// #1007681536
+   83680:	cb000021 	sub	x1, x1, x0
+   83684:	f10ffc3f 	cmp	x1, #0x3ff
+   83688:	54000129 	b.ls	836ac <paging_init+0xdc>  // b.plast
+   8368c:	b2404fe0 	mov	x0, #0xfffff               	// #1048575
+   83690:	eb00003f 	cmp	x1, x0
+   83694:	54000508 	b.hi	83734 <paging_init+0x164>  // b.pmore
 		int_postfix((HIGH_MEMORY0 - LOW_MEMORY)),
-   836f8:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   83698:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
 		int_val((HIGH_MEMORY0 - LOW_MEMORY)),
-   836fc:	d34afc21 	lsr	x1, x1, #10
+   8369c:	d34afc21 	lsr	x1, x1, #10
 		int_postfix((HIGH_MEMORY0 - LOW_MEMORY)),
-   83700:	91080042 	add	x2, x2, #0x200
-   83704:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
-   83708:	14000004 	b	83718 <paging_init+0xe8>
-   8370c:	f0000002 	adrp	x2, 86000 <__asm_dcache_level+0xc>
-   83710:	911be042 	add	x2, x2, #0x6f8
-   83714:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   836a0:	91064042 	add	x2, x2, #0x190
+   836a4:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   836a8:	14000004 	b	836b8 <paging_init+0xe8>
+   836ac:	f0000002 	adrp	x2, 86000 <__asm_dcache_level+0xc>
+   836b0:	911a2042 	add	x2, x2, #0x688
+   836b4:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
 	printf("\t\t %lu%s %ld pages\n", 
-   83718:	912ae274 	add	x20, x19, #0xab8
-   8371c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83720:	910aa000 	add	x0, x0, #0x2a8
-   83724:	f9400a83 	ldr	x3, [x20, #16]
-   83728:	97fff7bc 	bl	81618 <tfp_printf>
+   836b8:	912ae274 	add	x20, x19, #0xab8
+   836bc:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   836c0:	9108e000 	add	x0, x0, #0x238
+   836c4:	f9400a83 	ldr	x3, [x20, #16]
+   836c8:	97fff7bc 	bl	815b8 <tfp_printf>
 		PAGING_PAGES);
     printf("\t malloc mem: %08x -- %08x\n", HIGH_MEMORY0-(MALLOC_PAGES<<PAGE_SHIFT), HIGH_MEMORY0);
-   8372c:	52a78202 	mov	w2, #0x3c100000            	// #1007681536
-   83730:	52a77201 	mov	w1, #0x3b900000            	// #999292928
-   83734:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83738:	910b0000 	add	x0, x0, #0x2c0
-   8373c:	97fff7b7 	bl	81618 <tfp_printf>
+   836cc:	52a78202 	mov	w2, #0x3c100000            	// #1007681536
+   836d0:	52a77201 	mov	w1, #0x3b900000            	// #999292928
+   836d4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   836d8:	91094000 	add	x0, x0, #0x250
+   836dc:	97fff7b7 	bl	815b8 <tfp_printf>
 	printf("\t\t %lu%s\n", int_val(MALLOC_PAGES * PAGE_SIZE),
-   83740:	910822a2 	add	x2, x21, #0x208
-   83744:	d2800101 	mov	x1, #0x8                   	// #8
-   83748:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   8374c:	910b8000 	add	x0, x0, #0x2e0
-   83750:	97fff7b2 	bl	81618 <tfp_printf>
+   836e0:	910662a2 	add	x2, x21, #0x198
+   836e4:	d2800101 	mov	x1, #0x8                   	// #8
+   836e8:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   836ec:	9109c000 	add	x0, x0, #0x270
+   836f0:	97fff7b2 	bl	815b8 <tfp_printf>
                                  int_postfix(MALLOC_PAGES * PAGE_SIZE)); 
 	printf("\t reserved for framebuffer: %08x -- %08x\n", 
-   83754:	52a7e002 	mov	w2, #0x3f000000            	// #1056964608
-   83758:	52a78201 	mov	w1, #0x3c100000            	// #1007681536
-   8375c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83760:	910bc000 	add	x0, x0, #0x2f0
-   83764:	97fff7ad 	bl	81618 <tfp_printf>
+   836f4:	52a7e002 	mov	w2, #0x3f000000            	// #1056964608
+   836f8:	52a78201 	mov	w1, #0x3c100000            	// #1007681536
+   836fc:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83700:	910a0000 	add	x0, x0, #0x280
+   83704:	97fff7ad 	bl	815b8 <tfp_printf>
 		HIGH_MEMORY0, HIGH_MEMORY);
 
 	paging_pages_total = ((HIGH_MEMORY0-LOW_MEMORY)>>PAGE_SHIFT) - MALLOC_PAGES; 
-   83768:	f9455e62 	ldr	x2, [x19, #2744]
-   8376c:	d2a78201 	mov	x1, #0x3c100000            	// #1007681536
+   83708:	f9455e62 	ldr	x2, [x19, #2744]
+   8370c:	d2a78201 	mov	x1, #0x3c100000            	// #1007681536
 
 	return PAGING_PAGES; 
 }
-   83770:	f94013f5 	ldr	x21, [sp, #32]
+   83710:	f94013f5 	ldr	x21, [sp, #32]
 	paging_pages_total = ((HIGH_MEMORY0-LOW_MEMORY)>>PAGE_SHIFT) - MALLOC_PAGES; 
-   83774:	cb020021 	sub	x1, x1, x2
+   83714:	cb020021 	sub	x1, x1, x2
 }
-   83778:	b9401280 	ldr	w0, [x20, #16]
+   83718:	b9401280 	ldr	w0, [x20, #16]
 	paging_pages_total = ((HIGH_MEMORY0-LOW_MEMORY)>>PAGE_SHIFT) - MALLOC_PAGES; 
-   8377c:	d34cfc21 	lsr	x1, x1, #12
-   83780:	51200021 	sub	w1, w1, #0x800
-   83784:	b9001a81 	str	w1, [x20, #24]
+   8371c:	d34cfc21 	lsr	x1, x1, #12
+   83720:	51200021 	sub	w1, w1, #0x800
+   83724:	b9001a81 	str	w1, [x20, #24]
 }
-   83788:	a94153f3 	ldp	x19, x20, [sp, #16]
-   8378c:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   83790:	d65f03c0 	ret
+   83728:	a94153f3 	ldp	x19, x20, [sp, #16]
+   8372c:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83730:	d65f03c0 	ret
 		int_val((HIGH_MEMORY0 - LOW_MEMORY)),
-   83794:	b24077e0 	mov	x0, #0x3fffffff            	// #1073741823
-   83798:	eb00003f 	cmp	x1, x0
-   8379c:	540000a8 	b.hi	837b0 <paging_init+0x180>  // b.pmore
+   83734:	b24077e0 	mov	x0, #0x3fffffff            	// #1073741823
+   83738:	eb00003f 	cmp	x1, x0
+   8373c:	540000a8 	b.hi	83750 <paging_init+0x180>  // b.pmore
 		int_postfix((HIGH_MEMORY0 - LOW_MEMORY)),
-   837a0:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   83740:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
 		int_val((HIGH_MEMORY0 - LOW_MEMORY)),
-   837a4:	d354fc21 	lsr	x1, x1, #20
+   83744:	d354fc21 	lsr	x1, x1, #20
 		int_postfix((HIGH_MEMORY0 - LOW_MEMORY)),
-   837a8:	910822a2 	add	x2, x21, #0x208
-   837ac:	17ffffdb 	b	83718 <paging_init+0xe8>
-   837b0:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   83748:	910662a2 	add	x2, x21, #0x198
+   8374c:	17ffffdb 	b	836b8 <paging_init+0xe8>
+   83750:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
 		int_val((HIGH_MEMORY0 - LOW_MEMORY)),
-   837b4:	d35efc21 	lsr	x1, x1, #30
+   83754:	d35efc21 	lsr	x1, x1, #30
 		int_postfix((HIGH_MEMORY0 - LOW_MEMORY)),
-   837b8:	9107e042 	add	x2, x2, #0x1f8
-   837bc:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
-   837c0:	17ffffd6 	b	83718 <paging_init+0xe8>
+   83758:	91062042 	add	x2, x2, #0x188
+   8375c:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   83760:	17ffffd6 	b	836b8 <paging_init+0xe8>
     BUG_ON(2 * MALLOC_PAGES >= PAGING_PAGES); // too many malloc pages 
-   837c4:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   837c8:	91070021 	add	x1, x1, #0x1c0
-   837cc:	52800f82 	mov	w2, #0x7c                  	// #124
-   837d0:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   837d4:	91084000 	add	x0, x0, #0x210
-   837d8:	97fff860 	bl	81958 <assertion_failed>
+   83764:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   83768:	91054021 	add	x1, x1, #0x150
+   8376c:	52800f82 	mov	w2, #0x7c                  	// #124
+   83770:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83774:	91068000 	add	x0, x0, #0x1a0
+   83778:	97fff860 	bl	818f8 <assertion_failed>
         acquire(&alloc_lock); 
-   837dc:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
-   837e0:	9139e2a0 	add	x0, x21, #0xe78
-   837e4:	97fff91d 	bl	81c58 <acquire>
+   8377c:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   83780:	913982a0 	add	x0, x21, #0xe60
+   83784:	97fff91d 	bl	81bf8 <acquire>
 		int ret = _reserve_phys_region(HIGH_MEMORY0-MALLOC_PAGES*PAGE_SIZE, 
-   837e8:	52800022 	mov	w2, #0x1                   	// #1
-   837ec:	d2a01001 	mov	x1, #0x800000              	// #8388608
-   837f0:	d2a77200 	mov	x0, #0x3b900000            	// #999292928
-   837f4:	97fffed1 	bl	83338 <_reserve_phys_region>
+   83788:	52800022 	mov	w2, #0x1                   	// #1
+   8378c:	d2a01001 	mov	x1, #0x800000              	// #8388608
+   83790:	d2a77200 	mov	x0, #0x3b900000            	// #999292928
+   83794:	97fffed1 	bl	832d8 <_reserve_phys_region>
         BUG_ON(ret); 
-   837f8:	34fff4e0 	cbz	w0, 83694 <paging_init+0x64>
-   837fc:	d503201f 	nop
-   83800:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   83804:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83808:	91070021 	add	x1, x1, #0x1c0
-   8380c:	91092000 	add	x0, x0, #0x248
-   83810:	52801062 	mov	w2, #0x83                  	// #131
-   83814:	97fff851 	bl	81958 <assertion_failed>
-   83818:	17ffff9f 	b	83694 <paging_init+0x64>
-   8381c:	00000000 	udf	#0
+   83798:	34fff4e0 	cbz	w0, 83634 <paging_init+0x64>
+   8379c:	d503201f 	nop
+   837a0:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   837a4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   837a8:	91054021 	add	x1, x1, #0x150
+   837ac:	91076000 	add	x0, x0, #0x1d8
+   837b0:	52801062 	mov	w2, #0x83                  	// #131
+   837b4:	97fff851 	bl	818f8 <assertion_failed>
+   837b8:	17ffff9f 	b	83634 <paging_init+0x64>
+   837bc:	00000000 	udf	#0
 
-0000000000083820 <myproc>:
+00000000000837c0 <myproc>:
     [TASK_RUNNING]  "RUNNING ",
     [TASK_SLEEPING] "SLEEP   ",
     [TASK_RUNNABLE] "RUNNABLE",
     [TASK_ZOMBIE]   "ZOMBIE  "};
     
 struct task_struct *myproc(void) {      
-   83820:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   83824:	910003fd 	mov	x29, sp
-   83828:	f9000bf3 	str	x19, [sp, #16]
+   837c0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   837c4:	910003fd 	mov	x29, sp
+   837c8:	f9000bf3 	str	x19, [sp, #16]
     struct task_struct *p;
     /* need disable irq b/c: if right after mycpu(), the cur task moves to 
     a diff cpu, then cpu still points to a previous cpu and ->proc 
     is not this task but a diff one */
 	push_off(); 
-   8382c:	97fff8f7 	bl	81c08 <push_off>
+   837cc:	97fff8f7 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83830:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   83834:	f9478c00 	ldr	x0, [x0, #3864]
-   83838:	f9400013 	ldr	x19, [x0]
+   837d0:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   837d4:	f9478000 	ldr	x0, [x0, #3840]
+   837d8:	f9400013 	ldr	x19, [x0]
     pop_off(); 
-   8383c:	97fff929 	bl	81ce0 <pop_off>
+   837dc:	97fff929 	bl	81c80 <pop_off>
 	return p; 
 };
-   83840:	aa1303e0 	mov	x0, x19
-   83844:	f9400bf3 	ldr	x19, [sp, #16]
-   83848:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   8384c:	d65f03c0 	ret
+   837e0:	aa1303e0 	mov	x0, x19
+   837e4:	f9400bf3 	ldr	x19, [sp, #16]
+   837e8:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   837ec:	d65f03c0 	ret
 
-0000000000083850 <sched_init>:
+00000000000837f0 <sched_init>:
 
 extern void init(int arg); // kernel.c
 
 /* must be called BEFORE any schedule() or timertick() occurs */
 void sched_init(void) {
-   83850:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
-   83854:	910003fd 	mov	x29, sp
-   83858:	f9001bf7 	str	x23, [sp, #48]
-   8385c:	d0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
-   83860:	a90153f3 	stp	x19, x20, [sp, #16]
-   83864:	b0000353 	adrp	x19, ec000 <kernel_stacks>
-   83868:	91000273 	add	x19, x19, #0x0
-   8386c:	f94786f4 	ldr	x20, [x23, #3848]
-   83870:	a9025bf5 	stp	x21, x22, [sp, #32]
-   83874:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
-   83878:	91408276 	add	x22, x19, #0x20, lsl #12
+   837f0:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   837f4:	910003fd 	mov	x29, sp
+   837f8:	f9001bf7 	str	x23, [sp, #48]
+   837fc:	d0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
+   83800:	a90153f3 	stp	x19, x20, [sp, #16]
+   83804:	b0000353 	adrp	x19, ec000 <kernel_stacks>
+   83808:	91000273 	add	x19, x19, #0x0
+   8380c:	f9477af4 	ldr	x20, [x23, #3824]
+   83810:	a9025bf5 	stp	x21, x22, [sp, #32]
+   83814:	b0000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   83818:	91408276 	add	x22, x19, #0x20, lsl #12
     for (int i = 0; i < NR_TASKS; i++) {
         task[i] = (struct task_struct *)(&kernel_stacks[i][0]); 
         BUG_ON((unsigned long)task[i] & ~PAGE_MASK);  // must be page aligned. see above
         memset(task[i], 0, sizeof(struct task_struct)); // zero everything
         initlock(&(task[i]->lock), "task");
-   8387c:	910cc2b5 	add	x21, x21, #0x330
+   8381c:	910b02b5 	add	x21, x21, #0x2c0
         task[i] = (struct task_struct *)(&kernel_stacks[i][0]); 
-   83880:	f9000293 	str	x19, [x20]
+   83820:	f9000293 	str	x19, [x20]
         memset(task[i], 0, sizeof(struct task_struct)); // zero everything
-   83884:	aa1303e0 	mov	x0, x19
-   83888:	52802d02 	mov	w2, #0x168                 	// #360
-   8388c:	52800001 	mov	w1, #0x0                   	// #0
-   83890:	97fff83e 	bl	81988 <memset>
+   83824:	aa1303e0 	mov	x0, x19
+   83828:	52802d02 	mov	w2, #0x168                 	// #360
+   8382c:	52800001 	mov	w1, #0x0                   	// #0
+   83830:	97fff83e 	bl	81928 <memset>
         initlock(&(task[i]->lock), "task");
-   83894:	91400673 	add	x19, x19, #0x1, lsl #12
-   83898:	f9400280 	ldr	x0, [x20]
-   8389c:	aa1503e1 	mov	x1, x21
-   838a0:	91046000 	add	x0, x0, #0x118
-   838a4:	97fff8cb 	bl	81bd0 <initlock>
+   83834:	91400673 	add	x19, x19, #0x1, lsl #12
+   83838:	f9400280 	ldr	x0, [x20]
+   8383c:	aa1503e1 	mov	x1, x21
+   83840:	91046000 	add	x0, x0, #0x118
+   83844:	97fff8cb 	bl	81b70 <initlock>
         task[i]->state = TASK_UNUSED;
-   838a8:	f8408680 	ldr	x0, [x20], #8
+   83848:	f8408680 	ldr	x0, [x20], #8
     for (int i = 0; i < NR_TASKS; i++) {
-   838ac:	eb16027f 	cmp	x19, x22
+   8384c:	eb16027f 	cmp	x19, x22
         task[i]->state = TASK_UNUSED;
-   838b0:	b901381f 	str	wzr, [x0, #312]
+   83850:	b901381f 	str	wzr, [x0, #312]
     for (int i = 0; i < NR_TASKS; i++) {
-   838b4:	54fffe61 	b.ne	83880 <sched_init+0x30>  // b.any
+   83854:	54fffe61 	b.ne	83820 <sched_init+0x30>  // b.any
     }
 
     for (int i = 0; i < NCPU; i++) {
         idle_tasks[i] = (struct task_struct *)(&boot_stacks[i][0]); 
         cpus[i].proc = idle_tasks[i]; 
-   838b8:	d0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
+   83858:	d0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
         idle_tasks[i] = (struct task_struct *)(&boot_stacks[i][0]); 
-   838bc:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   838c0:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   8385c:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   83860:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
         initlock(&(idle_tasks[i]->lock), "idle"); // some code will try to grab
-   838c4:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   83864:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
         cpus[i].proc = idle_tasks[i]; 
-   838c8:	f9478c42 	ldr	x2, [x2, #3864]
+   83868:	f9478042 	ldr	x2, [x2, #3840]
         initlock(&(idle_tasks[i]->lock), "idle"); // some code will try to grab
-   838cc:	910ce021 	add	x1, x1, #0x338
+   8386c:	910b2021 	add	x1, x1, #0x2c8
         idle_tasks[i] = (struct task_struct *)(&boot_stacks[i][0]); 
-   838d0:	f9477e73 	ldr	x19, [x19, #3832]
-   838d4:	f9476400 	ldr	x0, [x0, #3784]
+   83870:	f9477273 	ldr	x19, [x19, #3808]
+   83874:	f9475800 	ldr	x0, [x0, #3760]
         cpus[i].proc = idle_tasks[i]; 
-   838d8:	f9000040 	str	x0, [x2]
+   83878:	f9000040 	str	x0, [x2]
         idle_tasks[i] = (struct task_struct *)(&boot_stacks[i][0]); 
-   838dc:	f9000260 	str	x0, [x19]
+   8387c:	f9000260 	str	x0, [x19]
         initlock(&(idle_tasks[i]->lock), "idle"); // some code will try to grab
-   838e0:	91046000 	add	x0, x0, #0x118
-   838e4:	97fff8bb 	bl	81bd0 <initlock>
+   83880:	91046000 	add	x0, x0, #0x118
+   83884:	97fff8bb 	bl	81b70 <initlock>
         snprintf(idle_tasks[i]->name, 10, "idle-%d", i); 
-   838e8:	f9400260 	ldr	x0, [x19]
-   838ec:	52800003 	mov	w3, #0x0                   	// #0
-   838f0:	d2800141 	mov	x1, #0xa                   	// #10
-   838f4:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
-   838f8:	9103c000 	add	x0, x0, #0xf0
-   838fc:	910d0042 	add	x2, x2, #0x340
-   83900:	97fff782 	bl	81708 <tfp_snprintf>
+   83888:	f9400260 	ldr	x0, [x19]
+   8388c:	52800003 	mov	w3, #0x0                   	// #0
+   83890:	d2800141 	mov	x1, #0xa                   	// #10
+   83894:	b0000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   83898:	9103c000 	add	x0, x0, #0xf0
+   8389c:	910b4042 	add	x2, x2, #0x2d0
+   838a0:	97fff782 	bl	816a8 <tfp_snprintf>
         jump off the idle task to "normal" ones, saving cpu_context 
         (inc sp/pc) to idle_tasks[i] */
     }
     
     /* init task, will be picked up once cpu0 calls schedule() for the 1st time */
     init_task = task[0]; 
-   83904:	f94786f7 	ldr	x23, [x23, #3848]
-   83908:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   838a4:	f9477af7 	ldr	x23, [x23, #3824]
+   838a8:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
         idle_tasks[i]->pid = -1; // not meaningful. a placeholder
-   8390c:	f9400264 	ldr	x4, [x19]
+   838ac:	f9400264 	ldr	x4, [x19]
     init_task->state = TASK_RUNNABLE;
     init_task->cpu_context.x19 = (unsigned long)init; 
-   83910:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   838b0:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
     init_task = task[0]; 
-   83914:	f9477821 	ldr	x1, [x1, #3824]
+   838b4:	f9476c21 	ldr	x1, [x1, #3800]
     init_task->cpu_context.pc = (unsigned long)ret_from_fork; // entry.S
-   83918:	d0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
+   838b8:	d0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
     init_task = task[0]; 
-   8391c:	f94002e3 	ldr	x3, [x23]
+   838bc:	f94002e3 	ldr	x3, [x23]
         idle_tasks[i]->pid = -1; // not meaningful. a placeholder
-   83920:	12800005 	mov	w5, #0xffffffff            	// #-1
+   838c0:	12800005 	mov	w5, #0xffffffff            	// #-1
     init_task->cpu_context.x19 = (unsigned long)init; 
-   83924:	f9478800 	ldr	x0, [x0, #3856]
+   838c4:	f9477c00 	ldr	x0, [x0, #3832]
     init_task->cpu_context.pc = (unsigned long)ret_from_fork; // entry.S
-   83928:	f9479842 	ldr	x2, [x2, #3888]
+   838c8:	f9478c42 	ldr	x2, [x2, #3864]
     init_task->flags = PF_KTHREAD;
     // init_task->mm = 0;  // nothing (kernel task) 
     init_task->chan = 0;
     init_task->pid = 0;
     safestrcpy(init_task->name, "init", 5);
 }
-   8392c:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83930:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   83934:	f9401bf7 	ldr	x23, [sp, #48]
+   838cc:	a94153f3 	ldp	x19, x20, [sp, #16]
+   838d0:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   838d4:	f9401bf7 	ldr	x23, [sp, #48]
     init_task = task[0]; 
-   83938:	f9000023 	str	x3, [x1]
+   838d8:	f9000023 	str	x3, [x1]
         idle_tasks[i]->pid = -1; // not meaningful. a placeholder
-   8393c:	b9013485 	str	w5, [x4, #308]
+   838dc:	b9013485 	str	w5, [x4, #308]
     init_task->cpu_context.sp = (unsigned long)init_task + THREAD_SIZE; 
-   83940:	91400461 	add	x1, x3, #0x1, lsl #12
+   838e0:	91400461 	add	x1, x3, #0x1, lsl #12
     init_task->priority = 2;
-   83944:	d2800044 	mov	x4, #0x2                   	// #2
+   838e4:	d2800044 	mov	x4, #0x2                   	// #2
     init_task->state = TASK_RUNNABLE;
-   83948:	52800085 	mov	w5, #0x4                   	// #4
+   838e8:	52800085 	mov	w5, #0x4                   	// #4
     init_task->cpu_context.x19 = (unsigned long)init; 
-   8394c:	f9000060 	str	x0, [x3]
+   838ec:	f9000060 	str	x0, [x3]
     safestrcpy(init_task->name, "init", 5);
-   83950:	9103c060 	add	x0, x3, #0xf0
+   838f0:	9103c060 	add	x0, x3, #0xf0
     init_task->cpu_context.pc = (unsigned long)ret_from_fork; // entry.S
-   83954:	a9058861 	stp	x1, x2, [x3, #88]
+   838f4:	a9058861 	stp	x1, x2, [x3, #88]
     safestrcpy(init_task->name, "init", 5);
-   83958:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   8395c:	528000a2 	mov	w2, #0x5                   	// #5
+   838f8:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   838fc:	528000a2 	mov	w2, #0x5                   	// #5
     init_task->flags = PF_KTHREAD;
-   83960:	f9008464 	str	x4, [x3, #264]
+   83900:	f9008464 	str	x4, [x3, #264]
     safestrcpy(init_task->name, "init", 5);
-   83964:	910d2021 	add	x1, x1, #0x348
+   83904:	910b6021 	add	x1, x1, #0x2d8
     init_task->pid = 0;
-   83968:	b901347f 	str	wzr, [x3, #308]
+   83908:	b901347f 	str	wzr, [x3, #308]
     init_task->state = TASK_RUNNABLE;
-   8396c:	b9013865 	str	w5, [x3, #312]
+   8390c:	b9013865 	str	w5, [x3, #312]
     init_task->priority = 2;
-   83970:	a914107f 	stp	xzr, x4, [x3, #320]
+   83910:	a914107f 	stp	xzr, x4, [x3, #320]
     init_task->chan = 0;
-   83974:	f900ac7f 	str	xzr, [x3, #344]
+   83914:	f900ac7f 	str	xzr, [x3, #344]
 }
-   83978:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   83918:	a8c47bfd 	ldp	x29, x30, [sp], #64
     safestrcpy(init_task->name, "init", 5);
-   8397c:	17fff869 	b	81b20 <safestrcpy>
+   8391c:	17fff869 	b	81ac0 <safestrcpy>
 
-0000000000083980 <leave_scheduler>:
+0000000000083920 <leave_scheduler>:
     This function is needed b/c when a task is "switched to" for the first time,
     the task starts to execute from ret_from_fork instead of the instruction
     right after the callsite to cpu_switch_to(), (see comments in switch_to()).
     To balance the irq_disable/enable, ret_from_fork must call leave_scheduler()
     below */
 void leave_scheduler(void) {
-   83980:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   83920:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
     release(&sched_lock);
-   83984:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   83988:	913a4000 	add	x0, x0, #0xe90
+   83924:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83928:	9139e000 	add	x0, x0, #0xe78
 void leave_scheduler(void) {
-   8398c:	910003fd 	mov	x29, sp
+   8392c:	910003fd 	mov	x29, sp
     release(&sched_lock);
-   83990:	97fff8f4 	bl	81d60 <release>
+   83930:	97fff8f4 	bl	81d00 <release>
     enable_irq(); // new task must turn on irq. cf timer_tick() comments
 }
-   83994:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   83934:	a8c17bfd 	ldp	x29, x30, [sp], #16
     enable_irq(); // new task must turn on irq. cf timer_tick() comments
-   83998:	14000954 	b	85ee8 <enable_irq>
-   8399c:	d503201f 	nop
+   83938:	1400096c 	b	85ee8 <enable_irq>
+   8393c:	d503201f 	nop
 
-00000000000839a0 <switch_to>:
+0000000000083940 <switch_to>:
 }
 
 /* caller must hold sched_lock, and not holding next->lock
 called when preemption is disabled, so the cur task wont lose cpu */
 // Q2: quest: "two cooperative printers"
 void switch_to(struct task_struct * next) {
-   839a0:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   839a4:	910003fd 	mov	x29, sp
-   839a8:	f90013f5 	str	x21, [sp, #32]
+   83940:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   83944:	910003fd 	mov	x29, sp
+   83948:	f90013f5 	str	x21, [sp, #32]
     p=mycpu()->proc; 
-   839ac:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   8394c:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
 void switch_to(struct task_struct * next) {
-   839b0:	a90153f3 	stp	x19, x20, [sp, #16]
-   839b4:	aa0003f3 	mov	x19, x0
+   83950:	a90153f3 	stp	x19, x20, [sp, #16]
+   83954:	aa0003f3 	mov	x19, x0
 	push_off(); 
-   839b8:	97fff894 	bl	81c08 <push_off>
+   83958:	97fff894 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   839bc:	f9478ea0 	ldr	x0, [x21, #3864]
-   839c0:	f9400014 	ldr	x20, [x0]
+   8395c:	f94782a0 	ldr	x0, [x21, #3840]
+   83960:	f9400014 	ldr	x20, [x0]
     pop_off(); 
-   839c4:	97fff8c7 	bl	81ce0 <pop_off>
+   83964:	97fff8c7 	bl	81c80 <pop_off>
 	struct task_struct * prev; 
     struct task_struct *cur; 
 
     cur = myproc(); BUG_ON(!cur); 
-   839c8:	b40002d4 	cbz	x20, 83a20 <switch_to+0x80>
+   83968:	b40002d4 	cbz	x20, 839c0 <switch_to+0x80>
 	if (cur == next) 
-   839cc:	eb14027f 	cmp	x19, x20
-   839d0:	54000200 	b.eq	83a10 <switch_to+0x70>  // b.none
+   8396c:	eb14027f 	cmp	x19, x20
+   83970:	54000200 	b.eq	839b0 <switch_to+0x70>  // b.none
 		return; 
 
 	prev = cur;
 	mycpu()->proc = next;
-   839d4:	f9478eb5 	ldr	x21, [x21, #3864]
+   83974:	f94782b5 	ldr	x21, [x21, #3840]
 
 	if (prev->state == TASK_RUNNING) // preempted 
-   839d8:	b9413a80 	ldr	w0, [x20, #312]
+   83978:	b9413a80 	ldr	w0, [x20, #312]
 	mycpu()->proc = next;
-   839dc:	f90002b3 	str	x19, [x21]
+   8397c:	f90002b3 	str	x19, [x21]
 	if (prev->state == TASK_RUNNING) // preempted 
-   839e0:	7100041f 	cmp	w0, #0x1
-   839e4:	54000061 	b.ne	839f0 <switch_to+0x50>  // b.any
+   83980:	7100041f 	cmp	w0, #0x1
+   83984:	54000061 	b.ne	83990 <switch_to+0x50>  // b.any
 		prev->state = TASK_RUNNABLE; 
-   839e8:	52800080 	mov	w0, #0x4                   	// #4
-   839ec:	b9013a80 	str	w0, [x20, #312]
+   83988:	52800080 	mov	w0, #0x4                   	// #4
+   8398c:	b9013a80 	str	w0, [x20, #312]
 	next->state = TASK_RUNNING;
-   839f0:	52800020 	mov	w0, #0x1                   	// #1
+   83990:	52800020 	mov	w0, #0x1                   	// #1
 
         cpu_switch_to() does not need task::lock, cf "locking protocol" on the top
     */
 
     /* below: cpu_switch_to() in switch.S. it will branch to next->cpu_context.pc */
     cpu_switch_to(prev, next);   /* STUDENT: TODO: replace this */
-   839f4:	aa1303e1 	mov	x1, x19
+   83994:	aa1303e1 	mov	x1, x19
 }
-   839f8:	f94013f5 	ldr	x21, [sp, #32]
+   83998:	f94013f5 	ldr	x21, [sp, #32]
 	next->state = TASK_RUNNING;
-   839fc:	b9013a60 	str	w0, [x19, #312]
+   8399c:	b9013a60 	str	w0, [x19, #312]
     cpu_switch_to(prev, next);   /* STUDENT: TODO: replace this */
-   83a00:	aa1403e0 	mov	x0, x20
+   839a0:	aa1403e0 	mov	x0, x20
 }
-   83a04:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83a08:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   839a4:	a94153f3 	ldp	x19, x20, [sp, #16]
+   839a8:	a8c37bfd 	ldp	x29, x30, [sp], #48
     cpu_switch_to(prev, next);   /* STUDENT: TODO: replace this */
-   83a0c:	14000921 	b	85e90 <cpu_switch_to>
+   839ac:	14000939 	b	85e90 <cpu_switch_to>
 }
-   83a10:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83a14:	f94013f5 	ldr	x21, [sp, #32]
-   83a18:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   83a1c:	d65f03c0 	ret
+   839b0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   839b4:	f94013f5 	ldr	x21, [sp, #32]
+   839b8:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   839bc:	d65f03c0 	ret
     cur = myproc(); BUG_ON(!cur); 
-   83a20:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   83a24:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83a28:	910d4021 	add	x1, x1, #0x350
-   83a2c:	910d6000 	add	x0, x0, #0x358
-   83a30:	528018c2 	mov	w2, #0xc6                  	// #198
-   83a34:	97fff7c9 	bl	81958 <assertion_failed>
-   83a38:	17ffffe5 	b	839cc <switch_to+0x2c>
-   83a3c:	d503201f 	nop
+   839c0:	b0000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   839c4:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   839c8:	910b8021 	add	x1, x1, #0x2e0
+   839cc:	910ba000 	add	x0, x0, #0x2e8
+   839d0:	528018c2 	mov	w2, #0xc6                  	// #198
+   839d4:	97fff7c9 	bl	818f8 <assertion_failed>
+   839d8:	17ffffe5 	b	8396c <switch_to+0x2c>
+   839dc:	d503201f 	nop
 
-0000000000083a40 <schedule>:
+00000000000839e0 <schedule>:
 void schedule() {
-   83a40:	a9b97bfd 	stp	x29, x30, [sp, #-112]!
-   83a44:	910003fd 	mov	x29, sp
-   83a48:	a90573fb 	stp	x27, x28, [sp, #80]
+   839e0:	a9b97bfd 	stp	x29, x30, [sp, #-112]!
+   839e4:	910003fd 	mov	x29, sp
+   839e8:	a90573fb 	stp	x27, x28, [sp, #80]
     p=mycpu()->proc; 
-   83a4c:	d000009c 	adrp	x28, 95000 <wordsworth.1725+0xee10>
+   839ec:	d000009c 	adrp	x28, 95000 <wordsworth.1725+0xee10>
 void schedule() {
-   83a50:	a90153f3 	stp	x19, x20, [sp, #16]
-   83a54:	a9025bf5 	stp	x21, x22, [sp, #32]
-   83a58:	a90363f7 	stp	x23, x24, [sp, #48]
+   839f0:	a90153f3 	stp	x19, x20, [sp, #16]
+   839f4:	a9025bf5 	stp	x21, x22, [sp, #32]
+   839f8:	a90363f7 	stp	x23, x24, [sp, #48]
 			p = task[i]; BUG_ON(!p);
-   83a5c:	b0000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
-   83a60:	910d4318 	add	x24, x24, #0x350
+   839fc:	b0000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
+   83a00:	910b8318 	add	x24, x24, #0x2e0
 void schedule() {
-   83a64:	a9046bf9 	stp	x25, x26, [sp, #64]
+   83a04:	a9046bf9 	stp	x25, x26, [sp, #64]
 	push_off(); 
-   83a68:	97fff868 	bl	81c08 <push_off>
+   83a08:	97fff868 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83a6c:	f9478f80 	ldr	x0, [x28, #3864]
-   83a70:	f9400015 	ldr	x21, [x0]
+   83a0c:	f9478380 	ldr	x0, [x28, #3840]
+   83a10:	f9400015 	ldr	x21, [x0]
     pop_off(); 
-   83a74:	97fff89b 	bl	81ce0 <pop_off>
+   83a14:	97fff89b 	bl	81c80 <pop_off>
     acquire(&sched_lock); 
-   83a78:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   83a7c:	913a4000 	add	x0, x0, #0xe90
-   83a80:	97fff876 	bl	81c58 <acquire>
+   83a18:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83a1c:	9139e000 	add	x0, x0, #0xe78
+   83a20:	97fff876 	bl	81bf8 <acquire>
     cpu = cpuid();  // holding sched_lock, the cur process wont mirgrate across cpus
-   83a84:	94000921 	bl	85f08 <cpuid>
-   83a88:	2a0003f6 	mov	w22, w0
+   83a24:	94000939 	bl	85f08 <cpuid>
+   83a28:	2a0003f6 	mov	w22, w0
 			p = task[i]; BUG_ON(!p);
-   83a8c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   83a90:	910d8000 	add	x0, x0, #0x360
-   83a94:	f90037e0 	str	x0, [sp, #104]
-   83a98:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83a2c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83a30:	910bc000 	add	x0, x0, #0x2f0
+   83a34:	f90037e0 	str	x0, [sp, #104]
+   83a38:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
 void schedule() {
-   83a9c:	d2800013 	mov	x19, #0x0                   	// #0
+   83a3c:	d2800013 	mov	x19, #0x0                   	// #0
         has_runnable = 0; 
-   83aa0:	52800006 	mov	w6, #0x0                   	// #0
+   83a40:	52800006 	mov	w6, #0x0                   	// #0
 		max_cr = -1; 
-   83aa4:	12800019 	mov	w25, #0xffffffff            	// #-1
+   83a44:	12800019 	mov	w25, #0xffffffff            	// #-1
 			p = task[i]; BUG_ON(!p);
-   83aa8:	f947841b 	ldr	x27, [x0, #3848]
+   83a48:	f947781b 	ldr	x27, [x0, #3824]
 		next = 0;
-   83aac:	52800017 	mov	w23, #0x0                   	// #0
-   83ab0:	14000004 	b	83ac0 <schedule+0x80>
+   83a4c:	52800017 	mov	w23, #0x0                   	// #0
+   83a50:	14000004 	b	83a60 <schedule+0x80>
 		for (int i = 0; i < NR_TASKS; i++){
-   83ab4:	91000673 	add	x19, x19, #0x1
-   83ab8:	f100827f 	cmp	x19, #0x20
-   83abc:	540002e0 	b.eq	83b18 <schedule+0xd8>  // b.none
+   83a54:	91000673 	add	x19, x19, #0x1
+   83a58:	f100827f 	cmp	x19, #0x20
+   83a5c:	540002e0 	b.eq	83ab8 <schedule+0xd8>  // b.none
 			p = task[i]; BUG_ON(!p);
-   83ac0:	f8737b74 	ldr	x20, [x27, x19, lsl #3]
+   83a60:	f8737b74 	ldr	x20, [x27, x19, lsl #3]
         if (cpus[i].proc == p)
-   83ac4:	2a1303fa 	mov	w26, w19
+   83a64:	2a1303fa 	mov	w26, w19
 			p = task[i]; BUG_ON(!p);
-   83ac8:	b4000674 	cbz	x20, 83b94 <schedule+0x154>
+   83a68:	b40006b4 	cbz	x20, 83b3c <schedule+0x15c>
         if (cpus[i].proc == p)
-   83acc:	f9478f80 	ldr	x0, [x28, #3864]
-   83ad0:	f9400000 	ldr	x0, [x0]
-   83ad4:	eb00029f 	cmp	x20, x0
-   83ad8:	54000041 	b.ne	83ae0 <schedule+0xa0>  // b.any
+   83a6c:	f9478380 	ldr	x0, [x28, #3840]
+   83a70:	f9400000 	ldr	x0, [x0]
+   83a74:	eb00029f 	cmp	x20, x0
+   83a78:	54000041 	b.ne	83a80 <schedule+0xa0>  // b.any
             if (oncpu != -1 && oncpu != cpu) 
-   83adc:	35fffed6 	cbnz	w22, 83ab4 <schedule+0x74>
+   83a7c:	35fffed6 	cbnz	w22, 83a54 <schedule+0x74>
 				if (p->credits > max_cr) { max_cr = p->credits; next = i; }
-   83ae0:	b9413a80 	ldr	w0, [x20, #312]
-   83ae4:	93407f21 	sxtw	x1, w25
+   83a80:	b9413a80 	ldr	w0, [x20, #312]
+   83a84:	93407f21 	sxtw	x1, w25
 			if ((p == cur && p->state == TASK_RUNNING)
-   83ae8:	eb15029f 	cmp	x20, x21
-   83aec:	54000440 	b.eq	83b74 <schedule+0x134>  // b.none
+   83a88:	eb15029f 	cmp	x20, x21
+   83a8c:	54000480 	b.eq	83b1c <schedule+0x13c>  // b.none
                 || p->state == TASK_RUNNABLE) {
-   83af0:	7100101f 	cmp	w0, #0x4
-   83af4:	54fffe01 	b.ne	83ab4 <schedule+0x74>  // b.any
+   83a90:	7100101f 	cmp	w0, #0x4
+   83a94:	54fffe01 	b.ne	83a54 <schedule+0x74>  // b.any
 				if (p->credits > max_cr) { max_cr = p->credits; next = i; }
-   83af8:	f940a280 	ldr	x0, [x20, #320]
-   83afc:	52800026 	mov	w6, #0x1                   	// #1
-   83b00:	eb01001f 	cmp	x0, x1
-   83b04:	1a80d339 	csel	w25, w25, w0, le
-   83b08:	1a9ad2f7 	csel	w23, w23, w26, le
+   83a98:	f940a280 	ldr	x0, [x20, #320]
+   83a9c:	52800026 	mov	w6, #0x1                   	// #1
+   83aa0:	eb01001f 	cmp	x0, x1
+   83aa4:	1a80d339 	csel	w25, w25, w0, le
+   83aa8:	1a9ad2f7 	csel	w23, w23, w26, le
 		for (int i = 0; i < NR_TASKS; i++){
-   83b0c:	91000673 	add	x19, x19, #0x1
-   83b10:	f100827f 	cmp	x19, #0x20
-   83b14:	54fffd61 	b.ne	83ac0 <schedule+0x80>  // b.any
+   83aac:	91000673 	add	x19, x19, #0x1
+   83ab0:	f100827f 	cmp	x19, #0x20
+   83ab4:	54fffd61 	b.ne	83a60 <schedule+0x80>  // b.any
+		if (max_cr >0) {
+   83ab8:	7100033f 	cmp	w25, #0x0
             switch_to(task[next]);  /* STUDENT: TODO: replace this */
-   83b18:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-		if (max_cr >= 0) {
-   83b1c:	36f80559 	tbz	w25, #31, 83bc4 <schedule+0x184>
+   83abc:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+		if (max_cr >0) {
+   83ac0:	5400056c 	b.gt	83b6c <schedule+0x18c>
         if (has_runnable) { 
-   83b20:	340006a6 	cbz	w6, 83bf4 <schedule+0x1b4>
+   83ac4:	340006c6 	cbz	w6, 83b9c <schedule+0x1bc>
                 p = task[i]; BUG_ON(!p);
-   83b24:	f9478414 	ldr	x20, [x0, #3848]
-   83b28:	91040299 	add	x25, x20, #0x100
-   83b2c:	91002294 	add	x20, x20, #0x8
-   83b30:	f85f8293 	ldur	x19, [x20, #-8]
-   83b34:	b4000173 	cbz	x19, 83b60 <schedule+0x120>
+   83ac8:	f9477814 	ldr	x20, [x0, #3824]
+   83acc:	91040299 	add	x25, x20, #0x100
+   83ad0:	91002294 	add	x20, x20, #0x8
+   83ad4:	f85f8293 	ldur	x19, [x20, #-8]
+   83ad8:	b4000193 	cbz	x19, 83b08 <schedule+0x128>
+   83adc:	d503201f 	nop
                 if (p->state != TASK_UNUSED) {
-   83b38:	b9413a60 	ldr	w0, [x19, #312]
+   83ae0:	b9413a60 	ldr	w0, [x19, #312]
             for (int i = 0; i < NR_TASKS; i++) {
-   83b3c:	eb14033f 	cmp	x25, x20
+   83ae4:	eb14033f 	cmp	x25, x20
                 if (p->state != TASK_UNUSED) {
-   83b40:	34000080 	cbz	w0, 83b50 <schedule+0x110>
+   83ae8:	34000080 	cbz	w0, 83af8 <schedule+0x118>
                     p->credits = (p->credits >> 1) + p->priority;  // per priority
-   83b44:	a9540660 	ldp	x0, x1, [x19, #320]
-   83b48:	8b800420 	add	x0, x1, x0, asr #1
-   83b4c:	f900a260 	str	x0, [x19, #320]
+   83aec:	a9540660 	ldp	x0, x1, [x19, #320]
+   83af0:	8b800420 	add	x0, x1, x0, asr #1
+   83af4:	f900a260 	str	x0, [x19, #320]
             for (int i = 0; i < NR_TASKS; i++) {
-   83b50:	54fffa40 	b.eq	83a98 <schedule+0x58>  // b.none
+   83af8:	54fffa00 	b.eq	83a38 <schedule+0x58>  // b.none
                 p = task[i]; BUG_ON(!p);
-   83b54:	f9400293 	ldr	x19, [x20]
-   83b58:	91002294 	add	x20, x20, #0x8
-   83b5c:	b5fffef3 	cbnz	x19, 83b38 <schedule+0xf8>
-   83b60:	f94037e0 	ldr	x0, [sp, #104]
-   83b64:	aa1803e1 	mov	x1, x24
-   83b68:	528012a2 	mov	w2, #0x95                  	// #149
-   83b6c:	97fff77b 	bl	81958 <assertion_failed>
-   83b70:	17fffff2 	b	83b38 <schedule+0xf8>
+   83afc:	f9400293 	ldr	x19, [x20]
+   83b00:	91002294 	add	x20, x20, #0x8
+   83b04:	b5fffef3 	cbnz	x19, 83ae0 <schedule+0x100>
+   83b08:	f94037e0 	ldr	x0, [sp, #104]
+   83b0c:	aa1803e1 	mov	x1, x24
+   83b10:	528012a2 	mov	w2, #0x95                  	// #149
+   83b14:	97fff779 	bl	818f8 <assertion_failed>
+   83b18:	17fffff2 	b	83ae0 <schedule+0x100>
 			if ((p == cur && p->state == TASK_RUNNING)
-   83b74:	7100041f 	cmp	w0, #0x1
-   83b78:	54fffbc1 	b.ne	83af0 <schedule+0xb0>  // b.any
+   83b1c:	7100041f 	cmp	w0, #0x1
+   83b20:	54fffb81 	b.ne	83a90 <schedule+0xb0>  // b.any
 				if (p->credits > max_cr) { max_cr = p->credits; next = i; }
-   83b7c:	f940a280 	ldr	x0, [x20, #320]
-   83b80:	52800026 	mov	w6, #0x1                   	// #1
-   83b84:	eb01001f 	cmp	x0, x1
-   83b88:	1a80d339 	csel	w25, w25, w0, le
-   83b8c:	1a9ad2f7 	csel	w23, w23, w26, le
-   83b90:	17ffffdf 	b	83b0c <schedule+0xcc>
+   83b24:	f940a280 	ldr	x0, [x20, #320]
+   83b28:	52800026 	mov	w6, #0x1                   	// #1
+   83b2c:	eb01001f 	cmp	x0, x1
+   83b30:	1a80d339 	csel	w25, w25, w0, le
+   83b34:	1a9ad2f7 	csel	w23, w23, w26, le
+   83b38:	17ffffdd 	b	83aac <schedule+0xcc>
 			p = task[i]; BUG_ON(!p);
-   83b94:	f94037e0 	ldr	x0, [sp, #104]
-   83b98:	aa1803e1 	mov	x1, x24
-   83b9c:	52800fa2 	mov	w2, #0x7d                  	// #125
-   83ba0:	b90067e6 	str	w6, [sp, #100]
-   83ba4:	97fff76d 	bl	81958 <assertion_failed>
+   83b3c:	f94037e0 	ldr	x0, [sp, #104]
+   83b40:	aa1803e1 	mov	x1, x24
+   83b44:	52800fa2 	mov	w2, #0x7d                  	// #125
+   83b48:	b90067e6 	str	w6, [sp, #100]
+   83b4c:	97fff76b 	bl	818f8 <assertion_failed>
     if (!p) {BUG(); return -1;}
-   83ba8:	aa1803e1 	mov	x1, x24
-   83bac:	52800b62 	mov	w2, #0x5b                  	// #91
-   83bb0:	f0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   83bb4:	910d8000 	add	x0, x0, #0x360
-   83bb8:	97fff768 	bl	81958 <assertion_failed>
-   83bbc:	b94067e6 	ldr	w6, [sp, #100]
-   83bc0:	17ffffc8 	b	83ae0 <schedule+0xa0>
+   83b50:	aa1803e1 	mov	x1, x24
+   83b54:	52800b62 	mov	w2, #0x5b                  	// #91
+   83b58:	f0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   83b5c:	910d8000 	add	x0, x0, #0x360
+   83b60:	97fff766 	bl	818f8 <assertion_failed>
+   83b64:	b94067e6 	ldr	w6, [sp, #100]
+   83b68:	17ffffc6 	b	83a80 <schedule+0xa0>
             switch_to(task[next]);  /* STUDENT: TODO: replace this */
-   83bc4:	f9478416 	ldr	x22, [x0, #3848]
-   83bc8:	f877dac0 	ldr	x0, [x22, w23, sxtw #3]
-   83bcc:	97ffff75 	bl	839a0 <switch_to>
+   83b6c:	f9477816 	ldr	x22, [x0, #3824]
+   83b70:	f877dac0 	ldr	x0, [x22, w23, sxtw #3]
+   83b74:	97ffff73 	bl	83940 <switch_to>
 }
-   83bd0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83b78:	a94153f3 	ldp	x19, x20, [sp, #16]
     release(&sched_lock);
-   83bd4:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83b7c:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
 }
-   83bd8:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   83b80:	a9425bf5 	ldp	x21, x22, [sp, #32]
     release(&sched_lock);
-   83bdc:	913a4000 	add	x0, x0, #0xe90
+   83b84:	9139e000 	add	x0, x0, #0xe78
 }
-   83be0:	a94363f7 	ldp	x23, x24, [sp, #48]
-   83be4:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   83be8:	a94573fb 	ldp	x27, x28, [sp, #80]
-   83bec:	a8c77bfd 	ldp	x29, x30, [sp], #112
+   83b88:	a94363f7 	ldp	x23, x24, [sp, #48]
+   83b8c:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   83b90:	a94573fb 	ldp	x27, x28, [sp, #80]
+   83b94:	a8c77bfd 	ldp	x29, x30, [sp], #112
     release(&sched_lock);
-   83bf0:	17fff85c 	b	81d60 <release>
+   83b98:	17fff85a 	b	81d00 <release>
             switch_to(task[0]);   /* STUDENT: TODO: replace this */
-   83bf4:	f9478416 	ldr	x22, [x0, #3848]
-   83bf8:	f94002c0 	ldr	x0, [x22]
-   83bfc:	97ffff69 	bl	839a0 <switch_to>
+   83b9c:	f9477816 	ldr	x22, [x0, #3824]
+   83ba0:	f94002c0 	ldr	x0, [x22]
+   83ba4:	97ffff67 	bl	83940 <switch_to>
             break;
-   83c00:	17fffff4 	b	83bd0 <schedule+0x190>
-   83c04:	d503201f 	nop
+   83ba8:	17fffff4 	b	83b78 <schedule+0x198>
+   83bac:	d503201f 	nop
 
-0000000000083c08 <yield>:
+0000000000083bb0 <yield>:
 void yield(void) {    
-   83c08:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   83c0c:	910003fd 	mov	x29, sp
-   83c10:	a90153f3 	stp	x19, x20, [sp, #16]
+   83bb0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   83bb4:	910003fd 	mov	x29, sp
+   83bb8:	a90153f3 	stp	x19, x20, [sp, #16]
 	push_off(); 
-   83c14:	97fff7fd 	bl	81c08 <push_off>
+   83bbc:	97fff7fb 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83c18:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83bc0:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
     acquire(&sched_lock); p->credits = 0; release(&sched_lock);
-   83c1c:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   83c20:	913a4273 	add	x19, x19, #0xe90
+   83bc4:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   83bc8:	9139e273 	add	x19, x19, #0xe78
     p=mycpu()->proc; 
-   83c24:	f9478c00 	ldr	x0, [x0, #3864]
-   83c28:	f9400014 	ldr	x20, [x0]
+   83bcc:	f9478000 	ldr	x0, [x0, #3840]
+   83bd0:	f9400014 	ldr	x20, [x0]
     pop_off(); 
-   83c2c:	97fff82d 	bl	81ce0 <pop_off>
+   83bd4:	97fff82b 	bl	81c80 <pop_off>
     acquire(&sched_lock); p->credits = 0; release(&sched_lock);
-   83c30:	aa1303e0 	mov	x0, x19
-   83c34:	97fff809 	bl	81c58 <acquire>
-   83c38:	aa1303e0 	mov	x0, x19
-   83c3c:	f900a29f 	str	xzr, [x20, #320]
-   83c40:	97fff848 	bl	81d60 <release>
+   83bd8:	aa1303e0 	mov	x0, x19
+   83bdc:	97fff807 	bl	81bf8 <acquire>
+   83be0:	aa1303e0 	mov	x0, x19
+   83be4:	f900a29f 	str	xzr, [x20, #320]
+   83be8:	97fff846 	bl	81d00 <release>
 }
-   83c44:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83c48:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   83bec:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83bf0:	a8c27bfd 	ldp	x29, x30, [sp], #32
     schedule();
-   83c4c:	17ffff7d 	b	83a40 <schedule>
+   83bf4:	17ffff7b 	b	839e0 <schedule>
 
-0000000000083c50 <timer_tick>:
+0000000000083bf8 <timer_tick>:
 #define CPU_UTIL_INTERVAL 10  // cal cpu measurement every X ticks
 
 /* Called by handle_generic_timer_irq(), i.e. timer irq handler, with irq 
     automatically turned off by hardware. irq status can be checked by 
     is_irq_masked() */
 void timer_tick() {
-   83c50:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   83c54:	910003fd 	mov	x29, sp
-   83c58:	a90153f3 	stp	x19, x20, [sp, #16]
+   83bf8:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   83bfc:	910003fd 	mov	x29, sp
+   83c00:	a90153f3 	stp	x19, x20, [sp, #16]
     p=mycpu()->proc; 
-   83c5c:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   83c04:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
 void timer_tick() {
-   83c60:	f90013f5 	str	x21, [sp, #32]
+   83c08:	f90013f5 	str	x21, [sp, #32]
 	push_off(); 
-   83c64:	97fff7e9 	bl	81c08 <push_off>
+   83c0c:	97fff7e7 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83c68:	f9478e75 	ldr	x21, [x19, #3864]
-   83c6c:	f94002b4 	ldr	x20, [x21]
+   83c10:	f9478275 	ldr	x21, [x19, #3840]
+   83c14:	f94002b4 	ldr	x20, [x21]
     pop_off(); 
-   83c70:	97fff81c 	bl	81ce0 <pop_off>
+   83c18:	97fff81a 	bl	81c80 <pop_off>
     struct task_struct *cur = myproc();
     struct cpu* cp = mycpu(); 
-
+    printf("Inside timer_tick\n");
+   83c1c:	b0000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   83c20:	910be000 	add	x0, x0, #0x2f8
+   83c24:	97fff665 	bl	815b8 <tfp_printf>
     if (cur) { // update task::credits, decide if schedule() is needed
-   83c74:	b4000494 	cbz	x20, 83d04 <timer_tick+0xb4>
+   83c28:	b4000494 	cbz	x20, 83cb8 <timer_tick+0xc0>
         V("enter timer_tick cpu%d task %s pid %d", cpuid(), cur->name, cur->pid);
         if (cur->pid>=0 && cur->state == TASK_RUNNING) // not "idle" (pid -1), and running
-   83c78:	b9413680 	ldr	w0, [x20, #308]
-   83c7c:	37f80080 	tbnz	w0, #31, 83c8c <timer_tick+0x3c>
-   83c80:	b9413a80 	ldr	w0, [x20, #312]
-   83c84:	7100041f 	cmp	w0, #0x1
-   83c88:	54000460 	b.eq	83d14 <timer_tick+0xc4>  // b.none
+   83c2c:	b9413680 	ldr	w0, [x20, #308]
+   83c30:	37f80080 	tbnz	w0, #31, 83c40 <timer_tick+0x48>
+   83c34:	b9413a80 	ldr	w0, [x20, #312]
+   83c38:	7100041f 	cmp	w0, #0x1
+   83c3c:	54000460 	b.eq	83cc8 <timer_tick+0xd0>  // b.none
             cp->busy++; 
 
         // calculate cpu util %     Qx: quest: hide this until later lab
         if ((cp->total++ % CPU_UTIL_INTERVAL) == CPU_UTIL_INTERVAL - 1) {
-   83c8c:	f9478e61 	ldr	x1, [x19, #3864]
-   83c90:	b202e7e0 	mov	x0, #0xcccccccccccccccc    	// #-3689348814741910324
-   83c94:	f29999a0 	movk	x0, #0xcccd
-   83c98:	f9400c22 	ldr	x2, [x1, #24]
-   83c9c:	91000443 	add	x3, x2, #0x1
-   83ca0:	f9000c23 	str	x3, [x1, #24]
-   83ca4:	9bc07c40 	umulh	x0, x2, x0
-   83ca8:	d343fc00 	lsr	x0, x0, #3
-   83cac:	8b000800 	add	x0, x0, x0, lsl #2
-   83cb0:	cb000440 	sub	x0, x2, x0, lsl #1
-   83cb4:	f100241f 	cmp	x0, #0x9
-   83cb8:	540000a1 	b.ne	83ccc <timer_tick+0x7c>  // b.any
+   83c40:	f9478261 	ldr	x1, [x19, #3840]
+   83c44:	b202e7e0 	mov	x0, #0xcccccccccccccccc    	// #-3689348814741910324
+   83c48:	f29999a0 	movk	x0, #0xcccd
+   83c4c:	f9400c22 	ldr	x2, [x1, #24]
+   83c50:	91000443 	add	x3, x2, #0x1
+   83c54:	f9000c23 	str	x3, [x1, #24]
+   83c58:	9bc07c40 	umulh	x0, x2, x0
+   83c5c:	d343fc00 	lsr	x0, x0, #3
+   83c60:	8b000800 	add	x0, x0, x0, lsl #2
+   83c64:	cb000440 	sub	x0, x2, x0, lsl #1
+   83c68:	f100241f 	cmp	x0, #0x9
+   83c6c:	540000a1 	b.ne	83c80 <timer_tick+0x88>  // b.any
             cp->last_util = cp->busy * 100 / CPU_UTIL_INTERVAL; 
-   83cbc:	b9401020 	ldr	w0, [x1, #16]
-   83cc0:	0b000800 	add	w0, w0, w0, lsl #2
-   83cc4:	531f7800 	lsl	w0, w0, #1
-   83cc8:	2902003f 	stp	wzr, w0, [x1, #16]
+   83c70:	b9401020 	ldr	w0, [x1, #16]
+   83c74:	0b000800 	add	w0, w0, w0, lsl #2
+   83c78:	531f7800 	lsl	w0, w0, #1
+   83c7c:	2902003f 	stp	wzr, w0, [x1, #16]
             if (cpuid()==0)
                 procdump();
             #endif
         }
 
         acquire(&sched_lock); 
-   83ccc:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
-   83cd0:	913a4275 	add	x21, x19, #0xe90
-   83cd4:	aa1503e0 	mov	x0, x21
-   83cd8:	97fff7e0 	bl	81c58 <acquire>
+   83c80:	d0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   83c84:	9139e275 	add	x21, x19, #0xe78
+   83c88:	aa1503e0 	mov	x0, x21
+   83c8c:	97fff7db 	bl	81bf8 <acquire>
         if (cur->pid>=0 && --cur->credits > 0) { 
-   83cdc:	b9413680 	ldr	w0, [x20, #308]
-   83ce0:	37f800c0 	tbnz	w0, #31, 83cf8 <timer_tick+0xa8>
-   83ce4:	f940a281 	ldr	x1, [x20, #320]
-   83ce8:	d1000421 	sub	x1, x1, #0x1
-   83cec:	f900a281 	str	x1, [x20, #320]
-   83cf0:	f100003f 	cmp	x1, #0x0
-   83cf4:	5400018c 	b.gt	83d24 <timer_tick+0xd4>
+   83c90:	b9413680 	ldr	w0, [x20, #308]
+   83c94:	37f800c0 	tbnz	w0, #31, 83cac <timer_tick+0xb4>
+   83c98:	f940a281 	ldr	x1, [x20, #320]
+   83c9c:	d1000421 	sub	x1, x1, #0x1
+   83ca0:	f900a281 	str	x1, [x20, #320]
+   83ca4:	f100003f 	cmp	x1, #0x0
+   83ca8:	5400018c 	b.gt	83cd8 <timer_tick+0xe0>
             // let "cur" task to continue execution 
             V("leave timer_tick. no resche");
             release(&sched_lock); return;
         }
         cur->credits=0;
-   83cf8:	f900a29f 	str	xzr, [x20, #320]
+   83cac:	f900a29f 	str	xzr, [x20, #320]
         release(&sched_lock);
-   83cfc:	913a4260 	add	x0, x19, #0xe90
-   83d00:	97fff818 	bl	81d60 <release>
+   83cb0:	9139e260 	add	x0, x19, #0xe78
+   83cb4:	97fff813 	bl	81d00 <release>
 
     V("leave timer_tick cpu%d task %s pid %d", cpuid(), cur->name, cur->pid);
 	
     /* irq disabled until kernel_exit, in which eret will restore the 
        DAIF.I flag from spsr, which sets irq on. */
 }
-   83d04:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83d08:	f94013f5 	ldr	x21, [sp, #32]
-   83d0c:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83cb8:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83cbc:	f94013f5 	ldr	x21, [sp, #32]
+   83cc0:	a8c37bfd 	ldp	x29, x30, [sp], #48
 	schedule();
-   83d10:	17ffff4c 	b	83a40 <schedule>
+   83cc4:	17ffff47 	b	839e0 <schedule>
             cp->busy++; 
-   83d14:	b94012a0 	ldr	w0, [x21, #16]
-   83d18:	11000400 	add	w0, w0, #0x1
-   83d1c:	b90012a0 	str	w0, [x21, #16]
-   83d20:	17ffffdb 	b	83c8c <timer_tick+0x3c>
+   83cc8:	b94012a0 	ldr	w0, [x21, #16]
+   83ccc:	11000400 	add	w0, w0, #0x1
+   83cd0:	b90012a0 	str	w0, [x21, #16]
+   83cd4:	17ffffdb 	b	83c40 <timer_tick+0x48>
             release(&sched_lock); return;
-   83d24:	aa1503e0 	mov	x0, x21
+   83cd8:	aa1503e0 	mov	x0, x21
 }
-   83d28:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83d2c:	f94013f5 	ldr	x21, [sp, #32]
-   83d30:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83cdc:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83ce0:	f94013f5 	ldr	x21, [sp, #32]
+   83ce4:	a8c37bfd 	ldp	x29, x30, [sp], #48
             release(&sched_lock); return;
-   83d34:	17fff80b 	b	81d60 <release>
+   83ce8:	17fff806 	b	81d00 <release>
+   83cec:	d503201f 	nop
 
-0000000000083d38 <wakeup>:
+0000000000083cf0 <wakeup>:
 
 /* Must be called WITHOUT sched_lock 
 Called from irq (many drivers) or task
 return # of tasks woken up */
 // Q9: quest: "wordsmith"
 int wakeup(void *chan) {
-   83d38:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
-   83d3c:	910003fd 	mov	x29, sp
-   83d40:	a90153f3 	stp	x19, x20, [sp, #16]
-   83d44:	aa0003f3 	mov	x19, x0
+   83cf0:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   83cf4:	910003fd 	mov	x29, sp
+   83cf8:	a90153f3 	stp	x19, x20, [sp, #16]
+   83cfc:	aa0003f3 	mov	x19, x0
     int cnt = 0; 
-   83d48:	52800014 	mov	w20, #0x0                   	// #0
+   83d00:	52800014 	mov	w20, #0x0                   	// #0
 int wakeup(void *chan) {
-   83d4c:	f90013f5 	str	x21, [sp, #32]
+   83d04:	f90013f5 	str	x21, [sp, #32]
     int cnt; 
     acquire(&sched_lock);     
-   83d50:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
-   83d54:	913a42a0 	add	x0, x21, #0xe90
-   83d58:	97fff7c0 	bl	81c58 <acquire>
-    for (int i = 0; i < NR_TASKS; i ++) {
-   83d5c:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   83d08:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   83d0c:	9139e2a0 	add	x0, x21, #0xe78
+   83d10:	97fff7ba 	bl	81bf8 <acquire>
+	for (int i = 0; i < NR_TASKS; i ++) {
+   83d14:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
             p->state = TASK_RUNNABLE;
-   83d60:	52800080 	mov	w0, #0x4                   	// #4
-   83d64:	f9478421 	ldr	x1, [x1, #3848]
-   83d68:	91040024 	add	x4, x1, #0x100
-   83d6c:	14000003 	b	83d78 <wakeup+0x40>
-    for (int i = 0; i < NR_TASKS; i ++) {
-   83d70:	eb01009f 	cmp	x4, x1
-   83d74:	540001a0 	b.eq	83da8 <wakeup+0x70>  // b.none
-        p = task[i]; 
-   83d78:	f9400022 	ldr	x2, [x1]
+   83d18:	52800080 	mov	w0, #0x4                   	// #4
+   83d1c:	f9477821 	ldr	x1, [x1, #3824]
+   83d20:	91040024 	add	x4, x1, #0x100
+   83d24:	14000003 	b	83d30 <wakeup+0x40>
+	for (int i = 0; i < NR_TASKS; i ++) {
+   83d28:	eb01009f 	cmp	x4, x1
+   83d2c:	540001c0 	b.eq	83d64 <wakeup+0x74>  // b.none
+		p = task[i]; 
+   83d30:	f9400022 	ldr	x2, [x1]
         if (p->state == TASK_SLEEPING && p->chan == chan) {            
-   83d7c:	91002021 	add	x1, x1, #0x8
-   83d80:	b9413843 	ldr	w3, [x2, #312]
-   83d84:	7100087f 	cmp	w3, #0x2
-   83d88:	54ffff41 	b.ne	83d70 <wakeup+0x38>  // b.any
-   83d8c:	f940ac43 	ldr	x3, [x2, #344]
-   83d90:	eb03027f 	cmp	x19, x3
-   83d94:	54fffee1 	b.ne	83d70 <wakeup+0x38>  // b.any
+   83d34:	91002021 	add	x1, x1, #0x8
+   83d38:	b9413843 	ldr	w3, [x2, #312]
+   83d3c:	7100087f 	cmp	w3, #0x2
+   83d40:	54ffff41 	b.ne	83d28 <wakeup+0x38>  // b.any
+   83d44:	f940ac43 	ldr	x3, [x2, #344]
+   83d48:	eb03027f 	cmp	x19, x3
+   83d4c:	54fffee1 	b.ne	83d28 <wakeup+0x38>  // b.any
             p->state = TASK_RUNNABLE;
-   83d98:	b9013840 	str	w0, [x2, #312]
+   83d50:	b9013840 	str	w0, [x2, #312]
             cnt++;
-   83d9c:	11000694 	add	w20, w20, #0x1
-    for (int i = 0; i < NR_TASKS; i ++) {
-   83da0:	eb01009f 	cmp	x4, x1
-   83da4:	54fffea1 	b.ne	83d78 <wakeup+0x40>  // b.any
+   83d54:	11000694 	add	w20, w20, #0x1
+            p->chan  = 0;
+   83d58:	f900ac5f 	str	xzr, [x2, #344]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   83d5c:	eb01009f 	cmp	x4, x1
+   83d60:	54fffe81 	b.ne	83d30 <wakeup+0x40>  // b.any
     cnt = wakeup_nolock(chan); 
     release(&sched_lock);
-   83da8:	913a42a0 	add	x0, x21, #0xe90
-   83dac:	97fff7ed 	bl	81d60 <release>
+   83d64:	9139e2a0 	add	x0, x21, #0xe78
+   83d68:	97fff7e6 	bl	81d00 <release>
     return cnt; 
 }
-   83db0:	2a1403e0 	mov	w0, w20
-   83db4:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83db8:	f94013f5 	ldr	x21, [sp, #32]
-   83dbc:	a8c37bfd 	ldp	x29, x30, [sp], #48
-   83dc0:	d65f03c0 	ret
-   83dc4:	d503201f 	nop
+   83d6c:	2a1403e0 	mov	w0, w20
+   83d70:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83d74:	f94013f5 	ldr	x21, [sp, #32]
+   83d78:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   83d7c:	d65f03c0 	ret
 
-0000000000083dc8 <sleep>:
+0000000000083d80 <sleep>:
 
 /* Atomically release "lk" and sleep on chan.
 Reacquires lk when awakened.
 Called by tasks with @lk held */
 // Q9: quest: "wordsmith"
 void sleep(void *chan, struct spinlock *lk) {
-   83dc8:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
-   83dcc:	910003fd 	mov	x29, sp
-   83dd0:	a9025bf5 	stp	x21, x22, [sp, #32]
+   83d80:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   83d84:	910003fd 	mov	x29, sp
+   83d88:	a9025bf5 	stp	x21, x22, [sp, #32]
     p=mycpu()->proc; 
-   83dd4:	d0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
+   83d8c:	d0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
      * 
      * Corner case: lk==sched_lock, which is already held by cur task. the right
      * behavior of sleep(): keep sched_lock and switch to idle task, which later
      * will release the lock
      */
     if (lk != &sched_lock) {
-   83dd8:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   83d90:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
 void sleep(void *chan, struct spinlock *lk) {
-   83ddc:	a90153f3 	stp	x19, x20, [sp, #16]
-   83de0:	aa0103f4 	mov	x20, x1
+   83d94:	a90153f3 	stp	x19, x20, [sp, #16]
+   83d98:	aa0103f4 	mov	x20, x1
     if (lk != &sched_lock) {
-   83de4:	913a42b5 	add	x21, x21, #0xe90
+   83d9c:	9139e2b5 	add	x21, x21, #0xe78
 void sleep(void *chan, struct spinlock *lk) {
-   83de8:	f9001bf7 	str	x23, [sp, #48]
-   83dec:	aa0003f7 	mov	x23, x0
+   83da0:	f9001bf7 	str	x23, [sp, #48]
+   83da4:	aa0003f7 	mov	x23, x0
 	push_off(); 
-   83df0:	97fff786 	bl	81c08 <push_off>
+   83da8:	97fff780 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83df4:	f9478ed6 	ldr	x22, [x22, #3864]
-   83df8:	f94002d3 	ldr	x19, [x22]
+   83dac:	f94782d6 	ldr	x22, [x22, #3840]
+   83db0:	f94002d3 	ldr	x19, [x22]
     pop_off(); 
-   83dfc:	97fff7b9 	bl	81ce0 <pop_off>
+   83db4:	97fff7b3 	bl	81c80 <pop_off>
     if (lk != &sched_lock) {
-   83e00:	eb15029f 	cmp	x20, x21
-   83e04:	54000300 	b.eq	83e64 <sleep+0x9c>  // b.none
+   83db8:	eb15029f 	cmp	x20, x21
+   83dbc:	54000380 	b.eq	83e2c <sleep+0xac>  // b.none
         acquire(&sched_lock);
-   83e08:	aa1503e0 	mov	x0, x21
-   83e0c:	97fff793 	bl	81c58 <acquire>
+   83dc0:	aa1503e0 	mov	x0, x21
+   83dc4:	97fff78d 	bl	81bf8 <acquire>
         release(lk);
-   83e10:	aa1403e0 	mov	x0, x20
-   83e14:	97fff7d3 	bl	81d60 <release>
-    p->chan = chan;
+   83dc8:	aa1403e0 	mov	x0, x20
+   83dcc:	97fff7cd 	bl	81d00 <release>
+    p->chan  = chan;
     p->state = TASK_SLEEPING;
-    
+
     /* although the task has not used up the current tick, bill it regardless.
     thus this task will be disadvantaged in future scheduling  */
     p->credits --; 
-   83e18:	f940a262 	ldr	x2, [x19, #320]
+   83dd0:	f940a261 	ldr	x1, [x19, #320]
     p->state = TASK_SLEEPING;
-   83e1c:	52800040 	mov	w0, #0x2                   	// #2
+   83dd4:	52800040 	mov	w0, #0x2                   	// #2
+   83dd8:	b9013a60 	str	w0, [x19, #312]
+    p->credits --; 
+   83ddc:	d1000421 	sub	x1, x1, #0x1
+   83de0:	f900a261 	str	x1, [x19, #320]
+    p->chan  = chan;
+   83de4:	f900ae77 	str	x23, [x19, #344]
+
     /* switch the cpu away from the current kern stack to the idle task, which we
     know exists for sure. the idle task will return from the schedule() and 
     rls sched_lock. the next timertick will call schedule() and switch 
     to a normal task (if any)  */
-    struct task_struct *idle = 0;
+    struct task_struct *idle = idle_tasks[cpuid()];
+   83de8:	94000848 	bl	85f08 <cpuid>
+   83dec:	2a0003e2 	mov	w2, w0
+   83df0:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
     mycpu()->proc = idle;
-   83e20:	f90002df 	str	xzr, [x22]
     cpu_switch_to(p, idle);  
-   83e24:	d2800001 	mov	x1, #0x0                   	// #0
-    p->credits --; 
-   83e28:	d1000442 	sub	x2, x2, #0x1
-    p->state = TASK_SLEEPING;
-   83e2c:	b9013a60 	str	w0, [x19, #312]
-    p->credits --; 
-   83e30:	f900a262 	str	x2, [x19, #320]
+   83df4:	aa1303e0 	mov	x0, x19
+    struct task_struct *idle = idle_tasks[cpuid()];
+   83df8:	f9477021 	ldr	x1, [x1, #3808]
+   83dfc:	f862d821 	ldr	x1, [x1, w2, sxtw #3]
+    mycpu()->proc = idle;
+   83e00:	f90002c1 	str	x1, [x22]
     cpu_switch_to(p, idle);  
-   83e34:	aa1303e0 	mov	x0, x19
-    p->chan = chan;
-   83e38:	f900ae77 	str	x23, [x19, #344]
-    cpu_switch_to(p, idle);  
-   83e3c:	94000815 	bl	85e90 <cpu_switch_to>
+   83e04:	94000823 	bl	85e90 <cpu_switch_to>
     
     /* cpu_switch_to() back here when the cur task is woken up. 
     it now has sched_lock.  */
 
     /* Tidy up. */
     p->chan = 0;
-   83e40:	f900ae7f 	str	xzr, [x19, #344]
+   83e08:	f900ae7f 	str	xzr, [x19, #344]
 
     if (lk != &sched_lock) {
         release(&sched_lock); 
-   83e44:	aa1503e0 	mov	x0, x21
-   83e48:	97fff7c6 	bl	81d60 <release>
+   83e0c:	aa1503e0 	mov	x0, x21
+   83e10:	97fff7bc 	bl	81d00 <release>
         acquire(lk); 
-   83e4c:	aa1403e0 	mov	x0, x20
+   83e14:	aa1403e0 	mov	x0, x20
         - T1 tries to reacquire lk (before releasing sched_lock)
         - T2 has lk, but cannot run b/c T1 has sched_lock -- deadlock         
             cf unittests.c do_write()
         */
     } /* else keep holding sched_lock */
 }
-   83e50:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83e54:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   83e58:	f9401bf7 	ldr	x23, [sp, #48]
-   83e5c:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   83e18:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83e1c:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   83e20:	f9401bf7 	ldr	x23, [sp, #48]
+   83e24:	a8c47bfd 	ldp	x29, x30, [sp], #64
         acquire(lk); 
-   83e60:	17fff77e 	b	81c58 <acquire>
+   83e28:	17fff774 	b	81bf8 <acquire>
     p->credits --; 
-   83e64:	f940a260 	ldr	x0, [x19, #320]
+   83e2c:	f940a260 	ldr	x0, [x19, #320]
     p->state = TASK_SLEEPING;
-   83e68:	52800041 	mov	w1, #0x2                   	// #2
+   83e30:	52800041 	mov	w1, #0x2                   	// #2
+   83e34:	b9013a61 	str	w1, [x19, #312]
+    p->credits --; 
+   83e38:	d1000400 	sub	x0, x0, #0x1
+   83e3c:	f900a260 	str	x0, [x19, #320]
+    p->chan  = chan;
+   83e40:	f900ae77 	str	x23, [x19, #344]
+    struct task_struct *idle = idle_tasks[cpuid()];
+   83e44:	94000831 	bl	85f08 <cpuid>
+   83e48:	2a0003e2 	mov	w2, w0
+   83e4c:	d0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+    cpu_switch_to(p, idle);  
+   83e50:	aa1303e0 	mov	x0, x19
+    struct task_struct *idle = idle_tasks[cpuid()];
+   83e54:	f9477021 	ldr	x1, [x1, #3808]
+   83e58:	f862d821 	ldr	x1, [x1, w2, sxtw #3]
     mycpu()->proc = idle;
-   83e6c:	f90002df 	str	xzr, [x22]
-    p->credits --; 
-   83e70:	d1000400 	sub	x0, x0, #0x1
-    p->state = TASK_SLEEPING;
-   83e74:	b9013a61 	str	w1, [x19, #312]
-    p->credits --; 
-   83e78:	f900a260 	str	x0, [x19, #320]
+   83e5c:	f90002c1 	str	x1, [x22]
     cpu_switch_to(p, idle);  
-   83e7c:	d2800001 	mov	x1, #0x0                   	// #0
-    p->chan = chan;
-   83e80:	f900ae77 	str	x23, [x19, #344]
-    cpu_switch_to(p, idle);  
-   83e84:	aa1303e0 	mov	x0, x19
-   83e88:	94000802 	bl	85e90 <cpu_switch_to>
+   83e60:	9400080c 	bl	85e90 <cpu_switch_to>
 }
-   83e8c:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   83e90:	f9401bf7 	ldr	x23, [sp, #48]
+   83e64:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   83e68:	f9401bf7 	ldr	x23, [sp, #48]
     p->chan = 0;
-   83e94:	f900ae7f 	str	xzr, [x19, #344]
+   83e6c:	f900ae7f 	str	xzr, [x19, #344]
 }
-   83e98:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83e9c:	a8c47bfd 	ldp	x29, x30, [sp], #64
-   83ea0:	d65f03c0 	ret
-   83ea4:	d503201f 	nop
+   83e70:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83e74:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   83e78:	d65f03c0 	ret
+   83e7c:	d503201f 	nop
 
-0000000000083ea8 <wait>:
+0000000000083e80 <wait>:
 
 /* Wait for a child process to exit and return its pid.
     Return -1 if this process has no children. 
     addr=0 a special case, dont care about status
     --- "addr" ignored for lab2 */
 int wait(uint64 addr /*dst user va to copy status to */) {
-   83ea8:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
-   83eac:	910003fd 	mov	x29, sp
-   83eb0:	a90153f3 	stp	x19, x20, [sp, #16]
-   83eb4:	a9025bf5 	stp	x21, x22, [sp, #32]
+   83e80:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
+   83e84:	910003fd 	mov	x29, sp
+   83e88:	a90153f3 	stp	x19, x20, [sp, #16]
+   83e8c:	a9025bf5 	stp	x21, x22, [sp, #32]
 
     for (;;) {
         // Scan through table looking for exited children.  pp:child
         havekids = 0;
         for (pp = task; pp < &task[NR_TASKS]; pp++) {
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83eb8:	b0000096 	adrp	x22, 94000 <wordsworth.1725+0xde10>
-   83ebc:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   83e90:	b0000096 	adrp	x22, 94000 <wordsworth.1725+0xde10>
+   83e94:	d0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
 int wait(uint64 addr /*dst user va to copy status to */) {
-   83ec0:	a90363f7 	stp	x23, x24, [sp, #48]
+   83e98:	a90363f7 	stp	x23, x24, [sp, #48]
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83ec4:	910da2d6 	add	x22, x22, #0x368
+   83e9c:	910c42d6 	add	x22, x22, #0x310
     acquire(&sched_lock); 
-   83ec8:	d0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
+   83ea0:	d0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
 int wait(uint64 addr /*dst user va to copy status to */) {
-   83ecc:	a9046bf9 	stp	x25, x26, [sp, #64]
+   83ea4:	a9046bf9 	stp	x25, x26, [sp, #64]
 	push_off(); 
-   83ed0:	97fff74e 	bl	81c08 <push_off>
+   83ea8:	97fff740 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83ed4:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83eac:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83ed8:	b0000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
-   83edc:	910d42f7 	add	x23, x23, #0x350
+   83eb0:	b0000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
+   83eb4:	910b82f7 	add	x23, x23, #0x2e0
     p=mycpu()->proc; 
-   83ee0:	f9478c00 	ldr	x0, [x0, #3864]
-   83ee4:	f9400019 	ldr	x25, [x0]
+   83eb8:	f9478000 	ldr	x0, [x0, #3840]
+   83ebc:	f9400019 	ldr	x25, [x0]
     pop_off(); 
-   83ee8:	97fff77e 	bl	81ce0 <pop_off>
+   83ec0:	97fff770 	bl	81c80 <pop_off>
     acquire(&sched_lock); 
-   83eec:	913a4300 	add	x0, x24, #0xe90
-   83ef0:	97fff75a 	bl	81c58 <acquire>
+   83ec4:	9139e300 	add	x0, x24, #0xe78
+   83ec8:	97fff74c 	bl	81bf8 <acquire>
         for (pp = task; pp < &task[NR_TASKS]; pp++) {
-   83ef4:	f94786b3 	ldr	x19, [x21, #3848]
+   83ecc:	f9477ab3 	ldr	x19, [x21, #3824]
         havekids = 0;
-   83ef8:	5280001a 	mov	w26, #0x0                   	// #0
-   83efc:	14000005 	b	83f10 <wait+0x68>
+   83ed0:	5280001a 	mov	w26, #0x0                   	// #0
+   83ed4:	14000005 	b	83ee8 <wait+0x68>
         for (pp = task; pp < &task[NR_TASKS]; pp++) {
-   83f00:	f94786a0 	ldr	x0, [x21, #3848]
-   83f04:	91040000 	add	x0, x0, #0x100
-   83f08:	eb00027f 	cmp	x19, x0
-   83f0c:	54000420 	b.eq	83f90 <wait+0xe8>  // b.none
+   83ed8:	f9477aa0 	ldr	x0, [x21, #3824]
+   83edc:	91040000 	add	x0, x0, #0x100
+   83ee0:	eb00027f 	cmp	x19, x0
+   83ee4:	54000420 	b.eq	83f68 <wait+0xe8>  // b.none
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83f10:	f9400274 	ldr	x20, [x19]
+   83ee8:	f9400274 	ldr	x20, [x19]
         for (pp = task; pp < &task[NR_TASKS]; pp++) {
-   83f14:	91002273 	add	x19, x19, #0x8
+   83eec:	91002273 	add	x19, x19, #0x8
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83f18:	b4000334 	cbz	x20, 83f7c <wait+0xd4>
+   83ef0:	b4000334 	cbz	x20, 83f54 <wait+0xd4>
             if (p0->state == TASK_UNUSED) continue; 
-   83f1c:	b9413a80 	ldr	w0, [x20, #312]
-   83f20:	34ffff00 	cbz	w0, 83f00 <wait+0x58>
+   83ef4:	b9413a80 	ldr	w0, [x20, #312]
+   83ef8:	34ffff00 	cbz	w0, 83ed8 <wait+0x58>
             if (p0->parent == p) {
-   83f24:	f940b281 	ldr	x1, [x20, #352]
-   83f28:	eb19003f 	cmp	x1, x25
-   83f2c:	54fffea1 	b.ne	83f00 <wait+0x58>  // b.any
+   83efc:	f940b281 	ldr	x1, [x20, #352]
+   83f00:	eb19003f 	cmp	x1, x25
+   83f04:	54fffea1 	b.ne	83ed8 <wait+0x58>  // b.any
                 havekids = 1;
                 if (p0->state == TASK_ZOMBIE) {
-   83f30:	71000c1f 	cmp	w0, #0x3
+   83f08:	71000c1f 	cmp	w0, #0x3
                 havekids = 1;
-   83f34:	5280003a 	mov	w26, #0x1                   	// #1
+   83f0c:	5280003a 	mov	w26, #0x1                   	// #1
                 if (p0->state == TASK_ZOMBIE) {
-   83f38:	54fffe41 	b.ne	83f00 <wait+0x58>  // b.any
+   83f10:	54fffe41 	b.ne	83ed8 <wait+0x58>  // b.any
                     // Found one.
                     pid = p0->pid;
-   83f3c:	b9413693 	ldr	w19, [x20, #308]
+   83f14:	b9413693 	ldr	w19, [x20, #308]
                     I("found zombie pid=%d", pid); 
                     freeproc(p0);       // will mark the task slot as unused                    
                     release(&sched_lock); 
-   83f40:	913a4300 	add	x0, x24, #0xe90
+   83f18:	9139e300 	add	x0, x24, #0xe78
     BUG_ON(!p); V("%s entered. pid %d", __func__, p->pid);
 
     p->state = TASK_UNUSED; // mark the slot as unused
     // o need to zero task_struct, which is among the task's kernel page
     // FIX: since we cannot recycle task slot now, so we dont dec nr_tasks ...
     p->flags = 0; 
-   83f44:	f900869f 	str	xzr, [x20, #264]
+   83f1c:	f900869f 	str	xzr, [x20, #264]
     p->killed = 0; 
-   83f48:	f9009a9f 	str	xzr, [x20, #304]
+   83f20:	f9009a9f 	str	xzr, [x20, #304]
     p->state = TASK_UNUSED; // mark the slot as unused
-   83f4c:	b9013a9f 	str	wzr, [x20, #312]
+   83f24:	b9013a9f 	str	wzr, [x20, #312]
     p->credits = 0; 
-   83f50:	f900a29f 	str	xzr, [x20, #320]
+   83f28:	f900a29f 	str	xzr, [x20, #320]
     p->chan = 0; 
     p->pid = 0; 
     p->xstate = 0; 
-   83f54:	b901529f 	str	wzr, [x20, #336]
+   83f2c:	b901529f 	str	wzr, [x20, #336]
     p->chan = 0; 
-   83f58:	f900ae9f 	str	xzr, [x20, #344]
+   83f30:	f900ae9f 	str	xzr, [x20, #344]
                     release(&sched_lock); 
-   83f5c:	97fff781 	bl	81d60 <release>
+   83f34:	97fff773 	bl	81d00 <release>
 }
-   83f60:	2a1303e0 	mov	w0, w19
-   83f64:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83f68:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   83f6c:	a94363f7 	ldp	x23, x24, [sp, #48]
-   83f70:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   83f74:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   83f78:	d65f03c0 	ret
+   83f38:	2a1303e0 	mov	w0, w19
+   83f3c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83f40:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   83f44:	a94363f7 	ldp	x23, x24, [sp, #48]
+   83f48:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   83f4c:	a8c57bfd 	ldp	x29, x30, [sp], #80
+   83f50:	d65f03c0 	ret
             struct task_struct *p0 = *pp; BUG_ON(!p0); 
-   83f7c:	aa1703e1 	mov	x1, x23
-   83f80:	aa1603e0 	mov	x0, x22
-   83f84:	52803802 	mov	w2, #0x1c0                 	// #448
-   83f88:	97fff674 	bl	81958 <assertion_failed>
-   83f8c:	17ffffe4 	b	83f1c <wait+0x74>
+   83f54:	aa1703e1 	mov	x1, x23
+   83f58:	aa1603e0 	mov	x0, x22
+   83f5c:	52803862 	mov	w2, #0x1c3                 	// #451
+   83f60:	97fff666 	bl	818f8 <assertion_failed>
+   83f64:	17ffffe4 	b	83ef4 <wait+0x74>
         if (!havekids) {
-   83f90:	340000ba 	cbz	w26, 83fa4 <wait+0xfc>
+   83f68:	340000ba 	cbz	w26, 83f7c <wait+0xfc>
         sleep(p, &sched_lock); // sleep on own task_struct
-   83f94:	913a4301 	add	x1, x24, #0xe90
-   83f98:	aa1903e0 	mov	x0, x25
-   83f9c:	97ffff8b 	bl	83dc8 <sleep>
+   83f6c:	9139e301 	add	x1, x24, #0xe78
+   83f70:	aa1903e0 	mov	x0, x25
+   83f74:	97ffff83 	bl	83d80 <sleep>
         havekids = 0;
-   83fa0:	17ffffd5 	b	83ef4 <wait+0x4c>
+   83f78:	17ffffd5 	b	83ecc <wait+0x4c>
             release(&sched_lock);
-   83fa4:	913a4300 	add	x0, x24, #0xe90
+   83f7c:	9139e300 	add	x0, x24, #0xe78
             return -1;
-   83fa8:	12800013 	mov	w19, #0xffffffff            	// #-1
+   83f80:	12800013 	mov	w19, #0xffffffff            	// #-1
             release(&sched_lock);
-   83fac:	97fff76d 	bl	81d60 <release>
+   83f84:	97fff75f 	bl	81d00 <release>
 }
-   83fb0:	2a1303e0 	mov	w0, w19
-   83fb4:	a94153f3 	ldp	x19, x20, [sp, #16]
-   83fb8:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   83fbc:	a94363f7 	ldp	x23, x24, [sp, #48]
-   83fc0:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   83fc4:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   83fc8:	d65f03c0 	ret
-   83fcc:	d503201f 	nop
+   83f88:	2a1303e0 	mov	w0, w19
+   83f8c:	a94153f3 	ldp	x19, x20, [sp, #16]
+   83f90:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   83f94:	a94363f7 	ldp	x23, x24, [sp, #48]
+   83f98:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   83f9c:	a8c57bfd 	ldp	x29, x30, [sp], #80
+   83fa0:	d65f03c0 	ret
+   83fa4:	d503201f 	nop
 
-0000000000083fd0 <exit_process>:
+0000000000083fa8 <exit_process>:
 void exit_process(int status) {
-   83fd0:	a9b97bfd 	stp	x29, x30, [sp, #-112]!
-   83fd4:	910003fd 	mov	x29, sp
-   83fd8:	a9025bf5 	stp	x21, x22, [sp, #32]
+   83fa8:	a9b97bfd 	stp	x29, x30, [sp, #-112]!
+   83fac:	910003fd 	mov	x29, sp
+   83fb0:	a9025bf5 	stp	x21, x22, [sp, #32]
     p=mycpu()->proc; 
-   83fdc:	d0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
+   83fb4:	d0000096 	adrp	x22, 95000 <wordsworth.1725+0xee10>
 void exit_process(int status) {
-   83fe0:	a90153f3 	stp	x19, x20, [sp, #16]
-   83fe4:	a90363f7 	stp	x23, x24, [sp, #48]
-   83fe8:	2a0003f7 	mov	w23, w0
-   83fec:	a9046bf9 	stp	x25, x26, [sp, #64]
+   83fb8:	a90153f3 	stp	x19, x20, [sp, #16]
+   83fbc:	a90363f7 	stp	x23, x24, [sp, #48]
+   83fc0:	2a0003f7 	mov	w23, w0
+   83fc4:	a9046bf9 	stp	x25, x26, [sp, #64]
     if (p == init_task)
-   83ff0:	d0000099 	adrp	x25, 95000 <wordsworth.1725+0xee10>
+   83fc8:	d0000099 	adrp	x25, 95000 <wordsworth.1725+0xee10>
 void exit_process(int status) {
-   83ff4:	a90573fb 	stp	x27, x28, [sp, #80]
+   83fcc:	a90573fb 	stp	x27, x28, [sp, #80]
 	push_off(); 
-   83ff8:	97fff704 	bl	81c08 <push_off>
+   83fd0:	97fff6f6 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   83ffc:	f9478ec0 	ldr	x0, [x22, #3864]
-   84000:	f940001a 	ldr	x26, [x0]
+   83fd4:	f94782c0 	ldr	x0, [x22, #3840]
+   83fd8:	f940001a 	ldr	x26, [x0]
     pop_off(); 
-   84004:	97fff737 	bl	81ce0 <pop_off>
+   83fdc:	97fff729 	bl	81c80 <pop_off>
     if (p == init_task)
-   84008:	f9477b20 	ldr	x0, [x25, #3824]
-   8400c:	f9400000 	ldr	x0, [x0]
-   84010:	eb1a001f 	cmp	x0, x26
-   84014:	54000bc0 	b.eq	8418c <exit_process+0x1bc>  // b.none
+   83fe0:	f9476f20 	ldr	x0, [x25, #3800]
+   83fe4:	f9400000 	ldr	x0, [x0]
+   83fe8:	eb1a001f 	cmp	x0, x26
+   83fec:	54000c20 	b.eq	84170 <exit_process+0x1c8>  // b.none
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84018:	b0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
+   83ff0:	d0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
     acquire(&sched_lock); 
-   8401c:	b0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
-   84020:	913a4000 	add	x0, x0, #0xe90
-   84024:	97fff70d 	bl	81c58 <acquire>
+   83ff4:	d0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   83ff8:	9139e000 	add	x0, x0, #0xe78
+   83ffc:	97fff6ff 	bl	81bf8 <acquire>
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84028:	f9478693 	ldr	x19, [x20, #3848]
+   84000:	f9477a93 	ldr	x19, [x20, #3824]
         BUG_ON(!(*child));
-   8402c:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84030:	9000009c 	adrp	x28, 94000 <wordsworth.1725+0xde10>
-   84034:	910d4035 	add	x21, x1, #0x350
+   84004:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84008:	9000009c 	adrp	x28, 94000 <wordsworth.1725+0xde10>
+   8400c:	910b8035 	add	x21, x1, #0x2e0
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84038:	91040278 	add	x24, x19, #0x100
+   84010:	91040278 	add	x24, x19, #0x100
         BUG_ON(!(*child));
-   8403c:	910e039c 	add	x28, x28, #0x380
+   84014:	910ca39c 	add	x28, x28, #0x328
     int cnt = 0; 
-   84040:	5280001b 	mov	w27, #0x0                   	// #0
+   84018:	5280001b 	mov	w27, #0x0                   	// #0
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84044:	f90037f3 	str	x19, [sp, #104]
-   84048:	14000003 	b	84054 <exit_process+0x84>
-   8404c:	eb18027f 	cmp	x19, x24
-   84050:	540001e0 	b.eq	8408c <exit_process+0xbc>  // b.none
+   8401c:	f90037f3 	str	x19, [sp, #104]
+   84020:	14000003 	b	8402c <exit_process+0x84>
+   84024:	eb18027f 	cmp	x19, x24
+   84028:	540001e0 	b.eq	84064 <exit_process+0xbc>  // b.none
         BUG_ON(!(*child));
-   84054:	f9400262 	ldr	x2, [x19]
-   84058:	b40008e2 	cbz	x2, 84174 <exit_process+0x1a4>
+   8402c:	f9400262 	ldr	x2, [x19]
+   84030:	b4000942 	cbz	x2, 84158 <exit_process+0x1b0>
         if ((*child)->state == TASK_UNUSED) continue;
-   8405c:	b9413843 	ldr	w3, [x2, #312]
+   84034:	b9413843 	ldr	w3, [x2, #312]
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84060:	91002273 	add	x19, x19, #0x8
+   84038:	91002273 	add	x19, x19, #0x8
         if ((*child)->state == TASK_UNUSED) continue;
-   84064:	34ffff43 	cbz	w3, 8404c <exit_process+0x7c>
+   8403c:	34ffff43 	cbz	w3, 84024 <exit_process+0x7c>
         if ((*child)->parent == p) {
-   84068:	f940b043 	ldr	x3, [x2, #352]
-   8406c:	eb03035f 	cmp	x26, x3
-   84070:	54fffee1 	b.ne	8404c <exit_process+0x7c>  // b.any
+   84040:	f940b043 	ldr	x3, [x2, #352]
+   84044:	eb03035f 	cmp	x26, x3
+   84048:	54fffee1 	b.ne	84024 <exit_process+0x7c>  // b.any
             (*child)->parent = init_task;
-   84074:	f9477b23 	ldr	x3, [x25, #3824]
+   8404c:	f9476f23 	ldr	x3, [x25, #3800]
             cnt ++; 
-   84078:	1100077b 	add	w27, w27, #0x1
+   84050:	1100077b 	add	w27, w27, #0x1
     for (child = task; child < &task[NR_TASKS]; child++) {
-   8407c:	eb18027f 	cmp	x19, x24
+   84054:	eb18027f 	cmp	x19, x24
             (*child)->parent = init_task;
-   84080:	f9400063 	ldr	x3, [x3]
-   84084:	f900b043 	str	x3, [x2, #352]
+   84058:	f9400063 	ldr	x3, [x3]
+   8405c:	f900b043 	str	x3, [x2, #352]
     for (child = task; child < &task[NR_TASKS]; child++) {
-   84088:	54fffe61 	b.ne	84054 <exit_process+0x84>  // b.any
+   84060:	54fffe61 	b.ne	8402c <exit_process+0x84>  // b.any
     if (reparent(p)) 
-   8408c:	3400027b 	cbz	w27, 840d8 <exit_process+0x108>
+   84064:	340002bb 	cbz	w27, 840b8 <exit_process+0x110>
         wakeup_nolock(init_task);
-   84090:	f9477b39 	ldr	x25, [x25, #3824]
+   84068:	f9476f39 	ldr	x25, [x25, #3800]
             p->state = TASK_RUNNABLE;
-   84094:	52800084 	mov	w4, #0x4                   	// #4
-   84098:	f94037e1 	ldr	x1, [sp, #104]
+   8406c:	52800084 	mov	w4, #0x4                   	// #4
+   84070:	f94037e1 	ldr	x1, [sp, #104]
         wakeup_nolock(init_task);
-   8409c:	f9400323 	ldr	x3, [x25]
-    for (int i = 0; i < NR_TASKS; i ++) {
-   840a0:	14000003 	b	840ac <exit_process+0xdc>
-   840a4:	eb01027f 	cmp	x19, x1
-   840a8:	54000180 	b.eq	840d8 <exit_process+0x108>  // b.none
-        p = task[i]; 
-   840ac:	f9400020 	ldr	x0, [x1]
+   84074:	f9400323 	ldr	x3, [x25]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   84078:	14000003 	b	84084 <exit_process+0xdc>
+   8407c:	eb01027f 	cmp	x19, x1
+   84080:	540001c0 	b.eq	840b8 <exit_process+0x110>  // b.none
+		p = task[i]; 
+   84084:	f9400020 	ldr	x0, [x1]
         if (p->state == TASK_SLEEPING && p->chan == chan) {            
-   840b0:	91002021 	add	x1, x1, #0x8
-   840b4:	b9413802 	ldr	w2, [x0, #312]
-   840b8:	7100085f 	cmp	w2, #0x2
-   840bc:	54ffff41 	b.ne	840a4 <exit_process+0xd4>  // b.any
-   840c0:	f940ac02 	ldr	x2, [x0, #344]
-   840c4:	eb02007f 	cmp	x3, x2
-   840c8:	54fffee1 	b.ne	840a4 <exit_process+0xd4>  // b.any
+   84088:	91002021 	add	x1, x1, #0x8
+   8408c:	b9413802 	ldr	w2, [x0, #312]
+   84090:	7100085f 	cmp	w2, #0x2
+   84094:	54ffff41 	b.ne	8407c <exit_process+0xd4>  // b.any
+   84098:	f940ac02 	ldr	x2, [x0, #344]
+   8409c:	eb02007f 	cmp	x3, x2
+   840a0:	54fffee1 	b.ne	8407c <exit_process+0xd4>  // b.any
             p->state = TASK_RUNNABLE;
-   840cc:	b9013804 	str	w4, [x0, #312]
-    for (int i = 0; i < NR_TASKS; i ++) {
-   840d0:	eb01027f 	cmp	x19, x1
-   840d4:	54fffec1 	b.ne	840ac <exit_process+0xdc>  // b.any
+   840a4:	b9013804 	str	w4, [x0, #312]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   840a8:	eb01027f 	cmp	x19, x1
+            p->chan  = 0;
+   840ac:	f900ac1f 	str	xzr, [x0, #344]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   840b0:	54fffea1 	b.ne	84084 <exit_process+0xdc>  // b.any
+   840b4:	d503201f 	nop
     wakeup_nolock(p->parent); 
-   840d8:	f9478681 	ldr	x1, [x20, #3848]
+   840b8:	f9477a81 	ldr	x1, [x20, #3824]
             p->state = TASK_RUNNABLE;
-   840dc:	52800085 	mov	w5, #0x4                   	// #4
+   840bc:	52800085 	mov	w5, #0x4                   	// #4
     wakeup_nolock(p->parent); 
-   840e0:	f940b344 	ldr	x4, [x26, #352]
-    for (int i = 0; i < NR_TASKS; i ++) {
-   840e4:	91040020 	add	x0, x1, #0x100
-   840e8:	14000003 	b	840f4 <exit_process+0x124>
-   840ec:	eb00003f 	cmp	x1, x0
-   840f0:	54000180 	b.eq	84120 <exit_process+0x150>  // b.none
-        p = task[i]; 
-   840f4:	f9400022 	ldr	x2, [x1]
+   840c0:	f940b344 	ldr	x4, [x26, #352]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   840c4:	91040020 	add	x0, x1, #0x100
+   840c8:	14000003 	b	840d4 <exit_process+0x12c>
+   840cc:	eb00003f 	cmp	x1, x0
+   840d0:	540001a0 	b.eq	84104 <exit_process+0x15c>  // b.none
+		p = task[i]; 
+   840d4:	f9400022 	ldr	x2, [x1]
         if (p->state == TASK_SLEEPING && p->chan == chan) {            
-   840f8:	91002021 	add	x1, x1, #0x8
-   840fc:	b9413843 	ldr	w3, [x2, #312]
-   84100:	7100087f 	cmp	w3, #0x2
-   84104:	54ffff41 	b.ne	840ec <exit_process+0x11c>  // b.any
-   84108:	f940ac43 	ldr	x3, [x2, #344]
-   8410c:	eb03009f 	cmp	x4, x3
-   84110:	54fffee1 	b.ne	840ec <exit_process+0x11c>  // b.any
+   840d8:	91002021 	add	x1, x1, #0x8
+   840dc:	b9413843 	ldr	w3, [x2, #312]
+   840e0:	7100087f 	cmp	w3, #0x2
+   840e4:	54ffff41 	b.ne	840cc <exit_process+0x124>  // b.any
+   840e8:	f940ac43 	ldr	x3, [x2, #344]
+   840ec:	eb03009f 	cmp	x4, x3
+   840f0:	54fffee1 	b.ne	840cc <exit_process+0x124>  // b.any
             p->state = TASK_RUNNABLE;
-   84114:	b9013845 	str	w5, [x2, #312]
-    for (int i = 0; i < NR_TASKS; i ++) {
-   84118:	eb00003f 	cmp	x1, x0
-   8411c:	54fffec1 	b.ne	840f4 <exit_process+0x124>  // b.any
+   840f4:	b9013845 	str	w5, [x2, #312]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   840f8:	eb00003f 	cmp	x1, x0
+            p->chan  = 0;
+   840fc:	f900ac5f 	str	xzr, [x2, #344]
+	for (int i = 0; i < NR_TASKS; i ++) {
+   84100:	54fffea1 	b.ne	840d4 <exit_process+0x12c>  // b.any
     p->state = TASK_ZOMBIE;
-   84120:	52800060 	mov	w0, #0x3                   	// #3
-   84124:	b9013b40 	str	w0, [x26, #312]
+   84104:	52800060 	mov	w0, #0x3                   	// #3
+   84108:	b9013b40 	str	w0, [x26, #312]
     p->xstate = status;
-   84128:	b9015357 	str	w23, [x26, #336]
+   8410c:	b9015357 	str	w23, [x26, #336]
     struct task_struct *idle = idle_tasks[cpuid()];
-   8412c:	94000777 	bl	85f08 <cpuid>
-   84130:	2a0003e2 	mov	w2, w0
-   84134:	b0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   84110:	9400077e 	bl	85f08 <cpuid>
+   84114:	2a0003e2 	mov	w2, w0
+   84118:	b0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
     cpu_switch_to(p, idle);
-   84138:	aa1a03e0 	mov	x0, x26
+   8411c:	aa1a03e0 	mov	x0, x26
     mycpu()->proc = idle;
-   8413c:	f9478ed6 	ldr	x22, [x22, #3864]
+   84120:	f94782d6 	ldr	x22, [x22, #3840]
     struct task_struct *idle = idle_tasks[cpuid()];
-   84140:	f9477c21 	ldr	x1, [x1, #3832]
-   84144:	f862d821 	ldr	x1, [x1, w2, sxtw #3]
+   84124:	f9477021 	ldr	x1, [x1, #3808]
+   84128:	f862d821 	ldr	x1, [x1, w2, sxtw #3]
     mycpu()->proc = idle;
-   84148:	f90002c1 	str	x1, [x22]
+   8412c:	f90002c1 	str	x1, [x22]
     cpu_switch_to(p, idle);
-   8414c:	94000751 	bl	85e90 <cpu_switch_to>
+   84130:	94000758 	bl	85e90 <cpu_switch_to>
 }
-   84150:	a94153f3 	ldp	x19, x20, [sp, #16]
+   84134:	a94153f3 	ldp	x19, x20, [sp, #16]
     panic("zombie exit");
-   84154:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84138:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
 }
-   84158:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   8413c:	a9425bf5 	ldp	x21, x22, [sp, #32]
     panic("zombie exit");
-   8415c:	910e4000 	add	x0, x0, #0x390
+   84140:	910ce000 	add	x0, x0, #0x338
 }
-   84160:	a94363f7 	ldp	x23, x24, [sp, #48]
-   84164:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   84168:	a94573fb 	ldp	x27, x28, [sp, #80]
-   8416c:	a8c77bfd 	ldp	x29, x30, [sp], #112
+   84144:	a94363f7 	ldp	x23, x24, [sp, #48]
+   84148:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   8414c:	a94573fb 	ldp	x27, x28, [sp, #80]
+   84150:	a8c77bfd 	ldp	x29, x30, [sp], #112
     panic("zombie exit");
-   84170:	17fff5b0 	b	81830 <panic>
+   84154:	17fff59f 	b	817d0 <panic>
         BUG_ON(!(*child));
-   84174:	52803402 	mov	w2, #0x1a0                 	// #416
-   84178:	aa1503e1 	mov	x1, x21
-   8417c:	aa1c03e0 	mov	x0, x28
-   84180:	97fff5f6 	bl	81958 <assertion_failed>
-   84184:	f9400262 	ldr	x2, [x19]
-   84188:	17ffffb5 	b	8405c <exit_process+0x8c>
+   84158:	52803462 	mov	w2, #0x1a3                 	// #419
+   8415c:	aa1503e1 	mov	x1, x21
+   84160:	aa1c03e0 	mov	x0, x28
+   84164:	97fff5e5 	bl	818f8 <assertion_failed>
+   84168:	f9400262 	ldr	x2, [x19]
+   8416c:	17ffffb2 	b	84034 <exit_process+0x8c>
         panic("init exiting");
-   8418c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84190:	910dc000 	add	x0, x0, #0x370
-   84194:	97fff5a7 	bl	81830 <panic>
-   84198:	17ffffa0 	b	84018 <exit_process+0x48>
-   8419c:	d503201f 	nop
+   84170:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84174:	910c6000 	add	x0, x0, #0x318
+   84178:	97fff596 	bl	817d0 <panic>
+   8417c:	17ffff9d 	b	83ff0 <exit_process+0x48>
 
-00000000000841a0 <procdump>:
+0000000000084180 <procdump>:
 }
 
 /* Print a process listing to console.  For debugging.
 Runs when user types ^P on console.
 No lock to avoid wedging a stuck machine further. */
 void procdump(void) {
-   841a0:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+   84180:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
     struct task_struct *p;
     char *state;
 
     printf("\t %5s %10s %10s %20s\n", "pid", "state", "name", "sleep-on");
-   841a4:	90000084 	adrp	x4, 94000 <wordsworth.1725+0xde10>
-   841a8:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84184:	90000084 	adrp	x4, 94000 <wordsworth.1725+0xde10>
+   84188:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
 void procdump(void) {
-   841ac:	910003fd 	mov	x29, sp
-   841b0:	a90153f3 	stp	x19, x20, [sp, #16]
-   841b4:	b0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   8418c:	910003fd 	mov	x29, sp
+   84190:	a90153f3 	stp	x19, x20, [sp, #16]
+   84194:	b0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
     printf("\t %5s %10s %10s %20s\n", "pid", "state", "name", "sleep-on");
-   841b8:	910ea084 	add	x4, x4, #0x3a8
-   841bc:	910ee063 	add	x3, x3, #0x3b8
-   841c0:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
-   841c4:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   841c8:	910f0042 	add	x2, x2, #0x3c0
-   841cc:	910f2021 	add	x1, x1, #0x3c8
-   841d0:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   841d4:	910f4000 	add	x0, x0, #0x3d0
+   84198:	910d4084 	add	x4, x4, #0x350
+   8419c:	910d8063 	add	x3, x3, #0x360
+   841a0:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   841a4:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   841a8:	910da042 	add	x2, x2, #0x368
+   841ac:	910dc021 	add	x1, x1, #0x370
+   841b0:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   841b4:	910de000 	add	x0, x0, #0x378
 void procdump(void) {
-   841d8:	a9025bf5 	stp	x21, x22, [sp, #32]
+   841b8:	a9025bf5 	stp	x21, x22, [sp, #32]
         if (p->state == TASK_UNUSED)
             continue;
         if (p->state >= 0 && p->state < NELEM(states) && states[p->state])
             state = states[p->state];
         else
             state = "???";
-   841dc:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
+   841bc:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
 void procdump(void) {
-   841e0:	f9001bf7 	str	x23, [sp, #48]
+   841c0:	f9001bf7 	str	x23, [sp, #48]
     printf("\t %5s %10s %10s %20s\n", "pid", "state", "name", "sleep-on");
-   841e4:	97fff50d 	bl	81618 <tfp_printf>
+   841c4:	97fff4fd 	bl	815b8 <tfp_printf>
     for (int i = 0; i < NR_TASKS; i++) {
-   841e8:	f9478673 	ldr	x19, [x19, #3848]
+   841c8:	f9477a73 	ldr	x19, [x19, #3824]
         printf("\t %5d %10s %10s %20lx\n", p->pid, state, p->name, 
-   841ec:	90000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   841cc:	90000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
             state = "???";
-   841f0:	910e8294 	add	x20, x20, #0x3a0
+   841d0:	910d2294 	add	x20, x20, #0x348
         printf("\t %5d %10s %10s %20lx\n", p->pid, state, p->name, 
-   841f4:	910fa2b5 	add	x21, x21, #0x3e8
-   841f8:	91040276 	add	x22, x19, #0x100
+   841d4:	910e42b5 	add	x21, x21, #0x390
+   841d8:	91040276 	add	x22, x19, #0x100
         if (p->state >= 0 && p->state < NELEM(states) && states[p->state])
-   841fc:	b0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
+   841dc:	b0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
         p = task[i];
-   84200:	f9400264 	ldr	x4, [x19]
+   841e0:	f9400264 	ldr	x4, [x19]
             state = "???";
-   84204:	aa1403e2 	mov	x2, x20
+   841e4:	aa1403e2 	mov	x2, x20
         printf("\t %5d %10s %10s %20lx\n", p->pid, state, p->name, 
-   84208:	aa1503e0 	mov	x0, x21
-   8420c:	91002273 	add	x19, x19, #0x8
-   84210:	9103c083 	add	x3, x4, #0xf0
+   841e8:	aa1503e0 	mov	x0, x21
+   841ec:	91002273 	add	x19, x19, #0x8
+   841f0:	9103c083 	add	x3, x4, #0xf0
         if (p->state == TASK_UNUSED)
-   84214:	b9413881 	ldr	w1, [x4, #312]
+   841f4:	b9413881 	ldr	w1, [x4, #312]
         if (p->state >= 0 && p->state < NELEM(states) && states[p->state])
-   84218:	7100103f 	cmp	w1, #0x4
+   841f8:	7100103f 	cmp	w1, #0x4
         if (p->state == TASK_UNUSED)
-   8421c:	34000121 	cbz	w1, 84240 <procdump+0xa0>
+   841fc:	34000121 	cbz	w1, 84220 <procdump+0xa0>
         if (p->state >= 0 && p->state < NELEM(states) && states[p->state])
-   84220:	913d62e5 	add	x5, x23, #0xf58
-   84224:	54000088 	b.hi	84234 <procdump+0x94>  // b.pmore
-   84228:	f861d8a2 	ldr	x2, [x5, w1, sxtw #3]
+   84200:	913d02e5 	add	x5, x23, #0xf40
+   84204:	54000088 	b.hi	84214 <procdump+0x94>  // b.pmore
+   84208:	f861d8a2 	ldr	x2, [x5, w1, sxtw #3]
             state = "???";
-   8422c:	f100005f 	cmp	x2, #0x0
-   84230:	9a820282 	csel	x2, x20, x2, eq	// eq = none
+   8420c:	f100005f 	cmp	x2, #0x0
+   84210:	9a820282 	csel	x2, x20, x2, eq	// eq = none
         printf("\t %5d %10s %10s %20lx\n", p->pid, state, p->name, 
-   84234:	b9413481 	ldr	w1, [x4, #308]
-   84238:	f940ac84 	ldr	x4, [x4, #344]
-   8423c:	97fff4f7 	bl	81618 <tfp_printf>
+   84214:	b9413481 	ldr	w1, [x4, #308]
+   84218:	f940ac84 	ldr	x4, [x4, #344]
+   8421c:	97fff4e7 	bl	815b8 <tfp_printf>
     for (int i = 0; i < NR_TASKS; i++) {
-   84240:	eb1302df 	cmp	x22, x19
-   84244:	54fffde1 	b.ne	84200 <procdump+0x60>  // b.any
+   84220:	eb1302df 	cmp	x22, x19
+   84224:	54fffde1 	b.ne	841e0 <procdump+0x60>  // b.any
                (unsigned long)p->chan);
     }
     
     extern unsigned paging_pages_used, paging_pages_total; // alloc.c
 	printf("paging mem: used %u total %u (%u/100)\n", 
-   84248:	b0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
-   8424c:	b0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
+   84228:	b0000081 	adrp	x1, 95000 <wordsworth.1725+0xee10>
+   8422c:	b0000082 	adrp	x2, 95000 <wordsworth.1725+0xee10>
 		paging_pages_used, paging_pages_total, 
         paging_pages_used*100/(paging_pages_total));
-   84250:	52800c83 	mov	w3, #0x64                  	// #100
+   84230:	52800c83 	mov	w3, #0x64                  	// #100
 	printf("paging mem: used %u total %u (%u/100)\n", 
-   84254:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84258:	f9477421 	ldr	x1, [x1, #3816]
-   8425c:	91100000 	add	x0, x0, #0x400
-   84260:	f9476842 	ldr	x2, [x2, #3792]
-   84264:	b9400021 	ldr	w1, [x1]
+   84234:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84238:	f9476821 	ldr	x1, [x1, #3792]
+   8423c:	910ea000 	add	x0, x0, #0x3a8
+   84240:	f9475c42 	ldr	x2, [x2, #3768]
+   84244:	b9400021 	ldr	w1, [x1]
 }
-   84268:	a94153f3 	ldp	x19, x20, [sp, #16]
+   84248:	a94153f3 	ldp	x19, x20, [sp, #16]
 	printf("paging mem: used %u total %u (%u/100)\n", 
-   8426c:	b9400042 	ldr	w2, [x2]
+   8424c:	b9400042 	ldr	w2, [x2]
         paging_pages_used*100/(paging_pages_total));
-   84270:	1b037c23 	mul	w3, w1, w3
+   84250:	1b037c23 	mul	w3, w1, w3
 }
-   84274:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   84278:	f9401bf7 	ldr	x23, [sp, #48]
-   8427c:	a8c47bfd 	ldp	x29, x30, [sp], #64
+   84254:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   84258:	f9401bf7 	ldr	x23, [sp, #48]
+   8425c:	a8c47bfd 	ldp	x29, x30, [sp], #64
 	printf("paging mem: used %u total %u (%u/100)\n", 
-   84280:	1ac20863 	udiv	w3, w3, w2
-   84284:	17fff4e5 	b	81618 <tfp_printf>
+   84260:	1ac20863 	udiv	w3, w3, w2
+   84264:	17fff4d5 	b	815b8 <tfp_printf>
 
-0000000000084288 <copy_process>:
+0000000000084268 <copy_process>:
     arg: arg to kernel thread; or stack (userva) for user thread
     name: to be copied to task->name[]. if null, copy parent's name
 */
 // Q2: quest "two cooperative printers"
 int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
     const char *name) {
-   84288:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
-   8428c:	910003fd 	mov	x29, sp
-   84290:	a90153f3 	stp	x19, x20, [sp, #16]
-   84294:	aa0303f3 	mov	x19, x3
-   84298:	a9025bf5 	stp	x21, x22, [sp, #32]
-   8429c:	a90363f7 	stp	x23, x24, [sp, #48]
+   84268:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
+   8426c:	910003fd 	mov	x29, sp
+   84270:	a90153f3 	stp	x19, x20, [sp, #16]
+   84274:	aa0303f3 	mov	x19, x3
+   84278:	a9025bf5 	stp	x21, x22, [sp, #32]
+   8427c:	a90363f7 	stp	x23, x24, [sp, #48]
 	struct task_struct *p = 0, *cur=myproc(); 
     int i, pid; 
 
 	acquire(&sched_lock);	
-   842a0:	b0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
-   842a4:	b0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
+   84280:	b0000098 	adrp	x24, 95000 <wordsworth.1725+0xee10>
+   84284:	b0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
     const char *name) {
-   842a8:	a9046bf9 	stp	x25, x26, [sp, #64]
-   842ac:	a90573fb 	stp	x27, x28, [sp, #80]
+   84288:	a9046bf9 	stp	x25, x26, [sp, #64]
+   8428c:	a90573fb 	stp	x27, x28, [sp, #80]
 	// find an empty tcb slot
 	for (i = 0; i < NR_TASKS; i++) {
-   842b0:	5280001c 	mov	w28, #0x0                   	// #0
+   84290:	5280001c 	mov	w28, #0x0                   	// #0
     const char *name) {
-   842b4:	a90687e0 	stp	x0, x1, [sp, #104]
-   842b8:	f9003fe2 	str	x2, [sp, #120]
+   84294:	a90687e0 	stp	x0, x1, [sp, #104]
+   84298:	f9003fe2 	str	x2, [sp, #120]
 	push_off(); 
-   842bc:	97fff653 	bl	81c08 <push_off>
+   8429c:	97fff643 	bl	81ba8 <push_off>
     p=mycpu()->proc; 
-   842c0:	b0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   842a0:	b0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
         pid = (lastpid+1+i) % NR_TASKS; 
-   842c4:	f0000321 	adrp	x1, eb000 <lastpid>
-   842c8:	91000039 	add	x25, x1, #0x0
+   842a4:	f0000321 	adrp	x1, eb000 <lastpid>
+   842a8:	91000039 	add	x25, x1, #0x0
     p=mycpu()->proc; 
-   842cc:	f9478c00 	ldr	x0, [x0, #3864]
-   842d0:	f9400014 	ldr	x20, [x0]
+   842ac:	f9478000 	ldr	x0, [x0, #3840]
+   842b0:	f9400014 	ldr	x20, [x0]
     pop_off(); 
-   842d4:	97fff683 	bl	81ce0 <pop_off>
+   842b4:	97fff673 	bl	81c80 <pop_off>
 	acquire(&sched_lock);	
-   842d8:	913a4300 	add	x0, x24, #0xe90
-   842dc:	97fff65f 	bl	81c58 <acquire>
+   842b8:	9139e300 	add	x0, x24, #0xe78
+   842bc:	97fff64f 	bl	81bf8 <acquire>
 		p = task[pid]; BUG_ON(!p); 
-   842e0:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   842e4:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   842e8:	910d4036 	add	x22, x1, #0x350
-   842ec:	910d8015 	add	x21, x0, #0x360
-   842f0:	14000005 	b	84304 <copy_process+0x7c>
+   842c0:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   842c4:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   842c8:	910b8036 	add	x22, x1, #0x2e0
+   842cc:	910bc015 	add	x21, x0, #0x2f0
+   842d0:	14000005 	b	842e4 <copy_process+0x7c>
 		if (p->state == TASK_UNUSED)
-   842f4:	b9413b62 	ldr	w2, [x27, #312]
+   842d4:	b9413b62 	ldr	w2, [x27, #312]
 	for (i = 0; i < NR_TASKS; i++) {
-   842f8:	7100839f 	cmp	w28, #0x20
+   842d8:	7100839f 	cmp	w28, #0x20
 		if (p->state == TASK_UNUSED)
-   842fc:	340002a2 	cbz	w2, 84350 <copy_process+0xc8>
+   842dc:	340002a2 	cbz	w2, 84330 <copy_process+0xc8>
 	for (i = 0; i < NR_TASKS; i++) {
-   84300:	54000920 	b.eq	84424 <copy_process+0x19c>  // b.none
+   842e0:	54000920 	b.eq	84404 <copy_process+0x19c>  // b.none
         pid = (lastpid+1+i) % NR_TASKS; 
-   84304:	b9400324 	ldr	w4, [x25]
+   842e4:	b9400324 	ldr	w4, [x25]
 		p = task[pid]; BUG_ON(!p); 
-   84308:	f94786e2 	ldr	x2, [x23, #3848]
+   842e8:	f9477ae2 	ldr	x2, [x23, #3824]
         pid = (lastpid+1+i) % NR_TASKS; 
-   8430c:	11000484 	add	w4, w4, #0x1
-   84310:	0b1c0084 	add	w4, w4, w28
-   84314:	1100079c 	add	w28, w28, #0x1
-   84318:	6b0403fa 	negs	w26, w4
-   8431c:	12001084 	and	w4, w4, #0x1f
-   84320:	1200135a 	and	w26, w26, #0x1f
-   84324:	5a9a449a 	csneg	w26, w4, w26, mi	// mi = first
+   842ec:	11000484 	add	w4, w4, #0x1
+   842f0:	0b1c0084 	add	w4, w4, w28
+   842f4:	1100079c 	add	w28, w28, #0x1
+   842f8:	6b0403fa 	negs	w26, w4
+   842fc:	12001084 	and	w4, w4, #0x1f
+   84300:	1200135a 	and	w26, w26, #0x1f
+   84304:	5a9a449a 	csneg	w26, w4, w26, mi	// mi = first
 		p = task[pid]; BUG_ON(!p); 
-   84328:	f87ad85b 	ldr	x27, [x2, w26, sxtw #3]
-   8432c:	b5fffe5b 	cbnz	x27, 842f4 <copy_process+0x6c>
-   84330:	52804a22 	mov	w2, #0x251                 	// #593
-   84334:	aa1603e1 	mov	x1, x22
-   84338:	aa1503e0 	mov	x0, x21
-   8433c:	97fff587 	bl	81958 <assertion_failed>
+   84308:	f87ad85b 	ldr	x27, [x2, w26, sxtw #3]
+   8430c:	b5fffe5b 	cbnz	x27, 842d4 <copy_process+0x6c>
+   84310:	52804a82 	mov	w2, #0x254                 	// #596
+   84314:	aa1603e1 	mov	x1, x22
+   84318:	aa1503e0 	mov	x0, x21
+   8431c:	97fff577 	bl	818f8 <assertion_failed>
 		if (p->state == TASK_UNUSED)
-   84340:	b9413b62 	ldr	w2, [x27, #312]
+   84320:	b9413b62 	ldr	w2, [x27, #312]
 	for (i = 0; i < NR_TASKS; i++) {
-   84344:	7100839f 	cmp	w28, #0x20
+   84324:	7100839f 	cmp	w28, #0x20
 		if (p->state == TASK_UNUSED)
-   84348:	35fffdc2 	cbnz	w2, 84300 <copy_process+0x78>
-   8434c:	d503201f 	nop
+   84328:	35fffdc2 	cbnz	w2, 842e0 <copy_process+0x78>
+   8432c:	d503201f 	nop
 			{V("alloc pid %d", pid); lastpid=pid; break;}
-   84350:	f0000320 	adrp	x0, eb000 <lastpid>
+   84330:	f0000320 	adrp	x0, eb000 <lastpid>
 	}
 	if (i == NR_TASKS) 
 		{release(&sched_lock); return -1;}
 
 	memset(p, 0, sizeof(struct task_struct));
-   84354:	52802d02 	mov	w2, #0x168                 	// #360
-   84358:	52800001 	mov	w1, #0x0                   	// #0
+   84334:	52802d02 	mov	w2, #0x168                 	// #360
+   84338:	52800001 	mov	w1, #0x0                   	// #0
 	initlock(&p->lock, "proc");
-   8435c:	91046379 	add	x25, x27, #0x118
+   8433c:	91046379 	add	x25, x27, #0x118
 			{V("alloc pid %d", pid); lastpid=pid; break;}
-   84360:	b900001a 	str	w26, [x0]
+   84340:	b900001a 	str	w26, [x0]
 	memset(p, 0, sizeof(struct task_struct));
-   84364:	aa1b03e0 	mov	x0, x27
-   84368:	97fff588 	bl	81988 <memset>
+   84344:	aa1b03e0 	mov	x0, x27
+   84348:	97fff578 	bl	81928 <memset>
 
 	acquire(&p->lock);	
     acquire(&cur->lock);	
-   8436c:	9104629c 	add	x28, x20, #0x118
+   8434c:	9104629c 	add	x28, x20, #0x118
 	initlock(&p->lock, "proc");
-   84370:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84374:	9110a021 	add	x1, x1, #0x428
-   84378:	aa1903e0 	mov	x0, x25
-   8437c:	97fff615 	bl	81bd0 <initlock>
+   84350:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84354:	910f4021 	add	x1, x1, #0x3d0
+   84358:	aa1903e0 	mov	x0, x25
+   8435c:	97fff605 	bl	81b70 <initlock>
 	acquire(&p->lock);	
-   84380:	aa1903e0 	mov	x0, x25
-   84384:	97fff635 	bl	81c58 <acquire>
+   84360:	aa1903e0 	mov	x0, x25
+   84364:	97fff625 	bl	81bf8 <acquire>
     acquire(&cur->lock);	
-   84388:	aa1c03e0 	mov	x0, x28
-   8438c:	97fff633 	bl	81c58 <acquire>
+   84368:	aa1c03e0 	mov	x0, x28
+   8436c:	97fff623 	bl	81bf8 <acquire>
 
     // load fn/arg to cpu context. cf ret_from_fork
     /* STUDENT: TODO: your code here */
     
     p->cpu_context.x19 = fn;
     p->cpu_context.x20 = arg;
-   84390:	a94707e0 	ldp	x0, x1, [sp, #112]
-   84394:	a9000760 	stp	x0, x1, [x27]
+   84370:	a94707e0 	ldp	x0, x1, [sp, #112]
+   84374:	a9000760 	stp	x0, x1, [x27]
 
 
     // also inherit task name
     if (name)
-   84398:	9103c360 	add	x0, x27, #0xf0
-   8439c:	b40003d3 	cbz	x19, 84414 <copy_process+0x18c>
+   84378:	9103c360 	add	x0, x27, #0xf0
+   8437c:	b40003d3 	cbz	x19, 843f4 <copy_process+0x18c>
         safestrcpy(p->name, name, sizeof(p->name));
-   843a0:	aa1303e1 	mov	x1, x19
-   843a4:	52800202 	mov	w2, #0x10                  	// #16
-   843a8:	97fff5de 	bl	81b20 <safestrcpy>
+   84380:	aa1303e1 	mov	x1, x19
+   84384:	52800202 	mov	w2, #0x10                  	// #16
+   84388:	97fff5ce 	bl	81ac0 <safestrcpy>
 	/* STUDENT: TODO: your code here */
 
     unsigned long stack_top = (unsigned long)p + THREAD_SIZE;
 
     p->cpu_context.sp = stack_top;
     p->cpu_context.pc = (unsigned long)ret_from_fork;
-   843ac:	b0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
+   8438c:	b0000080 	adrp	x0, 95000 <wordsworth.1725+0xee10>
     unsigned long stack_top = (unsigned long)p + THREAD_SIZE;
-   843b0:	91400762 	add	x2, x27, #0x1, lsl #12
+   84390:	91400762 	add	x2, x27, #0x1, lsl #12
 	p->credits = p->priority = cur->priority;
-   843b4:	f940a681 	ldr	x1, [x20, #328]
+   84394:	f940a681 	ldr	x1, [x20, #328]
 	p->pid = pid; 
-   843b8:	b901377a 	str	w26, [x27, #308]
+   84398:	b901377a 	str	w26, [x27, #308]
     p->cpu_context.pc = (unsigned long)ret_from_fork;
-   843bc:	f9479800 	ldr	x0, [x0, #3888]
-   843c0:	a9058362 	stp	x2, x0, [x27, #88]
+   8439c:	f9478c00 	ldr	x0, [x0, #3864]
+   843a0:	a9058362 	stp	x2, x0, [x27, #88]
 	p->flags = clone_flags;
-   843c4:	f94037e0 	ldr	x0, [sp, #104]
-   843c8:	f9008760 	str	x0, [x27, #264]
+   843a4:	f94037e0 	ldr	x0, [sp, #104]
+   843a8:	f9008760 	str	x0, [x27, #264]
 	p->credits = p->priority = cur->priority;
-   843cc:	a9140761 	stp	x1, x1, [x27, #320]
+   843ac:	a9140761 	stp	x1, x1, [x27, #320]
 	
     release(&cur->lock);
-   843d0:	aa1c03e0 	mov	x0, x28
-   843d4:	97fff663 	bl	81d60 <release>
+   843b0:	aa1c03e0 	mov	x0, x28
+   843b4:	97fff653 	bl	81d00 <release>
 	release(&p->lock);
-   843d8:	aa1903e0 	mov	x0, x25
-   843dc:	97fff661 	bl	81d60 <release>
+   843b8:	aa1903e0 	mov	x0, x25
+   843bc:	97fff651 	bl	81d00 <release>
  	p->parent = cur;
 	// the last thing: change the task's state so that the scheduler can pick up
     // the task to run in the future
 	/* STUDENT: TODO: your code here */
 
     p->state = TASK_RUNNABLE;
-   843e0:	52800080 	mov	w0, #0x4                   	// #4
-   843e4:	b9013b60 	str	w0, [x27, #312]
+   843c0:	52800080 	mov	w0, #0x4                   	// #4
+   843c4:	b9013b60 	str	w0, [x27, #312]
  	p->parent = cur;
-   843e8:	f900b374 	str	x20, [x27, #352]
+   843c8:	f900b374 	str	x20, [x27, #352]
 	
 	release(&sched_lock);
-   843ec:	913a4300 	add	x0, x24, #0xe90
-   843f0:	97fff65c 	bl	81d60 <release>
+   843cc:	9139e300 	add	x0, x24, #0xe78
+   843d0:	97fff64c 	bl	81d00 <release>
 
 	return pid;
 }
-   843f4:	2a1a03e0 	mov	w0, w26
-   843f8:	a94153f3 	ldp	x19, x20, [sp, #16]
-   843fc:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   84400:	a94363f7 	ldp	x23, x24, [sp, #48]
-   84404:	a9446bf9 	ldp	x25, x26, [sp, #64]
-   84408:	a94573fb 	ldp	x27, x28, [sp, #80]
-   8440c:	a8c87bfd 	ldp	x29, x30, [sp], #128
-   84410:	d65f03c0 	ret
+   843d4:	2a1a03e0 	mov	w0, w26
+   843d8:	a94153f3 	ldp	x19, x20, [sp, #16]
+   843dc:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   843e0:	a94363f7 	ldp	x23, x24, [sp, #48]
+   843e4:	a9446bf9 	ldp	x25, x26, [sp, #64]
+   843e8:	a94573fb 	ldp	x27, x28, [sp, #80]
+   843ec:	a8c87bfd 	ldp	x29, x30, [sp], #128
+   843f0:	d65f03c0 	ret
 	    safestrcpy(p->name, cur->name, sizeof(cur->name));
-   84414:	9103c281 	add	x1, x20, #0xf0
-   84418:	52800202 	mov	w2, #0x10                  	// #16
-   8441c:	97fff5c1 	bl	81b20 <safestrcpy>
-   84420:	17ffffe3 	b	843ac <copy_process+0x124>
+   843f4:	9103c281 	add	x1, x20, #0xf0
+   843f8:	52800202 	mov	w2, #0x10                  	// #16
+   843fc:	97fff5b1 	bl	81ac0 <safestrcpy>
+   84400:	17ffffe3 	b	8438c <copy_process+0x124>
 		{release(&sched_lock); return -1;}
-   84424:	913a4300 	add	x0, x24, #0xe90
-   84428:	1280001a 	mov	w26, #0xffffffff            	// #-1
-   8442c:	97fff64d 	bl	81d60 <release>
-   84430:	17fffff1 	b	843f4 <copy_process+0x16c>
-   84434:	00000000 	udf	#0
+   84404:	9139e300 	add	x0, x24, #0xe78
+   84408:	1280001a 	mov	w26, #0xffffffff            	// #-1
+   8440c:	97fff63d 	bl	81d00 <release>
+   84410:	17fffff1 	b	843d4 <copy_process+0x16c>
+   84414:	00000000 	udf	#0
 
-0000000000084438 <handler>:
+0000000000084418 <handler>:
 #include "plat.h"
 #include "utils.h"
 #include "debug.h"
 #include "sched.h"
 
 static void handler(TKernelTimerHandle hTimer, void *param, void *context) {
-   84438:	d10183ff 	sub	sp, sp, #0x60
-   8443c:	a9017bfd 	stp	x29, x30, [sp, #16]
-   84440:	910043fd 	add	x29, sp, #0x10
-   84444:	a90253f3 	stp	x19, x20, [sp, #32]
-   84448:	aa0003f3 	mov	x19, x0
-   8444c:	aa0103f4 	mov	x20, x1
+   84418:	d10183ff 	sub	sp, sp, #0x60
+   8441c:	a9017bfd 	stp	x29, x30, [sp, #16]
+   84420:	910043fd 	add	x29, sp, #0x10
+   84424:	a90253f3 	stp	x19, x20, [sp, #32]
+   84428:	aa0003f3 	mov	x19, x0
+   8442c:	aa0103f4 	mov	x20, x1
 	unsigned sec, msec; 
 	current_time(&sec, &msec);
-   84450:	910163e0 	add	x0, sp, #0x58
-   84454:	910173e1 	add	x1, sp, #0x5c
+   84430:	910163e0 	add	x0, sp, #0x58
+   84434:	910173e1 	add	x1, sp, #0x5c
 static void handler(TKernelTimerHandle hTimer, void *param, void *context) {
-   84458:	a9035bf5 	stp	x21, x22, [sp, #48]
-   8445c:	aa0203f5 	mov	x21, x2
-   84460:	f90023f7 	str	x23, [sp, #64]
+   84438:	a9035bf5 	stp	x21, x22, [sp, #48]
+   8443c:	aa0203f5 	mov	x21, x2
+   84440:	f90023f7 	str	x23, [sp, #64]
 	current_time(&sec, &msec);
-   84464:	97fff6b5 	bl	81f38 <current_time>
+   84444:	97fff6a5 	bl	81ed8 <current_time>
 	I("%u.%03u: fired. on cpu %d. htimer %ld, param %lx, contex %lx", sec, msec,
-   84468:	294b5ff6 	ldp	w22, w23, [sp, #88]
-   8446c:	940006a7 	bl	85f08 <cpuid>
-   84470:	f90003f5 	str	x21, [sp]
-   84474:	aa1403e7 	mov	x7, x20
-   84478:	aa1303e6 	mov	x6, x19
-   8447c:	2a1703e4 	mov	w4, w23
-   84480:	2a1603e3 	mov	w3, w22
-   84484:	2a0003e5 	mov	w5, w0
-   84488:	52800122 	mov	w2, #0x9                   	// #9
-   8448c:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84490:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84494:	91122021 	add	x1, x1, #0x488
-   84498:	91126000 	add	x0, x0, #0x498
-   8449c:	97fff45f 	bl	81618 <tfp_printf>
+   84448:	294b5ff6 	ldp	w22, w23, [sp, #88]
+   8444c:	940006af 	bl	85f08 <cpuid>
+   84450:	f90003f5 	str	x21, [sp]
+   84454:	aa1403e7 	mov	x7, x20
+   84458:	aa1303e6 	mov	x6, x19
+   8445c:	2a1703e4 	mov	w4, w23
+   84460:	2a1603e3 	mov	w3, w22
+   84464:	2a0003e5 	mov	w5, w0
+   84468:	52800122 	mov	w2, #0x9                   	// #9
+   8446c:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84470:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84474:	9110c021 	add	x1, x1, #0x430
+   84478:	91110000 	add	x0, x0, #0x440
+   8447c:	97fff44f 	bl	815b8 <tfp_printf>
 		cpuid(), hTimer, (unsigned long)param, (unsigned long)context); 
 }
-   844a0:	a9417bfd 	ldp	x29, x30, [sp, #16]
-   844a4:	a94253f3 	ldp	x19, x20, [sp, #32]
-   844a8:	a9435bf5 	ldp	x21, x22, [sp, #48]
-   844ac:	f94023f7 	ldr	x23, [sp, #64]
-   844b0:	910183ff 	add	sp, sp, #0x60
-   844b4:	d65f03c0 	ret
+   84480:	a9417bfd 	ldp	x29, x30, [sp, #16]
+   84484:	a94253f3 	ldp	x19, x20, [sp, #32]
+   84488:	a9435bf5 	ldp	x21, x22, [sp, #48]
+   8448c:	f94023f7 	ldr	x23, [sp, #64]
+   84490:	910183ff 	add	sp, sp, #0x60
+   84494:	d65f03c0 	ret
 
-00000000000844b8 <kern_task_print>:
+0000000000084498 <kern_task_print>:
 ////////////////////////////////////////////////
 //  two kernel tasks print msgs. 
 //  simple test for scheduler and context switch 
 
 // a simple kernel task: print a message, yield
 static void kern_task_print(const char *str) {
-   844b8:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   844bc:	910003fd 	mov	x29, sp
-   844c0:	a90153f3 	stp	x19, x20, [sp, #16]
-   844c4:	aa0003f4 	mov	x20, x0
+   84498:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   8449c:	910003fd 	mov	x29, sp
+   844a0:	a90153f3 	stp	x19, x20, [sp, #16]
+   844a4:	aa0003f4 	mov	x20, x0
 	printf("Kernel task started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
-   844c8:	940006a7 	bl	85f64 <get_el>
-   844cc:	2a0003f3 	mov	w19, w0
-   844d0:	97fffcd4 	bl	83820 <myproc>
-   844d4:	aa0003e2 	mov	x2, x0
-   844d8:	2a1303e1 	mov	w1, w19
-   844dc:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   844e0:	90000093 	adrp	x19, 94000 <wordsworth.1725+0xde10>
-   844e4:	9113a000 	add	x0, x0, #0x4e8
+   844a8:	940006af 	bl	85f64 <get_el>
+   844ac:	2a0003f3 	mov	w19, w0
+   844b0:	97fffcc4 	bl	837c0 <myproc>
+   844b4:	aa0003e2 	mov	x2, x0
+   844b8:	2a1303e1 	mov	w1, w19
+   844bc:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   844c0:	90000093 	adrp	x19, 94000 <wordsworth.1725+0xde10>
+   844c4:	91124000 	add	x0, x0, #0x490
 
 	while (1) {
 		printf("%s", str); 
-   844e8:	91144273 	add	x19, x19, #0x510
+   844c8:	9112e273 	add	x19, x19, #0x4b8
 	printf("Kernel task started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
-   844ec:	b9413442 	ldr	w2, [x2, #308]
-   844f0:	97fff44a 	bl	81618 <tfp_printf>
-   844f4:	d503201f 	nop
+   844cc:	b9413442 	ldr	w2, [x2, #308]
+   844d0:	97fff43a 	bl	815b8 <tfp_printf>
+   844d4:	d503201f 	nop
 		printf("%s", str); 
-   844f8:	aa1403e1 	mov	x1, x20
-   844fc:	aa1303e0 	mov	x0, x19
-   84500:	97fff446 	bl	81618 <tfp_printf>
+   844d8:	aa1403e1 	mov	x1, x20
+   844dc:	aa1303e0 	mov	x0, x19
+   844e0:	97fff436 	bl	815b8 <tfp_printf>
 		ms_delay(10); // NB: spin waiting (silly). for testing sched only
-   84504:	52800140 	mov	w0, #0xa                   	// #10
-   84508:	97fff684 	bl	81f18 <ms_delay>
+   844e4:	52800140 	mov	w0, #0xa                   	// #10
+   844e8:	97fff674 	bl	81eb8 <ms_delay>
 		yield();
-   8450c:	97fffdbf 	bl	83c08 <yield>
+   844ec:	97fffdb1 	bl	83bb0 <yield>
 	while (1) {
-   84510:	17fffffa 	b	844f8 <kern_task_print+0x40>
-   84514:	d503201f 	nop
+   844f0:	17fffffa 	b	844d8 <kern_task_print+0x40>
+   844f4:	d503201f 	nop
 
-0000000000084518 <kern_task_return>:
+00000000000844f8 <kern_task_return>:
 
 ////////////////////////////////////////////////
 // test kernel task return, exit() 
 
 // a task returns from its func
 static void kern_task_return(const char *str) {
-   84518:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   8451c:	910003fd 	mov	x29, sp
-   84520:	a90153f3 	stp	x19, x20, [sp, #16]
-   84524:	aa0003f3 	mov	x19, x0
+   844f8:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   844fc:	910003fd 	mov	x29, sp
+   84500:	a90153f3 	stp	x19, x20, [sp, #16]
+   84504:	aa0003f3 	mov	x19, x0
 	printf("Kernel task started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
-   84528:	9400068f 	bl	85f64 <get_el>
-   8452c:	2a0003f4 	mov	w20, w0
-   84530:	97fffcbc 	bl	83820 <myproc>
-   84534:	aa0003e2 	mov	x2, x0
-   84538:	2a1403e1 	mov	w1, w20
-   8453c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84540:	9113a000 	add	x0, x0, #0x4e8
-   84544:	b9413442 	ldr	w2, [x2, #308]
-   84548:	97fff434 	bl	81618 <tfp_printf>
+   84508:	94000697 	bl	85f64 <get_el>
+   8450c:	2a0003f4 	mov	w20, w0
+   84510:	97fffcac 	bl	837c0 <myproc>
+   84514:	aa0003e2 	mov	x2, x0
+   84518:	2a1403e1 	mov	w1, w20
+   8451c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84520:	91124000 	add	x0, x0, #0x490
+   84524:	b9413442 	ldr	w2, [x2, #308]
+   84528:	97fff424 	bl	815b8 <tfp_printf>
     printf("%s", str); 
-   8454c:	aa1303e1 	mov	x1, x19
-   84550:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   8452c:	aa1303e1 	mov	x1, x19
+   84530:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
     return;     
     // what will happen? 
     // this func is called from ret_from_fork (entry.S). after returning from 
 	// this func, it goes back to ret_from_fork and continues there -- in an inf loop
     // (cf entry.S ret_from_fork)
 }
-   84554:	a94153f3 	ldp	x19, x20, [sp, #16]
+   84534:	a94153f3 	ldp	x19, x20, [sp, #16]
     printf("%s", str); 
-   84558:	91144000 	add	x0, x0, #0x510
+   84538:	9112e000 	add	x0, x0, #0x4b8
 }
-   8455c:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   8453c:	a8c27bfd 	ldp	x29, x30, [sp], #32
     printf("%s", str); 
-   84560:	17fff42e 	b	81618 <tfp_printf>
-   84564:	d503201f 	nop
+   84540:	17fff41e 	b	815b8 <tfp_printf>
+   84544:	d503201f 	nop
 
-0000000000084568 <kern_task_exit>:
+0000000000084548 <kern_task_exit>:
 
 // a task calling "exit"
 static void kern_task_exit(const char *str) {
-   84568:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   8456c:	910003fd 	mov	x29, sp
-   84570:	a90153f3 	stp	x19, x20, [sp, #16]
-   84574:	aa0003f3 	mov	x19, x0
+   84548:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   8454c:	910003fd 	mov	x29, sp
+   84550:	a90153f3 	stp	x19, x20, [sp, #16]
+   84554:	aa0003f3 	mov	x19, x0
 	printf("Kernel task started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
-   84578:	9400067b 	bl	85f64 <get_el>
-   8457c:	2a0003f4 	mov	w20, w0
-   84580:	97fffca8 	bl	83820 <myproc>
-   84584:	aa0003e2 	mov	x2, x0
-   84588:	2a1403e1 	mov	w1, w20
-   8458c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84590:	9113a000 	add	x0, x0, #0x4e8
-   84594:	b9413442 	ldr	w2, [x2, #308]
-   84598:	97fff420 	bl	81618 <tfp_printf>
+   84558:	94000683 	bl	85f64 <get_el>
+   8455c:	2a0003f4 	mov	w20, w0
+   84560:	97fffc98 	bl	837c0 <myproc>
+   84564:	aa0003e2 	mov	x2, x0
+   84568:	2a1403e1 	mov	w1, w20
+   8456c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84570:	91124000 	add	x0, x0, #0x490
+   84574:	b9413442 	ldr	w2, [x2, #308]
+   84578:	97fff410 	bl	815b8 <tfp_printf>
     printf("%s", str); 
-   8459c:	aa1303e1 	mov	x1, x19
-   845a0:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   845a4:	91144000 	add	x0, x0, #0x510
-   845a8:	97fff41c 	bl	81618 <tfp_printf>
+   8457c:	aa1303e1 	mov	x1, x19
+   84580:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84584:	9112e000 	add	x0, x0, #0x4b8
+   84588:	97fff40c 	bl	815b8 <tfp_printf>
     exit_process(0); 
 }
-   845ac:	a94153f3 	ldp	x19, x20, [sp, #16]
+   8458c:	a94153f3 	ldp	x19, x20, [sp, #16]
     exit_process(0); 
-   845b0:	52800000 	mov	w0, #0x0                   	// #0
+   84590:	52800000 	mov	w0, #0x0                   	// #0
 }
-   845b4:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   84594:	a8c27bfd 	ldp	x29, x30, [sp], #32
     exit_process(0); 
-   845b8:	17fffe86 	b	83fd0 <exit_process>
-   845bc:	d503201f 	nop
+   84598:	17fffe84 	b	83fa8 <exit_process>
+   8459c:	d503201f 	nop
 
-00000000000845c0 <kern_task_donut>:
+00000000000845a0 <kern_task_donut>:
 //  modeled after test_kern_tasks_print()
 
 // Q4: quest: "two donuts"
 extern void donut(int idx); 	//donut.c
 extern void donut_canvas_init(void); //donut.c don't forget to init canvas -- once
 void kern_task_donut(int idx) {
-   845c0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   845c4:	910003fd 	mov	x29, sp
-   845c8:	a90153f3 	stp	x19, x20, [sp, #16]
-   845cc:	2a0003f3 	mov	w19, w0
+   845a0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   845a4:	910003fd 	mov	x29, sp
+   845a8:	a90153f3 	stp	x19, x20, [sp, #16]
+   845ac:	2a0003f3 	mov	w19, w0
 	printf("process started EL %d, pid %d idx %d\r\n", 
-   845d0:	94000665 	bl	85f64 <get_el>
-   845d4:	2a0003f4 	mov	w20, w0
+   845b0:	9400066d 	bl	85f64 <get_el>
+   845b4:	2a0003f4 	mov	w20, w0
         get_el(), myproc()->pid, idx);
-   845d8:	97fffc92 	bl	83820 <myproc>
-   845dc:	aa0003e2 	mov	x2, x0
+   845b8:	97fffc82 	bl	837c0 <myproc>
+   845bc:	aa0003e2 	mov	x2, x0
 	printf("process started EL %d, pid %d idx %d\r\n", 
-   845e0:	2a1403e1 	mov	w1, w20
-   845e4:	2a1303e3 	mov	w3, w19
-   845e8:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   845ec:	91146000 	add	x0, x0, #0x518
-   845f0:	b9413442 	ldr	w2, [x2, #308]
-   845f4:	97fff409 	bl	81618 <tfp_printf>
+   845c0:	2a1403e1 	mov	w1, w20
+   845c4:	2a1303e3 	mov	w3, w19
+   845c8:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   845cc:	91130000 	add	x0, x0, #0x4c0
+   845d0:	b9413442 	ldr	w2, [x2, #308]
+   845d4:	97fff3f9 	bl	815b8 <tfp_printf>
     // exp: diff proirities --> donuts will turn at diff rates
 	/* STUDENT: TODO: your code here */
     donut(idx);
-   845f8:	2a1303e0 	mov	w0, w19
+   845d8:	2a1303e0 	mov	w0, w19
 }
-   845fc:	a94153f3 	ldp	x19, x20, [sp, #16]
-   84600:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   845dc:	a94153f3 	ldp	x19, x20, [sp, #16]
+   845e0:	a8c27bfd 	ldp	x29, x30, [sp], #32
     donut(idx);
-   84604:	17fffb49 	b	83328 <donut>
+   845e4:	17fffb39 	b	832c8 <donut>
 
-0000000000084608 <task_reader>:
+00000000000845e8 <task_reader>:
 static void task_reader() {
-   84608:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
-   8460c:	910003fd 	mov	x29, sp
-   84610:	a90153f3 	stp	x19, x20, [sp, #16]
-   84614:	90000453 	adrp	x19, 10c000 <nread>
-    while (nread == nwrite) {   
-   84618:	91000273 	add	x19, x19, #0x0
-   8461c:	9101a3f4 	add	x20, sp, #0x68
+   845e8:	a9b87bfd 	stp	x29, x30, [sp, #-128]!
+    printf("in reader\n");
+   845ec:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   845f0:	9113a000 	add	x0, x0, #0x4e8
 static void task_reader() {
-   84620:	a9025bf5 	stp	x21, x22, [sp, #32]
-        str[i] = pipebuf[nread % NSIZE];
-   84624:	5290a3f6 	mov	w22, #0x851f                	// #34079
+   845f4:	910003fd 	mov	x29, sp
+   845f8:	a90153f3 	stp	x19, x20, [sp, #16]
+   845fc:	90000453 	adrp	x19, 10c000 <nread>
+    while (nread == nwrite) {   // pipe empty
+   84600:	91000273 	add	x19, x19, #0x0
+   84604:	9101a3f4 	add	x20, sp, #0x68
 static void task_reader() {
-   84628:	a9046bf9 	stp	x25, x26, [sp, #64]
-        str[i] = pipebuf[nread % NSIZE];
-   8462c:	91002279 	add	x25, x19, #0x8
-   84630:	b0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
-   84634:	72aa3d76 	movk	w22, #0x51eb, lsl #16
+   84608:	a9025bf5 	stp	x21, x22, [sp, #32]
+            str[i] = pipebuf[nread % NSIZE];
+   8460c:	5290a3f6 	mov	w22, #0x851f                	// #34079
 static void task_reader() {
-   84638:	a90363f7 	stp	x23, x24, [sp, #48]
-   8463c:	90000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
-   84640:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
-   84644:	a90573fb 	stp	x27, x28, [sp, #80]
+   84610:	a9046bf9 	stp	x25, x26, [sp, #64]
+            str[i] = pipebuf[nread % NSIZE];
+   84614:	91002279 	add	x25, x19, #0x8
+   84618:	b0000095 	adrp	x21, 95000 <wordsworth.1725+0xee10>
+   8461c:	9000009a 	adrp	x26, 94000 <wordsworth.1725+0xde10>
+   84620:	72aa3d76 	movk	w22, #0x51eb, lsl #16
+static void task_reader() {
+   84624:	a90363f7 	stp	x23, x24, [sp, #48]
+   84628:	90000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
+   8462c:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
+   84630:	a90573fb 	stp	x27, x28, [sp, #80]
+    printf("in reader\n");
+   84634:	97fff3e1 	bl	815b8 <tfp_printf>
     acquire(&testlock); 
-   84648:	913aa2ba 	add	x26, x21, #0xea8
-   8464c:	aa1a03e0 	mov	x0, x26
-   84650:	97fff582 	bl	81c58 <acquire>
-    while (nread == nwrite) {   
-   84654:	29400e62 	ldp	w2, w3, [x19]
-   84658:	6b02007f 	cmp	w3, w2
-   8465c:	54000121 	b.ne	84680 <task_reader+0x78>  // b.any
-        sleep(&nwrite, &testlock); // Sleep on the 'write' event (waiting for data)
-   84660:	9100127b 	add	x27, x19, #0x4
-   84664:	d503201f 	nop
-   84668:	aa1a03e1 	mov	x1, x26
-   8466c:	aa1b03e0 	mov	x0, x27
-   84670:	97fffdd6 	bl	83dc8 <sleep>
-    while (nread == nwrite) {   
-   84674:	29400e62 	ldp	w2, w3, [x19]
-   84678:	6b03005f 	cmp	w2, w3
-   8467c:	54ffff60 	b.eq	84668 <task_reader+0x60>  // b.none
-   84680:	aa1403fb 	mov	x27, x20
-    for (i = 0; i < n; i++) {
-   84684:	5280001a 	mov	w26, #0x0                   	// #0
-        str[i] = pipebuf[nread % NSIZE];
-   84688:	5280191c 	mov	w28, #0xc8                  	// #200
-   8468c:	14000002 	b	84694 <task_reader+0x8c>
-   84690:	29400e62 	ldp	w2, w3, [x19]
-   84694:	9b367c41 	smull	x1, w2, w22
-        nread++;
-   84698:	11000444 	add	w4, w2, #0x1
-        wakeup(&nread);
-   8469c:	aa1303e0 	mov	x0, x19
-        if (nread == nwrite) {
-   846a0:	6b03005f 	cmp	w2, w3
-   846a4:	54000160 	b.eq	846d0 <task_reader+0xc8>  // b.none
-        str[i] = pipebuf[nread % NSIZE];
-   846a8:	9366fc21 	asr	x1, x1, #38
-    for (i = 0; i < n; i++) {
-   846ac:	1100075a 	add	w26, w26, #0x1
-        str[i] = pipebuf[nread % NSIZE];
-   846b0:	4b827c21 	sub	w1, w1, w2, asr #31
-        nread++;
-   846b4:	b9000264 	str	w4, [x19]
-        str[i] = pipebuf[nread % NSIZE];
-   846b8:	1b1c8822 	msub	w2, w1, w28, w2
-   846bc:	3862cb21 	ldrb	w1, [x25, w2, sxtw]
-   846c0:	38001761 	strb	w1, [x27], #1
-        wakeup(&nread);
-   846c4:	97fffd9d 	bl	83d38 <wakeup>
-    for (i = 0; i < n; i++) {
-   846c8:	7100435f 	cmp	w26, #0x10
-   846cc:	54fffe21 	b.ne	84690 <task_reader+0x88>  // b.any
+   84638:	913a42bb 	add	x27, x21, #0xe90
+   8463c:	aa1b03e0 	mov	x0, x27
+   84640:	97fff56e 	bl	81bf8 <acquire>
+    while (nread == nwrite) {   // pipe empty
+   84644:	29400e62 	ldp	w2, w3, [x19]
+   84648:	6b02007f 	cmp	w3, w2
+   8464c:	54000161 	b.ne	84678 <task_reader+0x90>  // b.any
+        printf("Reader sleeping\n");
+   84650:	9113e35c 	add	x28, x26, #0x4f8
+   84654:	d503201f 	nop
+   84658:	aa1c03e0 	mov	x0, x28
+   8465c:	97fff3d7 	bl	815b8 <tfp_printf>
+        sleep(&testlock, &testlock);
+   84660:	aa1b03e1 	mov	x1, x27
+   84664:	aa1b03e0 	mov	x0, x27
+   84668:	97fffdc6 	bl	83d80 <sleep>
+    while (nread == nwrite) {   // pipe empty
+   8466c:	29400e62 	ldp	w2, w3, [x19]
+   84670:	6b03005f 	cmp	w2, w3
+   84674:	54ffff20 	b.eq	84658 <task_reader+0x70>  // b.none
+   84678:	4b020063 	sub	w3, w3, w2
+   8467c:	aa1403e1 	mov	x1, x20
+static void task_reader() {
+   84680:	52800004 	mov	w4, #0x0                   	// #0
+    for (i=0; i<n; i++) {
+   84684:	5280001b 	mov	w27, #0x0                   	// #0
+            str[i] = pipebuf[nread % NSIZE];
+   84688:	52801905 	mov	w5, #0xc8                  	// #200
+   8468c:	d503201f 	nop
+        if (nread == nwrite){
+   84690:	6b03037f 	cmp	w27, w3
+            str[i] = pipebuf[nread % NSIZE];
+   84694:	9b367c40 	smull	x0, w2, w22
+    for (i=0; i<n; i++) {
+   84698:	1100077b 	add	w27, w27, #0x1
+        if (nread == nwrite){
+   8469c:	54000300 	b.eq	846fc <task_reader+0x114>  // b.none
+            str[i] = pipebuf[nread % NSIZE];
+   846a0:	9366fc00 	asr	x0, x0, #38
+   846a4:	52800024 	mov	w4, #0x1                   	// #1
+   846a8:	4b827c00 	sub	w0, w0, w2, asr #31
+    for (i=0; i<n; i++) {
+   846ac:	7100437f 	cmp	w27, #0x10
+            str[i] = pipebuf[nread % NSIZE];
+   846b0:	1b058800 	msub	w0, w0, w5, w2
+   846b4:	0b040042 	add	w2, w2, w4
+   846b8:	3860cb20 	ldrb	w0, [x25, w0, sxtw]
+   846bc:	38001420 	strb	w0, [x1], #1
+    for (i=0; i<n; i++) {
+   846c0:	54fffe81 	b.ne	84690 <task_reader+0xa8>  // b.any
+   846c4:	b9000262 	str	w2, [x19]
+    wakeup(&testlock);
+   846c8:	913a42bc 	add	x28, x21, #0xe90
+   846cc:	aa1c03e0 	mov	x0, x28
+   846d0:	97fffd88 	bl	83cf0 <wakeup>
     release(&testlock); 
-   846d0:	913aa2a0 	add	x0, x21, #0xea8
-   846d4:	97fff5a3 	bl	81d60 <release>
+   846d4:	aa1c03e0 	mov	x0, x28
+   846d8:	97fff58a 	bl	81d00 <release>
         W("read: %d bytes. %s", n, mybuf);
-   846d8:	2a1a03e3 	mov	w3, w26
-   846dc:	aa1403e4 	mov	x4, x20
-   846e0:	91122301 	add	x1, x24, #0x488
-   846e4:	911502e0 	add	x0, x23, #0x540
-   846e8:	528024e2 	mov	w2, #0x127                 	// #295
+   846dc:	2a1b03e3 	mov	w3, w27
+   846e0:	aa1403e4 	mov	x4, x20
+   846e4:	9110c301 	add	x1, x24, #0x430
+   846e8:	911442e0 	add	x0, x23, #0x510
+   846ec:	52802602 	mov	w2, #0x130                 	// #304
         mybuf[n] = '\0';
-   846ec:	383aca9f 	strb	wzr, [x20, w26, sxtw]
+   846f0:	383bca9f 	strb	wzr, [x20, w27, sxtw]
         W("read: %d bytes. %s", n, mybuf);
-   846f0:	97fff3ca 	bl	81618 <tfp_printf>
+   846f4:	97fff3b1 	bl	815b8 <tfp_printf>
     while (1) {
-   846f4:	17ffffd5 	b	84648 <task_reader+0x40>
+   846f8:	17ffffd0 	b	84638 <task_reader+0x50>
+   846fc:	34000044 	cbz	w4, 84704 <task_reader+0x11c>
+   84700:	b9000262 	str	w2, [x19]
+    for (i=0; i<n; i++) {
+   84704:	2a0303fb 	mov	w27, w3
+   84708:	17fffff0 	b	846c8 <task_reader+0xe0>
+   8470c:	d503201f 	nop
 
-00000000000846f8 <task_writer>:
+0000000000084710 <task_writer>:
 static void task_writer() {
-   846f8:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
-   846fc:	910003fd 	mov	x29, sp
-   84700:	a9046bf9 	stp	x25, x26, [sp, #64]
-   84704:	90000459 	adrp	x25, 10c000 <nread>
-        while (nwrite == nread + NSIZE) { 
-   84708:	91000339 	add	x25, x25, #0x0
+   84710:	a9ba7bfd 	stp	x29, x30, [sp, #-96]!
+   84714:	910003fd 	mov	x29, sp
+   84718:	a90573fb 	stp	x27, x28, [sp, #80]
+   8471c:	9000045c 	adrp	x28, 10c000 <nread>
+        while (nwrite == nread + NSIZE) { // pipe write full
+   84720:	9100039c 	add	x28, x28, #0x0
+        pipebuf[nwrite % NSIZE] = str[i];
+   84724:	9100239b 	add	x27, x28, #0x8
 static void task_writer() {
-   8470c:	a90153f3 	stp	x19, x20, [sp, #16]
-   84710:	b0000094 	adrp	x20, 95000 <wordsworth.1725+0xee10>
-    acquire(&testlock); 
-   84714:	913aa294 	add	x20, x20, #0xea8
+   84728:	a90363f7 	stp	x23, x24, [sp, #48]
+   8472c:	90000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
+            printf("writer sleeping\n");
+   84730:	9114e318 	add	x24, x24, #0x538
 static void task_writer() {
-   84718:	a9025bf5 	stp	x21, x22, [sp, #32]
-   8471c:	d0000015 	adrp	x21, 86000 <__asm_dcache_level+0xc>
+   84734:	a9046bf9 	stp	x25, x26, [sp, #64]
+        pipebuf[nwrite % NSIZE] = str[i];
+   84738:	5290a3f9 	mov	w25, #0x851f                	// #34079
+   8473c:	b0000097 	adrp	x23, 95000 <wordsworth.1725+0xee10>
+   84740:	9000009a 	adrp	x26, 94000 <wordsworth.1725+0xde10>
+   84744:	72aa3d79 	movk	w25, #0x51eb, lsl #16
+static void task_writer() {
+   84748:	a90153f3 	stp	x19, x20, [sp, #16]
+   8474c:	a9025bf5 	stp	x21, x22, [sp, #32]
+   84750:	d0000016 	adrp	x22, 86000 <__asm_dcache_level+0xc>
+   84754:	d503201f 	nop
         do_write(wordsworth, strlen(wordsworth)); // NB: strlen does NOT count '\0'
-   84720:	9107c2b5 	add	x21, x21, #0x1f0
-static void task_writer() {
-   84724:	a90363f7 	stp	x23, x24, [sp, #48]
-        pipebuf[nwrite % NSIZE] = str[i];
-   84728:	5290a3f7 	mov	w23, #0x851f                	// #34079
-   8472c:	91002338 	add	x24, x25, #0x8
-   84730:	72aa3d77 	movk	w23, #0x51eb, lsl #16
-   84734:	d503201f 	nop
-        do_write(wordsworth, strlen(wordsworth)); // NB: strlen does NOT count '\0'
-   84738:	aa1503e0 	mov	x0, x21
-   8473c:	97fff507 	bl	81b58 <strlen>
-   84740:	2a0003f3 	mov	w19, w0
+   84758:	9107c2c0 	add	x0, x22, #0x1f0
     acquire(&testlock); 
-   84744:	aa1403e0 	mov	x0, x20
-   84748:	97fff544 	bl	81c58 <acquire>
-    while (i < n) {
-   8474c:	d280001a 	mov	x26, #0x0                   	// #0
-   84750:	7100027f 	cmp	w19, #0x0
+   8475c:	913a42f3 	add	x19, x23, #0xe90
+        do_write(wordsworth, strlen(wordsworth)); // NB: strlen does NOT count '\0'
+   84760:	97fff4e6 	bl	81af8 <strlen>
+   84764:	2a0003f5 	mov	w21, w0
+    acquire(&testlock); 
+   84768:	aa1303e0 	mov	x0, x19
+   8476c:	97fff523 	bl	81bf8 <acquire>
+    while (i<n) {
+   84770:	d2800014 	mov	x20, #0x0                   	// #0
+   84774:	710002bf 	cmp	w21, #0x0
+   84778:	540000ec 	b.gt	84794 <task_writer+0x84>
+   8477c:	1400001c 	b	847ec <task_writer+0xdc>
+            printf("writer sleeping\n");
+   84780:	aa1803e0 	mov	x0, x24
+   84784:	97fff38d 	bl	815b8 <tfp_printf>
+            sleep(&testlock, &testlock);
+   84788:	aa1303e1 	mov	x1, x19
+   8478c:	aa1303e0 	mov	x0, x19
+   84790:	97fffd7c 	bl	83d80 <sleep>
+        while (nwrite == nread + NSIZE) { // pipe write full
+   84794:	29400780 	ldp	w0, w1, [x28]
+   84798:	11032000 	add	w0, w0, #0xc8
+   8479c:	6b01001f 	cmp	w0, w1
+   847a0:	54ffff00 	b.eq	84780 <task_writer+0x70>  // b.none
+        printf("Writing\n");
+   847a4:	91154340 	add	x0, x26, #0x550
+   847a8:	97fff384 	bl	815b8 <tfp_printf>
         pipebuf[nwrite % NSIZE] = str[i];
-   84754:	52801916 	mov	w22, #0xc8                  	// #200
-    while (i < n) {
-   84758:	540000ac 	b.gt	8476c <task_writer+0x74>
-   8475c:	14000015 	b	847b0 <task_writer+0xb8>
-            sleep(&nread, &testlock); // Sleep on the 'read' event (waiting for space)
-   84760:	aa1403e1 	mov	x1, x20
-   84764:	aa1903e0 	mov	x0, x25
-   84768:	97fffd98 	bl	83dc8 <sleep>
-        while (nwrite == nread + NSIZE) { 
-   8476c:	29400720 	ldp	w0, w1, [x25]
-   84770:	11032000 	add	w0, w0, #0xc8
-   84774:	6b01001f 	cmp	w0, w1
-   84778:	54ffff40 	b.eq	84760 <task_writer+0x68>  // b.none
-        pipebuf[nwrite % NSIZE] = str[i];
-   8477c:	9b377c22 	smull	x2, w1, w23
+   847ac:	b9400782 	ldr	w2, [x28, #4]
+   847b0:	9107c2c3 	add	x3, x22, #0x1f0
+   847b4:	52801904 	mov	w4, #0xc8                  	// #200
+        wakeup(&testlock);
+   847b8:	aa1303e0 	mov	x0, x19
         nwrite++;
-   84780:	aa1903e0 	mov	x0, x25
+   847bc:	11000441 	add	w1, w2, #0x1
+   847c0:	b9000781 	str	w1, [x28, #4]
         pipebuf[nwrite % NSIZE] = str[i];
-   84784:	38756b43 	ldrb	w3, [x26, x21]
-        nwrite++;
-   84788:	11000424 	add	w4, w1, #0x1
-   8478c:	9100075a 	add	x26, x26, #0x1
-        pipebuf[nwrite % NSIZE] = str[i];
-   84790:	9366fc42 	asr	x2, x2, #38
-        nwrite++;
-   84794:	b8004c04 	str	w4, [x0, #4]!
-        pipebuf[nwrite % NSIZE] = str[i];
-   84798:	4b817c42 	sub	w2, w2, w1, asr #31
-   8479c:	1b168441 	msub	w1, w2, w22, w1
-   847a0:	3821cb03 	strb	w3, [x24, w1, sxtw]
-        wakeup(&nwrite); 
-   847a4:	97fffd65 	bl	83d38 <wakeup>
-    while (i < n) {
-   847a8:	6b1a027f 	cmp	w19, w26
-   847ac:	54fffe0c 	b.gt	8476c <task_writer+0x74>
-    release(&testlock);
-   847b0:	aa1403e0 	mov	x0, x20
-   847b4:	97fff56b 	bl	81d60 <release>
+   847c4:	38636a83 	ldrb	w3, [x20, x3]
+   847c8:	91000694 	add	x20, x20, #0x1
+   847cc:	9b397c41 	smull	x1, w2, w25
+   847d0:	9366fc21 	asr	x1, x1, #38
+   847d4:	4b827c21 	sub	w1, w1, w2, asr #31
+   847d8:	1b048821 	msub	w1, w1, w4, w2
+   847dc:	3821cb63 	strb	w3, [x27, w1, sxtw]
+        wakeup(&testlock);
+   847e0:	97fffd44 	bl	83cf0 <wakeup>
+    while (i<n) {
+   847e4:	6b1402bf 	cmp	w21, w20
+   847e8:	54fffd6c 	b.gt	84794 <task_writer+0x84>
+    wakeup(&testlock);
+   847ec:	913a42f3 	add	x19, x23, #0xe90
+   847f0:	aa1303e0 	mov	x0, x19
+   847f4:	97fffd3f 	bl	83cf0 <wakeup>
+    release(&testlock); 
+   847f8:	aa1303e0 	mov	x0, x19
+   847fc:	97fff541 	bl	81d00 <release>
         ms_delay(100); // spin waiting (silly). for testing only
-   847b8:	52800c80 	mov	w0, #0x64                  	// #100
-   847bc:	97fff5d7 	bl	81f18 <ms_delay>
+   84800:	52800c80 	mov	w0, #0x64                  	// #100
+   84804:	97fff5ad 	bl	81eb8 <ms_delay>
     while (1) {
-   847c0:	17ffffde 	b	84738 <task_writer+0x40>
-   847c4:	d503201f 	nop
+   84808:	17ffffd4 	b	84758 <task_writer+0x48>
+   8480c:	d503201f 	nop
 
-00000000000847c8 <test_ktimer>:
+0000000000084810 <test_ktimer>:
 void test_ktimer() {
-   847c8:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
-   847cc:	910003fd 	mov	x29, sp
-   847d0:	a90153f3 	stp	x19, x20, [sp, #16]
+   84810:	a9ba7bfd 	stp	x29, x30, [sp, #-96]!
+   84814:	910003fd 	mov	x29, sp
+   84818:	a90153f3 	stp	x19, x20, [sp, #16]
 	current_time(&sec, &msec); 
-   847d4:	910123f4 	add	x20, sp, #0x48
-   847d8:	aa1403e0 	mov	x0, x20
+   8481c:	910163f4 	add	x20, sp, #0x58
+   84820:	aa1403e0 	mov	x0, x20
 void test_ktimer() {
-   847dc:	a9025bf5 	stp	x21, x22, [sp, #32]
+   84824:	a9025bf5 	stp	x21, x22, [sp, #32]
 	current_time(&sec, &msec); 
-   847e0:	910133f5 	add	x21, sp, #0x4c
-   847e4:	aa1503e1 	mov	x1, x21
+   84828:	910173f5 	add	x21, sp, #0x5c
+   8482c:	aa1503e1 	mov	x1, x21
 void test_ktimer() {
-   847e8:	f9001bf7 	str	x23, [sp, #48]
+   84830:	f9001bf7 	str	x23, [sp, #48]
 	current_time(&sec, &msec); 
-   847ec:	97fff5d3 	bl	81f38 <current_time>
+   84834:	97fff5a9 	bl	81ed8 <current_time>
 	I("%u.%03u start delaying 500ms...", sec, msec); 
-   847f0:	294913e3 	ldp	w3, w4, [sp, #72]
-   847f4:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
-   847f8:	911222f3 	add	x19, x23, #0x488
-   847fc:	52800242 	mov	w2, #0x12                  	// #18
-   84800:	aa1303e1 	mov	x1, x19
-   84804:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84808:	9115a000 	add	x0, x0, #0x568
-   8480c:	97fff383 	bl	81618 <tfp_printf>
+   84838:	294b13e3 	ldp	w3, w4, [sp, #88]
+   8483c:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
+   84840:	9110c2f3 	add	x19, x23, #0x430
+   84844:	52800242 	mov	w2, #0x12                  	// #18
+   84848:	aa1303e1 	mov	x1, x19
+   8484c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84850:	91158000 	add	x0, x0, #0x560
+   84854:	97fff359 	bl	815b8 <tfp_printf>
 	ms_delay(500); 
-   84810:	52803e80 	mov	w0, #0x1f4                 	// #500
-   84814:	97fff5c1 	bl	81f18 <ms_delay>
+   84858:	52803e80 	mov	w0, #0x1f4                 	// #500
+   8485c:	97fff597 	bl	81eb8 <ms_delay>
 	current_time(&sec, &msec);
-   84818:	aa1503e1 	mov	x1, x21
-   8481c:	aa1403e0 	mov	x0, x20
-   84820:	97fff5c6 	bl	81f38 <current_time>
+   84860:	aa1503e1 	mov	x1, x21
+   84864:	aa1403e0 	mov	x0, x20
+   84868:	97fff59c 	bl	81ed8 <current_time>
 	int t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   84824:	90000015 	adrp	x21, 84000 <exit_process+0x30>
+   8486c:	90000015 	adrp	x21, 84000 <exit_process+0x58>
 	I("%u.%03u ended delaying 500ms", sec, msec); 
-   84828:	294913e3 	ldp	w3, w4, [sp, #72]
-   8482c:	aa1303e1 	mov	x1, x19
-   84830:	528002a2 	mov	w2, #0x15                  	// #21
-   84834:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84838:	91168000 	add	x0, x0, #0x5a0
+   84870:	294b13e3 	ldp	w3, w4, [sp, #88]
+   84874:	aa1303e1 	mov	x1, x19
+   84878:	528002a2 	mov	w2, #0x15                  	// #21
+   8487c:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84880:	91166000 	add	x0, x0, #0x598
 	int t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   8483c:	9110e2b5 	add	x21, x21, #0x438
+   84884:	911062b5 	add	x21, x21, #0x418
 	I("%u.%03u ended delaying 500ms", sec, msec); 
-   84840:	97fff376 	bl	81618 <tfp_printf>
+   84888:	97fff34c 	bl	815b8 <tfp_printf>
 	I("timer start. timer id %u", t); 
-   84844:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
+   8488c:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
 	int t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   84848:	d29bdda3 	mov	x3, #0xdeed                	// #57069
-   8484c:	d297dde2 	mov	x2, #0xbeef                	// #48879
-   84850:	aa1503e1 	mov	x1, x21
-   84854:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
-   84858:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
-   8485c:	52803e80 	mov	w0, #0x1f4                 	// #500
-   84860:	97fff5de 	bl	81fd8 <ktimer_start>
+   84890:	d29bdda3 	mov	x3, #0xdeed                	// #57069
+   84894:	d297dde2 	mov	x2, #0xbeef                	// #48879
+   84898:	aa1503e1 	mov	x1, x21
+   8489c:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
+   848a0:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
+   848a4:	52803e80 	mov	w0, #0x1f4                 	// #500
+   848a8:	97fff5b4 	bl	81f78 <ktimer_start>
 	I("timer start. timer id %u", t); 
-   84864:	2a0003e3 	mov	w3, w0
-   84868:	aa1303e1 	mov	x1, x19
-   8486c:	91174294 	add	x20, x20, #0x5d0
-   84870:	52800322 	mov	w2, #0x19                  	// #25
+   848ac:	2a0003e3 	mov	w3, w0
+   848b0:	aa1303e1 	mov	x1, x19
+   848b4:	91172294 	add	x20, x20, #0x5c8
+   848b8:	52800322 	mov	w2, #0x19                  	// #25
 	int t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   84874:	2a0003f6 	mov	w22, w0
+   848bc:	2a0003f6 	mov	w22, w0
 	I("timer start. timer id %u", t); 
-   84878:	aa1403e0 	mov	x0, x20
-   8487c:	97fff367 	bl	81618 <tfp_printf>
+   848c0:	aa1403e0 	mov	x0, x20
+   848c4:	97fff33d 	bl	815b8 <tfp_printf>
 	ms_delay(1000);
-   84880:	52807d00 	mov	w0, #0x3e8                 	// #1000
-   84884:	97fff5a5 	bl	81f18 <ms_delay>
+   848c8:	52807d00 	mov	w0, #0x3e8                 	// #1000
+   848cc:	97fff57b 	bl	81eb8 <ms_delay>
 	I("timer %d should have fired", t); 
-   84888:	2a1603e3 	mov	w3, w22
-   8488c:	aa1303e1 	mov	x1, x19
-   84890:	52800362 	mov	w2, #0x1b                  	// #27
-   84894:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84898:	91180000 	add	x0, x0, #0x600
-   8489c:	97fff35f 	bl	81618 <tfp_printf>
+   848d0:	2a1603e3 	mov	w3, w22
+   848d4:	aa1303e1 	mov	x1, x19
+   848d8:	52800362 	mov	w2, #0x1b                  	// #27
+   848dc:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   848e0:	9117e000 	add	x0, x0, #0x5f8
+   848e4:	97fff335 	bl	815b8 <tfp_printf>
 	t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   848a0:	d29bdda3 	mov	x3, #0xdeed                	// #57069
-   848a4:	d297dde2 	mov	x2, #0xbeef                	// #48879
-   848a8:	aa1503e1 	mov	x1, x21
-   848ac:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
-   848b0:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
-   848b4:	52803e80 	mov	w0, #0x1f4                 	// #500
-   848b8:	97fff5c8 	bl	81fd8 <ktimer_start>
+   848e8:	d29bdda3 	mov	x3, #0xdeed                	// #57069
+   848ec:	d297dde2 	mov	x2, #0xbeef                	// #48879
+   848f0:	aa1503e1 	mov	x1, x21
+   848f4:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
+   848f8:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
+   848fc:	52803e80 	mov	w0, #0x1f4                 	// #500
+   84900:	97fff59e 	bl	81f78 <ktimer_start>
 	I("timer start. timer id %u", t); 
-   848bc:	2a0003e3 	mov	w3, w0
-   848c0:	aa1303e1 	mov	x1, x19
-   848c4:	aa1403e0 	mov	x0, x20
-   848c8:	528003e2 	mov	w2, #0x1f                  	// #31
-   848cc:	97fff353 	bl	81618 <tfp_printf>
-	t = ktimer_start(1000, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   848d0:	d29bdda3 	mov	x3, #0xdeed                	// #57069
-   848d4:	d297dde2 	mov	x2, #0xbeef                	// #48879
-   848d8:	aa1503e1 	mov	x1, x21
-   848dc:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
-   848e0:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
-   848e4:	52807d00 	mov	w0, #0x3e8                 	// #1000
-   848e8:	97fff5bc 	bl	81fd8 <ktimer_start>
-	I("timer start. timer id %u", t); 
-   848ec:	2a0003e3 	mov	w3, w0
-   848f0:	aa1303e1 	mov	x1, x19
-   848f4:	52800422 	mov	w2, #0x21                  	// #33
-   848f8:	aa1403e0 	mov	x0, x20
-   848fc:	97fff347 	bl	81618 <tfp_printf>
-	ms_delay(2000); 
-   84900:	5280fa00 	mov	w0, #0x7d0                 	// #2000
-   84904:	97fff585 	bl	81f18 <ms_delay>
-	I("both timers should have fired"); 
+   84904:	2a0003e3 	mov	w3, w0
    84908:	aa1303e1 	mov	x1, x19
-   8490c:	52800462 	mov	w2, #0x23                  	// #35
-   84910:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84914:	9118c000 	add	x0, x0, #0x630
-   84918:	97fff340 	bl	81618 <tfp_printf>
+   8490c:	aa1403e0 	mov	x0, x20
+   84910:	528003e2 	mov	w2, #0x1f                  	// #31
+   84914:	97fff329 	bl	815b8 <tfp_printf>
+	t = ktimer_start(1000, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
+   84918:	d29bdda3 	mov	x3, #0xdeed                	// #57069
+   8491c:	d297dde2 	mov	x2, #0xbeef                	// #48879
+   84920:	aa1503e1 	mov	x1, x21
+   84924:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
+   84928:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
+   8492c:	52807d00 	mov	w0, #0x3e8                 	// #1000
+   84930:	97fff592 	bl	81f78 <ktimer_start>
+	I("timer start. timer id %u", t); 
+   84934:	2a0003e3 	mov	w3, w0
+   84938:	aa1303e1 	mov	x1, x19
+   8493c:	52800422 	mov	w2, #0x21                  	// #33
+   84940:	aa1403e0 	mov	x0, x20
+   84944:	97fff31d 	bl	815b8 <tfp_printf>
+	ms_delay(2000); 
+   84948:	5280fa00 	mov	w0, #0x7d0                 	// #2000
+   8494c:	97fff55b 	bl	81eb8 <ms_delay>
+	I("both timers should have fired"); 
+   84950:	aa1303e1 	mov	x1, x19
+   84954:	52800462 	mov	w2, #0x23                  	// #35
+   84958:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   8495c:	9118a000 	add	x0, x0, #0x628
+   84960:	97fff316 	bl	815b8 <tfp_printf>
 	t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   8491c:	d29bdda3 	mov	x3, #0xdeed                	// #57069
-   84920:	d297dde2 	mov	x2, #0xbeef                	// #48879
-   84924:	aa1503e1 	mov	x1, x21
-   84928:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
-   8492c:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
-   84930:	52803e80 	mov	w0, #0x1f4                 	// #500
-   84934:	97fff5a9 	bl	81fd8 <ktimer_start>
+   84964:	d29bdda3 	mov	x3, #0xdeed                	// #57069
+   84968:	d297dde2 	mov	x2, #0xbeef                	// #48879
+   8496c:	aa1503e1 	mov	x1, x21
+   84970:	f2bbd5a3 	movk	x3, #0xdead, lsl #16
+   84974:	f2bbd5a2 	movk	x2, #0xdead, lsl #16
+   84978:	52803e80 	mov	w0, #0x1f4                 	// #500
+   8497c:	97fff57f 	bl	81f78 <ktimer_start>
+   84980:	2a0003f5 	mov	w21, w0
 	I("timer start. timer id %u", t);
-   84938:	2a0003e3 	mov	w3, w0
-   8493c:	aa1303e1 	mov	x1, x19
-   84940:	528004e2 	mov	w2, #0x27                  	// #39
+   84984:	aa1303e1 	mov	x1, x19
+   84988:	2a1503e3 	mov	w3, w21
+   8498c:	528004e2 	mov	w2, #0x27                  	// #39
 	t = ktimer_start(500, handler, (void *)0xdeadbeef, (void*)0xdeaddeed);
-   84944:	2a0003f5 	mov	w21, w0
+   84990:	b9004fe0 	str	w0, [sp, #76]
 	I("timer start. timer id %u", t);
-   84948:	aa1403e0 	mov	x0, x20
-   8494c:	97fff333 	bl	81618 <tfp_printf>
+   84994:	aa1403e0 	mov	x0, x20
+   84998:	97fff308 	bl	815b8 <tfp_printf>
 	ms_delay(100); 
-   84950:	52800c80 	mov	w0, #0x64                  	// #100
-   84954:	97fff571 	bl	81f18 <ms_delay>
+   8499c:	52800c80 	mov	w0, #0x64                  	// #100
+   849a0:	97fff546 	bl	81eb8 <ms_delay>
 	int c = ktimer_cancel(t); 
-   84958:	2a1503e0 	mov	w0, w21
-   8495c:	97fff5e3 	bl	820e8 <ktimer_cancel>
+   849a4:	2a1503e0 	mov	w0, w21
+   849a8:	97fff5b8 	bl	82088 <ktimer_cancel>
 	I("timer cancel return val = %d", c);
-   84960:	aa1303e1 	mov	x1, x19
+   849ac:	aa1303e1 	mov	x1, x19
 	int c = ktimer_cancel(t); 
-   84964:	2a0003f4 	mov	w20, w0
+   849b0:	2a0003f4 	mov	w20, w0
 	I("timer cancel return val = %d", c);
-   84968:	2a0003e3 	mov	w3, w0
-   8496c:	52800542 	mov	w2, #0x2a                  	// #42
-   84970:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84974:	9119a000 	add	x0, x0, #0x668
-   84978:	97fff328 	bl	81618 <tfp_printf>
+   849b4:	2a0003e3 	mov	w3, w0
+   849b8:	52800542 	mov	w2, #0x2a                  	// #42
+   849bc:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   849c0:	91198000 	add	x0, x0, #0x660
+   849c4:	97fff2fd 	bl	815b8 <tfp_printf>
 	BUG_ON(c < 0);
-   8497c:	37f80174 	tbnz	w20, #31, 849a8 <test_ktimer+0x1e0>
+   849c8:	37f80174 	tbnz	w20, #31, 849f4 <test_ktimer+0x1e4>
 	I("there shouldn't be more callback"); 
-   84980:	911222e1 	add	x1, x23, #0x488
-   84984:	528005a2 	mov	w2, #0x2d                  	// #45
-   84988:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   8498c:	911aa000 	add	x0, x0, #0x6a8
-   84990:	97fff322 	bl	81618 <tfp_printf>
+   849cc:	9110c2e1 	add	x1, x23, #0x430
+   849d0:	528005a2 	mov	w2, #0x2d                  	// #45
+   849d4:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   849d8:	911a8000 	add	x0, x0, #0x6a0
+   849dc:	97fff2f7 	bl	815b8 <tfp_printf>
 }
-   84994:	a94153f3 	ldp	x19, x20, [sp, #16]
-   84998:	a9425bf5 	ldp	x21, x22, [sp, #32]
-   8499c:	f9401bf7 	ldr	x23, [sp, #48]
-   849a0:	a8c57bfd 	ldp	x29, x30, [sp], #80
-   849a4:	d65f03c0 	ret
+   849e0:	a94153f3 	ldp	x19, x20, [sp, #16]
+   849e4:	a9425bf5 	ldp	x21, x22, [sp, #32]
+   849e8:	f9401bf7 	ldr	x23, [sp, #48]
+   849ec:	a8c67bfd 	ldp	x29, x30, [sp], #96
+   849f0:	d65f03c0 	ret
 	BUG_ON(c < 0);
-   849a8:	aa1303e1 	mov	x1, x19
-   849ac:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   849b0:	52800562 	mov	w2, #0x2b                  	// #43
-   849b4:	911a6000 	add	x0, x0, #0x698
-   849b8:	97fff3e8 	bl	81958 <assertion_failed>
-   849bc:	17fffff1 	b	84980 <test_ktimer+0x1b8>
+   849f4:	aa1303e1 	mov	x1, x19
+   849f8:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   849fc:	52800562 	mov	w2, #0x2b                  	// #43
+   84a00:	911a4000 	add	x0, x0, #0x690
+   84a04:	97fff3bd 	bl	818f8 <assertion_failed>
+   84a08:	17fffff1 	b	849cc <test_ktimer+0x1bc>
+   84a0c:	d503201f 	nop
 
-00000000000849c0 <test_fb>:
+0000000000084a10 <test_fb>:
 void test_fb() {
-   849c0:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
-   849c4:	910003fd 	mov	x29, sp
-   849c8:	f9000bf3 	str	x19, [sp, #16]
+   84a10:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   84a14:	910003fd 	mov	x29, sp
+   84a18:	f9000bf3 	str	x19, [sp, #16]
     the_fb.width = N;
-   849cc:	b0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
+   84a1c:	b0000093 	adrp	x19, 95000 <wordsworth.1725+0xee10>
     fb_fini(); 
-   849d0:	97fff6ec 	bl	82580 <fb_fini>
+   84a20:	97fff6c0 	bl	82520 <fb_fini>
     the_fb.width = N;
-   849d4:	f9479260 	ldr	x0, [x19, #3872]
-   849d8:	b21803e2 	mov	x2, #0x10000000100         	// #1099511628032
+   84a24:	f9478660 	ldr	x0, [x19, #3848]
+   84a28:	b21803e2 	mov	x2, #0x10000000100         	// #1099511628032
     the_fb.vwidth = N*2; 
-   849dc:	b21703e1 	mov	x1, #0x20000000200         	// #2199023256064
-   849e0:	a9008402 	stp	x2, x1, [x0, #8]
+   84a2c:	b21703e1 	mov	x1, #0x20000000200         	// #2199023256064
+   84a30:	a9008402 	stp	x2, x1, [x0, #8]
     if (fb_init() != 0) BUG();     
-   849e4:	97fff805 	bl	829f8 <fb_init>
-   849e8:	35000960 	cbnz	w0, 84b14 <test_fb+0x154>
+   84a34:	97fff7d9 	bl	82998 <fb_init>
+   84a38:	35000960 	cbnz	w0, 84b64 <test_fb+0x154>
     int pitch = the_fb.pitch; 
-   849ec:	f9479261 	ldr	x1, [x19, #3872]
+   84a3c:	f9478661 	ldr	x1, [x19, #3848]
             setpixel(the_fb.fb,x,y,pitch,r); 
-   849f0:	52802008 	mov	w8, #0x100                 	// #256
+   84a40:	52802008 	mov	w8, #0x100                 	// #256
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   849f4:	52801fe6 	mov	w6, #0xff                  	// #255
+   84a44:	52801fe6 	mov	w6, #0xff                  	// #255
             setpixel(the_fb.fb,x,y,pitch,r); 
-   849f8:	f9400020 	ldr	x0, [x1]
+   84a48:	f9400020 	ldr	x0, [x1]
     int pitch = the_fb.pitch; 
-   849fc:	b9401823 	ldr	w3, [x1, #24]
+   84a4c:	b9401823 	ldr	w3, [x1, #24]
     for (y=0;y<N;y++)
-   84a00:	91100004 	add	x4, x0, #0x400
+   84a50:	91100004 	add	x4, x0, #0x400
             setpixel(the_fb.fb,x,y,pitch,r); 
-   84a04:	aa0403e5 	mov	x5, x4
-   84a08:	93407c67 	sxtw	x7, w3
+   84a54:	aa0403e5 	mov	x5, x4
+   84a58:	93407c67 	sxtw	x7, w3
         for (x=0;x<N;x++)
-   84a0c:	d11000a2 	sub	x2, x5, #0x400
+   84a5c:	d11000a2 	sub	x2, x5, #0x400
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a10:	b8004446 	str	w6, [x2], #4
+   84a60:	b8004446 	str	w6, [x2], #4
         for (x=0;x<N;x++)
-   84a14:	eb05005f 	cmp	x2, x5
-   84a18:	54ffffc1 	b.ne	84a10 <test_fb+0x50>  // b.any
+   84a64:	eb05005f 	cmp	x2, x5
+   84a68:	54ffffc1 	b.ne	84a60 <test_fb+0x50>  // b.any
     for (y=0;y<N;y++)
-   84a1c:	8b070045 	add	x5, x2, x7
-   84a20:	71000508 	subs	w8, w8, #0x1
-   84a24:	54ffff41 	b.ne	84a0c <test_fb+0x4c>  // b.any
-   84a28:	91200001 	add	x1, x0, #0x800
-   84a2c:	52802008 	mov	w8, #0x100                 	// #256
-   84a30:	aa0103e5 	mov	x5, x1
+   84a6c:	8b070045 	add	x5, x2, x7
+   84a70:	71000508 	subs	w8, w8, #0x1
+   84a74:	54ffff41 	b.ne	84a5c <test_fb+0x4c>  // b.any
+   84a78:	91200001 	add	x1, x0, #0x800
+   84a7c:	52802008 	mov	w8, #0x100                 	// #256
+   84a80:	aa0103e5 	mov	x5, x1
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a34:	32009fe6 	mov	w6, #0xff00ff              	// #16711935
+   84a84:	32009fe6 	mov	w6, #0xff00ff              	// #16711935
         for (x=N;x<2*N;x++)
-   84a38:	d11000a2 	sub	x2, x5, #0x400
-   84a3c:	d503201f 	nop
+   84a88:	d11000a2 	sub	x2, x5, #0x400
+   84a8c:	d503201f 	nop
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a40:	b8004446 	str	w6, [x2], #4
+   84a90:	b8004446 	str	w6, [x2], #4
         for (x=N;x<2*N;x++)
-   84a44:	eb0200bf 	cmp	x5, x2
-   84a48:	54ffffc1 	b.ne	84a40 <test_fb+0x80>  // b.any
+   84a94:	eb0200bf 	cmp	x5, x2
+   84a98:	54ffffc1 	b.ne	84a90 <test_fb+0x80>  // b.any
     for (y=0;y<N;y++)
-   84a4c:	8b0700a5 	add	x5, x5, x7
-   84a50:	71000508 	subs	w8, w8, #0x1
-   84a54:	54ffff21 	b.ne	84a38 <test_fb+0x78>  // b.any
-   84a58:	53185c63 	lsl	w3, w3, #8
-   84a5c:	52802006 	mov	w6, #0x100                 	// #256
+   84a9c:	8b0700a5 	add	x5, x5, x7
+   84aa0:	71000508 	subs	w8, w8, #0x1
+   84aa4:	54ffff21 	b.ne	84a88 <test_fb+0x78>  // b.any
+   84aa8:	53185c63 	lsl	w3, w3, #8
+   84aac:	52802006 	mov	w6, #0x100                 	// #256
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a60:	529fe005 	mov	w5, #0xff00                	// #65280
-   84a64:	93407c63 	sxtw	x3, w3
-   84a68:	8b040064 	add	x4, x3, x4
+   84ab0:	529fe005 	mov	w5, #0xff00                	// #65280
+   84ab4:	93407c63 	sxtw	x3, w3
+   84ab8:	8b040064 	add	x4, x3, x4
         for (x=0;x<N;x++)
-   84a6c:	d1100082 	sub	x2, x4, #0x400
+   84abc:	d1100082 	sub	x2, x4, #0x400
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a70:	b8004445 	str	w5, [x2], #4
+   84ac0:	b8004445 	str	w5, [x2], #4
         for (x=0;x<N;x++)
-   84a74:	eb02009f 	cmp	x4, x2
-   84a78:	54ffffc1 	b.ne	84a70 <test_fb+0xb0>  // b.any
+   84ac4:	eb02009f 	cmp	x4, x2
+   84ac8:	54ffffc1 	b.ne	84ac0 <test_fb+0xb0>  // b.any
     for (y=N;y<2*N;y++)
-   84a7c:	8b070084 	add	x4, x4, x7
-   84a80:	710004c6 	subs	w6, w6, #0x1
-   84a84:	54ffff41 	b.ne	84a6c <test_fb+0xac>  // b.any
-   84a88:	8b010063 	add	x3, x3, x1
-   84a8c:	52802005 	mov	w5, #0x100                 	// #256
+   84acc:	8b070084 	add	x4, x4, x7
+   84ad0:	710004c6 	subs	w6, w6, #0x1
+   84ad4:	54ffff41 	b.ne	84abc <test_fb+0xac>  // b.any
+   84ad8:	8b010063 	add	x3, x3, x1
+   84adc:	52802005 	mov	w5, #0x100                 	// #256
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a90:	52a01fe4 	mov	w4, #0xff0000              	// #16711680
+   84ae0:	52a01fe4 	mov	w4, #0xff0000              	// #16711680
         for (x=N;x<2*N;x++)
-   84a94:	d1100062 	sub	x2, x3, #0x400
+   84ae4:	d1100062 	sub	x2, x3, #0x400
     *(PIXEL *)(buf + y*pit + x*PIXELSIZE) = p; 
-   84a98:	b8004444 	str	w4, [x2], #4
+   84ae8:	b8004444 	str	w4, [x2], #4
         for (x=N;x<2*N;x++)
-   84a9c:	eb02007f 	cmp	x3, x2
-   84aa0:	54ffffc1 	b.ne	84a98 <test_fb+0xd8>  // b.any
+   84aec:	eb02007f 	cmp	x3, x2
+   84af0:	54ffffc1 	b.ne	84ae8 <test_fb+0xd8>  // b.any
     for (y=N;y<2*N;y++)
-   84aa4:	8b070063 	add	x3, x3, x7
-   84aa8:	710004a5 	subs	w5, w5, #0x1
-   84aac:	54ffff41 	b.ne	84a94 <test_fb+0xd4>  // b.any
+   84af4:	8b070063 	add	x3, x3, x7
+   84af8:	710004a5 	subs	w5, w5, #0x1
+   84afc:	54ffff41 	b.ne	84ae4 <test_fb+0xd4>  // b.any
     __asm_flush_dcache_range(the_fb.fb, the_fb.fb + the_fb.size); 
-   84ab0:	f9479273 	ldr	x19, [x19, #3872]
-   84ab4:	b9403661 	ldr	w1, [x19, #52]
-   84ab8:	8b010001 	add	x1, x0, x1
-   84abc:	94000534 	bl	85f8c <__asm_flush_dcache_range>
+   84b00:	f9478673 	ldr	x19, [x19, #3848]
+   84b04:	b9403661 	ldr	w1, [x19, #52]
+   84b08:	8b010001 	add	x1, x0, x1
+   84b0c:	94000520 	bl	85f8c <__asm_flush_dcache_range>
         fb_set_voffsets(0,0);
-   84ac0:	52800001 	mov	w1, #0x0                   	// #0
-   84ac4:	52800000 	mov	w0, #0x0                   	// #0
-   84ac8:	97fff674 	bl	82498 <fb_set_voffsets>
+   84b10:	52800001 	mov	w1, #0x0                   	// #0
+   84b14:	52800000 	mov	w0, #0x0                   	// #0
+   84b18:	97fff648 	bl	82438 <fb_set_voffsets>
         ms_delay(1500); 
-   84acc:	5280bb80 	mov	w0, #0x5dc                 	// #1500
-   84ad0:	97fff512 	bl	81f18 <ms_delay>
+   84b1c:	5280bb80 	mov	w0, #0x5dc                 	// #1500
+   84b20:	97fff4e6 	bl	81eb8 <ms_delay>
         fb_set_voffsets(0,N);
-   84ad4:	52802001 	mov	w1, #0x100                 	// #256
-   84ad8:	52800000 	mov	w0, #0x0                   	// #0
-   84adc:	97fff66f 	bl	82498 <fb_set_voffsets>
+   84b24:	52802001 	mov	w1, #0x100                 	// #256
+   84b28:	52800000 	mov	w0, #0x0                   	// #0
+   84b2c:	97fff643 	bl	82438 <fb_set_voffsets>
         ms_delay(1500); 
-   84ae0:	5280bb80 	mov	w0, #0x5dc                 	// #1500
-   84ae4:	97fff50d 	bl	81f18 <ms_delay>
+   84b30:	5280bb80 	mov	w0, #0x5dc                 	// #1500
+   84b34:	97fff4e1 	bl	81eb8 <ms_delay>
         fb_set_voffsets(N,0);
-   84ae8:	52800001 	mov	w1, #0x0                   	// #0
-   84aec:	52802000 	mov	w0, #0x100                 	// #256
-   84af0:	97fff66a 	bl	82498 <fb_set_voffsets>
+   84b38:	52800001 	mov	w1, #0x0                   	// #0
+   84b3c:	52802000 	mov	w0, #0x100                 	// #256
+   84b40:	97fff63e 	bl	82438 <fb_set_voffsets>
         ms_delay(1500); 
-   84af4:	5280bb80 	mov	w0, #0x5dc                 	// #1500
-   84af8:	97fff508 	bl	81f18 <ms_delay>
+   84b44:	5280bb80 	mov	w0, #0x5dc                 	// #1500
+   84b48:	97fff4dc 	bl	81eb8 <ms_delay>
         fb_set_voffsets(N,N);
-   84afc:	52802001 	mov	w1, #0x100                 	// #256
-   84b00:	2a0103e0 	mov	w0, w1
-   84b04:	97fff665 	bl	82498 <fb_set_voffsets>
+   84b4c:	52802001 	mov	w1, #0x100                 	// #256
+   84b50:	2a0103e0 	mov	w0, w1
+   84b54:	97fff639 	bl	82438 <fb_set_voffsets>
         ms_delay(1500); 
-   84b08:	5280bb80 	mov	w0, #0x5dc                 	// #1500
-   84b0c:	97fff503 	bl	81f18 <ms_delay>
+   84b58:	5280bb80 	mov	w0, #0x5dc                 	// #1500
+   84b5c:	97fff4d7 	bl	81eb8 <ms_delay>
     while (1) {
-   84b10:	17ffffec 	b	84ac0 <test_fb+0x100>
+   84b60:	17ffffec 	b	84b10 <test_fb+0x100>
     if (fb_init() != 0) BUG();     
-   84b14:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84b18:	d0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
-   84b1c:	91122021 	add	x1, x1, #0x488
-   84b20:	910d8000 	add	x0, x0, #0x360
-   84b24:	52800b22 	mov	w2, #0x59                  	// #89
-   84b28:	97fff38c 	bl	81958 <assertion_failed>
-   84b2c:	17ffffb0 	b	849ec <test_fb+0x2c>
+   84b64:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84b68:	d0000000 	adrp	x0, 86000 <__asm_dcache_level+0xc>
+   84b6c:	9110c021 	add	x1, x1, #0x430
+   84b70:	910d8000 	add	x0, x0, #0x360
+   84b74:	52800b22 	mov	w2, #0x59                  	// #89
+   84b78:	97fff360 	bl	818f8 <assertion_failed>
+   84b7c:	17ffffb0 	b	84a3c <test_fb+0x2c>
 
-0000000000084b30 <test_kern_tasks_print>:
+0000000000084b80 <test_kern_tasks_print>:
 void test_kern_tasks_print(void) {
-   84b30:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   84b80:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_print, 
-   84b34:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84b38:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   84b84:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84b88:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
 void test_kern_tasks_print(void) {
-   84b3c:	910003fd 	mov	x29, sp
-   84b40:	a90153f3 	stp	x19, x20, [sp, #16]
+   84b8c:	910003fd 	mov	x29, sp
+   84b90:	a90153f3 	stp	x19, x20, [sp, #16]
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_print, 
-   84b44:	90000013 	adrp	x19, 84000 <exit_process+0x30>
-   84b48:	9112e273 	add	x19, x19, #0x4b8
-   84b4c:	aa1303e1 	mov	x1, x19
-   84b50:	911b8063 	add	x3, x3, #0x6e0
-   84b54:	911ba042 	add	x2, x2, #0x6e8
-   84b58:	d2800040 	mov	x0, #0x2                   	// #2
-   84b5c:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
+   84b94:	90000013 	adrp	x19, 84000 <exit_process+0x58>
+   84b98:	91126273 	add	x19, x19, #0x498
+   84b9c:	aa1303e1 	mov	x1, x19
+   84ba0:	911b6063 	add	x3, x3, #0x6d8
+   84ba4:	911b8042 	add	x2, x2, #0x6e0
+   84ba8:	d2800040 	mov	x0, #0x2                   	// #2
+   84bac:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
 void test_kern_tasks_print(void) {
-   84b60:	f90013f5 	str	x21, [sp, #32]
-   84b64:	90000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
+   84bb0:	f90013f5 	str	x21, [sp, #32]
+   84bb4:	90000095 	adrp	x21, 94000 <wordsworth.1725+0xde10>
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_print, 
-   84b68:	97fffdc8 	bl	84288 <copy_process>
+   84bb8:	97fffdac 	bl	84268 <copy_process>
 	BUG_ON(res<0); 
-   84b6c:	37f80180 	tbnz	w0, #31, 84b9c <test_kern_tasks_print+0x6c>
+   84bbc:	37f80180 	tbnz	w0, #31, 84bec <test_kern_tasks_print+0x6c>
 	res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_print, 
-   84b70:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84b74:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
-   84b78:	aa1303e1 	mov	x1, x19
-   84b7c:	911c2063 	add	x3, x3, #0x708
-   84b80:	911c4042 	add	x2, x2, #0x710
-   84b84:	d2800040 	mov	x0, #0x2                   	// #2
-   84b88:	97fffdc0 	bl	84288 <copy_process>
+   84bc0:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84bc4:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   84bc8:	aa1303e1 	mov	x1, x19
+   84bcc:	911c0063 	add	x3, x3, #0x700
+   84bd0:	911c2042 	add	x2, x2, #0x708
+   84bd4:	d2800040 	mov	x0, #0x2                   	// #2
+   84bd8:	97fffda4 	bl	84268 <copy_process>
 	BUG_ON(res<0);
-   84b8c:	37f80120 	tbnz	w0, #31, 84bb0 <test_kern_tasks_print+0x80>
+   84bdc:	37f80120 	tbnz	w0, #31, 84c00 <test_kern_tasks_print+0x80>
         	yield();
-   84b90:	97fffc1e 	bl	83c08 <yield>
-   84b94:	97fffc1d 	bl	83c08 <yield>
+   84be0:	97fffbf4 	bl	83bb0 <yield>
+   84be4:	97fffbf3 	bl	83bb0 <yield>
 	while (1)
-   84b98:	17fffffe 	b	84b90 <test_kern_tasks_print+0x60>
+   84be8:	17fffffe 	b	84be0 <test_kern_tasks_print+0x60>
 	BUG_ON(res<0); 
-   84b9c:	911222a1 	add	x1, x21, #0x488
-   84ba0:	911be280 	add	x0, x20, #0x6f8
-   84ba4:	528012e2 	mov	w2, #0x97                  	// #151
-   84ba8:	97fff36c 	bl	81958 <assertion_failed>
-   84bac:	17fffff1 	b	84b70 <test_kern_tasks_print+0x40>
+   84bec:	9110c2a1 	add	x1, x21, #0x430
+   84bf0:	911bc280 	add	x0, x20, #0x6f0
+   84bf4:	528012e2 	mov	w2, #0x97                  	// #151
+   84bf8:	97fff340 	bl	818f8 <assertion_failed>
+   84bfc:	17fffff1 	b	84bc0 <test_kern_tasks_print+0x40>
 	BUG_ON(res<0);
-   84bb0:	911222a1 	add	x1, x21, #0x488
-   84bb4:	911be280 	add	x0, x20, #0x6f8
-   84bb8:	52801382 	mov	w2, #0x9c                  	// #156
-   84bbc:	97fff367 	bl	81958 <assertion_failed>
+   84c00:	9110c2a1 	add	x1, x21, #0x430
+   84c04:	911bc280 	add	x0, x20, #0x6f0
+   84c08:	52801382 	mov	w2, #0x9c                  	// #156
+   84c0c:	97fff33b 	bl	818f8 <assertion_failed>
         	yield();
-   84bc0:	97fffc12 	bl	83c08 <yield>
+   84c10:	97fffbe8 	bl	83bb0 <yield>
 	while (1)
-   84bc4:	17fffff4 	b	84b94 <test_kern_tasks_print+0x64>
+   84c14:	17fffff4 	b	84be4 <test_kern_tasks_print+0x64>
 
-0000000000084bc8 <test_kern_task_mgmt>:
+0000000000084c18 <test_kern_task_mgmt>:
 void test_kern_task_mgmt(void) {
-   84bc8:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   84c18:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_return, 
-   84bcc:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84bd0:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   84c1c:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84c20:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
 void test_kern_task_mgmt(void) {
-   84bd4:	910003fd 	mov	x29, sp
+   84c24:	910003fd 	mov	x29, sp
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_return, 
-   84bd8:	90000001 	adrp	x1, 84000 <exit_process+0x30>
-   84bdc:	911b8063 	add	x3, x3, #0x6e0
-   84be0:	911ba042 	add	x2, x2, #0x6e8
-   84be4:	91146021 	add	x1, x1, #0x518
-   84be8:	d2800040 	mov	x0, #0x2                   	// #2
-   84bec:	97fffda7 	bl	84288 <copy_process>
+   84c28:	90000001 	adrp	x1, 84000 <exit_process+0x58>
+   84c2c:	911b6063 	add	x3, x3, #0x6d8
+   84c30:	911b8042 	add	x2, x2, #0x6e0
+   84c34:	9113e021 	add	x1, x1, #0x4f8
+   84c38:	d2800040 	mov	x0, #0x2                   	// #2
+   84c3c:	97fffd8b 	bl	84268 <copy_process>
 	BUG_ON(res<0); 
-   84bf0:	37f80180 	tbnz	w0, #31, 84c20 <test_kern_task_mgmt+0x58>
+   84c40:	37f80180 	tbnz	w0, #31, 84c70 <test_kern_task_mgmt+0x58>
 	res = copy_process(PF_KTHREAD, (unsigned long)&kern_task_exit, 
-   84bf4:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84bf8:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
-   84bfc:	90000001 	adrp	x1, 84000 <exit_process+0x30>
-   84c00:	911c2063 	add	x3, x3, #0x708
-   84c04:	911c4042 	add	x2, x2, #0x710
-   84c08:	9115a021 	add	x1, x1, #0x568
-   84c0c:	d2800040 	mov	x0, #0x2                   	// #2
-   84c10:	97fffd9e 	bl	84288 <copy_process>
+   84c44:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84c48:	90000082 	adrp	x2, 94000 <wordsworth.1725+0xde10>
+   84c4c:	90000001 	adrp	x1, 84000 <exit_process+0x58>
+   84c50:	911c0063 	add	x3, x3, #0x700
+   84c54:	911c2042 	add	x2, x2, #0x708
+   84c58:	91152021 	add	x1, x1, #0x548
+   84c5c:	d2800040 	mov	x0, #0x2                   	// #2
+   84c60:	97fffd82 	bl	84268 <copy_process>
 	BUG_ON(res<0);    
-   84c14:	37f80140 	tbnz	w0, #31, 84c3c <test_kern_task_mgmt+0x74>
+   84c64:	37f80140 	tbnz	w0, #31, 84c8c <test_kern_task_mgmt+0x74>
 }
-   84c18:	a8c17bfd 	ldp	x29, x30, [sp], #16
-   84c1c:	d65f03c0 	ret
+   84c68:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   84c6c:	d65f03c0 	ret
 	BUG_ON(res<0); 
-   84c20:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84c24:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84c28:	91122021 	add	x1, x1, #0x488
-   84c2c:	911be000 	add	x0, x0, #0x6f8
-   84c30:	528017e2 	mov	w2, #0xbf                  	// #191
-   84c34:	97fff349 	bl	81958 <assertion_failed>
-   84c38:	17ffffef 	b	84bf4 <test_kern_task_mgmt+0x2c>
+   84c70:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84c74:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84c78:	9110c021 	add	x1, x1, #0x430
+   84c7c:	911bc000 	add	x0, x0, #0x6f0
+   84c80:	528017e2 	mov	w2, #0xbf                  	// #191
+   84c84:	97fff31d 	bl	818f8 <assertion_failed>
+   84c88:	17ffffef 	b	84c44 <test_kern_task_mgmt+0x2c>
 }
-   84c3c:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   84c8c:	a8c17bfd 	ldp	x29, x30, [sp], #16
 	BUG_ON(res<0);    
-   84c40:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84c44:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84c48:	91122021 	add	x1, x1, #0x488
-   84c4c:	911be000 	add	x0, x0, #0x6f8
-   84c50:	52801882 	mov	w2, #0xc4                  	// #196
-   84c54:	17fff341 	b	81958 <assertion_failed>
+   84c90:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84c94:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84c98:	9110c021 	add	x1, x1, #0x430
+   84c9c:	911bc000 	add	x0, x0, #0x6f0
+   84ca0:	52801882 	mov	w2, #0xc4                  	// #196
+   84ca4:	17fff315 	b	818f8 <assertion_failed>
 
-0000000000084c58 <test_kern_reader_writer>:
+0000000000084ca8 <test_kern_reader_writer>:
 void test_kern_reader_writer() {
-   84c58:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   84ca8:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
 	int res = copy_process(PF_KTHREAD, (unsigned long)&task_writer, 
-   84c5c:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84c60:	90000001 	adrp	x1, 84000 <exit_process+0x30>
+   84cac:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84cb0:	90000001 	adrp	x1, 84000 <exit_process+0x58>
 void test_kern_reader_writer() {
-   84c64:	910003fd 	mov	x29, sp
+   84cb4:	910003fd 	mov	x29, sp
 	int res = copy_process(PF_KTHREAD, (unsigned long)&task_writer, 
-   84c68:	911c6063 	add	x3, x3, #0x718
-   84c6c:	911be021 	add	x1, x1, #0x6f8
-   84c70:	d2800002 	mov	x2, #0x0                   	// #0
-   84c74:	d2800040 	mov	x0, #0x2                   	// #2
-   84c78:	97fffd84 	bl	84288 <copy_process>
+   84cb8:	911c4063 	add	x3, x3, #0x710
+   84cbc:	911c4021 	add	x1, x1, #0x710
+   84cc0:	d2800002 	mov	x2, #0x0                   	// #0
+   84cc4:	d2800040 	mov	x0, #0x2                   	// #2
+   84cc8:	97fffd68 	bl	84268 <copy_process>
 	BUG_ON(res<0); 
-   84c7c:	37f80180 	tbnz	w0, #31, 84cac <test_kern_reader_writer+0x54>
+   84ccc:	37f80160 	tbnz	w0, #31, 84cf8 <test_kern_reader_writer+0x50>
 	res = copy_process(PF_KTHREAD, (unsigned long)&task_reader, 
-   84c80:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84c84:	90000001 	adrp	x1, 84000 <exit_process+0x30>
-   84c88:	911c8063 	add	x3, x3, #0x720
-   84c8c:	91182021 	add	x1, x1, #0x608
-   84c90:	d2800002 	mov	x2, #0x0                   	// #0
-   84c94:	d2800040 	mov	x0, #0x2                   	// #2
-   84c98:	97fffd7c 	bl	84288 <copy_process>
+   84cd0:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84cd4:	90000001 	adrp	x1, 84000 <exit_process+0x58>
+   84cd8:	911c6063 	add	x3, x3, #0x718
+   84cdc:	9117a021 	add	x1, x1, #0x5e8
+   84ce0:	d2800002 	mov	x2, #0x0                   	// #0
+   84ce4:	d2800040 	mov	x0, #0x2                   	// #2
+   84ce8:	97fffd60 	bl	84268 <copy_process>
 	BUG_ON(res<0);    
-   84c9c:	37f80240 	tbnz	w0, #31, 84ce4 <test_kern_reader_writer+0x8c>
-    schedule();
-   84ca0:	97fffb68 	bl	83a40 <schedule>
+   84cec:	37f80220 	tbnz	w0, #31, 84d30 <test_kern_reader_writer+0x88>
 }
-   84ca4:	a8c17bfd 	ldp	x29, x30, [sp], #16
-    schedule();
-   84ca8:	17fffb66 	b	83a40 <schedule>
+   84cf0:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   84cf4:	d65f03c0 	ret
 	BUG_ON(res<0); 
-   84cac:	528025c2 	mov	w2, #0x12e                 	// #302
-   84cb0:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84cb4:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84cb8:	91122021 	add	x1, x1, #0x488
-   84cbc:	911be000 	add	x0, x0, #0x6f8
-   84cc0:	97fff326 	bl	81958 <assertion_failed>
+   84cf8:	528026e2 	mov	w2, #0x137                 	// #311
+   84cfc:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84d00:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84d04:	9110c021 	add	x1, x1, #0x430
+   84d08:	911bc000 	add	x0, x0, #0x6f0
+   84d0c:	97fff2fb 	bl	818f8 <assertion_failed>
 	res = copy_process(PF_KTHREAD, (unsigned long)&task_reader, 
-   84cc4:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
-   84cc8:	90000001 	adrp	x1, 84000 <exit_process+0x30>
-   84ccc:	911c8063 	add	x3, x3, #0x720
-   84cd0:	91182021 	add	x1, x1, #0x608
-   84cd4:	d2800002 	mov	x2, #0x0                   	// #0
-   84cd8:	d2800040 	mov	x0, #0x2                   	// #2
-   84cdc:	97fffd6b 	bl	84288 <copy_process>
+   84d10:	90000083 	adrp	x3, 94000 <wordsworth.1725+0xde10>
+   84d14:	90000001 	adrp	x1, 84000 <exit_process+0x58>
+   84d18:	911c6063 	add	x3, x3, #0x718
+   84d1c:	9117a021 	add	x1, x1, #0x5e8
+   84d20:	d2800002 	mov	x2, #0x0                   	// #0
+   84d24:	d2800040 	mov	x0, #0x2                   	// #2
+   84d28:	97fffd50 	bl	84268 <copy_process>
 	BUG_ON(res<0);    
-   84ce0:	36fffe00 	tbz	w0, #31, 84ca0 <test_kern_reader_writer+0x48>
-   84ce4:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
-   84ce8:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
-   84cec:	91122021 	add	x1, x1, #0x488
-   84cf0:	911be000 	add	x0, x0, #0x6f8
-   84cf4:	52802642 	mov	w2, #0x132                 	// #306
-   84cf8:	97fff318 	bl	81958 <assertion_failed>
-    schedule();
-   84cfc:	97fffb51 	bl	83a40 <schedule>
+   84d2c:	36fffe20 	tbz	w0, #31, 84cf0 <test_kern_reader_writer+0x48>
 }
-   84d00:	a8c17bfd 	ldp	x29, x30, [sp], #16
-    schedule();
-   84d04:	17fffb4f 	b	83a40 <schedule>
+   84d30:	a8c17bfd 	ldp	x29, x30, [sp], #16
+	BUG_ON(res<0);    
+   84d34:	90000081 	adrp	x1, 94000 <wordsworth.1725+0xde10>
+   84d38:	90000080 	adrp	x0, 94000 <wordsworth.1725+0xde10>
+   84d3c:	9110c021 	add	x1, x1, #0x430
+   84d40:	911bc000 	add	x0, x0, #0x6f0
+   84d44:	52802742 	mov	w2, #0x13a                 	// #314
+   84d48:	17fff2ec 	b	818f8 <assertion_failed>
+   84d4c:	d503201f 	nop
 
-0000000000084d08 <test_kern_tasks_donut>:
+0000000000084d50 <test_kern_tasks_donut>:
 
 void test_kern_tasks_donut(void) {
-   84d08:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
-   84d0c:	910003fd 	mov	x29, sp
-   84d10:	a90153f3 	stp	x19, x20, [sp, #16]
-   84d14:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
+   84d50:	a9bb7bfd 	stp	x29, x30, [sp, #-80]!
+   84d54:	910003fd 	mov	x29, sp
+   84d58:	a90153f3 	stp	x19, x20, [sp, #16]
+   84d5c:	90000094 	adrp	x20, 94000 <wordsworth.1725+0xde10>
     char name[10]; 
     int res; 
 
     donut_canvas_init(); 
-   84d18:	d2800013 	mov	x19, #0x0                   	// #0
+   84d60:	d2800013 	mov	x19, #0x0                   	// #0
     
     // spawn N donut tasks 
     for (int i=0; i<N_DONUTS; i++) {
         snprintf(name, 10, "donut-%d", i); 
-   84d1c:	911ca294 	add	x20, x20, #0x728
+   84d64:	911c8294 	add	x20, x20, #0x720
 void test_kern_tasks_donut(void) {
-   84d20:	a9025bf5 	stp	x21, x22, [sp, #32]
-   84d24:	90000015 	adrp	x21, 84000 <exit_process+0x30>
-   84d28:	910103f6 	add	x22, sp, #0x40
-   84d2c:	911702b5 	add	x21, x21, #0x5c0
-   84d30:	a90363f7 	stp	x23, x24, [sp, #48]
-   84d34:	90000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
-   84d38:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
+   84d68:	a9025bf5 	stp	x21, x22, [sp, #32]
+   84d6c:	90000015 	adrp	x21, 84000 <exit_process+0x58>
+   84d70:	910103f6 	add	x22, sp, #0x40
+   84d74:	911682b5 	add	x21, x21, #0x5a0
+   84d78:	a90363f7 	stp	x23, x24, [sp, #48]
+   84d7c:	90000098 	adrp	x24, 94000 <wordsworth.1725+0xde10>
+   84d80:	90000097 	adrp	x23, 94000 <wordsworth.1725+0xde10>
         res = copy_process(PF_KTHREAD,
                            (unsigned long)&kern_task_donut,
                            (unsigned long)i,
                            name);
 
         BUG_ON(res < 0);
-   84d3c:	91122318 	add	x24, x24, #0x488
-   84d40:	911ce2f7 	add	x23, x23, #0x738
+   84d84:	9110c318 	add	x24, x24, #0x430
+   84d88:	911cc2f7 	add	x23, x23, #0x730
     donut_canvas_init(); 
-   84d44:	97fff7e9 	bl	82ce8 <donut_canvas_init>
+   84d8c:	97fff7bf 	bl	82c88 <donut_canvas_init>
     for (int i=0; i<N_DONUTS; i++) {
-   84d48:	14000003 	b	84d54 <test_kern_tasks_donut+0x4c>
-   84d4c:	f100667f 	cmp	x19, #0x19
-   84d50:	54000260 	b.eq	84d9c <test_kern_tasks_donut+0x94>  // b.none
-        snprintf(name, 10, "donut-%d", i); 
-   84d54:	2a1303e3 	mov	w3, w19
-   84d58:	aa1403e2 	mov	x2, x20
-   84d5c:	d2800141 	mov	x1, #0xa                   	// #10
-   84d60:	aa1603e0 	mov	x0, x22
-   84d64:	97fff269 	bl	81708 <tfp_snprintf>
-        res = copy_process(PF_KTHREAD,
-   84d68:	aa1303e2 	mov	x2, x19
-   84d6c:	aa1603e3 	mov	x3, x22
-   84d70:	aa1503e1 	mov	x1, x21
-   84d74:	91000673 	add	x19, x19, #0x1
-   84d78:	d2800040 	mov	x0, #0x2                   	// #2
-   84d7c:	97fffd43 	bl	84288 <copy_process>
-        BUG_ON(res < 0);
-   84d80:	36fffe60 	tbz	w0, #31, 84d4c <test_kern_tasks_donut+0x44>
-   84d84:	aa1803e1 	mov	x1, x24
-   84d88:	aa1703e0 	mov	x0, x23
-   84d8c:	52802b02 	mov	w2, #0x158                 	// #344
-   84d90:	97fff2f2 	bl	81958 <assertion_failed>
-    for (int i=0; i<N_DONUTS; i++) {
+   84d90:	14000003 	b	84d9c <test_kern_tasks_donut+0x4c>
    84d94:	f100667f 	cmp	x19, #0x19
-   84d98:	54fffde1 	b.ne	84d54 <test_kern_tasks_donut+0x4c>  // b.any
+   84d98:	54000260 	b.eq	84de4 <test_kern_tasks_donut+0x94>  // b.none
+        snprintf(name, 10, "donut-%d", i); 
+   84d9c:	2a1303e3 	mov	w3, w19
+   84da0:	aa1403e2 	mov	x2, x20
+   84da4:	d2800141 	mov	x1, #0xa                   	// #10
+   84da8:	aa1603e0 	mov	x0, x22
+   84dac:	97fff23f 	bl	816a8 <tfp_snprintf>
+        res = copy_process(PF_KTHREAD,
+   84db0:	aa1303e2 	mov	x2, x19
+   84db4:	aa1603e3 	mov	x3, x22
+   84db8:	aa1503e1 	mov	x1, x21
+   84dbc:	91000673 	add	x19, x19, #0x1
+   84dc0:	d2800040 	mov	x0, #0x2                   	// #2
+   84dc4:	97fffd29 	bl	84268 <copy_process>
+        BUG_ON(res < 0);
+   84dc8:	36fffe60 	tbz	w0, #31, 84d94 <test_kern_tasks_donut+0x44>
+   84dcc:	aa1803e1 	mov	x1, x24
+   84dd0:	aa1703e0 	mov	x0, x23
+   84dd4:	52802bc2 	mov	w2, #0x15e                 	// #350
+   84dd8:	97fff2c8 	bl	818f8 <assertion_failed>
+    for (int i=0; i<N_DONUTS; i++) {
+   84ddc:	f100667f 	cmp	x19, #0x19
+   84de0:	54fffde1 	b.ne	84d9c <test_kern_tasks_donut+0x4c>  // b.any
 	// current we are on the "init" task. 
 	// if we allow this function to return to kernel_main() which procceeds to wait(), 
 	// and our sleep() (called by wait()) is yet to function, the kernel will crash there. so we just keep
 	// the init task to keep yielding here forever. 	
 	while (1)
         	yield();
-   84d9c:	97fffb9b 	bl	83c08 <yield>
-   84da0:	97fffb9a 	bl	83c08 <yield>
+   84de4:	97fffb73 	bl	83bb0 <yield>
+   84de8:	97fffb72 	bl	83bb0 <yield>
 	while (1)
-   84da4:	17fffffe 	b	84d9c <test_kern_tasks_donut+0x94>
+   84dec:	17fffffe 	b	84de4 <test_kern_tasks_donut+0x94>
 
-0000000000084da8 <uart_send>:
+0000000000084df0 <uart_send>:
 #define AUX_MU_BAUD_REG (PBASE+0x00215068)
 
 // busy wait
 void uart_send (char c) {
 	while(1) {
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84da8:	d28a0a82 	mov	x2, #0x5054                	// #20564
+   84df0:	d28a0a82 	mov	x2, #0x5054                	// #20564
 void uart_send (char c) {
-   84dac:	12001c00 	and	w0, w0, #0xff
+   84df4:	12001c00 	and	w0, w0, #0xff
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84db0:	f2a7e422 	movk	x2, #0x3f21, lsl #16
-   84db4:	d503201f 	nop
-   84db8:	b9400041 	ldr	w1, [x2]
-   84dbc:	362fffe1 	tbz	w1, #5, 84db8 <uart_send+0x10>
+   84df8:	f2a7e422 	movk	x2, #0x3f21, lsl #16
+   84dfc:	d503201f 	nop
+   84e00:	b9400041 	ldr	w1, [x2]
+   84e04:	362fffe1 	tbz	w1, #5, 84e00 <uart_send+0x10>
 			break;
 	}
 	put32(AUX_MU_IO_REG, c);
-   84dc0:	d28a0801 	mov	x1, #0x5040                	// #20544
-   84dc4:	f2a7e421 	movk	x1, #0x3f21, lsl #16
-   84dc8:	b9000020 	str	w0, [x1]
+   84e08:	d28a0801 	mov	x1, #0x5040                	// #20544
+   84e0c:	f2a7e421 	movk	x1, #0x3f21, lsl #16
+   84e10:	b9000020 	str	w0, [x1]
 }
-   84dcc:	d65f03c0 	ret
+   84e14:	d65f03c0 	ret
 
-0000000000084dd0 <uart_recv>:
+0000000000084e18 <uart_recv>:
  
 // busy wait
 char uart_recv (void) {
 	while(1) {
 		if(get32(AUX_MU_LSR_REG) & 0x01) 
-   84dd0:	d28a0a81 	mov	x1, #0x5054                	// #20564
-   84dd4:	f2a7e421 	movk	x1, #0x3f21, lsl #16
-   84dd8:	b9400020 	ldr	w0, [x1]
-   84ddc:	3607ffe0 	tbz	w0, #0, 84dd8 <uart_recv+0x8>
+   84e18:	d28a0a81 	mov	x1, #0x5054                	// #20564
+   84e1c:	f2a7e421 	movk	x1, #0x3f21, lsl #16
+   84e20:	b9400020 	ldr	w0, [x1]
+   84e24:	3607ffe0 	tbz	w0, #0, 84e20 <uart_recv+0x8>
 			break;
 	}
 	return(get32(AUX_MU_IO_REG) & 0xFF);
-   84de0:	d28a0800 	mov	x0, #0x5040                	// #20544
-   84de4:	f2a7e420 	movk	x0, #0x3f21, lsl #16
-   84de8:	b9400000 	ldr	w0, [x0]
+   84e28:	d28a0800 	mov	x0, #0x5040                	// #20544
+   84e2c:	f2a7e420 	movk	x0, #0x3f21, lsl #16
+   84e30:	b9400000 	ldr	w0, [x0]
 }
-   84dec:	d65f03c0 	ret
+   84e34:	d65f03c0 	ret
 
-0000000000084df0 <uart_send_string>:
+0000000000084e38 <uart_send_string>:
 
 void uart_send_string(char* str) {
 	for (int i = 0; str[i] != '\0'; i ++) {
-   84df0:	39400002 	ldrb	w2, [x0]
-   84df4:	34000182 	cbz	w2, 84e24 <uart_send_string+0x34>
+   84e38:	39400002 	ldrb	w2, [x0]
+   84e3c:	34000182 	cbz	w2, 84e6c <uart_send_string+0x34>
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84df8:	d28a0a81 	mov	x1, #0x5054                	// #20564
+   84e40:	d28a0a81 	mov	x1, #0x5054                	// #20564
 	put32(AUX_MU_IO_REG, c);
-   84dfc:	d28a0804 	mov	x4, #0x5040                	// #20544
-   84e00:	91000403 	add	x3, x0, #0x1
+   84e44:	d28a0804 	mov	x4, #0x5040                	// #20544
+   84e48:	91000403 	add	x3, x0, #0x1
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84e04:	f2a7e421 	movk	x1, #0x3f21, lsl #16
+   84e4c:	f2a7e421 	movk	x1, #0x3f21, lsl #16
 	put32(AUX_MU_IO_REG, c);
-   84e08:	f2a7e424 	movk	x4, #0x3f21, lsl #16
-   84e0c:	d503201f 	nop
+   84e50:	f2a7e424 	movk	x4, #0x3f21, lsl #16
+   84e54:	d503201f 	nop
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84e10:	b9400020 	ldr	w0, [x1]
-   84e14:	362fffe0 	tbz	w0, #5, 84e10 <uart_send_string+0x20>
+   84e58:	b9400020 	ldr	w0, [x1]
+   84e5c:	362fffe0 	tbz	w0, #5, 84e58 <uart_send_string+0x20>
 	put32(AUX_MU_IO_REG, c);
-   84e18:	b9000082 	str	w2, [x4]
+   84e60:	b9000082 	str	w2, [x4]
 	for (int i = 0; str[i] != '\0'; i ++) {
-   84e1c:	38401462 	ldrb	w2, [x3], #1
-   84e20:	35ffff82 	cbnz	w2, 84e10 <uart_send_string+0x20>
+   84e64:	38401462 	ldrb	w2, [x3], #1
+   84e68:	35ffff82 	cbnz	w2, 84e58 <uart_send_string+0x20>
 		uart_send((char)str[i]);
 	}
 }
-   84e24:	d65f03c0 	ret
+   84e6c:	d65f03c0 	ret
 
-0000000000084e28 <putc>:
+0000000000084e70 <putc>:
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84e28:	d28a0a82 	mov	x2, #0x5054                	// #20564
+   84e70:	d28a0a82 	mov	x2, #0x5054                	// #20564
 
 // This function is required by printf function
 void putc ( void* p, char c) {
-   84e2c:	12001c21 	and	w1, w1, #0xff
+   84e74:	12001c21 	and	w1, w1, #0xff
 		if(get32(AUX_MU_LSR_REG) & 0x20) 
-   84e30:	f2a7e422 	movk	x2, #0x3f21, lsl #16
-   84e34:	d503201f 	nop
-   84e38:	b9400040 	ldr	w0, [x2]
-   84e3c:	362fffe0 	tbz	w0, #5, 84e38 <putc+0x10>
+   84e78:	f2a7e422 	movk	x2, #0x3f21, lsl #16
+   84e7c:	d503201f 	nop
+   84e80:	b9400040 	ldr	w0, [x2]
+   84e84:	362fffe0 	tbz	w0, #5, 84e80 <putc+0x10>
 	put32(AUX_MU_IO_REG, c);
-   84e40:	d28a0800 	mov	x0, #0x5040                	// #20544
-   84e44:	f2a7e420 	movk	x0, #0x3f21, lsl #16
-   84e48:	b9000001 	str	w1, [x0]
+   84e88:	d28a0800 	mov	x0, #0x5040                	// #20544
+   84e8c:	f2a7e420 	movk	x0, #0x3f21, lsl #16
+   84e90:	b9000001 	str	w1, [x0]
 	uart_send(c);
 }
-   84e4c:	d65f03c0 	ret
+   84e94:	d65f03c0 	ret
 
-0000000000084e50 <uart_init>:
+0000000000084e98 <uart_init>:
 
     // code below also showcases how to configure GPIO pins
     // cf: https://github.com/bztsrc/raspi3-tutorial/blob/master/03_uart1/uart.c#L45
 
     // select gpio functions for pin14,15. note 3bits per pin.
     selector = get32(GPFSEL1);
-   84e50:	d2800082 	mov	x2, #0x4                   	// #4
+   84e98:	d2800082 	mov	x2, #0x4                   	// #4
 void uart_init(void) {
-   84e54:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
+   84e9c:	a9be7bfd 	stp	x29, x30, [sp, #-32]!
     selector = get32(GPFSEL1);
-   84e58:	f2a7e402 	movk	x2, #0x3f20, lsl #16
+   84ea0:	f2a7e402 	movk	x2, #0x3f20, lsl #16
 void uart_init(void) {
-   84e5c:	910003fd 	mov	x29, sp
+   84ea4:	910003fd 	mov	x29, sp
     selector = get32(GPFSEL1);
-   84e60:	b9400041 	ldr	w1, [x2]
+   84ea8:	b9400041 	ldr	w1, [x2]
 
     // Below: set up GPIO pull modes. protocol recommended by the bcm2837 manual
     //    (pg 101, "GPIO Pull-up/down Clock Registers")
     // We need neither the pull-up nor the pull-down state, because both
     //  the 14 and 15 pins are going to be connected all the time.
     put32(GPPUD, 0); // disable pull up/down control (for pins below)
-   84e64:	d2801283 	mov	x3, #0x94                  	// #148
-   84e68:	f2a7e403 	movk	x3, #0x3f20, lsl #16
+   84eac:	d2801283 	mov	x3, #0x94                  	// #148
+   84eb0:	f2a7e403 	movk	x3, #0x3f20, lsl #16
     selector |= 2 << 15;    // set alt5 for gpio15
-   84e6c:	52840004 	mov	w4, #0x2000                	// #8192
-   84e70:	120e6421 	and	w1, w1, #0xfffc0fff
+   84eb4:	52840004 	mov	w4, #0x2000                	// #8192
+   84eb8:	120e6421 	and	w1, w1, #0xfffc0fff
 void uart_init(void) {
-   84e74:	f9000bf3 	str	x19, [sp, #16]
+   84ebc:	f9000bf3 	str	x19, [sp, #16]
     selector |= 2 << 15;    // set alt5 for gpio15
-   84e78:	72a00024 	movk	w4, #0x1, lsl #16
-   84e7c:	2a040021 	orr	w1, w1, w4
+   84ec0:	72a00024 	movk	w4, #0x1, lsl #16
+   84ec4:	2a040021 	orr	w1, w1, w4
     put32(GPFSEL1, selector);
-   84e80:	b9000041 	str	w1, [x2]
+   84ec8:	b9000041 	str	w1, [x2]
     delay(150);
     // "control the actuation of internal pull-downs on the respective GPIO pins."
     put32(GPPUDCLK0, (1 << 14) | (1 << 15)); // "clock the control signal into the GPIO pads"
-   84e84:	d2801313 	mov	x19, #0x98                  	// #152
+   84ecc:	d2801313 	mov	x19, #0x98                  	// #152
     put32(GPPUD, 0); // disable pull up/down control (for pins below)
-   84e88:	b900007f 	str	wzr, [x3]
+   84ed0:	b900007f 	str	wzr, [x3]
     put32(GPPUDCLK0, (1 << 14) | (1 << 15)); // "clock the control signal into the GPIO pads"
-   84e8c:	f2a7e413 	movk	x19, #0x3f20, lsl #16
+   84ed4:	f2a7e413 	movk	x19, #0x3f20, lsl #16
     delay(150);
-   84e90:	d28012c0 	mov	x0, #0x96                  	// #150
-   84e94:	9400043b 	bl	85f80 <delay>
+   84ed8:	d28012c0 	mov	x0, #0x96                  	// #150
+   84edc:	94000429 	bl	85f80 <delay>
     put32(GPPUDCLK0, (1 << 14) | (1 << 15)); // "clock the control signal into the GPIO pads"
-   84e98:	52980000 	mov	w0, #0xc000                	// #49152
-   84e9c:	b9000260 	str	w0, [x19]
+   84ee0:	52980000 	mov	w0, #0xc000                	// #49152
+   84ee4:	b9000260 	str	w0, [x19]
     delay(150);
-   84ea0:	d28012c0 	mov	x0, #0x96                  	// #150
-   84ea4:	94000437 	bl	85f80 <delay>
+   84ee8:	d28012c0 	mov	x0, #0x96                  	// #150
+   84eec:	94000425 	bl	85f80 <delay>
     put32(GPPUDCLK0, 0);               // remote the clock, flush GPIO setup
-   84ea8:	b900027f 	str	wzr, [x19]
+   84ef0:	b900027f 	str	wzr, [x19]
     put32(AUX_MU_IIR_REG, FLUSH_UART); // flush FIFO
-   84eac:	d28a0901 	mov	x1, #0x5048                	// #20552
+   84ef4:	d28a0901 	mov	x1, #0x5048                	// #20552
 
     put32(AUX_ENABLES, 1);     // Enable mini uart (this also enables access to it registers)
-   84eb0:	d28a0082 	mov	x2, #0x5004                	// #20484
+   84ef8:	d28a0082 	mov	x2, #0x5004                	// #20484
     put32(AUX_MU_IIR_REG, FLUSH_UART); // flush FIFO
-   84eb4:	f2a7e421 	movk	x1, #0x3f21, lsl #16
+   84efc:	f2a7e421 	movk	x1, #0x3f21, lsl #16
     put32(AUX_ENABLES, 1);     // Enable mini uart (this also enables access to it registers)
-   84eb8:	f2a7e422 	movk	x2, #0x3f21, lsl #16
+   84f00:	f2a7e422 	movk	x2, #0x3f21, lsl #16
     put32(AUX_MU_CNTL_REG, 0); // Disable auto flow control and disable receiver and transmitter (for now)
-   84ebc:	d28a0c00 	mov	x0, #0x5060                	// #20576
+   84f04:	d28a0c00 	mov	x0, #0x5060                	// #20576
     put32(AUX_MU_IIR_REG, FLUSH_UART); // flush FIFO
-   84ec0:	528018c3 	mov	w3, #0xc6                  	// #198
+   84f08:	528018c3 	mov	w3, #0xc6                  	// #198
     put32(AUX_MU_CNTL_REG, 0); // Disable auto flow control and disable receiver and transmitter (for now)
-   84ec4:	f2a7e420 	movk	x0, #0x3f21, lsl #16
+   84f0c:	f2a7e420 	movk	x0, #0x3f21, lsl #16
 
     put32(AUX_MU_IER_REG, 0);                     // Disable receive and transmit interrupts
     put32(AUX_MU_IER_REG, (3 << 2) | (0xf << 4)); // bit 7:4 3:2 must be 1
 
     put32(AUX_MU_LCR_REG, 3);    // Enable 8 bit mode
     put32(AUX_MU_MCR_REG, 0);    // Set RTS line to be always high
-   84ec8:	d28a0a04 	mov	x4, #0x5050                	// #20560
+   84f10:	d28a0a04 	mov	x4, #0x5050                	// #20560
     put32(AUX_MU_BAUD_REG, 270); // Set baud rate to 115200
 
     put32(AUX_MU_CNTL_REG, 3); // Finally, enable transmitter and receiver
 }
-   84ecc:	f9400bf3 	ldr	x19, [sp, #16]
+   84f14:	f9400bf3 	ldr	x19, [sp, #16]
     put32(AUX_MU_IIR_REG, FLUSH_UART); // flush FIFO
-   84ed0:	b9000023 	str	w3, [x1]
+   84f18:	b9000023 	str	w3, [x1]
     put32(AUX_MU_IER_REG, 0);                     // Disable receive and transmit interrupts
-   84ed4:	d28a0881 	mov	x1, #0x5044                	// #20548
+   84f1c:	d28a0881 	mov	x1, #0x5044                	// #20548
     put32(AUX_ENABLES, 1);     // Enable mini uart (this also enables access to it registers)
-   84ed8:	52800023 	mov	w3, #0x1                   	// #1
+   84f20:	52800023 	mov	w3, #0x1                   	// #1
     put32(AUX_MU_IER_REG, 0);                     // Disable receive and transmit interrupts
-   84edc:	f2a7e421 	movk	x1, #0x3f21, lsl #16
+   84f24:	f2a7e421 	movk	x1, #0x3f21, lsl #16
     put32(AUX_ENABLES, 1);     // Enable mini uart (this also enables access to it registers)
-   84ee0:	b9000043 	str	w3, [x2]
+   84f28:	b9000043 	str	w3, [x2]
     put32(AUX_MU_LCR_REG, 3);    // Enable 8 bit mode
-   84ee4:	d28a0983 	mov	x3, #0x504c                	// #20556
+   84f2c:	d28a0983 	mov	x3, #0x504c                	// #20556
     put32(AUX_MU_CNTL_REG, 0); // Disable auto flow control and disable receiver and transmitter (for now)
-   84ee8:	b900001f 	str	wzr, [x0]
+   84f30:	b900001f 	str	wzr, [x0]
     put32(AUX_MU_LCR_REG, 3);    // Enable 8 bit mode
-   84eec:	f2a7e423 	movk	x3, #0x3f21, lsl #16
+   84f34:	f2a7e423 	movk	x3, #0x3f21, lsl #16
     put32(AUX_MU_IER_REG, (3 << 2) | (0xf << 4)); // bit 7:4 3:2 must be 1
-   84ef0:	52801f82 	mov	w2, #0xfc                  	// #252
+   84f38:	52801f82 	mov	w2, #0xfc                  	// #252
     put32(AUX_MU_IER_REG, 0);                     // Disable receive and transmit interrupts
-   84ef4:	b900003f 	str	wzr, [x1]
+   84f3c:	b900003f 	str	wzr, [x1]
     put32(AUX_MU_MCR_REG, 0);    // Set RTS line to be always high
-   84ef8:	f2a7e424 	movk	x4, #0x3f21, lsl #16
+   84f40:	f2a7e424 	movk	x4, #0x3f21, lsl #16
     put32(AUX_MU_IER_REG, (3 << 2) | (0xf << 4)); // bit 7:4 3:2 must be 1
-   84efc:	b9000022 	str	w2, [x1]
+   84f44:	b9000022 	str	w2, [x1]
     put32(AUX_MU_BAUD_REG, 270); // Set baud rate to 115200
-   84f00:	d28a0d02 	mov	x2, #0x5068                	// #20584
+   84f48:	d28a0d02 	mov	x2, #0x5068                	// #20584
     put32(AUX_MU_LCR_REG, 3);    // Enable 8 bit mode
-   84f04:	52800061 	mov	w1, #0x3                   	// #3
+   84f4c:	52800061 	mov	w1, #0x3                   	// #3
     put32(AUX_MU_BAUD_REG, 270); // Set baud rate to 115200
-   84f08:	f2a7e422 	movk	x2, #0x3f21, lsl #16
+   84f50:	f2a7e422 	movk	x2, #0x3f21, lsl #16
     put32(AUX_MU_LCR_REG, 3);    // Enable 8 bit mode
-   84f0c:	b9000061 	str	w1, [x3]
+   84f54:	b9000061 	str	w1, [x3]
     put32(AUX_MU_BAUD_REG, 270); // Set baud rate to 115200
-   84f10:	528021c3 	mov	w3, #0x10e                 	// #270
+   84f58:	528021c3 	mov	w3, #0x10e                 	// #270
     put32(AUX_MU_MCR_REG, 0);    // Set RTS line to be always high
-   84f14:	b900009f 	str	wzr, [x4]
+   84f5c:	b900009f 	str	wzr, [x4]
     put32(AUX_MU_BAUD_REG, 270); // Set baud rate to 115200
-   84f18:	b9000043 	str	w3, [x2]
+   84f60:	b9000043 	str	w3, [x2]
     put32(AUX_MU_CNTL_REG, 3); // Finally, enable transmitter and receiver
-   84f1c:	b9000001 	str	w1, [x0]
+   84f64:	b9000001 	str	w1, [x0]
 }
-   84f20:	a8c27bfd 	ldp	x29, x30, [sp], #32
-   84f24:	d65f03c0 	ret
+   84f68:	a8c27bfd 	ldp	x29, x30, [sp], #32
+   84f6c:	d65f03c0 	ret
 	...
 
 0000000000085000 <vectors>:
@@ -8905,7 +8911,7 @@ error_invalid_el0_32:
 // NB: despite the name "fork", we are not doing fork() as in Linux/Unix
 ret_from_fork:
 	bl	leave_scheduler
-   85e80:	97fff6c0 	bl	83980 <leave_scheduler>
+   85e80:	97fff6a8 	bl	83920 <leave_scheduler>
 	/* 	Explanation: copy_process() saves `fn` (the process's main function) and
 	`arg` (the argument passed to the process) to`task_struct.x19` and `x20`.
 	When switching to a new task, the kernel restores `fn` and `arg` from

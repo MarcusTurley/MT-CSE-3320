@@ -209,23 +209,27 @@ static int nwrite=0, nread=0;
 
 // write n chars from "str" to pipebuf. block if buf is full
 static void do_write(const char *str, int n) {
-    int i = 0; 
+    int i=0; 
     acquire(&testlock); 
-    while (i < n) {
-        // If buffer is full, wait for reader to consume data
-        while (nwrite == nread + NSIZE) { 
-            sleep(&nread, &testlock); // Sleep on the 'read' event (waiting for space)
+    while (i<n) {
+        while (nwrite == nread + NSIZE) { // pipe write full
+            /* STUDENT: TODO: your code here */
+            printf("writer sleeping\n");
+            sleep(&testlock, &testlock);
         }
-        
-        // Write one character into the circular buffer
+        /* STUDENT: TODO: your code here */
+        printf("Writing\n");
         pipebuf[nwrite % NSIZE] = str[i];
         nwrite++;
         i++;
+
+        wakeup(&testlock);
         
-        // Wake up any sleeping readers because there is now data
-        wakeup(&nwrite); 
     }
-    release(&testlock);
+    // done writing n bytes, buf not full, wakeup reader anyway
+    /* STUDENT: TODO: your code here */
+    wakeup(&testlock);
+    release(&testlock); 
 }
 
 // read chars from pipebuf to "str". block if buf is empty at the beginning
@@ -233,30 +237,33 @@ static void do_write(const char *str, int n) {
 // n: read at most n chars. 
 // return: # of chars actually read
 static int do_read(char *str, int n) {
-    int i = 0; 
+    int i; 
 
     acquire(&testlock); 
-    // If pipe is empty at the start, block until data arrives
-    while (nread == nwrite) {   
-        sleep(&nwrite, &testlock); // Sleep on the 'write' event (waiting for data)
+    while (nread == nwrite) {   // pipe empty
+        /* STUDENT: TODO: your code here */
+        printf("Reader sleeping\n");
+        sleep(&testlock, &testlock);
     }
-
-    for (i = 0; i < n; i++) {
-        // Stop if we've emptied the buffer before reaching 'n'
-        if (nread == nwrite) {
-            break; 
+    for (i=0; i<n; i++) {
+        // pipe empty
+            /* STUDENT: TODO: your code here */
+        if (nread == nwrite){
+            break;
+        }             
+        else{
+                // read out
+        /* STUDENT: TODO: your code here */
+            str[i] = pipebuf[nread % NSIZE];
+            nread++;
         }
-
-        // Read character using modulo for circular wrapping
-        str[i] = pipebuf[nread % NSIZE];
-        nread++;
-
-        // Wake up any sleeping writers because there is now free space
-        wakeup(&nread);
+            
+        
     }
-
+    /* STUDENT: TODO: your code here */
+    wakeup(&testlock);
     release(&testlock); 
-    return i;
+    return i; 
 }
 
 static void task_writer() {
@@ -282,6 +289,7 @@ static void task_writer() {
     while (1) {
         do_write(wordsworth, strlen(wordsworth)); // NB: strlen does NOT count '\0'
         ms_delay(100); // spin waiting (silly). for testing only
+        
     }
 }
 
@@ -289,6 +297,7 @@ static void task_reader() {
 #define MYBUFLEN 17 // can be small 
     char mybuf[MYBUFLEN];
     int n; 
+    printf("in reader\n");
     while (1) {
         n = do_read(mybuf, MYBUFLEN-1); // need one char for '\0'
         mybuf[n] = '\0';
@@ -300,12 +309,9 @@ void test_kern_reader_writer() {
 	int res = copy_process(PF_KTHREAD, (unsigned long)&task_writer, 
 		0 /*arg*/, "writer");         
 	BUG_ON(res<0); 
-
 	res = copy_process(PF_KTHREAD, (unsigned long)&task_reader, 
 		0 /*arg*/, "reader"); 
 	BUG_ON(res<0);    
-    schedule();
-    schedule();
 }
 
 ////////////////////////////////////////////////

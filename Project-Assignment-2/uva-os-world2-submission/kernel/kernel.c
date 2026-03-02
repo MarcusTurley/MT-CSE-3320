@@ -60,13 +60,19 @@ void init(int arg/*ignored*/) {
 	int wpid; 
     W("entering init");
 
+	printf("Init is running\n");
+
 	// Q2: quest: "two cooperative printers"
 	/* STUDENT: TODO: your code here */
-	// test_kern_tasks_donut();
+	//test_kern_tasks_donut();
 	// Q4: quest: "two donuts"
 	/* STUDENT: TODO: your code here */
 	// test_kern_task_mgmt();
 	test_kern_reader_writer(); 
+	while (1) {
+    yield();
+}
+	printf("Created reader/writer task\n");
 
 	while (1) {
 		wpid = wait(0 /* does not care about status */); 
