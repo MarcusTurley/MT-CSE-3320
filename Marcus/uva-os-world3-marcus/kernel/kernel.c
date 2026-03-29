@@ -33,24 +33,25 @@ int move_to_user_mode_donut(unsigned long start, unsigned long size,
 void kernel_process() {
 	unsigned long begin = (unsigned long)&user_begin;  	// defined in linker script
 	unsigned long end = (unsigned long)&user_end;
-	int err = 0; 
+	unsigned long size = end - begin;
 	
 	printf("Kernel process started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
 	/* below: call "move_to_user_mode" to switch to user mode (with user code
 		start & size). this function maps two pages for user code only...only
 		good for simple tasks */
 	/* TODO: your code here */
-		unsigned long size = end - begin;
-		err = move_to_user_mode(begin, size, 0);
+	unsigned long user_pc = (unsigned long)user_process_hello - begin;
+
+  printf("Kernel process started at EL %d, pid %d\n", get_el(), myproc()->pid);
 
 	/* alternatively, call "move_to_user_mode_donut". maps usr pages on demand. 
 		can launch: donut (kuser), nes0 (binary elf embedded). */
 
 	/* TODO: your code here */
-	
-	if (err < 0){
-		printf("Error while moving process to user mode\n\r");
-	} else I("move_to_user_mode ok");
+	if (move_to_user_mode(begin, size, user_pc) < 0) {
+      panic("move_to_user_mode failed");
+  }
+	I("move_to_user_mode ok");
 	/* this func is called from ret_from_fork (entry.S). after returning from
 	this func, it goes back to ret_from_fork and performs kernel_exit there.
 	hence, trapframe populated by move_to_user_mode() will take effect.  */

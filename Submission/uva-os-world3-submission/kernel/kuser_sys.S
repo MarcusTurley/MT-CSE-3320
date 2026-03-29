@@ -13,12 +13,16 @@
 .globl call_sys_fork
     call_sys_fork:
     /* TODO: your code here */
+    mov x8, #SYS_fork
+    svc #0
     ret          
           
 
 .globl call_sys_exit
     call_sys_exit:
     /* TODO: your code here */
+    mov x8, #SYS_exit
+    svc #0
     ret          
 
 .globl call_sys_wait
@@ -42,9 +46,11 @@
     ret          
           
 .globl call_sys_write
-    call_sys_write:
     /* TODO: your code here */
-    ret          
+    call_sys_write:
+    mov x8, #SYS_write
+    svc #0
+    ret
           
 
 .globl call_sys_close
