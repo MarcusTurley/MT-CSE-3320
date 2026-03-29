@@ -38,9 +38,10 @@ void kernel_process() {
 	printf("Kernel process started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
 	/* below: call "move_to_user_mode" to switch to user mode (with user code
 		start & size). this function maps two pages for user code only...only
-		good for simple tasks */ 
-
+		good for simple tasks */
 	/* TODO: your code here */
+		unsigned long size = end - begin;
+		err = move_to_user_mode(begin, size, 0);
 
 	/* alternatively, call "move_to_user_mode_donut". maps usr pages on demand. 
 		can launch: donut (kuser), nes0 (binary elf embedded). */
