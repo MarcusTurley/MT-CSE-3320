@@ -35,12 +35,12 @@ void kernel_process() {
 	unsigned long end = (unsigned long)&user_end;
 	unsigned long size = end - begin;
 	
-	printf("Kernel process started at EL %d, pid %d\r\n", get_el(), myproc()->pid);
 	/* below: call "move_to_user_mode" to switch to user mode (with user code
 		start & size). this function maps two pages for user code only...only
 		good for simple tasks */
 	/* TODO: your code here */
-	unsigned long user_pc = (unsigned long)user_process_hello - begin;
+	unsigned long user_hello_pc = (unsigned long)user_process_hello - begin;
+	unsigned long user_printers_pc = (unsigned long)user_process_printers - begin;
 
   printf("Kernel process started at EL %d, pid %d\n", get_el(), myproc()->pid);
 
@@ -48,9 +48,12 @@ void kernel_process() {
 		can launch: donut (kuser), nes0 (binary elf embedded). */
 
 	/* TODO: your code here */
-	if (move_to_user_mode(begin, size, user_pc) < 0) {
+	// if (move_to_user_mode(begin, size, user_hello_pc) < 0)
+  //     panic("move_to_user_mode failed");
+
+	if (move_to_user_mode(begin, size, user_printers_pc) < 0)
       panic("move_to_user_mode failed");
-  }
+
 	I("move_to_user_mode ok");
 	/* this func is called from ret_from_fork (entry.S). after returning from
 	this func, it goes back to ret_from_fork and performs kernel_exit there.

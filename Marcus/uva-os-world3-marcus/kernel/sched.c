@@ -703,24 +703,25 @@ int move_to_user_mode(unsigned long start, unsigned long size, unsigned long pc)
     */
 	regs->pstate = PSR_MODE_EL0t;
 	regs->pc = pc; /* TODO: replace this */
-	regs->sp = PAGE_SIZE * 1; /* TODO: replace this */
+	regs->sp = PAGE_SIZE * 2; /* TODO: replace this */
     
     /* Map 2 code pages (instead of 1), so that we can experiment with 
        larger kuser code (e.g., donut) as well as small ones (printers).
        Note: The two kernel VAs (code_page) may not be contiguous. 
        Hence, two separate memmove() calls. */
-    void *code_page_1 = allocate_user_page_mm(cur->mm, 0 /*va*/, 
+    void *code_page = allocate_user_page_mm(cur->mm, 0 /*va*/, 
         MMU_PTE_FLAGS | MM_AP_RW);
-	if (code_page_1 == 0)	{ release(&cur->mm->lock); return -1;}
-    memmove(code_page_1, (void *)start, PAGE_SIZE); // memory copy
+	if (code_page == 0)	{ release(&cur->mm->lock); return -1;}
+    memmove(code_page, (void *)start, PAGE_SIZE); // memory copy
 
-    void *code_page_2 = allocate_user_page_mm(cur->mm, PAGE_SIZE /*va*/, 
+    void *stack_page = allocate_user_page_mm(cur->mm, PAGE_SIZE /*va*/, 
         MMU_PTE_FLAGS | MM_AP_RW);
-    if ((code_page_2) == 0) {
+    if ((stack_page) == 0) {
         release(&cur->mm->lock);
         return -1;
     }
-    memmove(code_page_2, (void *)(start + PAGE_SIZE), PAGE_SIZE);
+    memmove(stack_page, (void *)(start + PAGE_SIZE), size - PAGE_SIZE);
+    
 
     /* XXX (Feb 2025): memmove the actual "size" instead of two pages */
 
@@ -742,7 +743,6 @@ int move_to_user_mode(unsigned long start, unsigned long size, unsigned long pc)
     /* 	Note that the actual switch will not happen until kernel_exit. */
 	return 0;
 }
-
 /* The modified move_to_user_mode() for launching "kuser donut".
     - Map n pages (as needed by app's "size": user_donut.c ~5000 bytes, more
       than 1 page);
@@ -860,8 +860,10 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
         struct trapframe *cur_regs = task_pt_regs(cur);
         // copy over the parent's entire trapframe to the child
         /* TODO: your code here */
+        *childregs = *cur_regs;
         // set fork()'s return value for the child 
         /* TODO: your code here */
+        childregs->regs[0] = 0;
         if (clone_flags & PF_UTHREAD) {	// fork a "thread", i.e. child to share the parent's existing mm
             p->mm = cur->mm; BUG_ON(!p->mm);
             __atomic_add_fetch(&p->mm->ref, 1, __ATOMIC_SEQ_CST);
