@@ -138,12 +138,12 @@
 
 .globl call_sys_sbrk
     call_sys_sbrk:
-    /* TODO: your code here */
+    svc #0 /* TODO: your code here */
     ret          
           
 .globl call_sys_sleep
     call_sys_sleep:
-    /* TODO: your code here */
+    svc #0 /* TODO: your code here */
     ret          
           
 

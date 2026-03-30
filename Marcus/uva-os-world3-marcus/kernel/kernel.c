@@ -41,6 +41,7 @@ void kernel_process() {
 	/* TODO: your code here */
 	unsigned long user_hello_pc = (unsigned long)user_process_hello - begin;
 	unsigned long user_printers_pc = (unsigned long)user_process_printers - begin;
+	unsigned long user_donut_pc = (unsigned long)user_donut - begin;
 
   printf("Kernel process started at EL %d, pid %d\n", get_el(), myproc()->pid);
 
@@ -53,6 +54,9 @@ void kernel_process() {
 
 	if (move_to_user_mode(begin, size, user_printers_pc) < 0)
       panic("move_to_user_mode failed");
+
+	// if (move_to_user_mode_donut(begin, size, user_donut_pc) < 0)
+  //     panic("move_to_user_mode failed");
 
 	I("move_to_user_mode ok");
 	/* this func is called from ret_from_fork (entry.S). after returning from

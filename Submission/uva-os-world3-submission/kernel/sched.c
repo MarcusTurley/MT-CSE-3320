@@ -703,24 +703,25 @@ int move_to_user_mode(unsigned long start, unsigned long size, unsigned long pc)
     */
 	regs->pstate = PSR_MODE_EL0t;
 	regs->pc = pc; /* TODO: replace this */
-	regs->sp = PAGE_SIZE * 1; /* TODO: replace this */
+	regs->sp = PAGE_SIZE * 2; /* TODO: replace this */
     
     /* Map 2 code pages (instead of 1), so that we can experiment with 
        larger kuser code (e.g., donut) as well as small ones (printers).
        Note: The two kernel VAs (code_page) may not be contiguous. 
        Hence, two separate memmove() calls. */
-    void *code_page_1 = allocate_user_page_mm(cur->mm, 0 /*va*/, 
+    void *code_page = allocate_user_page_mm(cur->mm, 0 /*va*/, 
         MMU_PTE_FLAGS | MM_AP_RW);
-	if (code_page_1 == 0)	{ release(&cur->mm->lock); return -1;}
-    memmove(code_page_1, (void *)start, PAGE_SIZE); // memory copy
+	if (code_page == 0)	{ release(&cur->mm->lock); return -1;}
+    memmove(code_page, (void *)start, PAGE_SIZE); // memory copy
 
-    void *code_page_2 = allocate_user_page_mm(cur->mm, PAGE_SIZE /*va*/, 
+    void *stack_page = allocate_user_page_mm(cur->mm, PAGE_SIZE /*va*/, 
         MMU_PTE_FLAGS | MM_AP_RW);
-    if ((code_page_2) == 0) {
+    if ((stack_page) == 0) {
         release(&cur->mm->lock);
         return -1;
     }
-    memmove(code_page_2, (void *)(start + PAGE_SIZE), PAGE_SIZE);
+    memmove(stack_page, (void *)(start + PAGE_SIZE), size - PAGE_SIZE);
+    
 
     /* XXX (Feb 2025): memmove the actual "size" instead of two pages */
 
@@ -742,7 +743,6 @@ int move_to_user_mode(unsigned long start, unsigned long size, unsigned long pc)
     /* 	Note that the actual switch will not happen until kernel_exit. */
 	return 0;
 }
-
 /* The modified move_to_user_mode() for launching "kuser donut".
     - Map n pages (as needed by app's "size": user_donut.c ~5000 bytes, more
       than 1 page);
@@ -770,8 +770,9 @@ int move_to_user_mode_donut(unsigned long start, unsigned long size, unsigned lo
     unsigned long remain=size; 
     void *code_page; 
     unsigned long cnt=0;
-    while (0) { /* TODO: replace this */
-        code_page = allocate_user_page_mm(cur->mm, cnt/*va*/, MMU_PTE_FLAGS | MM_AP_RW);
+    unsigned long code_flags = MM_TYPE_PAGE | (MT_NORMAL << 2) | MM_AF | MM_SH_INNER | MM_AP_RW;
+    while (remain > 0) { /* TODO: replace this */
+        code_page = allocate_user_page_mm(cur->mm, cnt/*va*/, MM_TYPE_PAGE);
         if (code_page == 0)	{ release(&cur->mm->lock); BUG(); return -1;} // XXX shall reverse mappings
         int n = MIN(remain,PAGE_SIZE); 
         memmove(code_page, (void *)(start+cnt), n);
@@ -782,8 +783,9 @@ int move_to_user_mode_donut(unsigned long start, unsigned long size, unsigned lo
     // map fb to user VM, and pass its vaddr to the user process
     {
         unsigned long fb_pa, fb_pa_end; 
+        unsigned long fb_begin_pa = VA2PA(the_fb.fb);
         BUG_ON(the_fb.fb == 0); 
-        fb_pa = VA2PA(the_fb.fb);  
+        fb_pa = fb_begin_pa;  
         fb_pa_end = fb_pa + the_fb.vheight * the_fb.pitch;
 
         // below: reserve lookup physical addr (PA) for framebuffer (fb_pa):
@@ -797,7 +799,7 @@ int move_to_user_mode_donut(unsigned long start, unsigned long size, unsigned lo
         // mmap fb area to user VM    
         for (; fb_pa < fb_pa_end; fb_pa += PAGE_SIZE) {
             unsigned long * ret = map_page(cur->mm, 
-                0,0, /* TODO: replace this */
+                fb_pa,fb_pa, /* TODO: replace this */
                 1 /* alloc pgtable on demand*/, 
                 MMU_PTE_FLAGS | MM_AP_RW /* perm */); 
             BUG_ON(!ret);     
@@ -805,9 +807,13 @@ int move_to_user_mode_donut(unsigned long start, unsigned long size, unsigned lo
 
         // populate args for user_donut(), which span x0--x7
         // cf user_donut() for the args it expects
-        regs->regs[0] = 0; /* TODO: replace this */
-        regs->regs[1] = 0; /* TODO: replace this */
+        regs->regs[0] = fb_begin_pa; /* TODO: replace this */
+        regs->regs[1] = the_fb.pitch; /* TODO: replace this */
     }
+
+    void *stack_page = allocate_user_page_mm(cur->mm, USER_VA_END - PAGE_SIZE, 
+                                        MMU_PTE_FLAGS | MM_AP_RW);
+    if (!stack_page) { /* handle error */ }
 
 	set_pgd(cur->mm->pgd);
 
@@ -860,8 +866,10 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
         struct trapframe *cur_regs = task_pt_regs(cur);
         // copy over the parent's entire trapframe to the child
         /* TODO: your code here */
+        *childregs = *cur_regs;
         // set fork()'s return value for the child 
         /* TODO: your code here */
+        childregs->regs[0] = 0;
         if (clone_flags & PF_UTHREAD) {	// fork a "thread", i.e. child to share the parent's existing mm
             p->mm = cur->mm; BUG_ON(!p->mm);
             __atomic_add_fetch(&p->mm->ref, 1, __ATOMIC_SEQ_CST);

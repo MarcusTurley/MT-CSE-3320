@@ -87,12 +87,12 @@ void user_donut(unsigned char *fb /*usr VA*/, int pitch) {
     myprintf("fb %p pitch %d", fb, pitch);
   
     // for usage of sbrk(), cf "man sbrk" also search for "sbrk" in usertests.c
-    b = call_sys_sbrk(0); /* TODO: replace this */
-    if (b) { /* TODO: replace this */
+    b = (char *)call_sys_sbrk(1760); /* TODO: replace this */
+    if (b == (char *)-1) { /* TODO: replace this */
       myprintf("sbrk for b failed\n"); call_sys_exit(-1); 
     }
-    z = call_sys_sbrk(0); /* TODO: replace this */
-    if (z) { /* TODO: replace this */
+    z = (char *)call_sys_sbrk(1760); /* TODO: replace this */
+    if (z == (char *)-1) { /* TODO: replace this */
       myprintf("sbrk for z failed\n"); call_sys_exit(-1); 
     }
 
@@ -163,6 +163,7 @@ void user_donut(unsigned char *fb /*usr VA*/, int pitch) {
         
         /* TODO: your code here */
         // not as fast as expected? possible reason: this code is compiled -0O
+        call_sys_sleep(5);
     }
 }
 

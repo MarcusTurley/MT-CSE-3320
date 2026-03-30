@@ -256,11 +256,15 @@ int dup_current_virt_memory(struct mm_struct *dstmm) {
 		memmove(kernel_va, (void *)i, PAGE_SIZE); /* TODO: replace this */
 	}
 
+	unsigned long sp_start = PGROUNDDOWN(regs->sp);
 	// copy user stack from src to dst. 
 	V("regs->sp %lx", regs->sp);
-	// for (unsigned long i = PGROUNDDOWN(regs->sp); i < USER_VA_END; i+=PAGE_SIZE) {
-	for (unsigned long i = PGROUNDDOWN(regs->sp); i < PAGE_SIZE*2; i+=PAGE_SIZE) {
+	for (unsigned long i = sp_start; i < USER_VA_END; i+=PAGE_SIZE) {
 		unsigned long *pte = map_page(srcmm, i, 0/*just locate*/, 0/*no alloc*/, 0);
+		if (!pte || !(*pte & MM_TYPE_PAGE)) {
+            if (i > sp_start + 1024*1024) break;
+            continue;
+        }
 		BUG_ON(!pte);  // bad user mapping (stack)?
 		unsigned long perm = PTE_TO_PERM(*pte);
 		void *kernel_va = allocate_user_page_mm(dstmm, i, perm); /* TODO: replace this */
@@ -549,13 +553,13 @@ unsigned long growproc (struct mm_struct *mm, int incr) {
 	int ret; 
 	
 	// careful: sz is unsigned; incr is signed
-	if (1) { /* TODO: replace this */
+	if (incr < 0 && (long)sz + incr < (long)mm->codesz) { /* TODO: replace this */
 		W("incr too small"); 
 		W("sz 0x%lx %ld (dec) incr %d (dec). requested new brk 0x%lx", 
 			sz, sz, incr, sz+incr); 
 		goto bad; 
 	}
-	if (1) { /* TODO: replace this */
+	if (incr > 0 && (sz + incr > USER_VA_END || sz + incr < sz)) { /* TODO: replace this */
 		W("incr too large"); 
 		W("sz 0x%lx %ld (dec) incr %d (dec). requested new brk 0x%lx", 
 		sz, sz, incr, sz+incr); 
@@ -563,7 +567,7 @@ unsigned long growproc (struct mm_struct *mm, int incr) {
 	}
 
 	if (incr >= 0) {		// brk grows
-		for (; ; ) { /* TODO: replace this */
+		for (sz1 = PGROUNDUP(sz); sz1 < sz + incr; sz1 += PAGE_SIZE) { /* TODO: replace this */
 			kva = allocate_user_page_mm(mm, sz1, MM_AP_RW | MM_XN); 
 			if (!kva) {
 				W("allocate_user_page_mm failed");
